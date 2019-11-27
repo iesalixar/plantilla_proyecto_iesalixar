@@ -1,7 +1,7 @@
 ## Relación de proyectos de cada uno de los alumnos (respetar el orden de lista)
 
 ## Alumnos de 2º curso
-- [Benalli Domínguez, Alberto Manuel]()
+- [Benalli Domínguez, Alberto Manuel](https://github.com/amanuelbenallid/Proyectofinal)
 - [Camacho Martínez, Iván]()
 - [Garrido Vega, Elena]()
 - [Garzón Martín, Iván]()
