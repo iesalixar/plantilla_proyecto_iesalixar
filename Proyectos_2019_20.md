@@ -9,7 +9,7 @@
 - [López Hernández, Jesús Manuel]()
 - [Márquez Sánchez, Javier]()
 - [Martín Romero, Javier]()
-- [Oria de Rueda Pérez, Pablo]()
+- [Oria de Rueda Pérez, Pablo](https://github.com/poriad/plantilla_proyecto_iesalixar)
 - [Ponce García, Esther]()
 - [Rocha González, Blas Luis]()
 - [Sánchez Martínez, Juan Carlos]()
