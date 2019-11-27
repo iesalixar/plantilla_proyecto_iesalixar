@@ -3,7 +3,7 @@
 ## Alumnos de 2º curso
 - [Benalli Domínguez, Alberto Manuel]()
 - [Camacho Martínez, Iván]()
-- [Garrido Vega, Elena]()
+- [Garrido Vega, Elena](https://github.com/egarridov/plantilla_proyecto_egarridov)
 - [Garzón Martín, Iván]()
 - [Guerrero Marín, Ángel]()
 - [López Hernández, Jesús Manuel]()
