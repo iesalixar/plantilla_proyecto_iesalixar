@@ -5,7 +5,7 @@
 - [Camacho Martínez, Iván]()
 - [Garrido Vega, Elena]()
 - [Garzón Martín, Iván]()
-- [Guerrero Marín, Ángel]()
+- [Guerrero Marín, Ángel](https://github.com/wondo1996/plantilla_proyecto_iesalixar)
 - [López Hernández, Jesús Manuel]()
 - [Márquez Sánchez, Javier]()
 - [Martín Romero, Javier]()
