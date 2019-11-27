@@ -16,6 +16,6 @@
 - [Santiago Romero, Alejandro]()
 ## Alumnos de 1º curso
 - [Del Real Navarro, Rocío]()
-- [Escacena Macías, Pedro]()
+- [Escacena Macías, Pedro](https://github.com/PedroEscacena/2-DAW.git)
 - [Librero Cansino, Juan José]()
 - [Rivas Montero, Sergio]()
