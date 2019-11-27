@@ -15,7 +15,7 @@
 - [Sánchez Martínez, Juan Carlos]()
 - [Santiago Romero, Alejandro]()
 ## Alumnos de 1º curso
-- [Del Real Navarro, Rocío]()
+- [Del Real Navarro, Rocío](https://github.com/rociornav/plantilla_proyecto_iesalixar)
 - [Escacena Macías, Pedro]()
 - [Librero Cansino, Juan José]()
 - [Rivas Montero, Sergio]()
