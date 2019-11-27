@@ -17,5 +17,5 @@
 ## Alumnos de 1º curso
 - [Del Real Navarro, Rocío]()
 - [Escacena Macías, Pedro]()
-- [Librero Cansino, Juan José]()
+- [Librero Cansino, Juan José](https://github.com/juanjolibrero98/plantilla_proyecto_iesalixar.git)
 - [Rivas Montero, Sergio]()
