@@ -7,7 +7,7 @@
 - [Garzón Martín, Iván](https://github.com/igarzonm/plantilla_proyecto_iesalixar)
 - [Guerrero Marín, Ángel]()
 - [López Hernández, Jesús Manuel]()
-- [Márquez Sánchez, Javier]()
+- [Márquez Sánchez, Javier](https://github.com/jmarquezs2/plantilla_proyecto_iesalixar)
 - [Martín Romero, Javier](https://github.com/javiermr93/plantilla_proyecto_iesalixar)
 - [Oria de Rueda Pérez, Pablo](https://github.com/poriad/plantilla_proyecto_iesalixar)
 - [Ponce García, Esther](https://github.com/alumeponceg/plantilla_proyecto_iesalixar)
