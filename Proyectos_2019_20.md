@@ -18,4 +18,4 @@
 - [Del Real Navarro, Rocío](https://github.com/rociornav/plantilla_proyecto_iesalixar)
 - [Escacena Macías, Pedro](https://github.com/PedroEscacena/2-DAW.git)
 - [Librero Cansino, Juan José](https://github.com/juanjolibrero98/plantilla_proyecto_iesalixar.git)
-- [Rivas Montero, Sergio]()
+- [Rivas Montero, Sergio](https://github.com/SergioRivasM/plantilla_proyecto_iesalixar.git)
