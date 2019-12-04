@@ -10,5 +10,5 @@
 - Imprimirá diplomas con los datos de los alumnos.
 - Permitirá enviar correos masivos con ofertas de nuevos talleres.
 - Permitirá que los alumnos valoren cada uno de los talleres.
-- Se habilitará un blog para que los usuarios puedan realizar comentarios.
+* Se habilitará un blog para que los usuarios puedan realizar comentarios.
 - .....
