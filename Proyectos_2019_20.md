@@ -4,7 +4,7 @@
 - [Benalli Domínguez, Alberto Manuel](https://github.com/amanuelbenallid/Proyectofinal)
 - [Camacho Martínez, Iván]()
 - [Garrido Vega, Elena]()
-- [Garzón Martín, Iván]()
+- [Garzón Martín, Iván](https://github.com/igarzonm/plantilla_proyecto_iesalixar)
 - [Guerrero Marín, Ángel]()
 - [López Hernández, Jesús Manuel]()
 - [Márquez Sánchez, Javier]()
