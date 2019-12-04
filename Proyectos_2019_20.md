@@ -8,7 +8,7 @@
 - [Guerrero Marín, Ángel]()
 - [López Hernández, Jesús Manuel]()
 - [Márquez Sánchez, Javier]()
-- [Martín Romero, Javier]()
+- [Martín Romero, Javier](https://github.com/javiermr93/plantilla_proyecto_iesalixar)
 - [Oria de Rueda Pérez, Pablo]()
 - [Ponce García, Esther](https://github.com/alumeponceg/plantilla_proyecto_iesalixar)
 - [Rocha González, Blas Luis]()
