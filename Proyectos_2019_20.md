@@ -12,7 +12,7 @@
 - [Oria de Rueda Pérez, Pablo]()
 - [Ponce García, Esther](https://github.com/alumeponceg/plantilla_proyecto_iesalixar)
 - [Rocha González, Blas Luis]()
-- [Sánchez Martínez, Juan Carlos]()
+- [Sánchez Martínez, Juan Carlos](https://github.com/JCarlosSanchezMartinez)
 - [Santiago Romero, Alejandro]()
 ## Alumnos de 1º curso
 - [Del Real Navarro, Rocío]()
