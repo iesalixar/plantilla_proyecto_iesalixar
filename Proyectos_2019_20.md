@@ -21,7 +21,7 @@
 - [Ponce García, Esther](https://github.com/alumeponceg/plantilla_proyecto_iesalixar)
 - [Rocha González, Blas Luis]()
 - [Sánchez Martínez, Juan Carlos](https://github.com/JCarlosSanchezMartinez)
-- [Santiago Romero, Alejandro]()
+- [Santiago Romero, Alejandro](https://github.com/AlejandroSantiagoRomero/plantilla_proyecto_iesalixar.git)
 ## Alumnos de 1º curso
 - [Del Real Navarro, Rocío](https://github.com/rociornav/plantilla_proyecto_iesalixar)
 - [Escacena Macías, Pedro](https://github.com/PedroEscacena/2-DAW.git)
