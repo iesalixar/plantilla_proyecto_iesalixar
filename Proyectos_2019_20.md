@@ -1,7 +1,7 @@
 ## Relación de proyectos de cada uno de los alumnos (respetar el orden de lista)
 
 ## Alumnos de 2º curso
-<<<<<<< HEAD
+
 - [Benalli Domínguez, Alberto Manuel]()
 - [Camacho Martínez, Iván]()
 - [Garrido Vega, Elena]()
@@ -12,7 +12,6 @@
 - [Garrido Vega, Elena](https://github.com/egarridov/plantilla_proyecto_egarridov)
 - [Garzón Martín, Iván](https://github.com/igarzonm/plantilla_proyecto_iesalixar)
 - [Guerrero Marín, Ángel](https://github.com/wondo1996/plantilla_proyecto_iesalixar)
->>>>>>> 6104a3f3ef71211bb2e98991e0adc89f92296476
 - [López Hernández, Jesús Manuel](https://github.com/jmanuellopezh/plantilla_proyecto_iesalixar)
 - [Márquez Sánchez, Javier](https://github.com/jmarquezs2/plantilla_proyecto_iesalixar)
 - [Martín Romero, Javier](https://github.com/javiermr93/plantilla_proyecto_iesalixar)
