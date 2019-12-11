@@ -7,7 +7,6 @@
 - [Garrido Vega, Elena]()
 - [Garzón Martín, Iván]()
 - [Guerrero Marín, Ángel](https://github.com/wondo1996/plantilla_proyecto_iesalixar)
-=======
 - [Benalli Domínguez, Alberto Manuel](https://github.com/amanuelbenallid/Proyectofinal)
 - [Camacho Martínez, Iván](https://github.com/icamachom/plantilla_proyecto_icamachom)
 - [Garrido Vega, Elena](https://github.com/egarridov/plantilla_proyecto_egarridov)
