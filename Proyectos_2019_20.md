@@ -13,7 +13,7 @@
 - [Martín Romero, Javier](https://github.com/javiermr93/plantilla_proyecto_iesalixar)
 - [Oria de Rueda Pérez, Pablo](https://github.com/poriad/plantilla_proyecto_iesalixar)
 - [Ponce García, Esther](https://github.com/alumeponceg/proyecto)
-- [Rocha González, Blas Luis](https://github.com/BLRochaGonzalez/plantilla_proyecto_iesalixar)
+- [Rocha González, Blas Luis](https://github.com/BLRochaGonzalez/Proyecto_FCT.git)
 - [Sánchez Martínez, Juan Carlos](https://github.com/JCarlosSanchezMartinez)
 - [Santiago Romero, Alejandro](https://github.com/AlejandroSantiagoRomero/plantilla_proyecto_iesalixar.git)
 ## Alumnos de 1º curso
