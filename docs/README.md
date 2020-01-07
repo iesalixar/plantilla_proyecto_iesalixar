@@ -4,7 +4,7 @@ En esta carpeta se recoge toda la documentación relativa al proyecto solicitada
 
 Un ejemplo sería el siguiente:
 - [Captura de requisitos]()
-- [Arquitectura del Proyecto y su contenido](docs/Alcance.md)
+- [Arquitectura del Proyecto y su contenido](https://github.com/iesalixar/plantilla_proyecto_iesalixar/blob/master/docs/Alcance.md)
     - [Vista de Subsistemaa y Componentes: Mapa de la Aplicación]()
     - [Vista de Concurrencia y Recursos: Diseño de Base de Datos]()
     - [Vista de Distribución: Diseño de la Página/Aplicación/Interfaz]()
