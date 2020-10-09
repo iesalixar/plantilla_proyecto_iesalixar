@@ -12,7 +12,7 @@
 - [Márquez Sánchez, Javier](https://github.com/jmarquezs2/plantilla_proyecto_iesalixar)
 - [Martín Romero, Javier](https://github.com/javiermr93/plantilla_proyecto_iesalixar)
 - [Oria de Rueda Pérez, Pablo](https://github.com/poriad/plantilla_proyecto_iesalixar)
-- [Ponce García, Esther](https://github.com/alumeponceg/proyecto)
+- [Ponce García, Esther](https://github.com/alumeponceg/plantilla_proyecto_EstherPonce)
 - [Rocha González, Blas Luis](https://github.com/BLRochaGonzalez/Proyecto_FCT.git)
 - [Sánchez Martínez, Juan Carlos](https://github.com/JCarlosSanchezMartinez)
 - [Santiago Romero, Alejandro](https://github.com/AlejandroSantiagoRomero/plantilla_proyecto_iesalixar.git)
