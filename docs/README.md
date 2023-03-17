@@ -62,5 +62,15 @@ Comparativa de herramientas similares, puntos fuertes y débiles de la aplicaci�
 ## Justificación del proyecto
 Motivación que justifique la realización de la aplicación web.
 
+## Uso de stack tecnológico. Justificación del mismo.
+
+## Esquema E-R y descripción de las entidades y campos de la base de datos.
+
+## Prototipo de la Aplicación Web.
+
+## Manual de Usuario.
+
+## Manual de Despliegue
+
 ## Postmortem y conclusiones del proyecto.
 Se puede completar con la siguiente información: Resumen de como ha sido la ejecución del proyecto, posibles mejoras y viabilidad de puesta en marcha real.
