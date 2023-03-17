@@ -1,25 +1,19 @@
 # Documentación del proyecto
 
-En esta carpeta se recoge toda la documentación relativa al proyecto solicitada por tu tutor. El conjunto de los documentos se presentará con una lista donde cada uno de los elementos sea a un enlace a un documento que esté dentro del propio repositorio.
+En este directorio se recoge toda la documentación relativa al proyecto solicitada por tu tutor. Obligatoriamente habrá un fichero pdf que contenga los siguientes apartados:
+- Portada
+- Índice
+- Introducción
+- [Requisitos Funcionales](https://github.com/iesalixar/plantilla_proyecto_iesalixar/blob/master/docs/Alcance.md)
+- Prototipo de la Aplicación Web.
+- Manual de Usuario.
+- Manual de Administración.
+- Manual de Despliegue
+- Postmortem y conclusiones del proyecto.
 
-Un ejemplo sería el siguiente:
-- [Captura de requisitos](https://github.com/iesalixar/plantilla_proyecto_iesalixar/blob/master/docs/Alcance.md)
-- [Arquitectura del Proyecto y su contenido]()
-    - [Vista de Subsistemaa y Componentes: Mapa de la Aplicación]()
-    - [Vista de Concurrencia y Recursos: Diseño de Base de Datos]()
-    - [Vista de Distribución: Diseño de la Página/Aplicación/Interfaz]()
-    - [vista de Seguridad y Fiabilidad]()
-    - [Vista de Despliegue]()
-- [Desarrollo (programación y diseño) de la Aplicación]()
-    - [Diagramas de clases y diagramas de colaboración]()
-    - [Estructura de datos]()
-    - [Código fuente: HTML, CSS, JavaScript, AJAX, etc...]()
-    
-- [Resultado de las pruebas y validaciones]()
- 
-- [Manual de Usuario]().
-- [Manual de Administración]().
-- [Postmortem y conclusiones del proyecto]().
+El nombre del fichero debe seguir la siguente nomenclatura: 202X-202X-IES ALIXAR-DAW2-NOMBRE ALUMNO-TÍTULO DEL PROYECTO O NOMBRE DE LA APLICACIÓN WEB
+El documento pdf deberá contener:
+- Encabezado: Logo del IES ALIXAR - TÍTULO DEL PROYECTO O NOMBRE DE LA APLICACIÓN WEB - NOMBRE-ALUMNO
+- Pié de página: Número de página
 
- 
-
+Adicionalmente, si por facilitad de lectura, se quieren adjuntar a este directorio otros elementos como imágenes del diseño de la base de datos, enlaces a una herramienta de prototipado, enlace a la aplicación desplegada a un servicio de terceros, archivos de configuración del despliegue,... se creará un subdirectorio con el nombre representativo de los archivos que va a contener.
