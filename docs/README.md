@@ -13,6 +13,7 @@ En este directorio se recoge toda la documentación relativa al proyecto solicit
 - Postmortem y conclusiones del proyecto.
 
 El nombre del fichero debe seguir la siguente nomenclatura: 202X-202X-IES ALIXAR-DAW2-NOMBRE ALUMNO-TÍTULO DEL PROYECTO O NOMBRE DE LA APLICACIÓN WEB
+
 El documento pdf deberá contener:
 - Encabezado: Logo del IES ALIXAR - TÍTULO DEL PROYECTO O NOMBRE DE LA APLICACIÓN WEB - NOMBRE-ALUMNO
 - Pié de página: Número de página
