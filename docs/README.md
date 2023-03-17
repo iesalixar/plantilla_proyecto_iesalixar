@@ -59,7 +59,7 @@ Listado enumerado de todas las acciones que los distintos usuarios pueden realiz
 ## Breve análisis/comparativa con las alternativas del mercado
 Comparativa de herramientas similares, puntos fuertes y débiles de la aplicación web que se quiere desarrollar respecto a las existentes.
 
-##Justificación del proyecto
+## Justificación del proyecto
 Motivación que justifique la realización de la aplicación web.
 
 ## Postmortem y conclusiones del proyecto.
