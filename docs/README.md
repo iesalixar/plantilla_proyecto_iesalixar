@@ -5,6 +5,7 @@ En este directorio se recoge toda la documentación relativa al proyecto solicit
 - Índice
 - Introducción
 - [Requisitos Funcionales](https://github.com/iesalixar/plantilla_proyecto_iesalixar/blob/master/docs/Alcance.md)
+- Esquema E-R y descripción de las entidades y campos de la base de datos.
 - Prototipo de la Aplicación Web.
 - Manual de Usuario.
 - Manual de Administración.
