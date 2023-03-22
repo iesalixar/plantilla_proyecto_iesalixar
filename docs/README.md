@@ -7,11 +7,9 @@ En este directorio se recoge toda la documentación relativa al proyecto solicit
 - Identificación de las necesidades del proyecto.
 - Breve análisis/comparativa con las alternativas del mercado
 - Justificación del proyecto
-- Uso de stack tecnológico. Justificación del mismo.
-- Esquema E-R y descripción de las entidades y campos de la base de datos.
+- Stack tecnológico.
+- Modelo de Datos.
 - Prototipo de la Aplicación Web.
-- Manual de Usuario.
-- Manual de Administración.
 - Manual de Despliegue
 - Postmortem y conclusiones del proyecto.
 
@@ -37,7 +35,7 @@ Debe contener los siguientes elementos:
 Se deberá crear un índice que contenga un acceso directo a la página de cada contenido. Para ello se tendrá que hacer un uso correcto de los encabezados de cada sección en la herramienta de edición de textos.
 
 ## Introducción
-Lo que se ha especificado en la propuesta o en las secciones Descripción del proyecto, Objetivo de la Aplicación
+Ampiación de lo que se ha especificado en la propuesta o en las secciones Descripción del proyecto, Objetivo de la Aplicación,...
 
 ## Identificación de las necesidades del proyecto.
 Listado enumerado de todas las acciones que los distintos usuarios pueden realizar en la aplicación. Ejemplo de requisitos funcionales del proyecto:
@@ -63,14 +61,16 @@ Comparativa de herramientas similares, puntos fuertes y débiles de la aplicaci�
 Motivación que justifique la realización de la aplicación web.
 
 ## Uso de stack tecnológico. Justificación del mismo.
+Lista de las tecnologías usadas para construir la aplicación y análisis de por qué se ha construído en estas tecnologías. 
 
 ## Esquema E-R y descripción de las entidades y campos de la base de datos.
+Imágen del esquema entidad relación y descricpión de las entidades y campos que conforman el modelo de datos.
 
 ## Prototipo de la Aplicación Web.
-
-## Manual de Usuario.
+Imágenes extraidas de la aplicación de prototipado.
 
 ## Manual de Despliegue
+Descripción de todos los pasos que se han realizado para desplegar la aplicación en los servicios de terceros o el contenedor docker. Estas descripciones deberán ir acompañadas de capturas de pantalla que faciliten la comprensión al técnico que realiza el despliegue, así como los comandos utilizados (en un formato que se distingan bien del texto del documento)
 
 ## Postmortem y conclusiones del proyecto.
 Se puede completar con la siguiente información: Resumen de como ha sido la ejecución del proyecto, posibles mejoras y viabilidad de puesta en marcha real.
