@@ -10,6 +10,7 @@ En este directorio se recoge toda la documentación relativa al proyecto solicit
 - Stack tecnológico.
 - Modelo de Datos.
 - Prototipo de la Aplicación Web.
+- Definición API REST publicación servicios
 - Manual de Despliegue
 - Postmortem y conclusiones del proyecto.
 
@@ -67,7 +68,10 @@ Lista de las tecnologías usadas para construir la aplicación y análisis de po
 Imágen del esquema entidad relación y descricpión de las entidades y campos que conforman el modelo de datos.
 
 ## Prototipo de la Aplicación Web.
-Imágenes extraidas de la aplicación de prototipado.
+Imágenes extraidas de la aplicación de prototipado. Si son muchas, poner solo las más representativas y el resto adjuntarlas como anexo.
+
+## Definición API REST publicación servicios
+Tabla con todas las apis desarrolladas para la aplicación con la información: endpoint, tipo, parámetros, descripción
 
 ## Manual de Despliegue
 Descripción de todos los pasos que se han realizado para desplegar la aplicación en los servicios de terceros o el contenedor docker. Estas descripciones deberán ir acompañadas de capturas de pantalla que faciliten la comprensión al técnico que realiza el despliegue, así como los comandos utilizados (en un formato que se distingan bien del texto del documento)
