@@ -1,0 +1,37 @@
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">Información del Perfil</h2>
+      <!-- Mostrar nombre de usuario estáticamente -->
+      <p>Nombre de Usuario: <span th:text="${userName}"></span></p>
+      <form th:action="@{/updateProfile}" method="post">
+        <input type="hidden" name="idUser" th:value="${idUser}" />
+        <div class="mb-3">
+          <label for="fullName" class="form-label">Nombre Completo</label>
+          <input type="text" class="form-control" id="fullName" name="fullName" th:value="${fullName}" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Correo Electrónico</label>
+          <input type="email" class="form-control" id="email" name="email" th:value="${email}" required>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="password" name="password" th:value="${password}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <form action="userProfile" method="post">
+      <input type="hidden" name="userName" th:value="${userName}" />
+      <input type="hidden" name="password" th:value="${password}" />
+      <button type="submit" class="btn btn-secondary">Volver al Perfil</button>
+    </form>
+    <form action="deleteProfile" method="post">
+      <input type="hidden" name="idUser" th:value="${idUser}" />
+      <button type="submit" class="btn btn-secondary">Eliminar Perfil</button>
+    </form>
+  </div>
+</div>
