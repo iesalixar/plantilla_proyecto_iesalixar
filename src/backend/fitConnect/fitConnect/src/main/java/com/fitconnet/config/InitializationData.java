@@ -46,7 +46,7 @@ public class InitializationData implements CommandLineRunner {
 
 		try {
 			// Usuario 1 - Rol USER
-			Usuario usuario1 = new Usuario();
+			User usuario1 = new User();
 			usuario1.setFirstName("Alice");
 			usuario1.setLastName("Johnson");
 			usuario1.setEmail("alice.johnson@example.com");
@@ -54,7 +54,7 @@ public class InitializationData implements CommandLineRunner {
 			usuario1.getRoles().add(Role.ROLE_USER);
 			usuarioRepository.save(usuario1);
 			// Usuario 2 - Rol ADMIN
-			Usuario usuario2 = new Usuario();
+			User usuario2 = new User();
 			usuario2.setFirstName("Bob");
 			usuario2.setLastName("Smith");
 			usuario2.setEmail("bob.smith@example.com");
@@ -62,7 +62,7 @@ public class InitializationData implements CommandLineRunner {
 			usuario2.getRoles().add(Role.ROLE_ADMIN);
 			usuarioRepository.save(usuario2);
 			// Usuario 3 - Rol USER
-			Usuario usuario3 = new Usuario();
+			User usuario3 = new User();
 			usuario3.setFirstName("Carol");
 			usuario3.setLastName("Davis");
 			usuario3.setEmail("carol.davis@example.com");

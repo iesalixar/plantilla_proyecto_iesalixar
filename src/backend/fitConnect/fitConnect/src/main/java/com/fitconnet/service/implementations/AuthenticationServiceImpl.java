@@ -42,7 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			throw new IllegalArgumentException("Email already in use.");
 		}
 
-		Usuario user = new Usuario();
+		User user = new User();
 		user.setFirstName(request.getFirstName());
 		user.setLastName(request.getLastName());
 		user.setEmail(request.getEmail());
@@ -61,7 +61,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-		Usuario user = userRepository.findByEmail(request.getEmail())
+		User user = userRepository.findByEmail(request.getEmail())
 				.orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
 		String jwt = jwtService.generateToken(user);
 		return JwtAuthenticationResponse.builder().token(jwt).build();
