@@ -1,5 +1,7 @@
 package com.fitconnet.mappers;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -20,4 +22,9 @@ public interface ActivityMapper {
 	@Mapping(source = "user", target = "user")
 	@Mapping(source = "participants", target = "participants")
 	ActivityDTO activityToActivityDTO(Activity activity);
+
+	Activity activityDTOToActivity(ActivityDTO activityDTO);
+
+	List<ActivityDTO> toActivityDTOS(List<Activity> activityList);
+
 }

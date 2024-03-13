@@ -36,7 +36,7 @@ public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "C_PK_USER_ID", unique = true, nullable = false)
-	private Integer id;
+	private Long id;
 	/** Nombre completo del usuario. */
 	@Column(name = "C_USER_FIRSTNAME", nullable = false)
 	@Size(min = 3, max = 20, message = "El nombre de usuario debe tener entre 3 y 20 caracteres.")
@@ -133,7 +133,7 @@ public class User implements UserDetails {
 		this.roles = roles;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 

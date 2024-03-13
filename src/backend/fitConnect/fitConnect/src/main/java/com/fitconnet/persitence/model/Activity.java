@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.util.List;
 
-import org.springframework.security.core.userdetails.User;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
