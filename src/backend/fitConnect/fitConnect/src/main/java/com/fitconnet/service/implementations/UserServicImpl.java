@@ -32,23 +32,23 @@ public class UserServicImpl implements UserServiceI {
 
 	@Override
 	public List<UserDTO> getAllUsers() {
-		return userMapper.toUserDTOS(userRepository.findAll());
+		return userMapper.toUserDTOList(userRepository.findAll());
 	}
 
 	@Override
 	public UserDTO createUser(User user) {
-		return userMapper.userToUserDTO(userRepository.save(user));
+		return userMapper.toUserDTO(userRepository.save(user));
 	}
 
 	@Override
 	public UserDTO updateUser(Long id, User user) {
 
 		User findUser = userRepository.findById(id)
-				.orElseThrow(() -> new UserNotFoundException("Vehicle not found", HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new UserNotFoundException("User not found", HttpStatus.NOT_FOUND));
 
 		User savedUser = userRepository.save(user);
 
-		return userMapper.userToUserDTO(savedUser);
+		return userMapper.toUserDTO(savedUser);
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class UserServicImpl implements UserServiceI {
 
 		User savedUser = userRepository.save(user);
 
-		return userMapper.userToUserDTO(savedUser);
+		return userMapper.toUserDTO(savedUser);
 	}
 
 	@Override
@@ -76,14 +76,14 @@ public class UserServicImpl implements UserServiceI {
 				.orElseThrow(() -> new UserNotFoundException("Vehicle not found", HttpStatus.NOT_FOUND));
 		userRepository.delete(id);
 
-		return userMapper.userToUserDTO(user);
+		return userMapper.toUserDTO(user);
 	}
 
 	@Override
 	public UserDTO getUser(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Vehicle not found", HttpStatus.NOT_FOUND));
-		return userMapper.userToUserDTO(user);
+		return userMapper.toUserDTO(user);
 	}
 
 }

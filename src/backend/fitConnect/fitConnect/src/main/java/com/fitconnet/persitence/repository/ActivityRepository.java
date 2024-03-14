@@ -19,5 +19,4 @@ public interface ActivityRepository extends MyBaseRepository<Activity, Long> {
 
 	List<Activity> findByDurationLessThan(Duration duration);
 
-	List<Activity> findByDistanceGreaterThan(double distance);
 }

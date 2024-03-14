@@ -16,12 +16,14 @@ public interface UserMapper {
 	@Mapping(source = "firstName", target = "firstName")
 	@Mapping(source = "lastName", target = "lastName")
 	@Mapping(source = "email", target = "email")
-	UserDTO userToUserDTO(User user);
+	UserDTO toUserDTO(User user);
 
-	User userDTOToUser(UserDTO userDTO);
+	User toUser(UserDTO userDTO);
 
-	List<UserDTO> toUserDTOS(Iterable<User> iterable);
+	List<UserDTO> toUserDTOList(Iterable<User> iterable);
 
 	void updateUser(@MappingTarget User target, User source);
+
+	List<User> toUserList(List<UserDTO> participants);
 
 }

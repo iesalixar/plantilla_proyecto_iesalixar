@@ -46,10 +46,6 @@ public class Activity implements Serializable {
 	@Column(name = "C_ACTIVITY_DURATION", length = 8)
 	private Duration duration;
 
-	/** Distancia recorrida durante la actividad. */
-	@Column(name = "C_DISTANCE")
-	private double distance;
-
 	/** Usuario asociado a esta actividad. */
 	@ManyToOne
 	@JoinColumn(name = "C_ACTIVITY_USER", referencedColumnName = "C_PK_ID_USER")
