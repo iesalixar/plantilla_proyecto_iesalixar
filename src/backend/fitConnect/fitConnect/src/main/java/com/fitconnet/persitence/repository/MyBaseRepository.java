@@ -16,4 +16,6 @@ public interface MyBaseRepository<T, I extends Serializable> extends Repository<
 	T delete(I id);
 
 	boolean exists(I id);
+
+	boolean existsByEmail(String email);
 }

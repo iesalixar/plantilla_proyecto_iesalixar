@@ -7,14 +7,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.api.productos.dto.request.SignUpRequest;
-import com.api.productos.dto.request.SigninRequest;
-import com.api.productos.dto.response.user.JwtAuthenticationResponse;
-import com.api.productos.entities.Role;
-import com.api.productos.entities.Usuario;
-import com.api.productos.repositories.interfaces.UserRepository;
-import com.api.productos.service.interfaces.AuthenticationService;
-import com.api.productos.service.interfaces.JwtService;
+import com.fitconnet.dto.requets.SignUpRequest;
+import com.fitconnet.dto.requets.SigninRequest;
+import com.fitconnet.dto.response.user.JwtAuthenticationResponse;
+import com.fitconnet.enums.Role;
+import com.fitconnet.persitence.model.User;
+import com.fitconnet.persitence.repository.UserRepository;
+import com.fitconnet.service.interfaces.AuthenticationService;
+import com.fitconnet.service.interfaces.JwtService;
 
 import lombok.Builder;
 

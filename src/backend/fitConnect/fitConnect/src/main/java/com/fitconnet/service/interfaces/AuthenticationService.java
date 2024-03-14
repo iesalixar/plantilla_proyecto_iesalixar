@@ -1,5 +1,9 @@
 package com.fitconnet.service.interfaces;
 
+import com.fitconnet.dto.requets.SignUpRequest;
+import com.fitconnet.dto.requets.SigninRequest;
+import com.fitconnet.dto.response.user.JwtAuthenticationResponse;
+
 public interface AuthenticationService {
 
 	/** REGISTRO */
