@@ -1,17 +1,23 @@
 package com.fitconnet.persitence.repository;
 
-import java.util.Optional;
+import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.fitconnet.enums.Role;
 import com.fitconnet.persitence.model.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends MyBaseRepository<User, Long> {
 
-	Optional<User> findByEmail(String email);
+	User findByEmail(String email);
 
-	Boolean existsByEmail(String email);
+	List<User> findByLastName(String lastName);
+
+	List<User> findByActivitiesPlace(String place);
+
+	List<User> findByRoles(Role role);
+
+	List<User> findByActivitiesActivityType(String activityType);
 
 }

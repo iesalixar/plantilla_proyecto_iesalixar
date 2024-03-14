@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.util.List;
 
-import org.springframework.security.core.userdetails.User;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -47,10 +45,6 @@ public class Activity implements Serializable {
 	/** Tiempo de duración en horas y/o minutos */
 	@Column(name = "C_ACTIVITY_DURATION", length = 8)
 	private Duration duration;
-
-	/** Distancia recorrida durante la actividad. */
-	@Column(name = "C_DISTANCE")
-	private double distance;
 
 	/** Usuario asociado a esta actividad. */
 	@ManyToOne

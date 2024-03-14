@@ -8,9 +8,7 @@ public class ActivityDTO {
 	private Long idActivity;
 	private String activityType;
 	private Duration duration;
-	private double distance;
 	private String place;
-	private UserDTO user;
 	private List<UserDTO> participants;
 
 	public Long getIdActivity() {
@@ -37,28 +35,12 @@ public class ActivityDTO {
 		this.duration = duration;
 	}
 
-	public double getDistance() {
-		return distance;
-	}
-
-	public void setDistance(double distance) {
-		this.distance = distance;
-	}
-
 	public String getPlace() {
 		return place;
 	}
 
 	public void setPlace(String place) {
 		this.place = place;
-	}
-
-	public UserDTO getUser() {
-		return user;
-	}
-
-	public void setUser(UserDTO user) {
-		this.user = user;
 	}
 
 	public List<UserDTO> getParticipants() {
