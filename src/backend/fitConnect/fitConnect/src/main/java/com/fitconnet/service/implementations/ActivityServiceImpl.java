@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 
 import com.fitconnet.dto.ActivityDTO;
+import com.fitconnet.error.exception.ActivityNotFoundException;
 import com.fitconnet.mappers.ActivityMapper;
 import com.fitconnet.mappers.UserMapper;
 import com.fitconnet.persitence.model.Activity;
@@ -38,7 +39,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	@Override
 	public ActivityDTO updateActivity(Long id, Activity activity) {
 		Activity findActivity = activityRepository.findById(id)
-				.orElseThrow(() -> new UserNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
 
 		Activity saveActivity = activityRepository.save(activity);
 
@@ -48,7 +49,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	@Override
 	public ActivityDTO patchActivity(Long id, ActivityDTO activityDTO) {
 		Activity activity = activityRepository.findById(id)
-				.orElseThrow(() -> new UserNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
 		if (activity.getActivityType() != null) {
 			activity.setActivityType(activityDTO.getActivityType());
 		}
@@ -69,7 +70,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	@Override
 	public ActivityDTO deleteById(Long id) {
 		Activity activity = activityRepository.findById(id)
-				.orElseThrow(() -> new UserNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
 		activityRepository.delete(id);
 
 		return activityMapper.toActivityDTO(activity);
@@ -78,7 +79,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	@Override
 	public ActivityDTO getActivity(Long id) {
 		Activity activity = activityRepository.findById(id)
-				.orElseThrow(() -> new UserNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
 		return activityMapper.toActivityDTO(activity);
 	}
 

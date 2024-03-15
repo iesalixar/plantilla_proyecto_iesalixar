@@ -22,7 +22,7 @@ public interface UserMapper {
 
 	List<UserDTO> toUserDTOList(Iterable<User> iterable);
 
-	void updateUser(@MappingTarget User target, User source);
+	void updateUser(User target, @MappingTarget User source);
 
 	List<User> toUserList(List<UserDTO> participants);
 

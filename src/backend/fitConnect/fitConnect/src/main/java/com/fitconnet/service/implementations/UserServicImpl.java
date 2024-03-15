@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.fitconnet.dto.UserDTO;
+import com.fitconnet.error.exception.UserNotFoundException;
 import com.fitconnet.mappers.UserMapper;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.UserRepository;

@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.api.productos.dto.response.error.ErrorDetailsResponse;
-import com.api.productos.error.exception.ProductoNotFoundException;
+import com.fitconnet.dto.response.error.ErrorDetailsResponse;
+import com.fitconnet.error.exception.ActivityNotFoundException;
+import com.fitconnet.error.exception.UserNotFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -24,8 +25,17 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
 	}
 
-	@ExceptionHandler(ProductoNotFoundException.class)
-	public ResponseEntity<ErrorDetailsResponse> handleLibroNotFoundException(ProductoNotFoundException ex,
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<ErrorDetailsResponse> handleLibroNotFoundException(UserNotFoundException ex,
+			WebRequest request) {
+		ErrorDetailsResponse errorDetails = new ErrorDetailsResponse(new Date(), ex.getMessage(),
+				request.getDescription(false));
+
+		return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(ActivityNotFoundException.class)
+	public ResponseEntity<ErrorDetailsResponse> handleLibroNotFoundException(ActivityNotFoundException ex,
 			WebRequest request) {
 		ErrorDetailsResponse errorDetails = new ErrorDetailsResponse(new Date(), ex.getMessage(),
 				request.getDescription(false));
