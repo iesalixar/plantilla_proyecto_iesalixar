@@ -9,11 +9,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.api.productos.entities.Producto;
-import com.api.productos.entities.Role;
-import com.api.productos.entities.Usuario;
-import com.api.productos.repositories.interfaces.ProductoRepository;
-import com.api.productos.repositories.interfaces.UserRepository;
+import com.fitconnet.enums.Role;
+import com.fitconnet.persitence.model.User;
+import com.fitconnet.persitence.repository.UserRepository;
 import com.github.javafaker.Faker;
 
 @Profile("demo")
@@ -24,14 +22,13 @@ public class InitializationData implements CommandLineRunner {
 
 	private final UserRepository usuarioRepository;
 
-	private final ProductoRepository productoRepository;
+	// private final ProductoRepository productoRepository;
 
 	private final PasswordEncoder passwordEncoder;
 
-	public InitializationData(UserRepository usuarioRepository, ProductoRepository productoRepository,
-			PasswordEncoder passwordEncoder) {
+	public InitializationData(UserRepository usuarioRepository, PasswordEncoder passwordEncoder) {
 		this.usuarioRepository = usuarioRepository;
-		this.productoRepository = productoRepository;
+		// this.productoRepository = productoRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
 
@@ -41,7 +38,7 @@ public class InitializationData implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		if (BORRAR_PRODUCTO) {
-			productoRepository.deleteAll();
+			// productoRepository.deleteAll();
 		}
 
 		try {
@@ -78,11 +75,11 @@ public class InitializationData implements CommandLineRunner {
 
 		Faker faker = new Faker(new Locale("es"));
 		for (int i = 0; i < 10; i++) {
-			Producto producto = new Producto();
-			producto.setCodigo(faker.number().digits(10));
-			producto.setNombre(faker.commerce().productName());
-			producto.setPrecio(faker.number().randomDouble(2, 1, 1000));
-			productoRepository.save(producto);
+//			Producto producto = new Producto();
+//			producto.setCodigo(faker.number().digits(10));
+//			producto.setNombre(faker.commerce().productName());
+//			producto.setPrecio(faker.number().randomDouble(2, 1, 1000));
+//			productoRepository.save(producto);
 		}
 
 	}

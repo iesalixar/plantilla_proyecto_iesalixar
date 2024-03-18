@@ -17,8 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.api.productos.entities.Role;
-import com.api.productos.service.interfaces.UserService;
+import com.fitconnet.enums.Role;
+import com.fitconnet.service.interfaces.UserServiceI;
 
 @Configuration
 @EnableWebSecurity
@@ -28,9 +28,9 @@ public class SecurityConfiguration {
 
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-	private final UserService userService;
+	private final UserServiceI userService;
 
-	public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, UserService userService) {
+	public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, UserServiceI userService) {
 		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
 		this.userService = userService;
 	}

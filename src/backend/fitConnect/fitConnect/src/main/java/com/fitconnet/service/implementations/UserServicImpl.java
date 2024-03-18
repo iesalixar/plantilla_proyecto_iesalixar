@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.fitconnet.dto.UserDTO;
+import com.fitconnet.error.exception.UserNotFoundException;
 import com.fitconnet.mappers.UserMapper;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.UserRepository;
@@ -74,7 +75,7 @@ public class UserServicImpl implements UserServiceI {
 	public UserDTO deleteById(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Vehicle not found", HttpStatus.NOT_FOUND));
-		userRepository.delete(id);
+		userRepository.deleteById(id);
 
 		return userMapper.toUserDTO(user);
 	}

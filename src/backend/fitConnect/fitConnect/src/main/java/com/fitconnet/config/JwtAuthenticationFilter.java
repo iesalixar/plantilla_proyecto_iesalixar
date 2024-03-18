@@ -12,8 +12,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.api.productos.service.interfaces.JwtService;
-import com.api.productos.service.interfaces.UserService;
+import com.fitconnet.service.interfaces.JwtService;
+import com.fitconnet.service.interfaces.UserServiceI;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,9 +24,9 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private final JwtService jwtService;
-	private final UserService userService;
+	private final UserServiceI userService;
 
-	public JwtAuthenticationFilter(JwtService jwtService, UserService userService) {
+	public JwtAuthenticationFilter(JwtService jwtService, UserServiceI userService) {
 		this.jwtService = jwtService;
 		this.userService = userService;
 
