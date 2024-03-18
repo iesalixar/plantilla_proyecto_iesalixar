@@ -5,26 +5,26 @@ import java.util.List;
 
 public class ActivityDTO {
 
-	private Long idActivity;
-	private String activityType;
+	private Long id;
+	private String type;
 	private Duration duration;
 	private String place;
 	private List<UserDTO> participants;
 
-	public Long getIdActivity() {
-		return idActivity;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdActivity(Long idActivity) {
-		this.idActivity = idActivity;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getActivityType() {
-		return activityType;
+	public String getType() {
+		return type;
 	}
 
-	public void setActivityType(String activityType) {
-		this.activityType = activityType;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Duration getDuration() {

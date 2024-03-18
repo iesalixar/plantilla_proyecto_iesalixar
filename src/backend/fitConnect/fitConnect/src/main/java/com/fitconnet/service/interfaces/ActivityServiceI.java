@@ -18,4 +18,5 @@ public interface ActivityServiceI {
 	ActivityDTO deleteById(Long id);
 
 	ActivityDTO getActivity(Long id);
+
 }

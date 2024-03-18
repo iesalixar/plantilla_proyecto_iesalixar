@@ -1,6 +1,7 @@
 package com.fitconnet.mappers;
 
 import java.util.List;
+import java.util.Set;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,6 +25,6 @@ public interface UserMapper {
 
 	void updateUser(User target, @MappingTarget User source);
 
-	List<User> toUserList(List<UserDTO> participants);
+	Set<User> toUserList(List<UserDTO> participants);
 
 }

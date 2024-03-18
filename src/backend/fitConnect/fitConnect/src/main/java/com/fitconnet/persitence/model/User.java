@@ -2,7 +2,6 @@ package com.fitconnet.persitence.model;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -22,13 +21,22 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "T_USER")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
@@ -58,15 +66,16 @@ public class User implements UserDetails {
 	private String password;
 	@ElementCollection(fetch = FetchType.EAGER, targetClass = Role.class)
 	@Enumerated(EnumType.STRING)
-	@CollectionTable(name = "usuario_rol")
-	@Column(name = "RolesUsuario")
+	@CollectionTable(name = "T_USER_ROLES", joinColumns = @JoinColumn(name = "C_PK_USER_ID"))
+	@Column(name = "C_USER_ROLES")
 	private Set<Role> roles = new HashSet<>();
+
 	/** Lista de actividades traqueadas por el usuario. */
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Activity> activities;
+	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
+	private Set<Activity> createdActivities;
 
 	@ManyToMany(mappedBy = "participants", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private List<Activity> activitiesParticipated;
+	private Set<Activity> invitedActivities;
 
 	@Transactional
 	@Override
@@ -107,46 +116,6 @@ public class User implements UserDetails {
 	@Override
 	public String getPassword() {
 		return password;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public String getEmail() {
-		return email;
 	}
 
 }

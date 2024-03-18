@@ -37,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Override
 	public JwtAuthenticationResponse signup(SignUpRequest request) {
-		boolean emailExists = userRepository.existsByEmail(request.getEmail());
+		boolean emailExists = userRepository.existingByEmail(request.getEmail());
 		if (emailExists) {
 			throw new IllegalArgumentException("Email already in use.");
 		}

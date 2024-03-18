@@ -15,8 +15,8 @@ public interface ActivityMapper {
 
 	ActivityMapper INSTANCE = Mappers.getMapper(ActivityMapper.class);
 
-	@Mapping(source = "idActivity", target = "idActivity")
-	@Mapping(source = "activityType", target = "activityType")
+	@Mapping(source = "id", target = "id")
+	@Mapping(source = "type", target = "type")
 	@Mapping(source = "duration", target = "duration")
 	@Mapping(source = "place", target = "place")
 	@Mapping(source = "participants", target = "participants")
