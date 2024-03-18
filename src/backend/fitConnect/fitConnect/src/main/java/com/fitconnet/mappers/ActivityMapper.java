@@ -1,10 +1,13 @@
 package com.fitconnet.mappers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import com.fitconnet.dto.ActivityDTO;
 import com.fitconnet.dto.UserDTO;
@@ -24,8 +27,11 @@ public interface ActivityMapper {
 
 	Activity toActivity(ActivityDTO activityDTO);
 
-	List<ActivityDTO> toActivityDTOSList(Iterable<Activity> all);
+	default Page<ActivityDTO> toActivityDTOSPage(Page<Activity> page) {
+		List<ActivityDTO> activityDTOList = page.getContent().stream().map(this::toActivityDTO)
+				.collect(Collectors.toList());
+		return new PageImpl<>(activityDTOList, page.getPageable(), page.getTotalElements());
+	}
 
 	List<Activity> toActivityList(List<UserDTO> list);
-
 }

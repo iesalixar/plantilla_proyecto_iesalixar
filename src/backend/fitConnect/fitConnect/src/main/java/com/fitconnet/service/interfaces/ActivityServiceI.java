@@ -1,13 +1,14 @@
 package com.fitconnet.service.interfaces;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.fitconnet.dto.ActivityDTO;
 import com.fitconnet.persitence.model.Activity;
 
 public interface ActivityServiceI {
 
-	List<ActivityDTO> getAllActivity();
+	Page<Activity> getAllActivity(Pageable pageable);
 
 	ActivityDTO createActivity(Activity activity);
 
