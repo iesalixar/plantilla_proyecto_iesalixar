@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>530</x>
+      <y>60</y>
+      <w>380</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>com.fitconnet.persitence.model::User
+--
+-serialVersionUID = 1L: long
+-id: Long
+-firstName: String
+-lastName: String
+-userName: String
+-email: String
+-password: String
+-roles = new HashSet(): Set&lt;Role&gt;
+-createdActivities: Set&lt;Activity&gt;
+-invitedActivities: Set&lt;Activity&gt;
+--
++getAuthorities(): Collection&lt;? extends GrantedAuthority&gt;
++getUsername(): String
++isAccountNonExpired(): boolean
++isAccountNonLocked(): boolean
++isCredentialsNonExpired(): boolean
++isEnabled(): boolean
++getPassword(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>970</x>
+      <y>70</y>
+      <w>260</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>com.fitconnet.persitence.model::Activity
+--
+-serialVersionUID = 1L: long
+-// Corregido el nombre&#13;
+id: Long
+-type: String
+-duration: Duration
+-place: String
+-creator: User
+-participants: Set&lt;User&gt;
+--
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
