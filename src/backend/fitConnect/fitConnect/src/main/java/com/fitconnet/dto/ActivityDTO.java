@@ -1,14 +1,22 @@
 package com.fitconnet.dto;
 
 import java.time.Duration;
+import java.util.Set;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ActivityDTO {
 
 	private Long id;
 	private String type;
 	private Duration duration;
 	private String place;
-	// private List<UserDTO> participants;
+	private Set<UserDTO> participants;
 
 	public Long getId() {
 		return id;
@@ -41,13 +49,5 @@ public class ActivityDTO {
 	public void setPlace(String place) {
 		this.place = place;
 	}
-
-//	public List<UserDTO> getParticipants() {
-//		return participants;
-//	}
-//
-//	public void setParticipants(List<UserDTO> participants) {
-//		this.participants = participants;
-//	}
 
 }

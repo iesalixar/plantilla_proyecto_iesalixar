@@ -24,7 +24,7 @@ import com.fitconnet.service.interfaces.UserServiceI;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-	private static final String PRODUCTOS_API_PATH = "/api/v1/productos/";
+	private static final String PRODUCTOS_API_PATH = "/api/v1/actividades";
 
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -37,14 +37,21 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(request -> request
-				.requestMatchers("/api/v1/auth/**").permitAll().requestMatchers(HttpMethod.GET, "/api/v1/productos/**")
-				.hasAnyAuthority(Role.ROLE_USER.toString(), Role.ROLE_ADMIN.toString())
-				.requestMatchers(HttpMethod.POST, PRODUCTOS_API_PATH + "**").hasAuthority(Role.ROLE_ADMIN.toString())
-				.requestMatchers(HttpMethod.PUT, PRODUCTOS_API_PATH + "**").hasAuthority(Role.ROLE_ADMIN.toString())
-				.requestMatchers(HttpMethod.DELETE, PRODUCTOS_API_PATH + "**").hasAuthority(Role.ROLE_ADMIN.toString())
-				.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-				.requestMatchers("/api/v1/users/**").hasAuthority("ROLE_ADMIN").anyRequest().authenticated())
+		http.csrf(AbstractHttpConfigurer::disable)
+				.authorizeHttpRequests(request -> request.requestMatchers("/api/v1/auth/**").permitAll()
+						.requestMatchers(HttpMethod.GET, "/api/v1/actividades/**")
+						.hasAnyAuthority(Role.ROLE_USER.toString(), Role.ROLE_ADMIN.toString())
+						.requestMatchers(HttpMethod.POST, "/api/v1/actividades/**")
+						.hasAnyAuthority(Role.ROLE_USER.toString(), Role.ROLE_ADMIN.toString()) // Permitir tanto a
+																								// usuarios como a
+																								// administradores crear
+																								// actividades
+						.requestMatchers(HttpMethod.PUT, PRODUCTOS_API_PATH + "**")
+						.hasAuthority(Role.ROLE_ADMIN.toString())
+						.requestMatchers(HttpMethod.DELETE, PRODUCTOS_API_PATH + "**")
+						.hasAuthority(Role.ROLE_ADMIN.toString())
+						.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+						.requestMatchers("/api/v1/users/**").hasAuthority("ROLE_ADMIN").anyRequest().authenticated())
 				.sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
 				.authenticationProvider(authenticationProvider())
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
