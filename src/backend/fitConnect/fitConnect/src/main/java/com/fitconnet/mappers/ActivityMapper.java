@@ -22,7 +22,7 @@ public interface ActivityMapper {
 	@Mapping(source = "type", target = "type")
 	@Mapping(source = "duration", target = "duration")
 	@Mapping(source = "place", target = "place")
-	@Mapping(source = "participants", target = "participants")
+	// @Mapping(source = "participants", target = "participants")
 	ActivityDTO toActivityDTO(Activity activity);
 
 	Activity toActivity(ActivityDTO activityDTO);

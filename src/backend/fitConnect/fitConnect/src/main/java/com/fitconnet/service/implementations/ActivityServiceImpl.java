@@ -1,7 +1,5 @@
 package com.fitconnet.service.implementations;
 
-import java.util.Set;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -12,7 +10,6 @@ import com.fitconnet.error.exception.ActivityNotFoundException;
 import com.fitconnet.mappers.ActivityMapper;
 import com.fitconnet.mappers.UserMapper;
 import com.fitconnet.persitence.model.Activity;
-import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.ActivityRepository;
 import com.fitconnet.service.interfaces.ActivityServiceI;
 
@@ -64,10 +61,10 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		if (activity.getPlace() != null) {
 			activity.setPlace(activityDTO.getPlace());
 		}
-		if (activity.getParticipants() != null) {
-			Set<User> participants = userMapper.toUserList(activityDTO.getParticipants());
-			activity.setParticipants(participants);
-		}
+//		if (activity.getParticipants() != null) {
+//			Set<User> participants = userMapper.toUserList(activityDTO.getParticipants());
+//			activity.setParticipants(participants);
+//		}
 
 		return activityMapper.toActivityDTO(activity);
 	}

@@ -1,7 +1,6 @@
 package com.fitconnet.dto;
 
 import java.time.Duration;
-import java.util.List;
 
 public class ActivityDTO {
 
@@ -9,7 +8,7 @@ public class ActivityDTO {
 	private String type;
 	private Duration duration;
 	private String place;
-	private List<UserDTO> participants;
+	// private List<UserDTO> participants;
 
 	public Long getId() {
 		return id;
@@ -43,12 +42,12 @@ public class ActivityDTO {
 		this.place = place;
 	}
 
-	public List<UserDTO> getParticipants() {
-		return participants;
-	}
-
-	public void setParticipants(List<UserDTO> participants) {
-		this.participants = participants;
-	}
+//	public List<UserDTO> getParticipants() {
+//		return participants;
+//	}
+//
+//	public void setParticipants(List<UserDTO> participants) {
+//		this.participants = participants;
+//	}
 
 }

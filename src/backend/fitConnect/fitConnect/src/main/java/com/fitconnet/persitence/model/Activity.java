@@ -2,21 +2,13 @@ package com.fitconnet.persitence.model;
 
 import java.io.Serializable;
 import java.time.Duration;
-import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Clase que representa una actividad en el sistema. Esta entidad mapea a la
@@ -24,9 +16,7 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(name = "T_ACTIVITY")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Activity implements Serializable {
 
 	/** Serial Version */
@@ -50,13 +40,48 @@ public class Activity implements Serializable {
 	@Column(name = "C_ACTIVITY_PLACE", length = 100)
 	private String place;
 
-	/** Usuario asociado a esta actividad. */
-	@ManyToOne
-	@JoinColumn(name = "C_ACTIVITY_CREATOR", referencedColumnName = "C_PK_USER_ID")
-	private User creator;
+	public Activity() {
+	}
 
-	@ManyToMany
-	@JoinTable(name = "T_ACTIVITY_PARTICIPANTS", joinColumns = @JoinColumn(name = "C_PK_ACTIVITY_ID"), inverseJoinColumns = @JoinColumn(name = "C_PK_USER_ID"))
-	private Set<User> participants;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Duration getDuration() {
+		return duration;
+	}
+
+	public void setDuration(Duration duration) {
+		this.duration = duration;
+	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
+	}
+
+//	/** Usuario asociado a esta actividad. */
+//	@ManyToOne
+//	@JoinColumn(name = "C_ACTIVITY_CREATOR", referencedColumnName = "C_PK_USER_ID")
+//	private User creator;
+//
+//	@ManyToMany
+//	@JoinTable(name = "T_ACTIVITY_PARTICIPANTS", joinColumns = @JoinColumn(name = "C_PK_ACTIVITY_ID"), inverseJoinColumns = @JoinColumn(name = "C_PK_USER_ID"))
+//	private Set<User> participants;
 
 }
