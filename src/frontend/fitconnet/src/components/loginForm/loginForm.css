@@ -8,6 +8,10 @@
   margin: 0 auto;
   
 }
+.container h2{
+  padding: 20px;
+  
+}
 .continue-with{
   display: flex;
   width: 100%;

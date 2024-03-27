@@ -1,8 +1,9 @@
-import React, {useState} from 'react'
+"use client"; 
 
-import './login.css'
+import React, { useState } from 'react';
+import './loginForm.css';
 
-function Login() {
+function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -22,16 +23,15 @@ function Login() {
   return (
     <div className="container">
       <h2>Welcome to Fitconnet</h2>
-    <div className='continue-with'>
-      <div className='btn-group'>
-        <button type="submit" className='facebook-btn'>Continue with Facebook</button>
-        <button type="submit" className='google-btn'>Continue with Google</button>
+      <div className='continue-with'>
+        <div className='btn-group'>
+          <button type="submit" className='facebook-btn'>Continue with Facebook</button>
+          <button type="submit" className='google-btn'>Continue with Google</button>
+        </div>
+        <span>Or</span>
       </div>
-      <span>Or</span>
-    </div>
-    <div className="form-container">
-
-      <form onSubmit={handleSubmit}>
+      <div className="form-container">
+        <form onSubmit={handleSubmit}>
           <input
             type="email"
             placeholder="Email"
@@ -48,17 +48,17 @@ function Login() {
           />
           <button type="submit">Log in</button>
         </form>
+      </div>
+      <div className="container-options">
+        <span>
+          <a href="#">Forgot password?</a>
+        </span>
+        <span>
+          <a href="#">Don&apos;t have an account?</a>
+        </span>
+      </div>
     </div>
-    <div class="container-options">
-  <span>
-    <a href="#">Forgot password?</a>
-  </span>
-  <span>
-    <a href="#">Don't have an account?</a>
-  </span>
-</div>
-  </div>
-);
+  );
 }
 
-export default Login;
+export default LoginForm;
