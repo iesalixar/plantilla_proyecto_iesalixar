@@ -1,16 +1,20 @@
-"use client"; 
+"use client";
 import React from 'react';
 import Form from '@/app/_components/forms/login/login';
-import Nav from '@/app/_components/nav/login/nav';
-
+import Nav from '@/app/_components/navs/login/nav';
+import Layout from './layout';
+import Footer from '@/app/_components/footer/footer';
 function LoginPage() {
-    return(
+    return (
         <>
-            <header>
-            <Nav />
-        </header><main>
-                <Form />
-            </main>
+            <Layout>
+                <header>
+                    <Nav />
+                </header><main>
+                    <Form />
+                </main>
+                <Footer />
+            </Layout>
         </>
     );
 }

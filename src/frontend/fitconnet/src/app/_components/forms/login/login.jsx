@@ -1,8 +1,9 @@
-"use client"; 
+"use client";
 
 import React, { useState } from 'react';
 import './style.scss';
-import {signIn} from '@/app/_services/auth/authService';
+import { signIn } from '@/app/_services/auth/authService';
+import Link from 'next/link'
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -61,7 +62,7 @@ function LoginForm() {
           <a href="#">Forgot password?</a>
         </span>
         <span>
-          <a href="#">Don&apos;t have an account?</a>
+          <Link href="/singup">Don&apos;t have an account?</Link>
         </span>
       </div>
     </div>
