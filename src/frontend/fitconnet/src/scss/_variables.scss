@@ -1,0 +1,39 @@
+@import '~bootstrap/scss/bootstrap';
+
+
+$primary:#00666B;
+$secondary: #5E8A8C;
+$primary-bg:#F0F5F5;
+$primary-font: #0F1717;
+$secunday-font: #FFFFFF;
+
+$theme-colors: (
+    "primary": $primary,
+    "danger": $danger,
+    "success": $success,
+    "secondary": $secondary,
+    "info": $info,
+    
+);
+
+.primary-custom-btn {
+
+    @include button-variant(
+        $primary-bg,
+        $primary,   
+        $primary-font,
+        $primary-bg,  
+        $primary,     
+        $primary      
+    );
+    
+   
+    border-style: none;
+    
+    font-weight: bold; 
+
+    &:hover {
+        background-color: $secondary; 
+        color: $secunday-font; 
+    }
+}

@@ -1,11 +1,13 @@
 "use client"; 
 
 import React, { useState } from 'react';
-import './loginForm.css';
+import './loginForm.scss';
+import {signIn} from '@/services/adminAuth/authAdminService';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -15,14 +17,22 @@ function LoginForm() {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    alert(`Email: ${email} \nContraseña: ${password}`);
+    try {
+      const token = await signIn(email, password); // Utilizar la función signIn
+      localStorage.setItem('token', data.token);
+      console.log('Token:', token);
+      // Manejar el token devuelto según tus necesidades (por ejemplo, almacenarlo en el estado o en localStorage)
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
     <div className="container">
-      <h2>Welcome to Fitconnet</h2>
+      <p className='h3'><strong>Welcome to Fitconnet</strong></p>
+      {error && <div className="error">{error}</div>}
       <div className='continue-with'>
         <div className='btn-group'>
           <button type="submit" className='facebook-btn'>Continue with Facebook</button>
