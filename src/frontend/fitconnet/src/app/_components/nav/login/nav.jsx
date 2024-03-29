@@ -1,5 +1,5 @@
 import React from "react";
-import "./loginNav.scss";
+import "./style.scss";
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';

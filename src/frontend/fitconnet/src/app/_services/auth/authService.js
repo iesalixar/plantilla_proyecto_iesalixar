@@ -11,7 +11,6 @@ const signIn = async (email, password) => {
         if (!response.ok) {
             throw new Error('Failed to sign in');
         }
-
         const data = await response.json();
         return data.token;
     } catch (error) {

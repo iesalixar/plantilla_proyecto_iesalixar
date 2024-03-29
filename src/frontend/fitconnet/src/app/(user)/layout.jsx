@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import "./_css/custom.css";
+import "@/app/_css/custom.css";
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';

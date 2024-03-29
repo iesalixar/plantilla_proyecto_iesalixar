@@ -1,14 +1,15 @@
 "use client"; 
 import React from 'react';
-import LoginForm from '@/components/forms/loginForm/loginForm';
-import LoginNav from '@/components/navbar/loginNav/loginNav';
+import Form from '@/app/_components/forms/login/login';
+import Nav from '@/app/_components/nav/login/nav';
+
 function LoginPage() {
     return(
         <>
             <header>
-            <LoginNav />
+            <Nav />
         </header><main>
-                <LoginForm />
+                <Form />
             </main>
         </>
     );

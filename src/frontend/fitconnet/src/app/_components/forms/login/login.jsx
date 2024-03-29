@@ -1,14 +1,13 @@
 "use client"; 
 
 import React, { useState } from 'react';
-import './loginForm.scss';
-import {signIn} from '@/services/adminAuth/authAdminService';
+import './style.scss';
+import {signIn} from '@/app/_services/auth/authService';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -20,15 +19,13 @@ function LoginForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const token = await signIn(email, password); // Utilizar la función signIn
-      localStorage.setItem('token', data.token);
-      console.log('Token:', token);
-      // Manejar el token devuelto según tus necesidades (por ejemplo, almacenarlo en el estado o en localStorage)
+      const token = await signIn(email, password);
+      localStorage.setItem("token", token);
+      console.log("Token:", token);
     } catch (error) {
       setError(error.message);
     }
   };
-
   return (
     <div className="container">
       <p className='h3'><strong>Welcome to Fitconnet</strong></p>
