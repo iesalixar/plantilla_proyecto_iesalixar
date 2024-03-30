@@ -11865,4 +11865,114 @@ textarea.form-control-lg {
 .primary-custom-btn:hover {
   background-color: #5E8A8C;
   color: #FFFFFF;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40vw;
+  margin: 0 auto;
+}
+.container p {
+  padding: 20px;
+  text-align: center;
+}
+
+.continue-with {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+.continue-with span {
+  margin: 20px;
+  color: #5e8a8c;
+}
+.continue-with .btn-group {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+}
+.continue-with .btn-group .facebook-btn,
+.continue-with .btn-group .google-btn {
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 45%;
+  height: 47.5px;
+}
+.continue-with .btn-group .facebook-btn.google-btn,
+.continue-with .btn-group .google-btn.google-btn {
+  background-color: #f0f5f5;
+  color: #0f1717;
+}
+.continue-with .btn-group .facebook-btn.google-btn:hover,
+.continue-with .btn-group .google-btn.google-btn:hover {
+  background-color: #5E8A8C;
+  color: #FFFFFF;
+}
+.continue-with .btn-group .facebook-btn.facebook-btn,
+.continue-with .btn-group .google-btn.facebook-btn {
+  background-color: #00666b;
+  color: #fff;
+}
+.continue-with .btn-group .facebook-btn.facebook-btn:hover,
+.continue-with .btn-group .google-btn.facebook-btn:hover {
+  background-color: #5E8A8C;
+  color: #FFFFFF;
+}
+
+.form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form-container span {
+  padding: 15px;
+  color: #5e8a8c;
+}
+.form-container h2, .form-container .h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.form-container form {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+.form-container form input[type=email],
+.form-container form input[type=password] {
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  color: #5e8a8c;
+}
+.form-container form button[type=submit] {
+  padding: 15px;
+  background-color: #00666b;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.form-container form button[type=submit]:hover {
+  background-color: #5E8A8C;
+}
+
+.container-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 20px;
+}
+.container-options a {
+  text-decoration: none;
+  color: #5e8a8c;
 }/*# sourceMappingURL=style.css.map */

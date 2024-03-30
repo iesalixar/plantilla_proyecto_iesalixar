@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import './style.scss';
-import { signIn } from '@/app/_services/auth/authService';
+import { signIn } from '@/app/_services/auth/login/authService';
 import Link from 'next/link'
 
 function LoginForm() {

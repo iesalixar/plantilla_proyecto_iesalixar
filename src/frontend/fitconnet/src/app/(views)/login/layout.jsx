@@ -14,13 +14,12 @@ export default function Layout({ children }) {
   return (
     <html lang="en">
       <head>
-        <title>{metadata.title}</title> {/* Usar el título del metadata */}
+        <title>{metadata.title}</title>
 
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </head>
       <body className={inter.className}>{children}
         <main>
-
         </main>
         <footer></footer>
       </body>
