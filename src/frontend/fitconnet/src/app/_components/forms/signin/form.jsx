@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import './style.scss';
-import { signIn } from '@/app/_services/auth/login/authService';
+import { signIn } from '@/app/_services/auth/signin/authService';
 import Link from 'next/link'
 
-function LoginForm() {
+function SigninForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -69,4 +69,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default SigninForm;

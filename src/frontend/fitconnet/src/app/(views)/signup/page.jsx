@@ -1,10 +1,11 @@
 "use client";
-import React from 'react';
-import Form from '@/app/_components/forms/login/login';
-import Nav from '@/app/_components/navs/login/nav';
+import React from "react";
+import Form from '@/app/_components/forms/signup/form';
+import Nav from '@/app/_components/navs/signup/nav';
 import Layout from './layout';
 import Footer from '@/app/_components/footer/footer';
-function LoginPage() {
+
+function SignupPage() {
     return (
         <>
             <Layout>
@@ -19,4 +20,4 @@ function LoginPage() {
     );
 }
 
-export default LoginPage;
+export default SignupPage;

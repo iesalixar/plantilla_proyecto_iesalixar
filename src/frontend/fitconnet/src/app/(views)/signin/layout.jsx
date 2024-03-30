@@ -6,8 +6,9 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { metadata } from './metadata';
 
-
 const inter = Inter({ subsets: ["latin"] });
+
+
 
 export default function Layout({ children }) {
   return (

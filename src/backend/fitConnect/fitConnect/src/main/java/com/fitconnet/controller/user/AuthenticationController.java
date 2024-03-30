@@ -26,14 +26,14 @@ public class AuthenticationController {
 		this.authenticationService = authenticationService;
 	}
 
-	@PostMapping("/signin")
+	@PostMapping("/signup")
 	@Operation(summary = "Registro de usuario", description = "Registro de un nuevo usuario")
 	@ApiResponse(responseCode = "200", description = "Usuario registrado exitosamente")
 	public ResponseEntity<JwtAuthenticationResponse> signup(@RequestBody SignUpRequest request) {
 		return ResponseEntity.ok(authenticationService.signup(request));
 	}
 
-	@PostMapping("/login")
+	@PostMapping("/signin")
 	@Operation(summary = "Inicio de sesión", description = "Inicio de sesión de usuario")
 	@ApiResponse(responseCode = "200", description = "Inicio de sesión exitoso")
 	public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SigninRequest request) {
