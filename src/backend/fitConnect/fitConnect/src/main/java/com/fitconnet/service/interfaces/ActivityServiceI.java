@@ -3,21 +3,20 @@ package com.fitconnet.service.interfaces;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.fitconnet.dto.ActivityDTO;
 import com.fitconnet.persitence.model.Activity;
 
 public interface ActivityServiceI {
 
 	Page<Activity> getAllActivity(Pageable pageable);
 
-	ActivityDTO createActivity(Activity activity);
+	Activity createActivity(Activity activity);
 
-	ActivityDTO updateActivity(Long id, Activity activity);
+	Activity updateActivity(Long id, Activity activity);
 
-	ActivityDTO patchActivity(Long id, ActivityDTO activityDTO);
+	Activity patchActivity(Long id, Activity activity);
 
-	ActivityDTO deleteById(Long id);
+	Activity deleteById(Long id);
 
-	ActivityDTO getActivity(Long id);
+	Activity getActivity(Long id);
 
 }

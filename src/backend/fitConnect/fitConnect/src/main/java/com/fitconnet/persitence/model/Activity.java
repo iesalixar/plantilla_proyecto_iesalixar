@@ -14,9 +14,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Clase que representa una actividad en el sistema. Esta entidad mapea a la
@@ -24,9 +21,9 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(name = "T_ACTIVITY")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class Activity implements Serializable {
 
 	/** Serial Version */
@@ -36,7 +33,7 @@ public class Activity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "C_PK_ACTIVITY_ID", unique = true, nullable = false)
-	private Long id; 
+	private Long id;
 
 	/** Tipo de actividad (por ejemplo, correr, nadar, etc.). */
 	@Column(name = "C_ACTIVITY_TYPE", length = 30, nullable = false)
@@ -58,5 +55,56 @@ public class Activity implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "T_ACTIVITY_PARTICIPANTS", joinColumns = @JoinColumn(name = "C_PK_ACTIVITY_ID"), inverseJoinColumns = @JoinColumn(name = "C_PK_USER_ID"))
 	private Set<User> participants;
+
+	public Activity() {
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Duration getDuration() {
+		return duration;
+	}
+
+	public void setDuration(Duration duration) {
+		this.duration = duration;
+	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
+	}
+
+	public User getCreator() {
+		return creator;
+	}
+
+	public void setCreator(User creator) {
+		this.creator = creator;
+	}
+
+	public Set<User> getParticipants() {
+		return participants;
+	}
+
+	public void setParticipants(Set<User> participants) {
+		this.participants = participants;
+	}
 
 }

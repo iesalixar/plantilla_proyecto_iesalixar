@@ -29,15 +29,12 @@ import jakarta.persistence.Table;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "T_USER")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
@@ -77,18 +74,17 @@ public class User implements UserDetails {
 
 	@ManyToMany(mappedBy = "participants", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<Activity> invitedActivities;
-	
+
 	@ManyToMany
-	@JoinTable(
-	    name = "T_USER_FRIENDS",
-	    joinColumns = @JoinColumn(name = "user_id"),
-	    inverseJoinColumns = @JoinColumn(name = "friend_id")
-	)
+	@JoinTable(name = "T_USER_FRIENDS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
 	private Set<User> friends = new HashSet<>();
-	
-	  @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
-	    private Set<Notification> notifications = new HashSet<>();
-	
+
+	@OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
+	private Set<Notification> notifications = new HashSet<>();
+
+	public User() {
+	}
+
 	@Transactional
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -98,6 +94,90 @@ public class User implements UserDetails {
 
 			return roles.stream().map(role -> new SimpleGrantedAuthority(role.name())).toList();
 		}
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Set<Activity> getCreatedActivities() {
+		return createdActivities;
+	}
+
+	public void setCreatedActivities(Set<Activity> createdActivities) {
+		this.createdActivities = createdActivities;
+	}
+
+	public Set<Activity> getInvitedActivities() {
+		return invitedActivities;
+	}
+
+	public void setInvitedActivities(Set<Activity> invitedActivities) {
+		this.invitedActivities = invitedActivities;
+	}
+
+	public Set<User> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(Set<User> friends) {
+		this.friends = friends;
+	}
+
+	public Set<Notification> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(Set<Notification> notifications) {
+		this.notifications = notifications;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override

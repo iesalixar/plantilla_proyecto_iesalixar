@@ -41,10 +41,10 @@ function SignupForm() {
             </div>
             <div className="form-container">
                 <form className="needs-validation" noValidate onSubmit={handleSubmit}>
-                    <div class="row g-3">
-                        <div class="col-12">
-                            <input type="text" class="form-control" id="firstName" placeholder="Name" value="" required="" />
-                            <div class="invalid-feedback">
+                    <div className="row g-3">
+                        <div className="col-12">
+                            <input type="text" className="form-control" id="firstName" placeholder="Name" value="" required="" />
+                            <div className="invalid-feedback">
                                 Valid first name is required.
                             </div>
                         </div>
@@ -57,34 +57,34 @@ function SignupForm() {
                             </div>
                         </div> */}
 
-                        <div class="col-12">
-                            <div class="input-group has-validation">
-                                <span class="input-group-text">@</span>
-                                <input type="text" class="form-control" id="username" placeholder="Username" required="" />
-                                <div class="invalid-feedback">
+                        <div className="col-12">
+                            <div className="input-group has-validation">
+                                <span className="input-group-text">@</span>
+                                <input type="text" className="form-control" id="username" placeholder="Username" required="" />
+                                <div className="invalid-feedback">
                                     Your username is required.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <input type="email" class="form-control" id="email" placeholder="you@example.com" />
-                            <div class="invalid-feedback">
+                        <div className="col-12">
+                            <input type="email" className="form-control" id="email" placeholder="you@example.com" />
+                            <div className="invalid-feedback">
                                 Please enter a valid email address for shipping updates.
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="input-group has-validation">
-                                <input type="text" class="form-control" id="username" placeholder="Password" required="" />
-                                <div class="invalid-feedback">
+                        <div className="col-12">
+                            <div className="input-group has-validation">
+                                <input type="text" className="form-control" id="username" placeholder="Password" required="" />
+                                <div className="invalid-feedback">
                                     Your Password is required.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 mb-4">
-                            <label for="age" class="form-label">Age</label>
-                            <div class="input-group has-validation">
-                                <input type="number" class="form-control" id="age" placeholder="Age" required="" />
-                                <div class="invalid-feedback">
+                        <div className="col-12 mb-4">
+                            <label for="age" className="form-label">Age</label>
+                            <div className="input-group has-validation">
+                                <input type="number" className="form-control" id="age" placeholder="Age" required="" />
+                                <div className="invalid-feedback">
                                     Your Age is required.
                                 </div>
                             </div>

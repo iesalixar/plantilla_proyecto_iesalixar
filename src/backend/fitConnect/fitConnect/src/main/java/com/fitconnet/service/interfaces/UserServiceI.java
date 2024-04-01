@@ -4,22 +4,21 @@ import java.util.Set;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import com.fitconnet.dto.UserDTO;
 import com.fitconnet.persitence.model.User;
 
 public interface UserServiceI {
 
 	UserDetailsService userDetailsService();
 
-	Set<UserDTO> getAllUsers();
+	Set<User> getAllUsers();
 
-	UserDTO createUser(User user);
+	User createUser(User user);
 
-	UserDTO updateUser(Long id, User user);
+	User updateUser(Long id, User user);
 
-	UserDTO patchUser(Long id, UserDTO userDTO);
+	User patchUser(Long id, User user);
 
-	UserDTO deleteById(Long id);
+	User deleteById(Long id);
 
-	UserDTO getUser(Long id);
+	User getUser(Long id);
 }

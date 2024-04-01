@@ -7,9 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.fitconnet.dto.UserDTO;
 import com.fitconnet.error.exception.UserNotFoundException;
-import com.fitconnet.mappers.UserMapper;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.UserRepository;
 import com.fitconnet.service.interfaces.UserServiceI;
@@ -18,11 +16,9 @@ import com.fitconnet.service.interfaces.UserServiceI;
 public class UserServicImpl implements UserServiceI {
 
 	private final UserRepository userRepository;
-	private final UserMapper userMapper;
 
-	public UserServicImpl(UserRepository userRepository, UserMapper userMapper) {
+	public UserServicImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
-		this.userMapper = userMapper;
 	}
 
 	@Override
@@ -32,59 +28,54 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public Set<UserDTO> getAllUsers() {
-		return userMapper.toUserDTOList(userRepository.findAll());
+	public Set<User> getAllUsers() {
+		return (Set<User>) userRepository.findAll();
 	}
 
 	@Override
-	public UserDTO createUser(User user) {
-		return userMapper.toUserDTO(userRepository.save(user));
+	public User createUser(User user) {
+		return userRepository.save(user);
 	}
 
 	@Override
-	public UserDTO updateUser(Long id, User user) {
+	public User updateUser(Long id, User user) {
 
 		User findUser = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("User not found", HttpStatus.NOT_FOUND));
 
-		User savedUser = userRepository.save(user);
-
-		return userMapper.toUserDTO(savedUser);
+		return userRepository.save(user);
 	}
 
 	@Override
-	public UserDTO patchUser(Long id, UserDTO userDTO) {
-		User user = userRepository.findById(id)
+	public User patchUser(Long id, User user) {
+		User aux = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("User not found", HttpStatus.NOT_FOUND));
-		if (user.getFirstName() != null) {
-			user.setFirstName(userDTO.getFirstName());
+		if (aux.getFirstName() != null) {
+			aux.setFirstName(user.getFirstName());
 		}
-		if (user.getLastName() != null) {
-			user.setLastName(userDTO.getLastName());
+		if (aux.getLastName() != null) {
+			aux.setLastName(user.getLastName());
 		}
-		if (user.getEmail() != null) {
-			user.setEmail(userDTO.getEmail());
+		if (aux.getEmail() != null) {
+			aux.setEmail(user.getEmail());
 		}
 
-		User savedUser = userRepository.save(user);
-
-		return userMapper.toUserDTO(savedUser);
+		return userRepository.save(aux);
 	}
 
 	@Override
-	public UserDTO deleteById(Long id) {
+	public User deleteById(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Vehicle not found", HttpStatus.NOT_FOUND));
 		userRepository.deleteById(id);
-
-		return userMapper.toUserDTO(user);
+		return user;
 	}
 
 	@Override
-	public UserDTO getUser(Long id) {
+	public User getUser(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Vehicle not found", HttpStatus.NOT_FOUND));
-		return userMapper.toUserDTO(user);
+		return user;
 	}
 
 }

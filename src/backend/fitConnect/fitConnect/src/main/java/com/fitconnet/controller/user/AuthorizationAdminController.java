@@ -1,6 +1,5 @@
 package com.fitconnet.controller.user;
 
-import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fitconnet.dto.UserDTO;
+import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.interfaces.UserServiceI;
 
 @RestController
@@ -28,9 +27,9 @@ public class AuthorizationAdminController {
 
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public ResponseEntity<Set<UserDTO>> showUsers() {
+	public ResponseEntity<Set<User>> showUsers() {
 		logger.info("## AuthorizationAdminController :: showUsers");
-		Set<UserDTO> userList = userService.getAllUsers();
+		Set<User> userList = userService.getAllUsers();
 		return ResponseEntity.ok(userList);
 	}
 }
