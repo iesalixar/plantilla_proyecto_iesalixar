@@ -1,6 +1,7 @@
 package com.fitconnet.controller.user;
 
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +28,9 @@ public class AuthorizationAdminController {
 
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public ResponseEntity<List<UserDTO>> showUsers() {
+	public ResponseEntity<Set<UserDTO>> showUsers() {
 		logger.info("## AuthorizationAdminController :: showUsers");
-		List<UserDTO> userList = userService.getAllUsers();
+		Set<UserDTO> userList = userService.getAllUsers();
 		return ResponseEntity.ok(userList);
 	}
 }

@@ -1,6 +1,6 @@
 package com.fitconnet.service.implementations;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,7 +32,7 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public List<UserDTO> getAllUsers() {
+	public Set<UserDTO> getAllUsers() {
 		return userMapper.toUserDTOList(userRepository.findAll());
 	}
 
@@ -55,7 +55,7 @@ public class UserServicImpl implements UserServiceI {
 	@Override
 	public UserDTO patchUser(Long id, UserDTO userDTO) {
 		User user = userRepository.findById(id)
-				.orElseThrow(() -> new UserNotFoundException("Vehicle not found", HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new UserNotFoundException("User not found", HttpStatus.NOT_FOUND));
 		if (user.getFirstName() != null) {
 			user.setFirstName(userDTO.getFirstName());
 		}
