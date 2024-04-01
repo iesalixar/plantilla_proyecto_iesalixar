@@ -12,6 +12,7 @@ public class UserDTO {
 	private Integer id;
 	private String firstName;
 	private String lastName;
+	private String userName;
 	private String email;
 
 	public Integer getId() {
@@ -34,8 +35,16 @@ public class UserDTO {
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastName(String userName) {
+		this.lastName = userName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getEmail() {
