@@ -22,6 +22,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -76,7 +77,18 @@ public class User implements UserDetails {
 
 	@ManyToMany(mappedBy = "participants", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<Activity> invitedActivities;
-
+	
+	@ManyToMany
+	@JoinTable(
+	    name = "T_USER_FRIENDS",
+	    joinColumns = @JoinColumn(name = "user_id"),
+	    inverseJoinColumns = @JoinColumn(name = "friend_id")
+	)
+	private Set<User> friends = new HashSet<>();
+	
+	  @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
+	    private Set<Notification> notifications = new HashSet<>();
+	
 	@Transactional
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
