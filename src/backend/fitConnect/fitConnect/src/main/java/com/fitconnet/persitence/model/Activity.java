@@ -36,7 +36,7 @@ public class Activity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "C_PK_ACTIVITY_ID", unique = true, nullable = false)
-	private Long id; // Corregido el nombre
+	private Long id; 
 
 	/** Tipo de actividad (por ejemplo, correr, nadar, etc.). */
 	@Column(name = "C_ACTIVITY_TYPE", length = 30, nullable = false)
