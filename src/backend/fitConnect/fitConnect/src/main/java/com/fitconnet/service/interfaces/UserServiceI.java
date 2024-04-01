@@ -1,6 +1,6 @@
 package com.fitconnet.service.interfaces;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -11,7 +11,7 @@ public interface UserServiceI {
 
 	UserDetailsService userDetailsService();
 
-	List<UserDTO> getAllUsers();
+	Set<UserDTO> getAllUsers();
 
 	UserDTO createUser(User user);
 
