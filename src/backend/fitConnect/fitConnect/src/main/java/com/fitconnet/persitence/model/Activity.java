@@ -56,7 +56,9 @@ public class Activity implements Serializable {
 	@JoinTable(name = "T_ACTIVITY_PARTICIPANTS", joinColumns = @JoinColumn(name = "C_PK_ACTIVITY_ID"), inverseJoinColumns = @JoinColumn(name = "C_PK_USER_ID"))
 	private Set<User> participants;
 
-	public Activity() {
+	public void Activity() {
+		// Método de construccion de actividades
+
 	}
 
 	public Long getId() {
