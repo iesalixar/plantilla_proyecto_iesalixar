@@ -52,10 +52,6 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		if (aux.getPlace() != null) {
 			aux.setPlace(activity.getPlace());
 		}
-//		if (activity.getParticipants() != null) {
-//			Set<User> participants = userMapper.toUserList(activityDTO.getParticipants());
-//			activity.setParticipants(participants);
-//		}
 
 		return activity;
 	}
