@@ -23,7 +23,7 @@ import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.service.interfaces.ActivityServiceI;
 
 @RestController
-@RequestMapping("/api/v1/actividades")
+@RequestMapping("/api/v1/activity")
 public class ActivityController {
 
 	@Qualifier("activityService")
@@ -40,8 +40,6 @@ public class ActivityController {
 		logger.info("ActivityController :: getAllActivities");
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Activity> activityPage = activityService.getAllActivity(pageable);
-		// Page<ActivityDTO> activityDTOPage =
-		// activityMapper.toActivityDTOSPage(activityPage);
 		return new ResponseEntity<>(activityPage, HttpStatus.OK);
 	}
 
@@ -49,7 +47,6 @@ public class ActivityController {
 	public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) {
 		logger.info("ActivityController :: createActivity");
 		activityService.createActivity(activity);
-		// ActivityDTO createdActivityDTO = activityService.createActivity(activity);
 		return new ResponseEntity<>(activity, HttpStatus.CREATED);
 	}
 
