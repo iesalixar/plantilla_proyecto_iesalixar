@@ -4,6 +4,8 @@ import java.util.Set;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.fitconnet.persitence.model.Activity;
+import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
 
 public interface UserServiceI {
@@ -20,5 +22,18 @@ public interface UserServiceI {
 
 	User deleteById(Long id);
 
-	User getUser(Long id);
+	User getUserById(Long id);
+
+	User getUserByUserName(String userName);
+
+	Set<User> getFriends(User user);
+
+	Set<Activity> getCreatedActivities(User user);
+
+	Set<Activity> getInvitedActivities(User user);
+
+	Set<Activity> getAllActivities(User user);
+
+	Set<Notification> getNotifications(User user);
+
 }
