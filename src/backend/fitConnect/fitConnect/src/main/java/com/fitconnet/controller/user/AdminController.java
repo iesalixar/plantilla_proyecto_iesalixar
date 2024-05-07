@@ -15,13 +15,13 @@ import com.fitconnet.service.interfaces.UserServiceI;
 
 @RestController
 @RequestMapping("/api/v1/users")
-public class AuthorizationAdminController {
+public class AdminController {
 
-	private static final Logger logger = LoggerFactory.getLogger(AuthorizationAdminController.class);
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
 	private UserServiceI userService;
 
-	public AuthorizationAdminController(UserServiceI userService) {
+	public AdminController(UserServiceI userService) {
 		this.userService = userService;
 	}
 
