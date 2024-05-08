@@ -1,6 +1,8 @@
 package com.fitconnet.controller.user;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -61,8 +63,8 @@ public class UserController {
 
 	@GetMapping("/friends/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public ResponseEntity<Set<User>> getFriends(@PathVariable Long id) {
-		Set<User> friends = new HashSet<>();
+	public ResponseEntity<List<User>> getFriends(@PathVariable Long id) {
+		List<User> friends = new ArrayList<>();
 
 		try {
 			User user = getUserMethod(id);
@@ -77,11 +79,11 @@ public class UserController {
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<Set<Activity>> getActivities(@PathVariable Long id) {
 
-		Set<Activity> activities = new HashSet<>();
+		Set<Activity> activities = new LinkedHashSet<>();
 
 		try {
 			User user = getUserMethod(id);
-			activities = userService.getAllActivities(user);
+			activities = userService.getAllActivities(id);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -91,10 +93,10 @@ public class UserController {
 	@GetMapping("/activities/created/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<Set<Activity>> getCreatedActivities(@PathVariable Long id) {
-		Set<Activity> activities = new HashSet<>();
+		Set<Activity> activities = new LinkedHashSet<>();
 		try {
 			User user = getUserMethod(id);
-			activities = userService.getCreatedActivities(user);
+			activities = userService.getCreatedActivities(id);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -104,10 +106,10 @@ public class UserController {
 	@GetMapping("/activities/invited/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<Set<Activity>> getInvitedActivities(@PathVariable Long id) {
-		Set<Activity> activities = new HashSet<>();
+		Set<Activity> activities = new LinkedHashSet<>();
 		try {
 			User user = getUserMethod(id);
-			activities = userService.getInvitedActivities(user);
+			activities = userService.getInvitedActivities(id);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -117,10 +119,10 @@ public class UserController {
 	@GetMapping("/notifications/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<Set<Notification>> getNotifications(@PathVariable Long id) {
-		Set<Notification> notifications = new HashSet<>();
+		Set<Notification> notifications = new LinkedHashSet<>();
 		try {
 			User user = getUserMethod(id);
-			notifications = userService.getNotifications(user);
+			notifications = userService.getNotifications(id);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
