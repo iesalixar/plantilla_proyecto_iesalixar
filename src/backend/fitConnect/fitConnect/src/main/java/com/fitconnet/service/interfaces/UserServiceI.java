@@ -26,14 +26,16 @@ public interface UserServiceI {
 
 	User getUserByUserName(String userName);
 
-	Set<User> getFriends(User user);
+	Set<User> getFriends(Long id);
 
-	Set<Activity> getCreatedActivities(User user);
+	Set<Activity> getCreatedActivities(Long id);
 
-	Set<Activity> getInvitedActivities(User user);
+	Set<Activity> getInvitedActivities(Long id);
 
-	Set<Activity> getAllActivities(User user);
+	Set<Activity> getAllActivities(Long id);
 
-	Set<Notification> getNotifications(User user);
+	Set<Notification> getNotifications(Long id);
+
+	Set<Notification> getAllNotifications(Long id);
 
 }
