@@ -89,14 +89,14 @@ public class UserController {
 	}
 
 	@PatchMapping("/{id}")
-	@PreAuthorize("hasAuthority('ROLE_USER')")
+	@PreAuthorize("hasAuthority('ROLE_USER') and #id == authentication.principal.id")
 	public ResponseEntity<User> patchUser(@PathVariable Long id, @RequestBody User user) {
 		User patchedUser = userService.patchUser(id, user);
 		return ResponseEntity.ok(patchedUser);
 	}
 
 	@DeleteMapping("/{id}")
-	@PreAuthorize("hasAuthority('ROLE_USER')")
+	@PreAuthorize("hasAuthority('ROLE_USER') and #id == authentication.principal.id")
 	public ResponseEntity<User> deleteUser(@PathVariable Long id) {
 		User deletedUser = userService.deleteById(id);
 		return ResponseEntity.ok(deletedUser);
