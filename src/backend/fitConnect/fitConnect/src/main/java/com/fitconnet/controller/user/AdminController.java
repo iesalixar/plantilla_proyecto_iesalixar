@@ -11,30 +11,40 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.fitconnet.dto.response.error.ErrorDetailsResponse;
+import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.interfaces.NotificationServiceI;
 import com.fitconnet.service.interfaces.UserServiceI;
 
 @RestController
-@RequestMapping("/api/v1/admin")
+@RequestMapping("/api/v1/admins")
 public class AdminController {
 
 	@Qualifier("userService")
 	private final UserServiceI userService;
+	@Qualifier("notificationService")
 	private final NotificationServiceI notificationService;
+	@Qualifier("globalExceptionHandler")
+	private final GlobalExceptionHandler globalExceptionHandler;
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	public AdminController(UserServiceI userService, NotificationServiceI notificationService) {
+	public AdminController(UserServiceI userService, NotificationServiceI notificationService,
+			GlobalExceptionHandler globalExceptionHandler) {
 		this.userService = userService;
 		this.notificationService = notificationService;
+		this.globalExceptionHandler = globalExceptionHandler;
 	}
 
 	@GetMapping
@@ -73,4 +83,9 @@ public class AdminController {
 		return ResponseEntity.ok(deletedUser);
 	}
 
+	@ExceptionHandler(NoHandlerFoundException.class)
+	public ResponseEntity<ErrorDetailsResponse> handleNoHandlerFoundException(NoHandlerFoundException ex,
+			WebRequest request) {
+		return globalExceptionHandler.handleNoHandlerFoundException(ex, request);
+	}
 }
