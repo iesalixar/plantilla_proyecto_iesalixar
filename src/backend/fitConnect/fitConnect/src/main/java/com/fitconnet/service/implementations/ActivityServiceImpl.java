@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.fitconnet.error.exception.ActivityNotFoundException;
+import com.fitconnet.error.exception.activity.ActivityNotFoundException;
 import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.persitence.repository.ActivityRepository;
 import com.fitconnet.service.interfaces.ActivityServiceI;

@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.fitconnet.error.exception.UserNotFoundException;
+import com.fitconnet.error.exception.user.UserNotFoundException;
 import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
