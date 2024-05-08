@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -42,6 +43,13 @@ public class AdminController {
 	public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
 		User updatedUser = userService.updateUser(id, user);
 		return ResponseEntity.ok(updatedUser);
+	}
+
+	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public ResponseEntity<User> deleteUser(@PathVariable Long id) {
+		User deletedUser = userService.deleteById(id);
+		return ResponseEntity.ok(deletedUser);
 	}
 
 }
