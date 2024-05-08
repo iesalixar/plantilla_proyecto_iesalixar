@@ -1,8 +1,10 @@
 package com.fitconnet.persitence.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -71,14 +73,14 @@ public class User implements UserDetails {
 
 	/** Lista de actividades traqueadas por el usuario. */
 	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
-	private Set<Activity> createdActivities;
+	private Set<Activity> createdActivities = new LinkedHashSet<>();
 
 	@ManyToMany(mappedBy = "participants", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private Set<Activity> invitedActivities;
+	private Set<Activity> invitedActivities = new LinkedHashSet<>();
 
 	@ManyToMany
 	@JoinTable(name = "T_USER_FRIENDS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
-	private Set<User> friends = new HashSet<>();
+	private List<User> friends = new ArrayList<>();
 
 	@OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
 	private Set<Notification> notifications = new LinkedHashSet<>();
@@ -161,11 +163,11 @@ public class User implements UserDetails {
 		this.invitedActivities = invitedActivities;
 	}
 
-	public Set<User> getFriends() {
+	public List<User> getFriends() {
 		return friends;
 	}
 
-	public void setFriends(Set<User> friends) {
+	public void setFriends(List<User> friends) {
 		this.friends = friends;
 	}
 
