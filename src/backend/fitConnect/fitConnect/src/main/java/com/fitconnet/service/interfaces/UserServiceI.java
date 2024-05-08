@@ -1,5 +1,6 @@
 package com.fitconnet.service.interfaces;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,7 +27,7 @@ public interface UserServiceI {
 
 	User getUserByUserName(String userName);
 
-	Set<User> getFriends(Long id);
+	List<User> getFriends(Long id);
 
 	Set<Activity> getCreatedActivities(Long id);
 
@@ -35,7 +36,5 @@ public interface UserServiceI {
 	Set<Activity> getAllActivities(Long id);
 
 	Set<Notification> getNotifications(Long id);
-
-	Set<Notification> getAllNotifications(Long id);
 
 }

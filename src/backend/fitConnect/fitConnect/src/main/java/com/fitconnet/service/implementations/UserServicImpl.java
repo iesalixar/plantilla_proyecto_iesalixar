@@ -1,6 +1,7 @@
 package com.fitconnet.service.implementations;
 
 import java.security.InvalidParameterException;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -121,22 +122,31 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public Set<User> getFriends(User user) {
+	public List<User> getFriends(Long id) {
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException("User not found", HttpStatus.NOT_FOUND));
 		return user.getFriends();
 	}
 
 	@Override
-	public Set<Activity> getCreatedActivities(User user) {
+	public Set<Activity> getCreatedActivities(Long id) {
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException("User not found", HttpStatus.NOT_FOUND));
 		return user.getCreatedActivities();
 	}
 
 	@Override
-	public Set<Activity> getInvitedActivities(User user) {
+	public Set<Activity> getInvitedActivities(Long id) {
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException("User not found", HttpStatus.NOT_FOUND));
 		return user.getInvitedActivities();
 	}
 
 	@Override
-	public Set<Activity> getAllActivities(User user) {
+	public Set<Activity> getAllActivities(Long id) {
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException("User not found", HttpStatus.NOT_FOUND));
+
 		Set<Activity> allActivities = Stream
 				.concat(user.getCreatedActivities().stream(), user.getInvitedActivities().stream())
 				.collect(Collectors.toSet());
@@ -144,7 +154,10 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public Set<Notification> getNotifications(User user) {
+	public Set<Notification> getNotifications(Long id) {
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException("User not found", HttpStatus.NOT_FOUND));
+
 		return user.getNotifications();
 	}
 
