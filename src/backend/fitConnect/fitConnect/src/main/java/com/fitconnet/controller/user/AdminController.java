@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
+import com.fitconnet.service.interfaces.NotificationServiceI;
 import com.fitconnet.service.interfaces.UserServiceI;
 
 @RestController
@@ -28,29 +29,22 @@ public class AdminController {
 
 	@Qualifier("userService")
 	private final UserServiceI userService;
+	private final NotificationServiceI notificationService;
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	public AdminController(UserServiceI userService) {
+	public AdminController(UserServiceI userService, NotificationServiceI notificationService) {
 		this.userService = userService;
+		this.notificationService = notificationService;
 	}
 
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<List<User>> showUsers() {
 		logger.info("## AuthorizationAdminController :: showUsers");
-
-		// Obtener el conjunto de usuarios
 		Set<User> userSet = userService.getAllUsers();
-
-		// Filtrar los usuarios que tienen el rol 'USER'
 		userSet.removeIf(user -> !user.getRoles().contains("ROLE_USER"));
-
-		// Convertir el conjunto a una lista
 		List<User> userList = new ArrayList<>(userSet);
-
-		// Ordenar la lista por userName
 		userList.sort(Comparator.comparing(User::getUserName));
-
 		return ResponseEntity.ok(userList);
 	}
 
@@ -58,8 +52,8 @@ public class AdminController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<Set<Notification>> showNotifications() {
 		logger.info("## AuthorizationAdminController :: showNotifications");
-		// Set<Notification> notificationsSet = userService.getAllNotifications();
-		return ResponseEntity.ok(notificationsSet);
+		Set<Notification> notifications = notificationService.getAll();
+		return ResponseEntity.ok(notifications);
 
 	}
 
@@ -75,7 +69,6 @@ public class AdminController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<User> deleteUser(@PathVariable Long id) {
 		logger.info("## AuthorizationAdminController :: deleteUser");
-
 		User deletedUser = userService.deleteById(id);
 		return ResponseEntity.ok(deletedUser);
 	}
