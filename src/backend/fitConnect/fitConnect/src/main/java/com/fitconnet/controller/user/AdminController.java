@@ -84,8 +84,7 @@ public class AdminController {
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
-	public ResponseEntity<ErrorDetailsResponse> handleNoHandlerFoundException(NoHandlerFoundException ex,
-			WebRequest request) {
-		return globalExceptionHandler.handleNoHandlerFoundException(ex, request);
+	public ResponseEntity<ErrorDetailsResponse> handleException(Exception ex, WebRequest request) {
+		return globalExceptionHandler.handleCommonExceptions(ex, request);
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.fitconnet.dto.response.error.ErrorDetailsResponse;
+import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.service.interfaces.ActivityServiceI;
 
@@ -28,10 +33,14 @@ public class ActivityController {
 
 	@Qualifier("activityService")
 	private final ActivityServiceI activityService;
+	@Qualifier("globalExceptionHandler")
+	private final GlobalExceptionHandler globalExceptionHandler;
+
 	private final Logger logger = LoggerFactory.getLogger(ActivityController.class);
 
-	public ActivityController(ActivityServiceI activityService) {
+	public ActivityController(ActivityServiceI activityService, GlobalExceptionHandler globalExceptionHandler) {
 		this.activityService = activityService;
+		this.globalExceptionHandler = globalExceptionHandler;
 	}
 
 	@GetMapping
@@ -76,6 +85,11 @@ public class ActivityController {
 		logger.info("ActivityController :: deleteActivity");
 		Activity deletedActivity = activityService.deleteById(id);
 		return new ResponseEntity<>(deletedActivity, HttpStatus.OK);
+	}
+
+	@ExceptionHandler(NoHandlerFoundException.class)
+	public ResponseEntity<ErrorDetailsResponse> handleException(Exception ex, WebRequest request) {
+		return globalExceptionHandler.handleCommonExceptions(ex, request);
 	}
 
 }
