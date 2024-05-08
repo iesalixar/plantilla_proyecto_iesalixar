@@ -1,5 +1,6 @@
 package com.fitconnet.controller.user;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -37,69 +38,125 @@ public class UserController {
 	@PostMapping
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
-		User newUser = userService.createUser(user);
+		User newUser = new User();
+		try {
+			newUser = userService.createUser(user);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
 	}
 
 	@GetMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	public ResponseEntity<User> getUser(@PathVariable Long id) {
-		User user = userService.getUserById(id);
-		return ResponseEntity.ok(user);
+		User user = new User();
+		try {
+			user = getUserMethod(id);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return ResponseEntity.status(HttpStatus.FOUND).body(user);
 	}
 
 	@GetMapping("/friends/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<Set<User>> getFriends(@PathVariable Long id) {
-		User user = userService.getUserById(id);
-		Set<User> friends = user.getFriends();
+		Set<User> friends = new HashSet<>();
+
+		try {
+			User user = getUserMethod(id);
+			friends = user.getFriends();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return ResponseEntity.ok(friends);
 	}
 
 	@GetMapping("/activities/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<Set<Activity>> getActivities(@PathVariable Long id) {
-		User user = userService.getUserById(id);
-		Set<Activity> activities = userService.getAllActivities(user);
+
+		Set<Activity> activities = new HashSet<>();
+
+		try {
+			User user = getUserMethod(id);
+			activities = userService.getAllActivities(user);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return ResponseEntity.ok(activities);
 	}
 
 	@GetMapping("/activities/created/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<Set<Activity>> getCreatedActivities(@PathVariable Long id) {
-		User user = userService.getUserById(id);
-		Set<Activity> activities = userService.getCreatedActivities(user);
+		Set<Activity> activities = new HashSet<>();
+		try {
+			User user = getUserMethod(id);
+			activities = userService.getCreatedActivities(user);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return ResponseEntity.ok(activities);
 	}
 
 	@GetMapping("/activities/invited/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<Set<Activity>> getInvitedActivities(@PathVariable Long id) {
-		User user = userService.getUserById(id);
-		Set<Activity> activities = userService.getInvitedActivities(user);
+		Set<Activity> activities = new HashSet<>();
+		try {
+			User user = getUserMethod(id);
+			activities = userService.getInvitedActivities(user);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return ResponseEntity.ok(activities);
 	}
 
 	@GetMapping("/notifications/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<Set<Notification>> getNotifications(@PathVariable Long id) {
-		User user = userService.getUserById(id);
-		Set<Notification> notifications = userService.getNotifications(user);
+		Set<Notification> notifications = new HashSet<>();
+		try {
+			User user = getUserMethod(id);
+			notifications = userService.getNotifications(user);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 		return ResponseEntity.ok(notifications);
 	}
 
 	@PatchMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER') and #id == authentication.principal.id")
 	public ResponseEntity<User> patchUser(@PathVariable Long id, @RequestBody User user) {
-		User patchedUser = userService.patchUser(id, user);
+
+		User patchedUser = new User();
+		try {
+			patchedUser = userService.patchUser(id, user);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return ResponseEntity.ok(patchedUser);
 	}
 
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER') and #id == authentication.principal.id")
 	public ResponseEntity<User> deleteUser(@PathVariable Long id) {
-		User deletedUser = userService.deleteById(id);
+		User deletedUser = new User();
+		try {
+			deletedUser = userService.deleteById(id);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return ResponseEntity.ok(deletedUser);
+	}
+
+	private User getUserMethod(Long id) {
+		User user = userService.getUserById(id);
+		return user;
 	}
 
 }
