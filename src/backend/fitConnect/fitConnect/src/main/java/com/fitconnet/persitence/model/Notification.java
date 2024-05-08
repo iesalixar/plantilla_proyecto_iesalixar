@@ -28,8 +28,8 @@ public class Notification {
 	private Date date;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User recipient;
+	@JoinColumn(name = "C_RECEIVER_ID")
+	private Long receiverId;
 
 	public Notification() {
 	}
@@ -50,12 +50,12 @@ public class Notification {
 		this.date = date;
 	}
 
-	public User getRecipient() {
-		return recipient;
+	public Long getReceiverId() {
+		return receiverId;
 	}
 
-	public void setRecipient(User recipient) {
-		this.recipient = recipient;
+	public void setReceiverId(Long receiverId) {
+		this.receiverId = receiverId;
 	}
 
 }
