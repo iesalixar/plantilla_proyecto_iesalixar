@@ -2,6 +2,7 @@ package com.fitconnet.persitence.model;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -80,7 +81,7 @@ public class User implements UserDetails {
 	private Set<User> friends = new HashSet<>();
 
 	@OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
-	private Set<Notification> notifications = new HashSet<>();
+	private Set<Notification> notifications = new LinkedHashSet<>();
 
 	public User() {
 	}
