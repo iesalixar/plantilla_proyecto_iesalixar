@@ -1,4 +1,4 @@
-package com.fitconnet.error.exception;
+package com.fitconnet.error.exception.activity;
 
 import org.springframework.http.HttpStatus;
 

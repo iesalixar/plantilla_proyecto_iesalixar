@@ -11,8 +11,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.fitconnet.dto.response.error.ErrorDetailsResponse;
-import com.fitconnet.error.exception.ActivityNotFoundException;
-import com.fitconnet.error.exception.UserNotFoundException;
+import com.fitconnet.error.exception.activity.ActivityNotFoundException;
+import com.fitconnet.error.exception.user.UserNotFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
