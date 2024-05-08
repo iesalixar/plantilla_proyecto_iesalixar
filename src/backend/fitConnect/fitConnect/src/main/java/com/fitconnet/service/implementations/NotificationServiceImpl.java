@@ -1,7 +1,7 @@
 package com.fitconnet.service.implementations;
 
 import java.security.InvalidParameterException;
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -22,8 +22,8 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	}
 
 	@Override
-	public List<Notification> getAll() {
-		return notificationRepository.findAll();
+	public Set<Notification> getAll() {
+		return (Set<Notification>) notificationRepository.findAll();
 	}
 
 	@Override

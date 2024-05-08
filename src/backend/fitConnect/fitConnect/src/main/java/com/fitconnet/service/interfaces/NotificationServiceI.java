@@ -1,12 +1,12 @@
 package com.fitconnet.service.interfaces;
 
-import java.util.List;
+import java.util.Set;
 
 import com.fitconnet.persitence.model.Notification;
 
 public interface NotificationServiceI {
 
-	List<Notification> getAll();
+	Set<Notification> getAll();
 
 	Notification getByRecipient(Long userId);
 
