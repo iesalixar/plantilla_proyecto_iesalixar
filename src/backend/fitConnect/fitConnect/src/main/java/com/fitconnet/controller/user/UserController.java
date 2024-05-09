@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,9 @@ import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
+import com.fitconnet.service.interfaces.ProcessingResponseI;
 import com.fitconnet.service.interfaces.UserServiceI;
+import com.fitconnet.utils.Constants;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -40,13 +41,17 @@ public class UserController {
 	private final UserServiceI userService;
 	@Qualifier("globalExceptionHandler")
 	private final GlobalExceptionHandler globalExceptionHandler;
-	private final Logger logger = LoggerFactory.getLogger(UserController.class);
-	private static final String USER_NOT_EXIST = "El usuario no existe";
+	@Qualifier("processingResponseI")
+	private final ProcessingResponseI processingResponseI;
 
-	public UserController(UserServiceI userService, GlobalExceptionHandler globalExceptionHandler) {
-		super();
+	private final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+	public UserController(UserServiceI userService, GlobalExceptionHandler globalExceptionHandler,
+			ProcessingResponseI processingResponseI) {
+
 		this.userService = userService;
 		this.globalExceptionHandler = globalExceptionHandler;
+		this.processingResponseI = processingResponseI;
 	}
 
 	@PostMapping
@@ -54,7 +59,7 @@ public class UserController {
 		logger.info("UserController :: createUser");
 		ResponseEntity<String> response = null;
 		Optional<User> existingUser = userService.getUserByUserName(user.getUserName());
-		response = processResponse(existingUser,
+		response = processingResponseI.processResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("El usuario ya existe"), () -> {
 					User newUser = new User();
 					setUserAttributes(user, newUser);
@@ -70,7 +75,8 @@ public class UserController {
 		logger.info("UserController :: getUser");
 		ResponseEntity<Optional<User>> response = null;
 		Optional<User> existingUser = getUserMethod(id);
-		response = processResponse(existingUser, () -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
+		response = processingResponseI.processResponse(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_EXIST),
 				() -> ResponseEntity.ok().body(existingUser));
 		return response;
 	}
@@ -81,7 +87,8 @@ public class UserController {
 		logger.info("UserController :: getFriends");
 		ResponseEntity<List<User>> response = null;
 		Optional<User> existingUser = getUserMethod(id);
-		response = processResponse(existingUser, () -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
+		response = processingResponseI.processResponse(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_EXIST),
 				() -> ResponseEntity.ok().body(existingUser.get().getFriends()));
 		return response;
 	}
@@ -92,8 +99,8 @@ public class UserController {
 		logger.info("UserController :: getActivities");
 		ResponseEntity<Optional<Set<Activity>>> response = null;
 		Optional<User> existingUser = getUserMethod(id);
-		response = processOptionalResponse(existingUser,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
+		response = processingResponseI.processOptionalResponse(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_EXIST),
 				() -> ResponseEntity.ok().body(userService.getAllActivities(id)));
 		return response;
 	}
@@ -104,8 +111,8 @@ public class UserController {
 		logger.info("UserController :: getCreatedActivities");
 		ResponseEntity<Optional<Set<Activity>>> response = null;
 		Optional<User> existingUser = getUserMethod(id);
-		response = processOptionalResponse(existingUser,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
+		response = processingResponseI.processOptionalResponse(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_EXIST),
 				() -> ResponseEntity.ok().body(userService.getCreatedActivities(id)));
 		return response;
 	}
@@ -116,8 +123,8 @@ public class UserController {
 		logger.info("UserController :: getInvitedActivities");
 		ResponseEntity<Optional<Set<Activity>>> response = null;
 		Optional<User> existingUser = getUserMethod(id);
-		response = processOptionalResponse(existingUser,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
+		response = processingResponseI.processOptionalResponse(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_EXIST),
 				() -> ResponseEntity.ok().body(userService.getInvitedActivities(id)));
 		return response;
 	}
@@ -128,8 +135,8 @@ public class UserController {
 		logger.info("UserController :: getNotifications");
 		ResponseEntity<Optional<Set<Notification>>> response = null;
 		Optional<User> existingUser = getUserMethod(id);
-		response = processOptionalResponse(existingUser,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
+		response = processingResponseI.processOptionalResponse(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_EXIST),
 				() -> ResponseEntity.ok().body(userService.getNotifications(id)));
 		return response;
 	}
@@ -140,8 +147,8 @@ public class UserController {
 		logger.info("UserController :: patchUser");
 		ResponseEntity<String> response = null;
 		Optional<User> existingUser = getUserMethod(id);
-		response = processResponse(existingUser, () -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
-				() -> {
+		response = processingResponseI.processResponse(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_EXIST), () -> {
 					userService.patchUser(id, user);
 					return ResponseEntity.ok().body("Usuario actualizado");
 				});
@@ -154,8 +161,8 @@ public class UserController {
 		logger.info("UserController :: deleteUser");
 		ResponseEntity<String> response = null;
 		Optional<User> existingUser = getUserMethod(id);
-		response = processResponse(existingUser, () -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
-				() -> {
+		response = processingResponseI.processResponse(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_EXIST), () -> {
 					userService.deleteById(id);
 					return ResponseEntity.ok().body("Usuario ha sido eliminado exitosamente");
 				});
@@ -176,28 +183,6 @@ public class UserController {
 		Set<Role> roles = new HashSet<>();
 		roles.add(Role.ROLE_USER);
 		newUser.setRoles(roles);
-	}
-
-	private <T> ResponseEntity<T> processResponse(Optional<?> entity, Supplier<ResponseEntity> conflictSupplier,
-			Supplier<ResponseEntity<T>> successSupplier) {
-		ResponseEntity<T> outcome;
-		if (!entity.isPresent()) {
-			outcome = conflictSupplier.get();
-		} else {
-			outcome = successSupplier.get();
-		}
-		return outcome;
-	}
-
-	private <T> ResponseEntity<Optional<T>> processOptionalResponse(Optional<?> entity,
-			Supplier<ResponseEntity> conflictSupplier, Supplier<ResponseEntity<Optional<T>>> successSupplier) {
-		ResponseEntity<Optional<T>> outcome;
-		if (!entity.isPresent()) {
-			outcome = conflictSupplier.get();
-		} else {
-			outcome = successSupplier.get();
-		}
-		return outcome;
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
