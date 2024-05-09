@@ -28,7 +28,7 @@ import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.service.interfaces.ActivityServiceI;
 
 @RestController
-@RequestMapping("/api/v1/activity")
+@RequestMapping("/api/v1/activities")
 public class ActivityController {
 
 	@Qualifier("activityService")
@@ -36,7 +36,7 @@ public class ActivityController {
 	@Qualifier("globalExceptionHandler")
 	private final GlobalExceptionHandler globalExceptionHandler;
 
-	private final Logger logger = LoggerFactory.getLogger(ActivityController.class);
+	private final Logger LOG = LoggerFactory.getLogger(ActivityController.class);
 
 	public ActivityController(ActivityServiceI activityService, GlobalExceptionHandler globalExceptionHandler) {
 		this.activityService = activityService;
@@ -46,7 +46,7 @@ public class ActivityController {
 	@GetMapping
 	public ResponseEntity<Page<Activity>> getAllActivities(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size) {
-		logger.info("ActivityController :: getAllActivities");
+		LOG.info("ActivityController :: getAllActivities");
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Activity> activityPage = activityService.getAllActivity(pageable);
 		return new ResponseEntity<>(activityPage, HttpStatus.OK);
@@ -54,35 +54,35 @@ public class ActivityController {
 
 	@PostMapping
 	public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) {
-		logger.info("ActivityController :: createActivity");
+		LOG.info("ActivityController :: createActivity");
 		activityService.createActivity(activity);
 		return new ResponseEntity<>(activity, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
-		logger.info("ActivityController :: getActivityById");
+		LOG.info("ActivityController :: getActivityById");
 		Activity activity = activityService.getActivity(id);
 		return new ResponseEntity<>(activity, HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
-		logger.info("ActivityController :: updateActivity");
+		LOG.info("ActivityController :: updateActivity");
 		Activity updatedActivity = activityService.updateActivity(id, activity);
 		return new ResponseEntity<>(updatedActivity, HttpStatus.OK);
 	}
 
 	@PatchMapping("/{id}")
 	public ResponseEntity<Activity> patchActivity(@PathVariable Long id, @RequestBody Activity activity) {
-		logger.info("ActivityController :: patchActivity");
+		LOG.info("ActivityController :: patchActivity");
 		Activity patchedActivity = activityService.patchActivity(id, activity);
 		return new ResponseEntity<>(patchedActivity, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Activity> deleteActivity(@PathVariable Long id) {
-		logger.info("ActivityController :: deleteActivity");
+		LOG.info("ActivityController :: deleteActivity");
 		Activity deletedActivity = activityService.deleteById(id);
 		return new ResponseEntity<>(deletedActivity, HttpStatus.OK);
 	}
