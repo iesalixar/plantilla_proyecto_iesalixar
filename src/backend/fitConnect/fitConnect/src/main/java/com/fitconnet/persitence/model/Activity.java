@@ -3,6 +3,7 @@ package com.fitconnet.persitence.model;
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -118,6 +119,25 @@ public class Activity implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(creator, date, duration, id, participants, place, type);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Activity other = (Activity) obj;
+		return Objects.equals(creator, other.creator) && Objects.equals(date, other.date)
+				&& Objects.equals(duration, other.duration) && Objects.equals(participants, other.participants)
+				&& Objects.equals(place, other.place) && Objects.equals(type, other.type);
 	}
 
 }

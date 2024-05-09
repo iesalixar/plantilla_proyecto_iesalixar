@@ -1,6 +1,7 @@
 package com.fitconnet.service.implementations;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
@@ -75,6 +76,27 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		Activity activity = activityRepository.findById(id)
 				.orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
 		activityRepository.deleteById(id);
+
+	}
+
+	@Override
+	public Boolean existActivity(Long id) {
+		return activityRepository.existsById(id);
+	}
+
+	@Override
+	public Boolean existByDate(Date date) {
+		return activityRepository.existByDate(date);
+	}
+
+	@Override
+	public void setActivityAttributes(Activity activity, Activity newActivity) {
+		newActivity.setCreator(activity.getCreator());
+		newActivity.setDate(activity.getDate());
+		newActivity.setDuration(activity.getDuration());
+		newActivity.setParticipants(activity.getParticipants());
+		newActivity.setPlace(activity.getPlace());
+		newActivity.setType(activity.getType());
 
 	}
 

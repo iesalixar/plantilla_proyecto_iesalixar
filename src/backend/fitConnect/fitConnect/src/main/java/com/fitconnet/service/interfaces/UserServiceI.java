@@ -28,7 +28,13 @@ public interface UserServiceI {
 
 	Optional<Set<Notification>> getNotifications(Long id);
 
+	List<User> userSetToSortedList();
+
 	UserDetailsService userDetailsService();
+
+	Boolean existById(Long id);
+
+	Boolean existByEmail(String email);
 
 	void createUser(User user);
 
@@ -37,5 +43,7 @@ public interface UserServiceI {
 	void patchUser(Long id, User user);
 
 	void deleteById(Long id);
+
+	void setUserAttributes(User user, User newUser);
 
 }

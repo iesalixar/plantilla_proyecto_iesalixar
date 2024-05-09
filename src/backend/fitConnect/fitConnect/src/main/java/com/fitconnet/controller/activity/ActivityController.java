@@ -1,13 +1,14 @@
 package com.fitconnet.controller.activity;
 
+import java.util.Optional;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -26,65 +26,131 @@ import com.fitconnet.dto.response.error.ErrorDetailsResponse;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.service.interfaces.ActivityServiceI;
+import com.fitconnet.service.interfaces.ProcessingResponseI;
+import com.fitconnet.service.interfaces.UserServiceI;
+import com.fitconnet.utils.Constants;
 
 @RestController
-@RequestMapping("/api/v1/activities")
+@RequestMapping("/api/v1/activity")
 public class ActivityController {
 
 	@Qualifier("activityService")
 	private final ActivityServiceI activityService;
+	@Qualifier("userService")
+	private final UserServiceI userService;
+	@Qualifier("processingResponseI")
+	private final ProcessingResponseI processingResponseI;
 	@Qualifier("globalExceptionHandler")
 	private final GlobalExceptionHandler globalExceptionHandler;
 
-	private final Logger LOG = LoggerFactory.getLogger(ActivityController.class);
+	private final Logger logger = LoggerFactory.getLogger(ActivityController.class);
 
-	public ActivityController(ActivityServiceI activityService, GlobalExceptionHandler globalExceptionHandler) {
+	public ActivityController(ActivityServiceI activityService, UserServiceI userService,
+			ProcessingResponseI processingResponseI, GlobalExceptionHandler globalExceptionHandler) {
+
 		this.activityService = activityService;
+		this.userService = userService;
+		this.processingResponseI = processingResponseI;
 		this.globalExceptionHandler = globalExceptionHandler;
 	}
 
-	@GetMapping
-	public ResponseEntity<Page<Activity>> getAllActivities(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size) {
-		LOG.info("ActivityController :: getAllActivities");
-		Pageable pageable = PageRequest.of(page, size);
-		Page<Activity> activityPage = activityService.getAllActivity(pageable);
-		return new ResponseEntity<>(activityPage, HttpStatus.OK);
+	@PostMapping
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+	public ResponseEntity<String> createActivity(@RequestBody Activity activity) {
+		logger.info("ActivityController :: createActivity");
+		ResponseEntity<String> response = null;
+		Boolean existingActivity = activityService.existByDate(activity.getDate());
+
+		response = processingResponseI.processResponseForString(existingActivity,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("La actividad ya existe"), () -> {
+					Activity newActivity = new Activity();
+					activityService.setActivityAttributes(activity, newActivity);
+					activityService.createActivity(newActivity);
+					return ResponseEntity.ok().body("Actividad creada correctamente.");
+				});
+		return response;
 	}
 
-	@PostMapping
-	public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) {
-		LOG.info("ActivityController :: createActivity");
-		activityService.createActivity(activity);
-		return new ResponseEntity<>(activity, HttpStatus.CREATED);
+	@GetMapping
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public ResponseEntity<Optional<Set<Activity>>> getActivities() {
+		logger.info("ActivityController :: getAllActivities");
+		Optional<Set<Activity>> activities = activityService.getAllActivity();
+		return ResponseEntity.ok().body(activities);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
-		LOG.info("ActivityController :: getActivityById");
-		Activity activity = activityService.getActivity(id);
-		return new ResponseEntity<>(activity, HttpStatus.OK);
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public ResponseEntity<Optional<Activity>> getActivityById(@PathVariable Long id) {
+		logger.info("ActivityController :: getActivityById");
+		Optional<Activity> activity = activityService.getActivity(id);
+		return ResponseEntity.ok().body(activity);
+	}
+
+	@GetMapping("/activities/{id}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public ResponseEntity<Optional<Set<Activity>>> getActivitiesByUserId(@PathVariable Long userId) {
+		logger.info("UserController :: getActivities");
+		ResponseEntity<Optional<Set<Activity>>> response = null;
+		Boolean existingUser = userService.existById(userId);
+		response = processingResponseI.processOptionalResponseForBoolean(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
+				() -> ResponseEntity.ok().body(userService.getAllActivities(userId)));
+		return response;
+	}
+
+	@GetMapping("/activities/created/{id}")
+	@PreAuthorize("hasAuthority('ROLE_USER')")
+	public ResponseEntity<Optional<Set<Activity>>> getCreatedActivities(@PathVariable Long userId) {
+		logger.info("UserController :: getCreatedActivities");
+		ResponseEntity<Optional<Set<Activity>>> response = null;
+		Boolean existingUser = userService.existById(userId);
+		response = processingResponseI.processOptionalResponseForBoolean(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
+				() -> ResponseEntity.ok().body(userService.getCreatedActivities(userId)));
+		return response;
+	}
+
+	@GetMapping("/activities/invited/{id}")
+	@PreAuthorize("hasAuthority('ROLE_USER')")
+	public ResponseEntity<Optional<Set<Activity>>> getInvitedActivities(@PathVariable Long userId) {
+		logger.info("UserController :: getInvitedActivities");
+		ResponseEntity<Optional<Set<Activity>>> response = null;
+		Boolean existingUser = userService.existById(userId);
+		response = processingResponseI.processOptionalResponseForBoolean(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
+				() -> ResponseEntity.ok().body(userService.getInvitedActivities(userId)));
+		return response;
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
-		LOG.info("ActivityController :: updateActivity");
-		Activity updatedActivity = activityService.updateActivity(id, activity);
-		return new ResponseEntity<>(updatedActivity, HttpStatus.OK);
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
+		logger.info("ActivityController :: updateActivity");
+		activityService.updateActivity(id, activity);
+		return ResponseEntity.ok().body("Se ha actualizado correctamente");
 	}
 
 	@PatchMapping("/{id}")
-	public ResponseEntity<Activity> patchActivity(@PathVariable Long id, @RequestBody Activity activity) {
-		LOG.info("ActivityController :: patchActivity");
-		Activity patchedActivity = activityService.patchActivity(id, activity);
-		return new ResponseEntity<>(patchedActivity, HttpStatus.OK);
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+	public ResponseEntity<String> patchActivity(@PathVariable Long id, @RequestBody Activity activity) {
+		logger.info("ActivityController :: patchActivity");
+		activityService.patchActivity(id, activity);
+		return ResponseEntity.ok().body("Se ha actulizado correctamente");
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Activity> deleteActivity(@PathVariable Long id) {
-		LOG.info("ActivityController :: deleteActivity");
-		Activity deletedActivity = activityService.deleteById(id);
-		return new ResponseEntity<>(deletedActivity, HttpStatus.OK);
+	@PreAuthorize("hasAuthority('ROLE_USER') and #id == authentication.principal.id")
+	public ResponseEntity<String> deleteActivity(@PathVariable Long id) {
+		logger.info("ActivityController :: deleteActivity");
+		ResponseEntity<String> response = null;
+		boolean existingActivity = activityService.existActivity(id);
+		response = processingResponseI.processResponseForString(existingActivity,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
+					activityService.deleteById(id);
+					return ResponseEntity.ok().body("Actividad ha eliminado correctamente");
+				});
+		return response;
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)

@@ -1,5 +1,6 @@
 package com.fitconnet.service.interfaces;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
@@ -11,6 +12,10 @@ public interface ActivityServiceI {
 
 	Optional<Activity> getActivity(Long id);
 
+	Boolean existActivity(Long id);
+
+	Boolean existByDate(Date date);
+
 	void createActivity(Activity activity);
 
 	void updateActivity(Long id, Activity activity);
@@ -18,5 +23,7 @@ public interface ActivityServiceI {
 	void patchActivity(Long id, Activity activity);
 
 	void deleteById(Long id);
+
+	void setActivityAttributes(Activity activity, Activity newActivity);
 
 }
