@@ -28,6 +28,10 @@ public interface UserServiceI {
 
 	Optional<Set<Notification>> getNotifications(Long id);
 
+	List<User> userSetToSortedList();
+
+	Optional<User> getUserMethod(Long id);
+
 	UserDetailsService userDetailsService();
 
 	void createUser(User user);
