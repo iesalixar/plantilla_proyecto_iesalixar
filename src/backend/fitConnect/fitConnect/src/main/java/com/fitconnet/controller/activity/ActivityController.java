@@ -1,12 +1,11 @@
 package com.fitconnet.controller.activity;
 
+import java.util.Optional;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -44,47 +42,45 @@ public class ActivityController {
 	}
 
 	@GetMapping
-	public ResponseEntity<Page<Activity>> getAllActivities(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size) {
+	public ResponseEntity<Optional<Set<Activity>>> getAllActivities() {
 		LOG.info("ActivityController :: getAllActivities");
-		Pageable pageable = PageRequest.of(page, size);
-		Page<Activity> activityPage = activityService.getAllActivity(pageable);
-		return new ResponseEntity<>(activityPage, HttpStatus.OK);
+		Optional<Set<Activity>> activities = activityService.getAllActivity();
+		return ResponseEntity.ok(activities);
 	}
 
 	@PostMapping
-	public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) {
+	public ResponseEntity<String> createActivity(@RequestBody Activity activity) {
 		LOG.info("ActivityController :: createActivity");
 		activityService.createActivity(activity);
-		return new ResponseEntity<>(activity, HttpStatus.CREATED);
+		return ResponseEntity.ok("El usuario ha sido creado correctamente.");
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
+	public ResponseEntity<Optional<Activity>> getActivityById(@PathVariable Long id) {
 		LOG.info("ActivityController :: getActivityById");
-		Activity activity = activityService.getActivity(id);
-		return new ResponseEntity<>(activity, HttpStatus.OK);
+		Optional<Activity> activity = activityService.getActivity(id);
+		return ResponseEntity.ok(activity);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
+	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
 		LOG.info("ActivityController :: updateActivity");
-		Activity updatedActivity = activityService.updateActivity(id, activity);
-		return new ResponseEntity<>(updatedActivity, HttpStatus.OK);
+		activityService.updateActivity(id, activity);
+		return ResponseEntity.ok("Se ha actualizado correctamente");
 	}
 
 	@PatchMapping("/{id}")
-	public ResponseEntity<Activity> patchActivity(@PathVariable Long id, @RequestBody Activity activity) {
+	public ResponseEntity<String> patchActivity(@PathVariable Long id, @RequestBody Activity activity) {
 		LOG.info("ActivityController :: patchActivity");
-		Activity patchedActivity = activityService.patchActivity(id, activity);
-		return new ResponseEntity<>(patchedActivity, HttpStatus.OK);
+		activityService.patchActivity(id, activity);
+		return ResponseEntity.ok("Se ha actulizado correctamente");
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Activity> deleteActivity(@PathVariable Long id) {
+	public ResponseEntity<String> deleteActivity(@PathVariable Long id) {
 		LOG.info("ActivityController :: deleteActivity");
-		Activity deletedActivity = activityService.deleteById(id);
-		return new ResponseEntity<>(deletedActivity, HttpStatus.OK);
+		activityService.deleteById(id);
+		return ResponseEntity.ok("Se ha eliminado correcatamente");
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
