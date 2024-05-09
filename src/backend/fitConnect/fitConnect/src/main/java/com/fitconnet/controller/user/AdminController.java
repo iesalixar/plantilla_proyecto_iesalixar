@@ -3,6 +3,7 @@ package com.fitconnet.controller.user;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -89,9 +90,9 @@ public class AdminController {
 
 	@GetMapping("/notifications")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public ResponseEntity<Set<Notification>> showNotifications() {
+	public ResponseEntity<Optional<Set<Notification>>> showNotifications() {
 		LOG.info("## AdminController :: showNotifications");
-		Set<Notification> notifications = notificationService.getAll();
+		Optional<Set<Notification>> notifications = notificationService.getAll();
 		return ResponseEntity.ok(notifications);
 
 	}

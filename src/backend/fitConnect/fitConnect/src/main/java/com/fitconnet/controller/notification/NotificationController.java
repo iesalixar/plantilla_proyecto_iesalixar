@@ -1,16 +1,15 @@
 package com.fitconnet.controller.notification;
 
+import java.util.Optional;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fitconnet.controller.user.UserController;
@@ -41,14 +40,13 @@ public class NotificationController {
 	}
 
 	@GetMapping("/{userId}")
-	public ResponseEntity<Page<Notification>> getNotificationsById(@PathVariable Long userId,
-			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+	public ResponseEntity<Optional<Set<Notification>>> getNotificationsById(@PathVariable Long userId) {
 
 		LOG.info("NotificationController :: getNotificationsById");
 
 		User user = getUserMethod(userId);
-		Pageable pageable = PageRequest.of(page, size);
-		Page<Notification> notificationsPage = notificationService.getByRecipient(userId, pageable);
+
+		Optional<Set<Notification>> notificationsPage = notificationService.getByRecipient(userId);
 
 		return ResponseEntity.ok(notificationsPage);
 	}

@@ -1,11 +1,14 @@
 package com.fitconnet.service.implementations;
 
 import java.security.InvalidParameterException;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -26,51 +29,53 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	}
 
 	@Override
-	public Set<Notification> getAll() {
-		return (Set<Notification>) notificationRepository.findAll();
+	public Optional<Set<Notification>> getAll() {
+		List<Notification> notificationList = notificationRepository.findAll();
+		Set<Notification> sortedNotifications = new LinkedHashSet<>();
+		sortedNotifications = notificationList.stream().sorted(Comparator.comparing(Notification::getDate))
+				.collect(Collectors.toSet());
+		return Optional.of(sortedNotifications);
 	}
 
 	@Override
-	public Page<Notification> getByRecipient(Long userId, Pageable pageable) {
-		Page<Notification> notificationsPage = notificationRepository.findByRecipientId(userId, pageable);
-		if (notificationsPage.isEmpty()) {
+	public Optional<Set<Notification>> getByRecipient(Long userId) {
+		Optional<Set<Notification>> notifications = notificationRepository.findByRecipientId(userId);
+		if (notifications.isEmpty()) {
 			throw new NotificationNotFoundException("Notifications not found for user with ID: " + userId,
 					HttpStatus.NOT_FOUND);
 		}
-		return notificationsPage;
+		return notifications;
 	}
 
 	@Override
-	public Notification create(Notification notification) {
+	public void create(Notification notification) {
 		Notification aux = new Notification();
 		try {
 			aux = notificationRepository.save(notification);
 		} catch (DataIntegrityViolationException | ConstraintViolationException e) {
 			throw new NotificationCreationException("Error creating notification", e, HttpStatus.BAD_REQUEST);
 		}
-		return aux;
 	}
 
 	@Override
-	public Notification delete(Long id) {
+	public void delete(Long id) {
 
 		Notification notification = notificationRepository.findById(id)
 				.orElseThrow(() -> new NotificationNotFoundException("Notification not found", HttpStatus.NOT_FOUND));
 		notificationRepository.deleteById(id);
-		return notification;
 	}
 
 	@Override
-	public Notification update(Long id, Notification notification) {
+	public void update(Long id, Notification notification) {
 		Notification aux = notificationRepository.findById(id)
 				.orElseThrow(() -> new NotificationNotFoundException("Notification not found", HttpStatus.NOT_FOUND));
 		notificationRepository.deleteById(id);
+		notificationRepository.save(aux);
 
-		return notificationRepository.save(aux);
 	}
 
 	@Override
-	public Notification patch(Long id, Notification notification) {
+	public void patch(Long id, Notification notification) {
 		Notification aux = notificationRepository.findById(id)
 				.orElseThrow(() -> new NotificationNotFoundException("Notification not found", HttpStatus.NOT_FOUND));
 		try {
@@ -89,7 +94,6 @@ public class NotificationServiceImpl implements NotificationServiceI {
 		} catch (ConstraintViolationException e) {
 			throw new InvalidParameterException("Debe ser una fecha válida.");
 		}
-		return aux;
 	}
 
 }
