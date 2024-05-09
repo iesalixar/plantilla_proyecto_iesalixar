@@ -1,7 +1,10 @@
 package com.fitconnet.controller.user;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +25,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.fitconnet.dto.response.error.ErrorDetailsResponse;
+import com.fitconnet.enums.Role;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.persitence.model.Notification;
@@ -29,14 +33,15 @@ import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.interfaces.UserServiceI;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/user")
 public class UserController {
 
 	@Qualifier("userService")
 	private final UserServiceI userService;
 	@Qualifier("globalExceptionHandler")
 	private final GlobalExceptionHandler globalExceptionHandler;
-	private final Logger LOG = LoggerFactory.getLogger(UserController.class);
+	private final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final String USER_NOT_EXIST = "El usuario no existe";
 
 	public UserController(UserServiceI userService, GlobalExceptionHandler globalExceptionHandler) {
 		super();
@@ -45,75 +50,154 @@ public class UserController {
 	}
 
 	@PostMapping
-	public ResponseEntity<User> createUser(@RequestBody User user) {
-		User newUser = userService.createUser(user);
-		return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+	public ResponseEntity<String> createUser(@RequestBody User user) {
+		logger.info("UserController :: createUser");
+		ResponseEntity<String> response = null;
+		Optional<User> existingUser = userService.getUserByUserName(user.getUserName());
+		response = processResponse(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("El usuario ya existe"), () -> {
+					User newUser = new User();
+					setUserAttributes(user, newUser);
+					userService.createUser(newUser);
+					return ResponseEntity.ok().body("Usuario: " + user.getUsername() + ", creado correctamente.");
+				});
+		return response;
 	}
 
 	@GetMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	public ResponseEntity<User> getUser(@PathVariable Long id) {
-		User user = getUserMethod(id);
-		return ResponseEntity.status(HttpStatus.FOUND).body(user);
+	public ResponseEntity<Optional<User>> getUser(@PathVariable Long id) {
+		logger.info("UserController :: getUser");
+		ResponseEntity<Optional<User>> response = null;
+		Optional<User> existingUser = getUserMethod(id);
+		response = processResponse(existingUser, () -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
+				() -> ResponseEntity.ok().body(existingUser));
+		return response;
 	}
 
 	@GetMapping("/friends/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<List<User>> getFriends(@PathVariable Long id) {
-		User user = getUserMethod(id);
-		List<User> friends = user.getFriends();
-		return ResponseEntity.ok(friends);
+		logger.info("UserController :: getFriends");
+		ResponseEntity<List<User>> response = null;
+		Optional<User> existingUser = getUserMethod(id);
+		response = processResponse(existingUser, () -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
+				() -> ResponseEntity.ok().body(existingUser.get().getFriends()));
+		return response;
 	}
 
 	@GetMapping("/activities/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public ResponseEntity<Set<Activity>> getActivities(@PathVariable Long id) {
-		User user = getUserMethod(id);
-		Set<Activity> activities = userService.getAllActivities(id);
-		return ResponseEntity.ok(activities);
+	public ResponseEntity<Optional<Set<Activity>>> getActivities(@PathVariable Long id) {
+		logger.info("UserController :: getActivities");
+		ResponseEntity<Optional<Set<Activity>>> response = null;
+		Optional<User> existingUser = getUserMethod(id);
+		response = processOptionalResponse(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
+				() -> ResponseEntity.ok().body(userService.getAllActivities(id)));
+		return response;
 	}
 
 	@GetMapping("/activities/created/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public ResponseEntity<Set<Activity>> getCreatedActivities(@PathVariable Long id) {
-		User user = getUserMethod(id);
-		Set<Activity> activities = userService.getCreatedActivities(id);
-		return ResponseEntity.ok(activities);
+	public ResponseEntity<Optional<Set<Activity>>> getCreatedActivities(@PathVariable Long id) {
+		logger.info("UserController :: getCreatedActivities");
+		ResponseEntity<Optional<Set<Activity>>> response = null;
+		Optional<User> existingUser = getUserMethod(id);
+		response = processOptionalResponse(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
+				() -> ResponseEntity.ok().body(userService.getCreatedActivities(id)));
+		return response;
 	}
 
 	@GetMapping("/activities/invited/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public ResponseEntity<Set<Activity>> getInvitedActivities(@PathVariable Long id) {
-		User user = getUserMethod(id);
-		Set<Activity> activities = userService.getInvitedActivities(id);
-		return ResponseEntity.ok(activities);
+	public ResponseEntity<Optional<Set<Activity>>> getInvitedActivities(@PathVariable Long id) {
+		logger.info("UserController :: getInvitedActivities");
+		ResponseEntity<Optional<Set<Activity>>> response = null;
+		Optional<User> existingUser = getUserMethod(id);
+		response = processOptionalResponse(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
+				() -> ResponseEntity.ok().body(userService.getInvitedActivities(id)));
+		return response;
 	}
 
 	@GetMapping("/notifications/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public ResponseEntity<Set<Notification>> getNotifications(@PathVariable Long id) {
-		User user = getUserMethod(id);
-		Set<Notification> notifications = userService.getNotifications(id);
-		return ResponseEntity.ok(notifications);
+	public ResponseEntity<Optional<Set<Notification>>> getNotifications(@PathVariable Long id) {
+		logger.info("UserController :: getNotifications");
+		ResponseEntity<Optional<Set<Notification>>> response = null;
+		Optional<User> existingUser = getUserMethod(id);
+		response = processOptionalResponse(existingUser,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
+				() -> ResponseEntity.ok().body(userService.getNotifications(id)));
+		return response;
 	}
 
 	@PatchMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER') and #id == authentication.principal.id")
-	public ResponseEntity<User> patchUser(@PathVariable Long id, @RequestBody User user) {
-		User patchedUser = userService.patchUser(id, user);
-		return ResponseEntity.ok(patchedUser);
+	public ResponseEntity<String> patchUser(@PathVariable Long id, @RequestBody User user) {
+		logger.info("UserController :: patchUser");
+		ResponseEntity<String> response = null;
+		Optional<User> existingUser = getUserMethod(id);
+		response = processResponse(existingUser, () -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
+				() -> {
+					userService.patchUser(id, user);
+					return ResponseEntity.ok().body("Usuario actualizado");
+				});
+		return response;
 	}
 
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER') and #id == authentication.principal.id")
-	public ResponseEntity<User> deleteUser(@PathVariable Long id) {
-		User deletedUser = userService.deleteById(id);
-		return ResponseEntity.ok(deletedUser);
+	public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+		logger.info("UserController :: deleteUser");
+		ResponseEntity<String> response = null;
+		Optional<User> existingUser = getUserMethod(id);
+		response = processResponse(existingUser, () -> ResponseEntity.status(HttpStatus.CONFLICT).body(USER_NOT_EXIST),
+				() -> {
+					userService.deleteById(id);
+					return ResponseEntity.ok().body("Usuario ha sido eliminado exitosamente");
+				});
+		return response;
 	}
 
-	public User getUserMethod(Long id) {
-		User user = userService.getUserById(id);
-		return user;
+	public Optional<User> getUserMethod(Long id) {
+		return userService.getUserById(id);
+	}
+
+	private void setUserAttributes(User user, User newUser) {
+		newUser.setFirstName(user.getFirstName());
+		newUser.setLastName(user.getLastName());
+		newUser.setUserName(user.getUsername());
+		newUser.setEmail(user.getEmail());
+		newUser.setPassword(user.getPassword());// TODO crear password encoder.
+		// Asignar el rol de usuario común
+		Set<Role> roles = new HashSet<>();
+		roles.add(Role.ROLE_USER);
+		newUser.setRoles(roles);
+	}
+
+	private <T> ResponseEntity<T> processResponse(Optional<?> entity, Supplier<ResponseEntity> conflictSupplier,
+			Supplier<ResponseEntity<T>> successSupplier) {
+		ResponseEntity<T> outcome;
+		if (!entity.isPresent()) {
+			outcome = conflictSupplier.get();
+		} else {
+			outcome = successSupplier.get();
+		}
+		return outcome;
+	}
+
+	private <T> ResponseEntity<Optional<T>> processOptionalResponse(Optional<?> entity,
+			Supplier<ResponseEntity> conflictSupplier, Supplier<ResponseEntity<Optional<T>>> successSupplier) {
+		ResponseEntity<Optional<T>> outcome;
+		if (!entity.isPresent()) {
+			outcome = conflictSupplier.get();
+		} else {
+			outcome = successSupplier.get();
+		}
+		return outcome;
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)

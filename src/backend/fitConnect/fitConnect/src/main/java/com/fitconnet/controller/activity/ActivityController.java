@@ -26,7 +26,7 @@ import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.service.interfaces.ActivityServiceI;
 
 @RestController
-@RequestMapping("/api/v1/activities")
+@RequestMapping("/api/v1/activity")
 public class ActivityController {
 
 	@Qualifier("activityService")
@@ -34,7 +34,7 @@ public class ActivityController {
 	@Qualifier("globalExceptionHandler")
 	private final GlobalExceptionHandler globalExceptionHandler;
 
-	private final Logger LOG = LoggerFactory.getLogger(ActivityController.class);
+	private final Logger logger = LoggerFactory.getLogger(ActivityController.class);
 
 	public ActivityController(ActivityServiceI activityService, GlobalExceptionHandler globalExceptionHandler) {
 		this.activityService = activityService;
@@ -43,44 +43,44 @@ public class ActivityController {
 
 	@GetMapping
 	public ResponseEntity<Optional<Set<Activity>>> getAllActivities() {
-		LOG.info("ActivityController :: getAllActivities");
+		logger.info("ActivityController :: getAllActivities");
 		Optional<Set<Activity>> activities = activityService.getAllActivity();
-		return ResponseEntity.ok(activities);
+		return ResponseEntity.ok().body(activities);
 	}
 
 	@PostMapping
 	public ResponseEntity<String> createActivity(@RequestBody Activity activity) {
-		LOG.info("ActivityController :: createActivity");
+		logger.info("ActivityController :: createActivity");
 		activityService.createActivity(activity);
-		return ResponseEntity.ok("El usuario ha sido creado correctamente.");
+		return ResponseEntity.ok().body("El usuario ha sido creado correctamente.");
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Optional<Activity>> getActivityById(@PathVariable Long id) {
-		LOG.info("ActivityController :: getActivityById");
+		logger.info("ActivityController :: getActivityById");
 		Optional<Activity> activity = activityService.getActivity(id);
-		return ResponseEntity.ok(activity);
+		return ResponseEntity.ok().body(activity);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
-		LOG.info("ActivityController :: updateActivity");
+		logger.info("ActivityController :: updateActivity");
 		activityService.updateActivity(id, activity);
-		return ResponseEntity.ok("Se ha actualizado correctamente");
+		return ResponseEntity.ok().body("Se ha actualizado correctamente");
 	}
 
 	@PatchMapping("/{id}")
 	public ResponseEntity<String> patchActivity(@PathVariable Long id, @RequestBody Activity activity) {
-		LOG.info("ActivityController :: patchActivity");
+		logger.info("ActivityController :: patchActivity");
 		activityService.patchActivity(id, activity);
-		return ResponseEntity.ok("Se ha actulizado correctamente");
+		return ResponseEntity.ok().body("Se ha actulizado correctamente");
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteActivity(@PathVariable Long id) {
-		LOG.info("ActivityController :: deleteActivity");
+		logger.info("ActivityController :: deleteActivity");
 		activityService.deleteById(id);
-		return ResponseEntity.ok("Se ha eliminado correcatamente");
+		return ResponseEntity.ok().body("Se ha eliminado correcatamente");
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
