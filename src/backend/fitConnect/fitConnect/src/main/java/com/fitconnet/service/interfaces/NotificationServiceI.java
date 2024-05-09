@@ -2,13 +2,16 @@ package com.fitconnet.service.interfaces;
 
 import java.util.Set;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.fitconnet.persitence.model.Notification;
 
 public interface NotificationServiceI {
 
 	Set<Notification> getAll();
 
-	Notification getByRecipient(Long userId);
+	Page<Notification> getByRecipient(Long userId, Pageable pageable);
 
 	Notification create(Notification notification);
 

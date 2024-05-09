@@ -7,8 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,8 +25,7 @@ public class Notification {
 
 	private Date date;
 
-	@ManyToOne
-	@JoinColumn(name = "C_RECEIVER_ID")
+	@Column(name = "C_RECEIVER_ID")
 	private Long receiverId;
 
 	public Notification() {

@@ -4,7 +4,10 @@ import java.security.InvalidParameterException;
 import java.util.Set;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import com.fitconnet.error.exception.notifications.NotificationCreationException;
 import com.fitconnet.error.exception.notifications.NotificationNotFoundException;
@@ -14,6 +17,7 @@ import com.fitconnet.service.interfaces.NotificationServiceI;
 
 import jakarta.validation.ConstraintViolationException;
 
+@Service
 public class NotificationServiceImpl implements NotificationServiceI {
 	private final NotificationRepository notificationRepository;
 
@@ -27,10 +31,13 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	}
 
 	@Override
-	public Notification getByRecipient(Long userId) {
-		Notification notification = notificationRepository.findById(userId)
-				.orElseThrow(() -> new NotificationNotFoundException("Notification not fund", HttpStatus.NOT_FOUND));
-		return notification;
+	public Page<Notification> getByRecipient(Long userId, Pageable pageable) {
+		Page<Notification> notificationsPage = notificationRepository.findByRecipientId(userId, pageable);
+		if (notificationsPage.isEmpty()) {
+			throw new NotificationNotFoundException("Notifications not found for user with ID: " + userId,
+					HttpStatus.NOT_FOUND);
+		}
+		return notificationsPage;
 	}
 
 	@Override

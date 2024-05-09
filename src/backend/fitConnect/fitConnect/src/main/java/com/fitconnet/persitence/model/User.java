@@ -82,7 +82,7 @@ public class User implements UserDetails {
 	@JoinTable(name = "T_USER_FRIENDS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
 	private List<User> friends = new ArrayList<>();
 
-	@OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "receiverId", cascade = CascadeType.ALL)
 	private Set<Notification> notifications = new LinkedHashSet<>();
 
 	public User() {
