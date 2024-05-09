@@ -2,6 +2,7 @@ package com.fitconnet.service.implementations;
 
 import java.security.InvalidParameterException;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
@@ -14,9 +15,11 @@ import org.springframework.stereotype.Service;
 
 import com.fitconnet.error.exception.notifications.NotificationCreationException;
 import com.fitconnet.error.exception.notifications.NotificationNotFoundException;
+import com.fitconnet.error.exception.user.UserNotFoundException;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.repository.NotificationRepository;
 import com.fitconnet.service.interfaces.NotificationServiceI;
+import com.fitconnet.utils.Constants;
 
 import jakarta.validation.ConstraintViolationException;
 
@@ -35,6 +38,13 @@ public class NotificationServiceImpl implements NotificationServiceI {
 		sortedNotifications = notificationList.stream().sorted(Comparator.comparing(Notification::getDate))
 				.collect(Collectors.toSet());
 		return Optional.of(sortedNotifications);
+	}
+
+	@Override
+	public Optional<Notification> getById(Long id) {
+		Notification notification = notificationRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException(Constants.NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND));
+		return Optional.of(notification);
 	}
 
 	@Override
@@ -94,6 +104,24 @@ public class NotificationServiceImpl implements NotificationServiceI {
 		} catch (ConstraintViolationException e) {
 			throw new InvalidParameterException("Debe ser una fecha válida.");
 		}
+	}
+
+	@Override
+	public boolean existById(Long id) {
+		return notificationRepository.existsById(id);
+	}
+
+	@Override
+	public void setNotificationAttributes(Notification notification, Notification newNotification) {
+		newNotification.setDate(notification.getDate());
+		newNotification.setMessage(notification.getMessage());
+		newNotification.setReceiverId(notification.getReceiverId());
+
+	}
+
+	@Override
+	public boolean existByDate(Date date) {
+		return notificationRepository.existByDate(date);
 	}
 
 }

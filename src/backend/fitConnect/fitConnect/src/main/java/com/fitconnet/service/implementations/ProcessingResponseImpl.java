@@ -12,7 +12,7 @@ import com.fitconnet.service.interfaces.ProcessingResponseI;
 public class ProcessingResponseImpl implements ProcessingResponseI {
 
 	@Override
-	public <T> ResponseEntity<T> processResponse(Optional<?> entity, Supplier<ResponseEntity> conflictSupplier,
+	public <T> ResponseEntity<T> processResponseForUser(Optional<?> entity, Supplier<ResponseEntity> conflictSupplier,
 			Supplier<ResponseEntity<T>> successSupplier) {
 		ResponseEntity<T> outcome;
 		if (!entity.isPresent()) {
@@ -34,4 +34,29 @@ public class ProcessingResponseImpl implements ProcessingResponseI {
 		}
 		return outcome;
 	}
+
+	@Override
+	public <T> ResponseEntity<T> processResponseForString(Boolean condition, Supplier<ResponseEntity> conflictSupplier,
+			Supplier<ResponseEntity<T>> successSupplier) {
+		ResponseEntity<T> outcome;
+		if (!condition) {
+			outcome = conflictSupplier.get();
+		} else {
+			outcome = successSupplier.get();
+		}
+		return outcome;
+	}
+
+	@Override
+	public <T> ResponseEntity<Optional<T>> processOptionalResponseForBoolean(Boolean condition,
+			Supplier<ResponseEntity> conflictSupplier, Supplier<ResponseEntity<Optional<T>>> successSupplier) {
+		ResponseEntity<Optional<T>> outcome;
+		if (!condition) {
+			outcome = conflictSupplier.get();
+		} else {
+			outcome = successSupplier.get();
+		}
+		return outcome;
+	}
+
 }

@@ -175,8 +175,27 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public Optional<User> getUserMethod(Long id) {
-		return getUserById(id);
+	public Boolean existById(Long id) {
+		return userRepository.existsById(id);
+	}
+
+	@Override
+	public Boolean existByEmail(String email) {
+		return userRepository.existsByEmail(email);
+	}
+
+	@Override
+	public void setUserAttributes(User user, User newUser) {
+		newUser.setFirstName(user.getFirstName());
+		newUser.setLastName(user.getLastName());
+		newUser.setUserName(user.getUsername());
+		newUser.setEmail(user.getEmail());
+		newUser.setPassword(user.getPassword());// TODO crear password encoder.
+		// Asignar el rol de usuario común
+		Set<Role> roles = new HashSet<>();
+		roles.add(Role.ROLE_USER);
+		newUser.setRoles(roles);
+
 	}
 
 }

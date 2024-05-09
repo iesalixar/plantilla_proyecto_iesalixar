@@ -1,5 +1,6 @@
 package com.fitconnet.service.interfaces;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
@@ -11,6 +12,12 @@ public interface NotificationServiceI {
 
 	Optional<Set<Notification>> getByRecipient(Long userId);
 
+	Optional<Notification> getById(Long id);
+
+	boolean existById(Long id);
+
+	boolean existByDate(Date date);
+
 	void create(Notification notification);
 
 	void delete(Long id);
@@ -18,5 +25,7 @@ public interface NotificationServiceI {
 	void update(Long id, Notification notification);
 
 	void patch(Long id, Notification notification);
+
+	void setNotificationAttributes(Notification notification, Notification newNotification);
 
 }
