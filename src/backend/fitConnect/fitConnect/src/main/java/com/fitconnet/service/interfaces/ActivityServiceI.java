@@ -1,22 +1,22 @@
 package com.fitconnet.service.interfaces;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.Optional;
+import java.util.Set;
 
 import com.fitconnet.persitence.model.Activity;
 
 public interface ActivityServiceI {
 
-	Page<Activity> getAllActivity(Pageable pageable);
+	Optional<Set<Activity>> getAllActivity();
 
-	Activity createActivity(Activity activity);
+	Optional<Activity> getActivity(Long id);
 
-	Activity updateActivity(Long id, Activity activity);
+	void createActivity(Activity activity);
 
-	Activity patchActivity(Long id, Activity activity);
+	void updateActivity(Long id, Activity activity);
 
-	Activity deleteById(Long id);
+	void patchActivity(Long id, Activity activity);
 
-	Activity getActivity(Long id);
+	void deleteById(Long id);
 
 }

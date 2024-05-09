@@ -1,6 +1,7 @@
 package com.fitconnet.service.interfaces;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,30 +12,30 @@ import com.fitconnet.persitence.model.User;
 
 public interface UserServiceI {
 
+	Optional<Set<User>> getAllUsers();
+
+	Optional<User> getUserById(Long id);
+
+	Optional<User> getUserByUserName(String userName);
+
+	Optional<List<User>> getFriends(Long id);
+
+	Optional<Set<Activity>> getCreatedActivities(Long id);
+
+	Optional<Set<Activity>> getInvitedActivities(Long id);
+
+	Optional<Set<Activity>> getAllActivities(Long id);
+
+	Optional<Set<Notification>> getNotifications(Long id);
+
 	UserDetailsService userDetailsService();
 
-	Set<User> getAllUsers();
+	void createUser(User user);
 
-	User createUser(User user);
+	void updateUser(Long id, User user);
 
-	User updateUser(Long id, User user);
+	void patchUser(Long id, User user);
 
-	User patchUser(Long id, User user);
-
-	User deleteById(Long id);
-
-	User getUserById(Long id);
-
-	User getUserByUserName(String userName);
-
-	List<User> getFriends(Long id);
-
-	Set<Activity> getCreatedActivities(Long id);
-
-	Set<Activity> getInvitedActivities(Long id);
-
-	Set<Activity> getAllActivities(Long id);
-
-	Set<Notification> getNotifications(Long id);
+	void deleteById(Long id);
 
 }

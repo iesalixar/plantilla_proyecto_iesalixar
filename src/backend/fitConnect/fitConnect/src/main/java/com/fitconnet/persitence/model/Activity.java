@@ -2,6 +2,7 @@ package com.fitconnet.persitence.model;
 
 import java.io.Serializable;
 import java.time.Duration;
+import java.util.Date;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -50,11 +51,13 @@ public class Activity implements Serializable {
 	/** Usuario asociado a esta actividad. */
 	@ManyToOne
 	@JoinColumn(name = "C_ACTIVITY_CREATOR", referencedColumnName = "C_PK_USER_ID")
-	private User creator;
+	private User creator; // TODO cambiar para que se relacione por la id.
 
 	@ManyToMany
 	@JoinTable(name = "T_ACTIVITY_PARTICIPANTS", joinColumns = @JoinColumn(name = "C_PK_ACTIVITY_ID"), inverseJoinColumns = @JoinColumn(name = "C_PK_USER_ID"))
 	private Set<User> participants;
+	// TODO poner nombre de la tabla
+	private Date date;
 
 	public void Activity() {
 		// Método de construccion de actividades
@@ -107,6 +110,14 @@ public class Activity implements Serializable {
 
 	public void setParticipants(Set<User> participants) {
 		this.participants = participants;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 }
