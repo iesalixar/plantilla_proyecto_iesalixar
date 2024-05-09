@@ -38,7 +38,7 @@ public class AdminController {
 	private final NotificationServiceI notificationService;
 	@Qualifier("globalExceptionHandler")
 	private final GlobalExceptionHandler globalExceptionHandler;
-	private final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
 	public AdminController(UserServiceI userService, NotificationServiceI notificationService,
 			GlobalExceptionHandler globalExceptionHandler) {
@@ -50,7 +50,7 @@ public class AdminController {
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<List<User>> showUsers() {
-		logger.info("## AuthorizationAdminController :: showUsers");
+		LOG.info("## AuthorizationAdminController :: showUsers");
 		Set<User> userSet = userService.getAllUsers();
 		userSet.removeIf(user -> !user.getRoles().contains("ROLE_USER"));
 		List<User> userList = new ArrayList<>(userSet);
@@ -61,7 +61,7 @@ public class AdminController {
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<Set<Notification>> showNotifications() {
-		logger.info("## AuthorizationAdminController :: showNotifications");
+		LOG.info("## AuthorizationAdminController :: showNotifications");
 		Set<Notification> notifications = notificationService.getAll();
 		return ResponseEntity.ok(notifications);
 
@@ -70,7 +70,7 @@ public class AdminController {
 	@PutMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-		logger.info("## AuthorizationAdminController :: updateUser");
+		LOG.info("## AuthorizationAdminController :: updateUser");
 		User updatedUser = userService.updateUser(id, user);
 		return ResponseEntity.ok(updatedUser);
 	}
@@ -78,7 +78,7 @@ public class AdminController {
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<User> deleteUser(@PathVariable Long id) {
-		logger.info("## AuthorizationAdminController :: deleteUser");
+		LOG.info("## AuthorizationAdminController :: deleteUser");
 		User deletedUser = userService.deleteById(id);
 		return ResponseEntity.ok(deletedUser);
 	}

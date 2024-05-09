@@ -29,14 +29,14 @@ import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.interfaces.UserServiceI;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
 	@Qualifier("userService")
 	private final UserServiceI userService;
 	@Qualifier("globalExceptionHandler")
 	private final GlobalExceptionHandler globalExceptionHandler;
-	private final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
 	public UserController(UserServiceI userService, GlobalExceptionHandler globalExceptionHandler) {
 		super();
@@ -45,7 +45,6 @@ public class UserController {
 	}
 
 	@PostMapping
-	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
 		User newUser = userService.createUser(user);
 		return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
@@ -112,7 +111,7 @@ public class UserController {
 		return ResponseEntity.ok(deletedUser);
 	}
 
-	private User getUserMethod(Long id) {
+	public User getUserMethod(Long id) {
 		User user = userService.getUserById(id);
 		return user;
 	}
