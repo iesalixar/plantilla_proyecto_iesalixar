@@ -1,4 +1,4 @@
-package com.fitconnet.controller.user;
+package com.fitconnet.controller.auth;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
