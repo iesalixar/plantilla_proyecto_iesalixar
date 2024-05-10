@@ -5,12 +5,13 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.fitconnet.persitence.model.Notification;
+import com.fitconnet.persitence.model.User;
 
 public interface NotificationServiceI {
 
 	Optional<Set<Notification>> getAll();
 
-	Optional<Set<Notification>> getByRecipient(Long userId);
+	Optional<Set<Notification>> getByRecipient(Optional<User> user);
 
 	Optional<Notification> getById(Long id);
 

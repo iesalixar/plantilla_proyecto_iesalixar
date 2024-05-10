@@ -17,10 +17,10 @@ public interface ActivityRepository extends JpaRepository<Activity, Long> {
 	@Query("SELECT n FROM Activity n WHERE n.date = ?1")
 	Boolean existByDate(Date date);
 
-	@Query("SELECT n FROM Activity n WHERE a.place = :place")
+	@Query("SELECT n FROM Activity n WHERE n.place = :place")
 	Optional<List<Activity>> findByActivityPlace(@Param("place") String place);
 
-	@Query("SELECT n FROM Activity n WHERE a.type = :activityType")
+	@Query("SELECT n FROM Activity n WHERE n.type = :activityType")
 	Optional<List<Activity>> findByActivityType(@Param("activityType") String activityType);
 
 }

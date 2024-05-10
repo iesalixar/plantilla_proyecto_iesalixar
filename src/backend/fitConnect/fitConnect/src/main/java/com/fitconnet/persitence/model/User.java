@@ -32,15 +32,19 @@ import jakarta.persistence.Table;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "T_USER")
-//@Data
-//@NoArgsConstructor
-//@AllArgsConstructor
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
-
 	/** Identificador único del usuario. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,6 +69,7 @@ public class User implements UserDetails {
 	@Column(name = "C_USER_PASSWORD")
 	@Size(min = 6, max = 30, message = "La contraseña debe tener entre 6 y 30 caracteres.")
 	private String password;
+
 	@ElementCollection(fetch = FetchType.EAGER, targetClass = Role.class)
 	@Enumerated(EnumType.STRING)
 	@CollectionTable(name = "T_USER_ROLES", joinColumns = @JoinColumn(name = "C_PK_USER_ID"))
@@ -82,11 +87,8 @@ public class User implements UserDetails {
 	@JoinTable(name = "T_USER_FRIENDS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
 	private List<User> friends = new ArrayList<>();
 
-	@OneToMany(mappedBy = "receiverId", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
 	private Set<Notification> notifications = new LinkedHashSet<>();
-
-	public User() {
-	}
 
 	@Transactional
 	@Override
@@ -97,90 +99,6 @@ public class User implements UserDetails {
 
 			return roles.stream().map(role -> new SimpleGrantedAuthority(role.name())).toList();
 		}
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
-	public Set<Activity> getCreatedActivities() {
-		return createdActivities;
-	}
-
-	public void setCreatedActivities(Set<Activity> createdActivities) {
-		this.createdActivities = createdActivities;
-	}
-
-	public Set<Activity> getInvitedActivities() {
-		return invitedActivities;
-	}
-
-	public void setInvitedActivities(Set<Activity> invitedActivities) {
-		this.invitedActivities = invitedActivities;
-	}
-
-	public List<User> getFriends() {
-		return friends;
-	}
-
-	public void setFriends(List<User> friends) {
-		this.friends = friends;
-	}
-
-	public Set<Notification> getNotifications() {
-		return notifications;
-	}
-
-	public void setNotifications(Set<Notification> notifications) {
-		this.notifications = notifications;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	@Override

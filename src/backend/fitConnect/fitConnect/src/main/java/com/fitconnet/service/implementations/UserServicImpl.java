@@ -127,7 +127,7 @@ public class UserServicImpl implements UserServiceI {
 
 		updateFieldIfDifferent(aux, user.getFirstName(), "firstName", aux::setFirstName);
 		updateFieldIfDifferent(aux, user.getLastName(), "lastName", aux::setLastName);
-		updateFieldIfDifferent(aux, user.getUserName(), "userName", aux::setUserName);
+		updateFieldIfDifferent(aux, user.getUsername(), "userName", aux::setUserName);
 		updateFieldIfDifferent(aux, user.getEmail(), "email", aux::setEmail);
 		updateFieldIfDifferent(aux, user.getPassword(), "password", aux::setPassword);
 	}
@@ -144,7 +144,7 @@ public class UserServicImpl implements UserServiceI {
 	public List<User> userSetToSortedList() {
 		Optional<Set<User>> userSet = getAll();
 		return userSet.orElse(new HashSet<>()).stream().filter(user -> !user.getRoles().contains(Role.ROLE_ADMIN))
-				.sorted(Comparator.comparing(User::getUserName)).toList();
+				.sorted(Comparator.comparing(User::getUsername)).toList();
 	}
 
 	@Override
@@ -187,7 +187,7 @@ public class UserServicImpl implements UserServiceI {
 		case "lastName":
 			return user.getLastName();
 		case "userName":
-			return user.getUserName();
+			return user.getUsername();
 		case "email":
 			return user.getEmail();
 		case "password":

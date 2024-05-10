@@ -17,6 +17,7 @@ import com.fitconnet.error.exception.notifications.NotificationCreationException
 import com.fitconnet.error.exception.notifications.NotificationNotFoundException;
 import com.fitconnet.error.exception.user.UserNotFoundException;
 import com.fitconnet.persitence.model.Notification;
+import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.NotificationRepository;
 import com.fitconnet.service.interfaces.NotificationServiceI;
 import com.fitconnet.utils.Constants;
@@ -48,20 +49,19 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	}
 
 	@Override
-	public Optional<Set<Notification>> getByRecipient(Long userId) {
-		Optional<Set<Notification>> notifications = notificationRepository.findByRecipientId(userId);
+	public Optional<Set<Notification>> getByRecipient(Optional<User> user) {
+		Optional<Set<Notification>> notifications = notificationRepository.findByRecipient(user);
 		if (notifications.isEmpty()) {
-			throw new NotificationNotFoundException("Notifications not found for user with ID: " + userId,
-					HttpStatus.NOT_FOUND);
+			throw new NotificationNotFoundException(Constants.NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND);
 		}
 		return notifications;
 	}
 
 	@Override
 	public void create(Notification notification) {
-		Notification aux = new Notification();
+
 		try {
-			aux = notificationRepository.save(notification);
+			notificationRepository.save(notification);
 		} catch (DataIntegrityViolationException | ConstraintViolationException e) {
 			throw new NotificationCreationException("Error creating notification", e, HttpStatus.BAD_REQUEST);
 		}
@@ -91,7 +91,7 @@ public class NotificationServiceImpl implements NotificationServiceI {
 				() -> new NotificationNotFoundException(Constants.NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND));
 		updateFieldIfDifferent(aux, notification.getMessage(), "message", aux::setMessage);
 		updateFieldIfDifferent(aux, notification.getDate(), "date", aux::setDate);
-		updateFieldIfDifferent(aux, notification.getReceiverId(), "receiverId", aux::setReceiverId);
+		updateFieldIfDifferent(aux, notification.getReceiver(), "receiver", aux::setReceiver);
 
 	}
 
@@ -104,7 +104,7 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	public void setAttributes(Notification notification, Notification newNotification) {
 		newNotification.setDate(notification.getDate());
 		newNotification.setMessage(notification.getMessage());
-		newNotification.setReceiverId(notification.getReceiverId());
+		newNotification.setReceiver(notification.getReceiver());
 
 	}
 
@@ -132,7 +132,7 @@ public class NotificationServiceImpl implements NotificationServiceI {
 		case "date":
 			return (T) notification.getDate();
 		case "receiverId":
-			return (T) notification.getReceiverId();
+			return (T) notification.getReceiver();
 		default:
 			throw new IllegalArgumentException("Campo desconocido: " + fieldName);
 		}

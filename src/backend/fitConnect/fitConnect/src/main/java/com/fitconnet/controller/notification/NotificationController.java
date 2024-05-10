@@ -73,27 +73,15 @@ public class NotificationController {
 		return ResponseEntity.ok().body(notifications);
 	}
 
-	@GetMapping("/notifications/{userId}")
+	@GetMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	public ResponseEntity<Optional<Set<Notification>>> getNotificationsByUserId(@PathVariable Long userId) {
-		logger.info("NotificationController :: getNotificationsByUserId");
-		ResponseEntity<Optional<Set<Notification>>> response = null;
-		Optional<User> existingUser = userService.getById(userId);
-		response = processingResponseI.processOptionalResponse(existingUser,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
-				() -> ResponseEntity.ok().body(notificationService.getByRecipient(userId)));
-		return response;
-	}
-
-	@GetMapping("/notification/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	public ResponseEntity<Optional<Set<Notification>>> getNotificationsById(@PathVariable Long id) {
+	public ResponseEntity<Optional<Set<Notification>>> getNotificationsByUserId(@PathVariable Long id) {
 		logger.info("NotificationController :: getNotificationsById");
 		ResponseEntity<Optional<Set<Notification>>> response = null;
-		Optional<Notification> existingNotifications = notificationService.getById(id);
-		response = processingResponseI.processOptionalResponse(existingNotifications,
+		Optional<User> existingUser = userService.getById(id);
+		response = processingResponseI.processOptionalResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND),
-				() -> ResponseEntity.ok().body(notificationService.getByRecipient(id)));
+				() -> ResponseEntity.ok().body(notificationService.getByRecipient(existingUser)));
 		return response;
 	}
 
