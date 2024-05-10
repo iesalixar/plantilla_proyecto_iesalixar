@@ -1,4 +1,4 @@
-package com.fitconnet.service.implementations;
+package com.fitconnet.service.implementations.entity;
 
 import java.security.InvalidParameterException;
 import java.util.Comparator;
@@ -15,20 +15,17 @@ import org.springframework.stereotype.Service;
 import com.fitconnet.error.exception.activity.ActivityNotFoundException;
 import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.persitence.repository.ActivityRepository;
-import com.fitconnet.service.interfaces.ActivityServiceI;
+import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.utils.Constants;
 
 import jakarta.validation.ConstraintViolationException;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class ActivityServiceImpl implements ActivityServiceI {
 
 	private final ActivityRepository activityRepository;
-
-	public ActivityServiceImpl(ActivityRepository activityRepository) {
-		this.activityRepository = activityRepository;
-
-	}
 
 	@Override
 	public Optional<Set<Activity>> getAll() {

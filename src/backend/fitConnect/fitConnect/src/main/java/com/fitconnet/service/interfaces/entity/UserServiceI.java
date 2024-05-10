@@ -1,4 +1,4 @@
-package com.fitconnet.service.interfaces;
+package com.fitconnet.service.interfaces.entity;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.fitconnet.enums.Role;
 import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
@@ -44,6 +45,6 @@ public interface UserServiceI {
 
 	void deleteById(Long id);
 
-	void setAttributes(User user, User newUser);
+	void setAttributes(User user, User newUser, Role rol);
 
 }

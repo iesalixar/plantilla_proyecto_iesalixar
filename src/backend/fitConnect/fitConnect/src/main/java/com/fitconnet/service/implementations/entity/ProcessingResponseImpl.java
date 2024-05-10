@@ -1,4 +1,4 @@
-package com.fitconnet.service.implementations;
+package com.fitconnet.service.implementations.entity;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.fitconnet.service.interfaces.ProcessingResponseI;
+import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 
 @Service
 public class ProcessingResponseImpl implements ProcessingResponseI {

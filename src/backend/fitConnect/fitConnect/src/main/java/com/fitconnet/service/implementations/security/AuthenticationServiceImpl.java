@@ -1,4 +1,4 @@
-package com.fitconnet.service.implementations;
+package com.fitconnet.service.implementations.security;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -7,36 +7,30 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.fitconnet.dto.requets.SignUpRequest;
-import com.fitconnet.dto.requets.SigninRequest;
-import com.fitconnet.dto.response.user.JwtAuthenticationResponse;
+import com.fitconnet.dto.requets.SignUpDTO;
+import com.fitconnet.dto.requets.SigninDTO;
+import com.fitconnet.dto.response.JwtAuthenticationDTO;
 import com.fitconnet.enums.Role;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.UserRepository;
-import com.fitconnet.service.interfaces.AuthenticationService;
-import com.fitconnet.service.interfaces.JwtService;
+import com.fitconnet.service.interfaces.security.AuthenticationServiceI;
+import com.fitconnet.service.interfaces.security.JwtServiceI;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 
 @Builder
 @Service
-public class AuthenticationServiceImpl implements AuthenticationService {
+@AllArgsConstructor
+public class AuthenticationServiceImpl implements AuthenticationServiceI {
 
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
-	private final JwtService jwtService;
+	private final JwtServiceI jwtService;
 	private final AuthenticationManager authenticationManager;
 
-	public AuthenticationServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
-			JwtService jwtService, AuthenticationManager authenticationManager) {
-		this.userRepository = userRepository;
-		this.passwordEncoder = passwordEncoder;
-		this.jwtService = jwtService;
-		this.authenticationManager = authenticationManager;
-	}
-
 	@Override
-	public JwtAuthenticationResponse signup(SignUpRequest request) {
+	public JwtAuthenticationDTO signup(SignUpDTO request) {
 		boolean emailExists = userRepository.existsByEmail(request.getEmail());
 		if (emailExists) {
 			throw new IllegalArgumentException("Email already in use.");
@@ -45,17 +39,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		User user = new User();
 		user.setFirstName(request.getFirstName());
 		user.setLastName(request.getLastName());
+		user.setUserName(request.getUserName());
 		user.setEmail(request.getEmail());
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 		user.getRoles().add(Role.ROLE_USER);
 		userRepository.save(user);
 
 		String jwt = jwtService.generateToken(user);
-		return JwtAuthenticationResponse.builder().token(jwt).build();
+		return JwtAuthenticationDTO.builder().token(jwt).build();
 	}
 
 	@Override
-	public JwtAuthenticationResponse signin(SigninRequest request) {
+	public JwtAuthenticationDTO signin(SigninDTO request) {
 		Authentication authentication = authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
@@ -64,6 +59,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		User user = userRepository.findByEmail(request.getEmail())
 				.orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
 		String jwt = jwtService.generateToken(user);
-		return JwtAuthenticationResponse.builder().token(jwt).build();
+		return JwtAuthenticationDTO.builder().token(jwt).build();
 	}
 }

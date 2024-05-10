@@ -1,4 +1,4 @@
-package com.fitconnet.service.implementations;
+package com.fitconnet.service.implementations.entity;
 
 import java.security.InvalidParameterException;
 import java.util.Comparator;
@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fitconnet.enums.Role;
@@ -20,20 +21,19 @@ import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.UserRepository;
-import com.fitconnet.service.interfaces.UserServiceI;
+import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
 
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class UserServicImpl implements UserServiceI {
 
 	private final UserRepository userRepository;
-
-	public UserServicImpl(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+	private final PasswordEncoder passwordEncoder;
 
 	@Override
 	public Optional<Set<User>> getAll() {
@@ -158,14 +158,19 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public void setAttributes(User user, User newUser) {
+	public void setAttributes(User user, User newUser, Role rol) {
 		newUser.setFirstName(user.getFirstName());
 		newUser.setLastName(user.getLastName());
 		newUser.setUserName(user.getUsername());
 		newUser.setEmail(user.getEmail());
-		newUser.setPassword(user.getPassword());// TODO crear password encoder.
+		newUser.setPassword(passwordEncoder.encode(user.getPassword()));
 		Set<Role> roles = new HashSet<>();
-		roles.add(Role.ROLE_USER);
+		if (rol.equals(Role.ROLE_USER)) {
+			roles.add(Role.ROLE_USER);
+		} else {
+			roles.add(Role.ROLE_ADMIN);
+		}
+
 		newUser.setRoles(roles);
 
 	}

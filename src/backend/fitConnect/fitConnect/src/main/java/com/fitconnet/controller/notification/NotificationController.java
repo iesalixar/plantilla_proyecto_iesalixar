@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,13 +22,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
-import com.fitconnet.service.interfaces.NotificationServiceI;
-import com.fitconnet.service.interfaces.ProcessingResponseI;
-import com.fitconnet.service.interfaces.UserServiceI;
+import com.fitconnet.service.interfaces.entity.NotificationServiceI;
+import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
+import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
+
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/notification")
+@CrossOrigin(origins = "http://localhost:4200")
+@AllArgsConstructor
 public class NotificationController {
 
 	@Qualifier("notificationService")
@@ -41,16 +46,8 @@ public class NotificationController {
 
 	private final Logger logger = LoggerFactory.getLogger(NotificationController.class);
 
-	public NotificationController(NotificationServiceI notificationService, UserServiceI userService,
-			ProcessingResponseI processingResponseI, GlobalExceptionHandler globalExceptionHandler) {
-		super();
-		this.notificationService = notificationService;
-		this.userService = userService;
-		this.processingResponseI = processingResponseI;
-		this.globalExceptionHandler = globalExceptionHandler;
-	}
-
 	@PostMapping
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<String> createNotification(@RequestBody Notification notification) {
 		logger.info("NotificationController :: createNotification");
 		ResponseEntity<String> response = null;

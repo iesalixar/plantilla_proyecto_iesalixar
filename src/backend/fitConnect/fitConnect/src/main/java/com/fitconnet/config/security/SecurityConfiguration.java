@@ -1,4 +1,4 @@
-package com.fitconnet.config;
+package com.fitconnet.config.security;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -18,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fitconnet.enums.Role;
-import com.fitconnet.service.interfaces.UserServiceI;
+import com.fitconnet.service.interfaces.entity.UserServiceI;
 
 @Configuration
 @EnableWebSecurity

@@ -1,4 +1,4 @@
-package com.fitconnet.service.interfaces;
+package com.fitconnet.service.interfaces.entity;
 
 import java.util.Optional;
 import java.util.function.Supplier;

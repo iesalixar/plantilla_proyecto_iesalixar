@@ -1,4 +1,4 @@
-package com.fitconnet.service.interfaces;
+package com.fitconnet.service.interfaces.entity;
 
 import java.util.Date;
 import java.util.Optional;

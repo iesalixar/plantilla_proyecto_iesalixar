@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +22,20 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.fitconnet.dto.response.error.ErrorDetailsResponse;
+import com.fitconnet.enums.Role;
+import com.fitconnet.error.ErrorDetailsResponse;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.User;
-import com.fitconnet.service.interfaces.ProcessingResponseI;
-import com.fitconnet.service.interfaces.UserServiceI;
+import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
+import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
+
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/user")
+@CrossOrigin(origins = "http://localhost:4200")
+@AllArgsConstructor
 public class UserController {
 
 	@Qualifier("userService")
@@ -41,14 +47,6 @@ public class UserController {
 
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	public UserController(UserServiceI userService, GlobalExceptionHandler globalExceptionHandler,
-			ProcessingResponseI processingResponseI) {
-
-		this.userService = userService;
-		this.globalExceptionHandler = globalExceptionHandler;
-		this.processingResponseI = processingResponseI;
-	}
-
 	@PostMapping
 	public ResponseEntity<String> createUser(@RequestBody User user) {
 		logger.info("UserController :: createUser");
@@ -57,7 +55,25 @@ public class UserController {
 		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("El usuario ya existe"), () -> {
 					User newUser = new User();
-					userService.setAttributes(user, newUser);
+					Role rol = Role.ROLE_USER;
+					userService.setAttributes(user, newUser, rol);
+					userService.create(newUser);
+					return ResponseEntity.ok().body("Usuario: " + user.getUsername() + ", creado correctamente.");
+				});
+		return response;
+	}
+
+	@PostMapping("/add/admin")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public ResponseEntity<String> createAdmin(@RequestBody User user) {
+		logger.info("UserController :: createUser");
+		ResponseEntity<String> response = null;
+		Boolean exist = userService.existByEmail(user.getEmail());
+		response = processingResponseI.processResponseForString(exist,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("El usuario ya existe"), () -> {
+					User newUser = new User();
+					Role rol = Role.ROLE_ADMIN;
+					userService.setAttributes(user, newUser, rol);
 					userService.create(newUser);
 					return ResponseEntity.ok().body("Usuario: " + user.getUsername() + ", creado correctamente.");
 				});

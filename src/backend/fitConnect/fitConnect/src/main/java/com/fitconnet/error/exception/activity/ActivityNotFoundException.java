@@ -2,6 +2,9 @@ package com.fitconnet.error.exception.activity;
 
 import org.springframework.http.HttpStatus;
 
+import lombok.Data;
+
+@Data
 public class ActivityNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
@@ -12,10 +15,6 @@ public class ActivityNotFoundException extends RuntimeException {
 		super(message);
 		this.status = status;
 
-	}
-
-	public HttpStatus getStatus() {
-		return status;
 	}
 
 }

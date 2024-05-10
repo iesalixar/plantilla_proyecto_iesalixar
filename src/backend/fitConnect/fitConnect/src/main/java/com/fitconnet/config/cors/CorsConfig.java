@@ -1,4 +1,4 @@
-package com.fitconnet.config;
+package com.fitconnet.config.cors;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

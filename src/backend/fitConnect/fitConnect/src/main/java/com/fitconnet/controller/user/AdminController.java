@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,19 +25,23 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.fitconnet.dto.response.error.ErrorDetailsResponse;
+import com.fitconnet.error.ErrorDetailsResponse;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
-import com.fitconnet.service.interfaces.ActivityServiceI;
-import com.fitconnet.service.interfaces.NotificationServiceI;
-import com.fitconnet.service.interfaces.ProcessingResponseI;
-import com.fitconnet.service.interfaces.UserServiceI;
+import com.fitconnet.service.interfaces.entity.ActivityServiceI;
+import com.fitconnet.service.interfaces.entity.NotificationServiceI;
+import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
+import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
+
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/admin")
+@CrossOrigin(origins = "http://localhost:4200")
+@AllArgsConstructor
 public class AdminController {
 
 	@Qualifier("userService")
@@ -51,16 +56,6 @@ public class AdminController {
 	private final ProcessingResponseI processingResponseI;
 
 	private final Logger logger = LoggerFactory.getLogger(AdminController.class);
-
-	public AdminController(UserServiceI userService, ActivityServiceI activityService,
-			NotificationServiceI notificationService, GlobalExceptionHandler globalExceptionHandler,
-			ProcessingResponseI processingResponseI) {
-		this.userService = userService;
-		this.activityService = activityService;
-		this.notificationService = notificationService;
-		this.globalExceptionHandler = globalExceptionHandler;
-		this.processingResponseI = processingResponseI;
-	}
 
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")

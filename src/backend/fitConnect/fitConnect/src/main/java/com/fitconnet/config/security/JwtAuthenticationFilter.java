@@ -1,4 +1,4 @@
-package com.fitconnet.config;
+package com.fitconnet.config.security;
 
 import java.io.IOException;
 
@@ -12,8 +12,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.fitconnet.service.interfaces.JwtService;
-import com.fitconnet.service.interfaces.UserServiceI;
+import com.fitconnet.service.interfaces.entity.UserServiceI;
+import com.fitconnet.service.interfaces.security.JwtServiceI;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,10 +23,10 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-	private final JwtService jwtService;
+	private final JwtServiceI jwtService;
 	private final UserServiceI userService;
 
-	public JwtAuthenticationFilter(JwtService jwtService, UserServiceI userService) {
+	public JwtAuthenticationFilter(JwtServiceI jwtService, UserServiceI userService) {
 		this.jwtService = jwtService;
 		this.userService = userService;
 

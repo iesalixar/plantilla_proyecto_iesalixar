@@ -1,4 +1,4 @@
-package com.fitconnet.service.implementations;
+package com.fitconnet.service.implementations.entity;
 
 import java.security.InvalidParameterException;
 import java.util.Comparator;
@@ -19,18 +19,16 @@ import com.fitconnet.error.exception.user.UserNotFoundException;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.NotificationRepository;
-import com.fitconnet.service.interfaces.NotificationServiceI;
+import com.fitconnet.service.interfaces.entity.NotificationServiceI;
 import com.fitconnet.utils.Constants;
 
 import jakarta.validation.ConstraintViolationException;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class NotificationServiceImpl implements NotificationServiceI {
 	private final NotificationRepository notificationRepository;
-
-	public NotificationServiceImpl(NotificationRepository notificationRepository) {
-		this.notificationRepository = notificationRepository;
-	}
 
 	@Override
 	public Optional<Set<Notification>> getAll() {

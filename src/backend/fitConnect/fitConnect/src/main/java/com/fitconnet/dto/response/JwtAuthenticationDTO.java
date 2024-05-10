@@ -1,10 +1,10 @@
-package com.fitconnet.dto.response.user;
+package com.fitconnet.dto.response;
 
 
-public class JwtAuthenticationResponse {
+public class JwtAuthenticationDTO {
     private String token;
 
-	public JwtAuthenticationResponse(String token) {
+	public JwtAuthenticationDTO(String token) {
 		this.token = token;
 	}
 
@@ -28,8 +28,8 @@ public class JwtAuthenticationResponse {
             return this;
         }
 
-        public JwtAuthenticationResponse build() {
-            return new JwtAuthenticationResponse(token);
+        public JwtAuthenticationDTO build() {
+            return new JwtAuthenticationDTO(token);
         }
     }
     

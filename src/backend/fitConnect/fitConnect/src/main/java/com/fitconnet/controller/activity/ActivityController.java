@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,16 +23,20 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.fitconnet.dto.response.error.ErrorDetailsResponse;
+import com.fitconnet.error.ErrorDetailsResponse;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.Activity;
-import com.fitconnet.service.interfaces.ActivityServiceI;
-import com.fitconnet.service.interfaces.ProcessingResponseI;
-import com.fitconnet.service.interfaces.UserServiceI;
+import com.fitconnet.service.interfaces.entity.ActivityServiceI;
+import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
+import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
+
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/activity")
+@CrossOrigin(origins = "http://localhost:4200")
+@AllArgsConstructor
 public class ActivityController {
 
 	@Qualifier("activityService")
@@ -44,15 +49,6 @@ public class ActivityController {
 	private final GlobalExceptionHandler globalExceptionHandler;
 
 	private final Logger logger = LoggerFactory.getLogger(ActivityController.class);
-
-	public ActivityController(ActivityServiceI activityService, UserServiceI userService,
-			ProcessingResponseI processingResponseI, GlobalExceptionHandler globalExceptionHandler) {
-
-		this.activityService = activityService;
-		this.userService = userService;
-		this.processingResponseI = processingResponseI;
-		this.globalExceptionHandler = globalExceptionHandler;
-	}
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")

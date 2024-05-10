@@ -11,43 +11,39 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.fitconnet.dto.requets.SignUpRequest;
-import com.fitconnet.dto.requets.SigninRequest;
-import com.fitconnet.dto.response.error.ErrorDetailsResponse;
-import com.fitconnet.dto.response.user.JwtAuthenticationResponse;
+import com.fitconnet.dto.requets.SignUpDTO;
+import com.fitconnet.dto.requets.SigninDTO;
+import com.fitconnet.dto.response.JwtAuthenticationDTO;
+import com.fitconnet.error.ErrorDetailsResponse;
 import com.fitconnet.error.GlobalExceptionHandler;
-import com.fitconnet.service.interfaces.AuthenticationService;
+import com.fitconnet.service.interfaces.security.AuthenticationServiceI;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 @CrossOrigin(origins = "http://localhost:4200")
+@AllArgsConstructor
 public class AuthenticationController {
 
 	@Qualifier("authenticationService")
-	private final AuthenticationService authenticationService;
+	private final AuthenticationServiceI authenticationService;
 	@Qualifier("globalExceptionHandler")
 	private final GlobalExceptionHandler globalExceptionHandler;
-
-	public AuthenticationController(AuthenticationService authenticationService,
-			GlobalExceptionHandler globalExceptionHandler) {
-		this.authenticationService = authenticationService;
-		this.globalExceptionHandler = globalExceptionHandler;
-	}
 
 	@PostMapping("/signup")
 	@Operation(summary = "Registro de usuario", description = "Registro de un nuevo usuario")
 	@ApiResponse(responseCode = "200", description = "Usuario registrado exitosamente")
-	public ResponseEntity<JwtAuthenticationResponse> signup(@RequestBody SignUpRequest request) {
+	public ResponseEntity<JwtAuthenticationDTO> signup(@RequestBody SignUpDTO request) {
 		return ResponseEntity.ok(authenticationService.signup(request));
 	}
 
 	@PostMapping("/signin")
 	@Operation(summary = "Inicio de sesión", description = "Inicio de sesión de usuario")
 	@ApiResponse(responseCode = "200", description = "Inicio de sesión exitoso")
-	public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SigninRequest request) {
+	public ResponseEntity<JwtAuthenticationDTO> signin(@RequestBody SigninDTO request) {
 		return ResponseEntity.ok(authenticationService.signin(request));
 	}
 
