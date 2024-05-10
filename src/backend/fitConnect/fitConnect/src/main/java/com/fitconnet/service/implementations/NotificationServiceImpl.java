@@ -3,10 +3,10 @@ package com.fitconnet.service.implementations;
 import java.security.InvalidParameterException;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -34,7 +34,7 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	@Override
 	public Optional<Set<Notification>> getAll() {
 		List<Notification> notificationList = notificationRepository.findAll();
-		Set<Notification> sortedNotifications = new LinkedHashSet<>();
+		Set<Notification> sortedNotifications;
 		sortedNotifications = notificationList.stream().sorted(Comparator.comparing(Notification::getDate))
 				.collect(Collectors.toSet());
 		return Optional.of(sortedNotifications);
@@ -70,41 +70,29 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	@Override
 	public void delete(Long id) {
 
-		Notification notification = notificationRepository.findById(id)
-				.orElseThrow(() -> new NotificationNotFoundException("Notification not found", HttpStatus.NOT_FOUND));
+		if (!notificationRepository.findById(id).isPresent()) {
+			throw new NotificationNotFoundException(Constants.NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND);
+		}
 		notificationRepository.deleteById(id);
 	}
 
 	@Override
 	public void update(Long id, Notification notification) {
-		Notification aux = notificationRepository.findById(id)
-				.orElseThrow(() -> new NotificationNotFoundException("Notification not found", HttpStatus.NOT_FOUND));
+		Notification aux = notificationRepository.findById(id).orElseThrow(
+				() -> new NotificationNotFoundException(Constants.NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND));
 		notificationRepository.deleteById(id);
 		notificationRepository.save(aux);
 
 	}
 
-// TODO MEJORAR PATCH
 	@Override
 	public void patch(Long id, Notification notification) {
-		Notification aux = notificationRepository.findById(id)
-				.orElseThrow(() -> new NotificationNotFoundException("Notification not found", HttpStatus.NOT_FOUND));
-		try {
-			if (notification.getMessage() != aux.getMessage()) {
-				aux.setMessage(notification.getMessage());
-			}
+		Notification aux = notificationRepository.findById(id).orElseThrow(
+				() -> new NotificationNotFoundException(Constants.NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND));
+		updateFieldIfDifferent(aux, notification.getMessage(), "message", aux::setMessage);
+		updateFieldIfDifferent(aux, notification.getDate(), "date", aux::setDate);
+		updateFieldIfDifferent(aux, notification.getReceiverId(), "receiverId", aux::setReceiverId);
 
-		} catch (ConstraintViolationException e) {
-			throw new InvalidParameterException("Debe ser un memsaje válido.");
-		}
-		try {
-			if (notification.getDate() != aux.getDate()) {
-				aux.setDate(notification.getDate());
-			}
-
-		} catch (ConstraintViolationException e) {
-			throw new InvalidParameterException("Debe ser una fecha válida.");
-		}
 	}
 
 	@Override
@@ -123,6 +111,31 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	@Override
 	public boolean existByDate(Date date) {
 		return notificationRepository.existByDate(date);
+	}
+
+	private <T> void updateFieldIfDifferent(Notification notification, T newValue, String fieldName,
+			Consumer<T> setter) {
+		T existingValue = getFieldValue(notification, fieldName);
+		if (newValue != null && !newValue.equals(existingValue)) {
+			try {
+				setter.accept(newValue);
+			} catch (ConstraintViolationException e) {
+				throw new InvalidParameterException("El valor para '" + fieldName + "' no es válido.");
+			}
+		}
+	}
+
+	private <T> T getFieldValue(Notification notification, String fieldName) {
+		switch (fieldName) {
+		case "message":
+			return (T) notification.getMessage();
+		case "date":
+			return (T) notification.getDate();
+		case "receiverId":
+			return (T) notification.getReceiverId();
+		default:
+			throw new IllegalArgumentException("Campo desconocido: " + fieldName);
+		}
 	}
 
 }

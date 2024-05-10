@@ -132,33 +132,6 @@ public class UserServicImpl implements UserServiceI {
 		updateFieldIfDifferent(aux, user.getPassword(), "password", aux::setPassword);
 	}
 
-	private void updateFieldIfDifferent(User user, String newValue, String fieldName, Consumer<String> setter) {
-		if (newValue != null && !newValue.equalsIgnoreCase(getFieldValue(user, fieldName))) {
-			try {
-				setter.accept(newValue);
-			} catch (ConstraintViolationException e) {
-				throw new InvalidParameterException("El valor para '" + fieldName + "' no es válido.");
-			}
-		}
-	}
-
-	private String getFieldValue(User user, String fieldName) {
-		switch (fieldName) {
-		case "firstName":
-			return user.getFirstName();
-		case "lastName":
-			return user.getLastName();
-		case "userName":
-			return user.getUserName();
-		case "email":
-			return user.getEmail();
-		case "password":
-			return user.getPassword();
-		default:
-			throw new IllegalArgumentException("Campo desconocido: " + fieldName);
-		}
-	}
-
 	@Override
 	public void deleteById(Long id) {
 		if (!userRepository.findById(id).isPresent()) {
@@ -191,11 +164,37 @@ public class UserServicImpl implements UserServiceI {
 		newUser.setUserName(user.getUsername());
 		newUser.setEmail(user.getEmail());
 		newUser.setPassword(user.getPassword());// TODO crear password encoder.
-		// Asignar el rol de usuario común
 		Set<Role> roles = new HashSet<>();
 		roles.add(Role.ROLE_USER);
 		newUser.setRoles(roles);
 
+	}
+
+	private void updateFieldIfDifferent(User user, String newValue, String fieldName, Consumer<String> setter) {
+		if (newValue != null && !newValue.equalsIgnoreCase(getFieldValue(user, fieldName))) {
+			try {
+				setter.accept(newValue);
+			} catch (ConstraintViolationException e) {
+				throw new InvalidParameterException("El valor para '" + fieldName + "' no es válido.");
+			}
+		}
+	}
+
+	private String getFieldValue(User user, String fieldName) {
+		switch (fieldName) {
+		case "firstName":
+			return user.getFirstName();
+		case "lastName":
+			return user.getLastName();
+		case "userName":
+			return user.getUserName();
+		case "email":
+			return user.getEmail();
+		case "password":
+			return user.getPassword();
+		default:
+			throw new IllegalArgumentException("Campo desconocido: " + fieldName);
+		}
 	}
 
 }
