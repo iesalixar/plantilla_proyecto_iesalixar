@@ -59,9 +59,9 @@ public class ActivityController {
 	public ResponseEntity<String> createActivity(@RequestBody Activity activity) {
 		logger.info("ActivityController :: createActivity");
 		ResponseEntity<String> response = null;
-		Boolean existingActivity = activityService.existByDate(activity.getDate());
+		Boolean exist = activityService.existByDate(activity.getDate());
 
-		response = processingResponseI.processResponseForString(existingActivity,
+		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("La actividad ya existe"), () -> {
 					Activity newActivity = new Activity();
 					activityService.setActivityAttributes(activity, newActivity);
@@ -83,11 +83,15 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<Optional<Activity>> getActivityById(@PathVariable Long id) {
 		logger.info("ActivityController :: getActivityById");
-		Optional<Activity> activity = activityService.getActivity(id);
-		return ResponseEntity.ok().body(activity);
+		ResponseEntity<Optional<Activity>> response = null;
+		Optional<Activity> existingActivity = activityService.getActivity(id);
+		response = processingResponseI.processResponseForEntity(existingActivity,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
+				() -> ResponseEntity.ok().body(existingActivity));
+		return response;
 	}
 
-	@GetMapping("/activities/{id}")
+	@GetMapping("/user/{userId}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<Optional<Set<Activity>>> getActivitiesByUserId(@PathVariable Long userId) {
 		logger.info("UserController :: getActivities");
@@ -99,7 +103,7 @@ public class ActivityController {
 		return response;
 	}
 
-	@GetMapping("/activities/created/{id}")
+	@GetMapping("/created/{userId}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<Optional<Set<Activity>>> getCreatedActivities(@PathVariable Long userId) {
 		logger.info("UserController :: getCreatedActivities");
@@ -111,7 +115,7 @@ public class ActivityController {
 		return response;
 	}
 
-	@GetMapping("/activities/invited/{id}")
+	@GetMapping("/invited/{userId}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<Optional<Set<Activity>>> getInvitedActivities(@PathVariable Long userId) {
 		logger.info("UserController :: getInvitedActivities");

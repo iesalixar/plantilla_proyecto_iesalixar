@@ -53,8 +53,8 @@ public class UserController {
 	public ResponseEntity<String> createUser(@RequestBody User user) {
 		logger.info("UserController :: createUser");
 		ResponseEntity<String> response = null;
-		Boolean existingUser = userService.existByEmail(user.getEmail());
-		response = processingResponseI.processResponseForString(existingUser,
+		Boolean exist = userService.existByEmail(user.getEmail());
+		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("El usuario ya existe"), () -> {
 					User newUser = new User();
 					userService.setUserAttributes(user, newUser);
@@ -78,7 +78,7 @@ public class UserController {
 		logger.info("UserController :: getUser");
 		ResponseEntity<Optional<User>> response = null;
 		Optional<User> existingUser = userService.getUserById(id);
-		response = processingResponseI.processResponseForUser(existingUser,
+		response = processingResponseI.processResponseForEntity(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
 				() -> ResponseEntity.ok().body(existingUser));
 		return response;
@@ -90,7 +90,7 @@ public class UserController {
 		logger.info("UserController :: getFriends");
 		ResponseEntity<List<User>> response = null;
 		Optional<User> existingUser = userService.getUserById(id);
-		response = processingResponseI.processResponseForUser(existingUser,
+		response = processingResponseI.processResponseForEntity(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
 				() -> ResponseEntity.ok().body(existingUser.get().getFriends()));
 		return response;
@@ -101,8 +101,8 @@ public class UserController {
 	public ResponseEntity<String> patchUser(@PathVariable Long id, @RequestBody User user) {
 		logger.info("UserController :: patchUser");
 		ResponseEntity<String> response = null;
-		Boolean existingUser = userService.existById(id);
-		response = processingResponseI.processResponseForString(existingUser,
+		Boolean exist = userService.existById(id);
+		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND), () -> {
 					userService.patchUser(id, user);
 					return ResponseEntity.ok().body("Usuario actualizado");
@@ -115,8 +115,8 @@ public class UserController {
 	public ResponseEntity<String> deleteUser(@PathVariable Long id) {
 		logger.info("UserController :: deleteUser");
 		ResponseEntity<String> response = null;
-		Boolean existingUser = userService.existById(id);
-		response = processingResponseI.processResponseForString(existingUser,
+		Boolean exist = userService.existById(id);
+		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND), () -> {
 					userService.deleteById(id);
 					return ResponseEntity.ok().body("Usuario ha sido eliminado exitosamente");

@@ -12,7 +12,7 @@ import com.fitconnet.service.interfaces.ProcessingResponseI;
 public class ProcessingResponseImpl implements ProcessingResponseI {
 
 	@Override
-	public <T> ResponseEntity<T> processResponseForUser(Optional<?> entity, Supplier<ResponseEntity> conflictSupplier,
+	public <T> ResponseEntity<T> processResponseForEntity(Optional<?> entity, Supplier<ResponseEntity> conflictSupplier,
 			Supplier<ResponseEntity<T>> successSupplier) {
 		ResponseEntity<T> outcome;
 		if (!entity.isPresent()) {

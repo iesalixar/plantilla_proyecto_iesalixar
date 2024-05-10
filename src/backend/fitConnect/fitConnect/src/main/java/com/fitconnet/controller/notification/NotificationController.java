@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,8 +54,8 @@ public class NotificationController {
 	public ResponseEntity<String> createNotification(@RequestBody Notification notification) {
 		logger.info("NotificationController :: createNotification");
 		ResponseEntity<String> response = null;
-		Boolean existNotification = notificationService.existByDate(notification.getDate());
-		response = processingResponseI.processResponseForString(existNotification,
+		Boolean exist = notificationService.existByDate(notification.getDate());
+		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("La notificación ya existe"), () -> {
 					Notification newNotification = new Notification();
 					notificationService.setNotificationAttributes(notification, newNotification);
@@ -89,10 +90,24 @@ public class NotificationController {
 	public ResponseEntity<Optional<Set<Notification>>> getNotificationsById(@PathVariable Long id) {
 		logger.info("NotificationController :: getNotificationsById");
 		ResponseEntity<Optional<Set<Notification>>> response = null;
-		Optional<Notification> existingNotification = notificationService.getById(id);
-		response = processingResponseI.processOptionalResponse(existingNotification,
+		Optional<Notification> existingNotifications = notificationService.getById(id);
+		response = processingResponseI.processOptionalResponse(existingNotifications,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND),
 				() -> ResponseEntity.ok().body(notificationService.getByRecipient(id)));
+		return response;
+	}
+
+	@PatchMapping("/{id}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public ResponseEntity<String> patchNotification(@PathVariable Long id, @RequestBody Notification notification) {
+		logger.info("NotificationController :: patchNotification");
+		ResponseEntity<String> response = null;
+		Boolean exist = notificationService.existById(id);
+		response = processingResponseI.processResponseForString(exist,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND), () -> {
+					notificationService.patch(id, notification);
+					return ResponseEntity.ok().body("Usuario actualizado");
+				});
 		return response;
 	}
 
@@ -101,8 +116,8 @@ public class NotificationController {
 	public ResponseEntity<String> deleteNotification(@PathVariable Long id) {
 		logger.info("ActivityController :: deleteNotification");
 		ResponseEntity<String> response = null;
-		boolean existingNotification = notificationService.existById(id);
-		response = processingResponseI.processResponseForString(existingNotification,
+		Boolean exist = notificationService.existById(id);
+		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND), () -> {
 					notificationService.delete(id);
 					return ResponseEntity.ok().body("Notificacion ha eliminado correctamente");

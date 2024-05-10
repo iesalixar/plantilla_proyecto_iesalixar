@@ -27,6 +27,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import com.fitconnet.dto.response.error.ErrorDetailsResponse;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.Activity;
+import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.interfaces.ActivityServiceI;
 import com.fitconnet.service.interfaces.NotificationServiceI;
@@ -74,15 +75,43 @@ public class AdminController {
 		return ResponseEntity.ok().body(dashboardData);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("/user/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody User user) {
 		logger.info("## AdminController :: updateUser");
 		ResponseEntity<String> response = null;
-		boolean existingUser = userService.existById(id);
-		response = processingResponseI.processResponseForString(existingUser,
+		boolean exist = userService.existById(id);
+		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND), () -> {
 					userService.updateUser(id, user);
+					return ResponseEntity.ok().body("Usuario actualizado");
+				});
+		return response;
+	}
+
+	@PutMapping("/notification/{id}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public ResponseEntity<String> updateNotification(@PathVariable Long id, @RequestBody Notification notification) {
+		logger.info("## AdminController :: updateNotification");
+		ResponseEntity<String> response = null;
+		Boolean exists = notificationService.existById(id);
+		response = processingResponseI.processResponseForString(exists,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND), () -> {
+					notificationService.update(id, notification);
+					return ResponseEntity.ok().body("Usuario actualizado");
+				});
+		return response;
+	}
+
+	@PutMapping("/activity/{id}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
+		logger.info("## AdminController :: updateActivity");
+		ResponseEntity<String> response = null;
+		Boolean exists = activityService.existActivity(id);
+		response = processingResponseI.processResponseForString(exists,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
+					activityService.updateActivity(id, activity);
 					return ResponseEntity.ok().body("Usuario actualizado");
 				});
 		return response;
@@ -93,8 +122,8 @@ public class AdminController {
 	public ResponseEntity<String> deleteUser(@PathVariable Long id) {
 		logger.info("## AdminController :: deleteUser");
 		ResponseEntity<String> response = null;
-		boolean existingUser = userService.existById(id);
-		response = processingResponseI.processResponseForString(existingUser,
+		Boolean exist = userService.existById(id);
+		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND), () -> {
 					userService.deleteById(id);
 					return ResponseEntity.ok().body("Usuario ha sido eliminado exitosamente");
@@ -107,8 +136,8 @@ public class AdminController {
 	public ResponseEntity<String> deleteActivity(@PathVariable Long id) {
 		logger.info("ActivityController :: deleteActivity");
 		ResponseEntity<String> response = null;
-		boolean existingActivity = activityService.existActivity(id);
-		response = processingResponseI.processResponseForString(existingActivity,
+		Boolean exist = activityService.existActivity(id);
+		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
 					activityService.deleteById(id);
 					return ResponseEntity.ok().body("Actividad ha eliminado correctamente");

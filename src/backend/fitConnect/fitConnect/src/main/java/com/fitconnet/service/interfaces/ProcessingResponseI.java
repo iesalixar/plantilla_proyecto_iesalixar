@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface ProcessingResponseI {
 
-	<T> ResponseEntity<T> processResponseForUser(Optional<?> entity, Supplier<ResponseEntity> conflictSupplier,
+	<T> ResponseEntity<T> processResponseForEntity(Optional<?> entity, Supplier<ResponseEntity> conflictSupplier,
 			Supplier<ResponseEntity<T>> successSupplier);
 
 	<T> ResponseEntity<T> processResponseForString(Boolean condition, Supplier<ResponseEntity> conflictSupplier,
