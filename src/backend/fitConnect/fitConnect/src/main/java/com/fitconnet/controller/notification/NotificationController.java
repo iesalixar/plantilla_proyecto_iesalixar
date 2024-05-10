@@ -65,7 +65,7 @@ public class NotificationController {
 	@GetMapping()
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<Optional<Set<Notification>>> getNotifications() {
-		logger.info("## AdminController :: showNotifications");
+		logger.info("## NotificationController :: getNotifications");
 		Optional<Set<Notification>> notifications = notificationService.getAll();
 		return ResponseEntity.ok().body(notifications);
 	}
@@ -73,7 +73,7 @@ public class NotificationController {
 	@GetMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	public ResponseEntity<Optional<Set<Notification>>> getNotificationsByUserId(@PathVariable Long id) {
-		logger.info("NotificationController :: getNotificationsById");
+		logger.info("NotificationController :: getNotificationsByUserId");
 		ResponseEntity<Optional<Set<Notification>>> response = null;
 		Optional<User> existingUser = userService.getById(id);
 		response = processingResponseI.processOptionalResponse(existingUser,

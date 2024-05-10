@@ -70,7 +70,7 @@ public class ActivityController {
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<Optional<Set<Activity>>> getActivities() {
-		logger.info("ActivityController :: getAllActivities");
+		logger.info("ActivityController :: getActivities");
 		Optional<Set<Activity>> activities = activityService.getAll();
 		return ResponseEntity.ok().body(activities);
 	}
@@ -90,7 +90,7 @@ public class ActivityController {
 	@GetMapping("/user/{userId}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<Optional<Set<Activity>>> getActivitiesByUserId(@PathVariable Long userId) {
-		logger.info("UserController :: getActivities");
+		logger.info("ActivityController :: getActivities");
 		ResponseEntity<Optional<Set<Activity>>> response = null;
 		Boolean existingUser = userService.existById(userId);
 		response = processingResponseI.processOptionalResponseForBoolean(existingUser,
@@ -102,7 +102,7 @@ public class ActivityController {
 	@GetMapping("/created/{userId}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<Optional<Set<Activity>>> getCreatedActivities(@PathVariable Long userId) {
-		logger.info("UserController :: getCreatedActivities");
+		logger.info("ActivityController :: getCreatedActivities");
 		ResponseEntity<Optional<Set<Activity>>> response = null;
 		Boolean existingUser = userService.existById(userId);
 		response = processingResponseI.processOptionalResponseForBoolean(existingUser,
@@ -114,7 +114,7 @@ public class ActivityController {
 	@GetMapping("/invited/{userId}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public ResponseEntity<Optional<Set<Activity>>> getInvitedActivities(@PathVariable Long userId) {
-		logger.info("UserController :: getInvitedActivities");
+		logger.info("ActivityController :: getInvitedActivities");
 		ResponseEntity<Optional<Set<Activity>>> response = null;
 		Boolean existingUser = userService.existById(userId);
 		response = processingResponseI.processOptionalResponseForBoolean(existingUser,

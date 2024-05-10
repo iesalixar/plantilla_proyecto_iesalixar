@@ -66,7 +66,7 @@ public class UserController {
 	@PostMapping("/add/admin")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<String> createAdmin(@RequestBody User user) {
-		logger.info("UserController :: createUser");
+		logger.info("UserController :: createAdmin");
 		ResponseEntity<String> response = null;
 		Boolean exist = userService.existByEmail(user.getEmail());
 		response = processingResponseI.processResponseForString(exist,
@@ -83,7 +83,7 @@ public class UserController {
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<List<User>> showUsers() {
-		logger.info("## AdminController :: showUsers");
+		logger.info("## UserController :: showUsers");
 		List<User> userList = userService.userSetToSortedList();
 		return ResponseEntity.ok().body(userList);
 	}
