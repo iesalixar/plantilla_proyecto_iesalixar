@@ -58,7 +58,7 @@ public class NotificationController {
 		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("La notificación ya existe"), () -> {
 					Notification newNotification = new Notification();
-					notificationService.setNotificationAttributes(notification, newNotification);
+					notificationService.setAttributes(notification, newNotification);
 					notificationService.create(newNotification);
 					return ResponseEntity.ok().body("Notificación creada correctamente.");
 				});
@@ -78,7 +78,7 @@ public class NotificationController {
 	public ResponseEntity<Optional<Set<Notification>>> getNotificationsByUserId(@PathVariable Long userId) {
 		logger.info("NotificationController :: getNotificationsByUserId");
 		ResponseEntity<Optional<Set<Notification>>> response = null;
-		Optional<User> existingUser = userService.getUserById(userId);
+		Optional<User> existingUser = userService.getById(userId);
 		response = processingResponseI.processOptionalResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
 				() -> ResponseEntity.ok().body(notificationService.getByRecipient(userId)));

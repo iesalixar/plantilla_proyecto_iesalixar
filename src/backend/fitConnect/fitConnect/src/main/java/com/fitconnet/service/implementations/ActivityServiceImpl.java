@@ -27,7 +27,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	}
 
 	@Override
-	public Optional<Set<Activity>> getAllActivity() {
+	public Optional<Set<Activity>> getAll() {
 		List<Activity> activitiesList = activityRepository.findAll();
 		Set<Activity> sortedActivities = new LinkedHashSet();
 		sortedActivities = activitiesList.stream().sorted(Comparator.comparing(Activity::getDate))
@@ -36,19 +36,19 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	}
 
 	@Override
-	public Optional<Activity> getActivity(Long id) {
+	public Optional<Activity> getOne(Long id) {
 		Activity activity = activityRepository.findById(id)
 				.orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
 		return Optional.of(activity);
 	}
 
 	@Override
-	public void createActivity(Activity activity) {
+	public void create(Activity activity) {
 		activityRepository.save(activity);
 	}
 
 	@Override
-	public void updateActivity(Long id, Activity activity) {
+	public void update(Long id, Activity activity) {
 		Activity findActivity = activityRepository.findById(id)
 				.orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
 
@@ -56,7 +56,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	}
 
 	@Override
-	public void patchActivity(Long id, Activity activity) {
+	public void patch(Long id, Activity activity) {
 		Activity aux = activityRepository.findById(id)
 				.orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
 		if (aux.getType() != null) {
@@ -80,7 +80,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	}
 
 	@Override
-	public Boolean existActivity(Long id) {
+	public Boolean existById(Long id) {
 		return activityRepository.existsById(id);
 	}
 
@@ -90,7 +90,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	}
 
 	@Override
-	public void setActivityAttributes(Activity activity, Activity newActivity) {
+	public void setAttributes(Activity activity, Activity newActivity) {
 		newActivity.setCreator(activity.getCreator());
 		newActivity.setDate(activity.getDate());
 		newActivity.setDuration(activity.getDuration());

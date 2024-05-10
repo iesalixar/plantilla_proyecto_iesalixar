@@ -64,8 +64,8 @@ public class ActivityController {
 		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("La actividad ya existe"), () -> {
 					Activity newActivity = new Activity();
-					activityService.setActivityAttributes(activity, newActivity);
-					activityService.createActivity(newActivity);
+					activityService.setAttributes(activity, newActivity);
+					activityService.create(newActivity);
 					return ResponseEntity.ok().body("Actividad creada correctamente.");
 				});
 		return response;
@@ -75,7 +75,7 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<Optional<Set<Activity>>> getActivities() {
 		logger.info("ActivityController :: getAllActivities");
-		Optional<Set<Activity>> activities = activityService.getAllActivity();
+		Optional<Set<Activity>> activities = activityService.getAll();
 		return ResponseEntity.ok().body(activities);
 	}
 
@@ -84,7 +84,7 @@ public class ActivityController {
 	public ResponseEntity<Optional<Activity>> getActivityById(@PathVariable Long id) {
 		logger.info("ActivityController :: getActivityById");
 		ResponseEntity<Optional<Activity>> response = null;
-		Optional<Activity> existingActivity = activityService.getActivity(id);
+		Optional<Activity> existingActivity = activityService.getOne(id);
 		response = processingResponseI.processResponseForEntity(existingActivity,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
 				() -> ResponseEntity.ok().body(existingActivity));
@@ -131,7 +131,7 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
 		logger.info("ActivityController :: updateActivity");
-		activityService.updateActivity(id, activity);
+		activityService.update(id, activity);
 		return ResponseEntity.ok().body("Se ha actualizado correctamente");
 	}
 
@@ -139,7 +139,7 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	public ResponseEntity<String> patchActivity(@PathVariable Long id, @RequestBody Activity activity) {
 		logger.info("ActivityController :: patchActivity");
-		activityService.patchActivity(id, activity);
+		activityService.patch(id, activity);
 		return ResponseEntity.ok().body("Se ha actulizado correctamente");
 	}
 
@@ -148,7 +148,7 @@ public class ActivityController {
 	public ResponseEntity<String> deleteActivity(@PathVariable Long id) {
 		logger.info("ActivityController :: deleteActivity");
 		ResponseEntity<String> response = null;
-		boolean existingActivity = activityService.existActivity(id);
+		boolean existingActivity = activityService.existById(id);
 		response = processingResponseI.processResponseForString(existingActivity,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
 					activityService.deleteById(id);

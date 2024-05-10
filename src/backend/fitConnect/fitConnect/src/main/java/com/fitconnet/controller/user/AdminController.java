@@ -67,7 +67,7 @@ public class AdminController {
 	public ResponseEntity<Map<String, Object>> showDashboard() {
 		logger.info("## AdminController :: showDashboard");
 		List<User> userList = userService.userSetToSortedList();
-		Optional<Set<Activity>> activities = activityService.getAllActivity();
+		Optional<Set<Activity>> activities = activityService.getAll();
 		Map<String, Object> dashboardData = new HashMap<>();
 		dashboardData.put("users", userList);
 		dashboardData.put("activities", activities.orElse(new HashSet<>()));
@@ -83,7 +83,7 @@ public class AdminController {
 		boolean exist = userService.existById(id);
 		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND), () -> {
-					userService.updateUser(id, user);
+					userService.update(id, user);
 					return ResponseEntity.ok().body("Usuario actualizado");
 				});
 		return response;
@@ -108,10 +108,10 @@ public class AdminController {
 	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
 		logger.info("## AdminController :: updateActivity");
 		ResponseEntity<String> response = null;
-		Boolean exists = activityService.existActivity(id);
+		Boolean exists = activityService.existById(id);
 		response = processingResponseI.processResponseForString(exists,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
-					activityService.updateActivity(id, activity);
+					activityService.update(id, activity);
 					return ResponseEntity.ok().body("Usuario actualizado");
 				});
 		return response;
@@ -136,7 +136,7 @@ public class AdminController {
 	public ResponseEntity<String> deleteActivity(@PathVariable Long id) {
 		logger.info("ActivityController :: deleteActivity");
 		ResponseEntity<String> response = null;
-		Boolean exist = activityService.existActivity(id);
+		Boolean exist = activityService.existById(id);
 		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
 					activityService.deleteById(id);

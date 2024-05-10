@@ -12,11 +12,11 @@ import com.fitconnet.persitence.model.User;
 
 public interface UserServiceI {
 
-	Optional<Set<User>> getAllUsers();
+	Optional<Set<User>> getAll();
 
-	Optional<User> getUserById(Long id);
+	Optional<User> getById(Long id);
 
-	Optional<User> getUserByUserName(String userName);
+	Optional<User> getByUserName(String userName);
 
 	Optional<List<User>> getFriends(Long id);
 
@@ -36,14 +36,14 @@ public interface UserServiceI {
 
 	Boolean existByEmail(String email);
 
-	void createUser(User user);
+	void create(User user);
 
-	void updateUser(Long id, User user);
+	void update(Long id, User user);
 
-	void patchUser(Long id, User user);
+	void patch(Long id, User user);
 
 	void deleteById(Long id);
 
-	void setUserAttributes(User user, User newUser);
+	void setAttributes(User user, User newUser);
 
 }

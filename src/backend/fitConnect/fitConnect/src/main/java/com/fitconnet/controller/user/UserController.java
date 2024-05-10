@@ -57,8 +57,8 @@ public class UserController {
 		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("El usuario ya existe"), () -> {
 					User newUser = new User();
-					userService.setUserAttributes(user, newUser);
-					userService.createUser(newUser);
+					userService.setAttributes(user, newUser);
+					userService.create(newUser);
 					return ResponseEntity.ok().body("Usuario: " + user.getUsername() + ", creado correctamente.");
 				});
 		return response;
@@ -77,7 +77,7 @@ public class UserController {
 	public ResponseEntity<Optional<User>> getUser(@PathVariable Long id) {
 		logger.info("UserController :: getUser");
 		ResponseEntity<Optional<User>> response = null;
-		Optional<User> existingUser = userService.getUserById(id);
+		Optional<User> existingUser = userService.getById(id);
 		response = processingResponseI.processResponseForEntity(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
 				() -> ResponseEntity.ok().body(existingUser));
@@ -89,7 +89,7 @@ public class UserController {
 	public ResponseEntity<List<User>> getFriends(@PathVariable Long id) {
 		logger.info("UserController :: getFriends");
 		ResponseEntity<List<User>> response = null;
-		Optional<User> existingUser = userService.getUserById(id);
+		Optional<User> existingUser = userService.getById(id);
 		response = processingResponseI.processResponseForEntity(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
 				() -> ResponseEntity.ok().body(existingUser.get().getFriends()));
@@ -104,7 +104,7 @@ public class UserController {
 		Boolean exist = userService.existById(id);
 		response = processingResponseI.processResponseForString(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND), () -> {
-					userService.patchUser(id, user);
+					userService.patch(id, user);
 					return ResponseEntity.ok().body("Usuario actualizado");
 				});
 		return response;

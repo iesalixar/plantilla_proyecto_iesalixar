@@ -26,6 +26,6 @@ public interface NotificationServiceI {
 
 	void patch(Long id, Notification notification);
 
-	void setNotificationAttributes(Notification notification, Notification newNotification);
+	void setAttributes(Notification notification, Notification newNotification);
 
 }

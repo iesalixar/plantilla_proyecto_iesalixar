@@ -36,21 +36,21 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public Optional<Set<User>> getAllUsers() {
+	public Optional<Set<User>> getAll() {
 		List<User> usersList = userRepository.findAll();
 		Set<User> usersSet = (Set<User>) usersList;
 		return Optional.of(usersSet);
 	}
 
 	@Override
-	public Optional<User> getUserById(Long id) {
+	public Optional<User> getById(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
 		return Optional.of(user);
 	}
 
 	@Override
-	public Optional<User> getUserByUserName(String userName) {
+	public Optional<User> getByUserName(String userName) {
 		User user = userRepository.findByUserName(userName)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
 		return Optional.of(user);
@@ -103,12 +103,12 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public void createUser(User user) {
+	public void create(User user) {
 		userRepository.save(user);
 	}
 
 	@Override
-	public void updateUser(Long id, User user) {
+	public void update(Long id, User user) {
 
 		if (!userRepository.findById(id).isPresent()) {
 			throw new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
@@ -121,7 +121,7 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public void patchUser(Long id, @Valid User user) {
+	public void patch(Long id, @Valid User user) {
 		User aux = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
 
@@ -169,7 +169,7 @@ public class UserServicImpl implements UserServiceI {
 
 	@Override
 	public List<User> userSetToSortedList() {
-		Optional<Set<User>> userSet = getAllUsers();
+		Optional<Set<User>> userSet = getAll();
 		return userSet.orElse(new HashSet<>()).stream().filter(user -> !user.getRoles().contains(Role.ROLE_ADMIN))
 				.sorted(Comparator.comparing(User::getUserName)).toList();
 	}
@@ -185,7 +185,7 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public void setUserAttributes(User user, User newUser) {
+	public void setAttributes(User user, User newUser) {
 		newUser.setFirstName(user.getFirstName());
 		newUser.setLastName(user.getLastName());
 		newUser.setUserName(user.getUsername());

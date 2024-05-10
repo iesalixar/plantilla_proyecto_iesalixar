@@ -113,7 +113,7 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	}
 
 	@Override
-	public void setNotificationAttributes(Notification notification, Notification newNotification) {
+	public void setAttributes(Notification notification, Notification newNotification) {
 		newNotification.setDate(notification.getDate());
 		newNotification.setMessage(notification.getMessage());
 		newNotification.setReceiverId(notification.getReceiverId());

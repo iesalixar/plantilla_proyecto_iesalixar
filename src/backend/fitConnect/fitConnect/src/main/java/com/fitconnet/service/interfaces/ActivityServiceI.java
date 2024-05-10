@@ -8,22 +8,22 @@ import com.fitconnet.persitence.model.Activity;
 
 public interface ActivityServiceI {
 
-	Optional<Set<Activity>> getAllActivity();
+	Optional<Set<Activity>> getAll();
 
-	Optional<Activity> getActivity(Long id);
+	Optional<Activity> getOne(Long id);
 
-	Boolean existActivity(Long id);
+	Boolean existById(Long id);
 
 	Boolean existByDate(Date date);
 
-	void createActivity(Activity activity);
+	void create(Activity activity);
 
-	void updateActivity(Long id, Activity activity);
+	void update(Long id, Activity activity);
 
-	void patchActivity(Long id, Activity activity);
+	void patch(Long id, Activity activity);
 
 	void deleteById(Long id);
 
-	void setActivityAttributes(Activity activity, Activity newActivity);
+	void setAttributes(Activity activity, Activity newActivity);
 
 }
