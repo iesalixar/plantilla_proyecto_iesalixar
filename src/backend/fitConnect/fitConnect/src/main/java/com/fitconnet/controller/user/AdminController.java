@@ -93,7 +93,7 @@ public class AdminController {
 		response = processingResponseI.processStringResponse(exists,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND), () -> {
 					notificationService.update(id, notification);
-					return ResponseEntity.ok().body("Usuario actualizado");
+					return ResponseEntity.ok().body("Notificación actualizada.");
 				});
 		return response;
 	}
@@ -107,7 +107,7 @@ public class AdminController {
 		response = processingResponseI.processStringResponse(exists,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
 					activityService.update(id, activity);
-					return ResponseEntity.ok().body("Usuario actualizado");
+					return ResponseEntity.ok().body("Actividad actualizada.");
 				});
 		return response;
 	}
