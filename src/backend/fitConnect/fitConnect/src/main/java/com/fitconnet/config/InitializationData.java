@@ -12,8 +12,11 @@ import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.ActivityRepository;
 import com.fitconnet.persitence.repository.UserRepository;
 
+import lombok.AllArgsConstructor;
+
 @Profile("demo")
 @Component
+@AllArgsConstructor
 public class InitializationData implements CommandLineRunner {
 
 	static final boolean DELETE_ACTIVITY = true;
@@ -25,13 +28,6 @@ public class InitializationData implements CommandLineRunner {
 	private final PasswordEncoder passwordEncoder;
 
 	private static final Logger logger = LoggerFactory.getLogger(InitializationData.class);
-
-	public InitializationData(UserRepository userRepository, ActivityRepository activityRepository,
-			PasswordEncoder passwordEncoder) {
-		this.userRepository = userRepository;
-		this.activityRepository = activityRepository;
-		this.passwordEncoder = passwordEncoder;
-	}
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -74,15 +70,6 @@ public class InitializationData implements CommandLineRunner {
 
 			logger.info(error);
 		}
-
-//		Faker faker = new Faker(new Locale("es"));
-//		for (int i = 0; i < 10; i++) {
-//			Activity activity = new Activity();
-//			activity.setType(faker.lorem().word());
-//			activity.setDuration(Duration.ofMinutes(faker.number().randomDigit()));
-//			activity.setPlace(faker.address().fullAddress());
-//			activityRepository.save(activity);
-//		}
 
 	}
 }

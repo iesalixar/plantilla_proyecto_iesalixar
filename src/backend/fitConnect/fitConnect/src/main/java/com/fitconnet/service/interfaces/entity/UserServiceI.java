@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.enums.Role;
 import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.persitence.model.Notification;
@@ -15,7 +16,7 @@ public interface UserServiceI {
 
 	Optional<Set<User>> getAll();
 
-	Optional<User> getById(Long id);
+	User getById(Long id);
 
 	Optional<User> getByUserName(String userName);
 
@@ -45,6 +46,8 @@ public interface UserServiceI {
 
 	void deleteById(Long id);
 
-	void setAttributes(User user, User newUser, Role rol);
+	void userDTOtoUSer(UserDTO request, User user, Role rol);
+
+	void usertoUserDTO(UserDTO response, User user, Role rol);
 
 }

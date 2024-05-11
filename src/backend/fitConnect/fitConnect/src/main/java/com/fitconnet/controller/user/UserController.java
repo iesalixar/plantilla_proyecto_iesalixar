@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.enums.Role;
 import com.fitconnet.error.ErrorDetailsResponse;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.User;
+import com.fitconnet.service.implementations.security.AuthenticationServiceImpl;
 import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
@@ -34,7 +35,6 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/user")
-@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class UserController {
 
@@ -44,38 +44,36 @@ public class UserController {
 	private final GlobalExceptionHandler globalExceptionHandler;
 	@Qualifier("processingResponseI")
 	private final ProcessingResponseI processingResponseI;
+	@Qualifier("processingResponseI")
+	private final AuthenticationServiceImpl authenticationServiceImpl;
 
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@PostMapping
-	public ResponseEntity<String> createUser(@RequestBody User user) {
+	public ResponseEntity<String> createUser(@RequestBody UserDTO user) {
 		logger.info("UserController :: createUser");
 		ResponseEntity<String> response = null;
 		Boolean exist = userService.existByEmail(user.getEmail());
-		response = processingResponseI.processResponseForString(exist,
+		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("El usuario ya existe"), () -> {
-					User newUser = new User();
 					Role rol = Role.ROLE_USER;
-					userService.setAttributes(user, newUser, rol);
-					userService.create(newUser);
-					return ResponseEntity.ok().body("Usuario: " + user.getUsername() + ", creado correctamente.");
+					authenticationServiceImpl.createUser(user, rol);
+					return ResponseEntity.ok().body("Usuario: " + user.getUserName() + ", creado correctamente.");
 				});
 		return response;
 	}
 
 	@PostMapping("/add/admin")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public ResponseEntity<String> createAdmin(@RequestBody User user) {
+	public ResponseEntity<String> createAdmin(@RequestBody UserDTO user) {
 		logger.info("UserController :: createAdmin");
 		ResponseEntity<String> response = null;
 		Boolean exist = userService.existByEmail(user.getEmail());
-		response = processingResponseI.processResponseForString(exist,
+		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("El usuario ya existe"), () -> {
-					User newUser = new User();
 					Role rol = Role.ROLE_ADMIN;
-					userService.setAttributes(user, newUser, rol);
-					userService.create(newUser);
-					return ResponseEntity.ok().body("Usuario: " + user.getUsername() + ", creado correctamente.");
+					authenticationServiceImpl.createUser(user, rol);
+					return ResponseEntity.ok().body("Usuario: " + user.getUserName() + ", creado correctamente.");
 				});
 		return response;
 	}
@@ -93,8 +91,9 @@ public class UserController {
 	public ResponseEntity<Optional<User>> getUser(@PathVariable Long id) {
 		logger.info("UserController :: getUser");
 		ResponseEntity<Optional<User>> response = null;
-		Optional<User> existingUser = userService.getById(id);
-		response = processingResponseI.processResponseForEntity(existingUser,
+		User user = userService.getById(id);
+		Optional<User> existingUser = Optional.of(user);
+		response = processingResponseI.processEntityResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
 				() -> ResponseEntity.ok().body(existingUser));
 		return response;
@@ -105,8 +104,9 @@ public class UserController {
 	public ResponseEntity<List<User>> getFriends(@PathVariable Long id) {
 		logger.info("UserController :: getFriends");
 		ResponseEntity<List<User>> response = null;
-		Optional<User> existingUser = userService.getById(id);
-		response = processingResponseI.processResponseForEntity(existingUser,
+		User user = userService.getById(id);
+		Optional<User> existingUser = Optional.of(user);
+		response = processingResponseI.processEntityResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
 				() -> ResponseEntity.ok().body(existingUser.get().getFriends()));
 		return response;
@@ -118,7 +118,7 @@ public class UserController {
 		logger.info("UserController :: patchUser");
 		ResponseEntity<String> response = null;
 		Boolean exist = userService.existById(id);
-		response = processingResponseI.processResponseForString(exist,
+		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND), () -> {
 					userService.patch(id, user);
 					return ResponseEntity.ok().body("Usuario actualizado");
@@ -132,7 +132,7 @@ public class UserController {
 		logger.info("UserController :: deleteUser");
 		ResponseEntity<String> response = null;
 		Boolean exist = userService.existById(id);
-		response = processingResponseI.processResponseForString(exist,
+		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND), () -> {
 					userService.deleteById(id);
 					return ResponseEntity.ok().body("Usuario ha sido eliminado exitosamente");

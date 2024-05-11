@@ -3,6 +3,7 @@ package com.fitconnet.service.implementations.entity;
 import java.security.InvalidParameterException;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -12,10 +13,15 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.fitconnet.dto.entities.ActivityDTO;
+import com.fitconnet.dto.entities.UserDTO;
+import com.fitconnet.enums.Role;
 import com.fitconnet.error.exception.activity.ActivityNotFoundException;
 import com.fitconnet.persitence.model.Activity;
+import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.ActivityRepository;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
+import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
 
 import jakarta.validation.ConstraintViolationException;
@@ -26,6 +32,7 @@ import lombok.AllArgsConstructor;
 public class ActivityServiceImpl implements ActivityServiceI {
 
 	private final ActivityRepository activityRepository;
+	private final UserServiceI userService;
 
 	@Override
 	public Optional<Set<Activity>> getAll() {
@@ -88,14 +95,67 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	}
 
 	@Override
-	public void setAttributes(Activity activity, Activity newActivity) {
-		newActivity.setCreator(activity.getCreator());
-		newActivity.setDate(activity.getDate());
-		newActivity.setDuration(activity.getDuration());
-		newActivity.setParticipants(activity.getParticipants());
-		newActivity.setPlace(activity.getPlace());
-		newActivity.setType(activity.getType());
+	public Activity activityDTOtoActivity(ActivityDTO activityDTO, User user) {
+		Activity Activity = new Activity();
+		Activity.setCreator(user);
+		Activity.setDate(activityDTO.getDate());
+		Activity.setDuration(activityDTO.getDuration());
+		Activity.setParticipants(participantsDTOtoParticipants(activityDTO.getParticipants()));
+		Activity.setPlace(activityDTO.getPlace());
+		Activity.setType(activityDTO.getType());
 
+		return Activity;
+
+	}
+
+	@Override
+	public ActivityDTO activityToActivityDTO(Activity activity, UserDTO userDTO) {
+		ActivityDTO dto = new ActivityDTO();
+		dto.setCreator(userDTO);
+		dto.setDate(activity.getDate());
+		dto.setDuration(activity.getDuration());
+		dto.setParticipants(participantstoParticipantsDTO(activity.getParticipants()));
+		dto.setPlace(activity.getPlace());
+		dto.setType(activity.getType());
+
+		return dto;
+	}
+
+	@Override
+	public Set<User> participantsDTOtoParticipants(Set<UserDTO> partipantsDTO) {
+		User user = new User();
+		Set<User> participats = new LinkedHashSet<>();
+
+		for (UserDTO dto : partipantsDTO) {
+			Set<Role> roles = dto.getRoles();
+			Role rol = Role.ROLE_USER;
+
+			if (!roles.contains(Role.ROLE_USER)) {
+				rol = Role.ROLE_ADMIN;
+			}
+			userService.userDTOtoUSer(dto, user, rol);
+		}
+
+		return participats;
+	}
+
+	@Override
+	public Set<UserDTO> participantstoParticipantsDTO(Set<User> partipants) {
+
+		Set<UserDTO> partipantsDTO = new LinkedHashSet<>();
+		UserDTO dto = new UserDTO();
+
+		for (User user : partipants) {
+			Set<Role> roles = user.getRoles();
+			Role rol = Role.ROLE_USER;
+
+			if (!roles.contains(Role.ROLE_USER)) {
+				rol = Role.ROLE_ADMIN;
+			}
+			userService.usertoUserDTO(dto, user, rol);
+		}
+
+		return partipantsDTO;
 	}
 
 	private <T> void updateFieldIfDifferent(Activity activity, T newValue, String fieldName, Consumer<T> setter) {

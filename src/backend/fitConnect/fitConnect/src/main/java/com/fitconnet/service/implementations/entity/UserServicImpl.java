@@ -12,9 +12,9 @@ import java.util.stream.Stream;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.enums.Role;
 import com.fitconnet.error.exception.user.UserNotFoundException;
 import com.fitconnet.persitence.model.Activity;
@@ -33,7 +33,6 @@ import lombok.AllArgsConstructor;
 public class UserServicImpl implements UserServiceI {
 
 	private final UserRepository userRepository;
-	private final PasswordEncoder passwordEncoder;
 
 	@Override
 	public Optional<Set<User>> getAll() {
@@ -43,10 +42,10 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public Optional<User> getById(Long id) {
+	public User getById(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return Optional.of(user);
+		return user;
 	}
 
 	@Override
@@ -158,12 +157,12 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public void setAttributes(User user, User newUser, Role rol) {
-		newUser.setFirstName(user.getFirstName());
-		newUser.setLastName(user.getLastName());
-		newUser.setUserName(user.getUsername());
-		newUser.setEmail(user.getEmail());
-		newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+	public void userDTOtoUSer(UserDTO request, User user, Role rol) {
+		user.setFirstName(request.getFirstName());
+		user.setLastName(request.getLastName());
+		user.setUserName(request.getUserName());
+		user.setEmail(request.getEmail());
+		user.setPassword((request.getPassword()));
 		Set<Role> roles = new HashSet<>();
 		if (rol.equals(Role.ROLE_USER)) {
 			roles.add(Role.ROLE_USER);
@@ -171,7 +170,26 @@ public class UserServicImpl implements UserServiceI {
 			roles.add(Role.ROLE_ADMIN);
 		}
 
-		newUser.setRoles(roles);
+		user.setRoles(roles);
+
+	}
+
+	@Override
+	public void usertoUserDTO(UserDTO response, User user, Role rol) {
+
+		response.setFirstName(user.getFirstName());
+		response.setLastName(user.getLastName());
+		response.setUserName(user.getUsername());
+		response.setEmail(user.getEmail());
+		response.setPassword((user.getPassword()));
+		Set<Role> roles = new HashSet<>();
+		if (rol.equals(Role.ROLE_USER)) {
+			roles.add(Role.ROLE_USER);
+		} else {
+			roles.add(Role.ROLE_ADMIN);
+		}
+
+		response.setRoles(roles);
 
 	}
 

@@ -52,7 +52,7 @@ public class NotificationController {
 		logger.info("NotificationController :: createNotification");
 		ResponseEntity<String> response = null;
 		Boolean exist = notificationService.existByDate(notification.getDate());
-		response = processingResponseI.processResponseForString(exist,
+		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("La notificación ya existe"), () -> {
 					Notification newNotification = new Notification();
 					notificationService.setAttributes(notification, newNotification);
@@ -75,7 +75,8 @@ public class NotificationController {
 	public ResponseEntity<Optional<Set<Notification>>> getNotificationsByUserId(@PathVariable Long id) {
 		logger.info("NotificationController :: getNotificationsByUserId");
 		ResponseEntity<Optional<Set<Notification>>> response = null;
-		Optional<User> existingUser = userService.getById(id);
+		User user = userService.getById(id);
+		Optional<User> existingUser = Optional.of(user);
 		response = processingResponseI.processOptionalResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND),
 				() -> ResponseEntity.ok().body(notificationService.getByRecipient(existingUser)));
@@ -88,7 +89,7 @@ public class NotificationController {
 		logger.info("NotificationController :: patchNotification");
 		ResponseEntity<String> response = null;
 		Boolean exist = notificationService.existById(id);
-		response = processingResponseI.processResponseForString(exist,
+		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND), () -> {
 					notificationService.patch(id, notification);
 					return ResponseEntity.ok().body("Usuario actualizado");
@@ -102,7 +103,7 @@ public class NotificationController {
 		logger.info("ActivityController :: deleteNotification");
 		ResponseEntity<String> response = null;
 		Boolean exist = notificationService.existById(id);
-		response = processingResponseI.processResponseForString(exist,
+		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND), () -> {
 					notificationService.delete(id);
 					return ResponseEntity.ok().body("Notificacion ha eliminado correctamente");

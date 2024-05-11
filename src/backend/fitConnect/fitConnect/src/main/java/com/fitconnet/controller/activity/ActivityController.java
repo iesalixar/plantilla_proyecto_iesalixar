@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.fitconnet.dto.requets.CreateActivity;
 import com.fitconnet.error.ErrorDetailsResponse;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.Activity;
+import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
@@ -52,15 +54,14 @@ public class ActivityController {
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	public ResponseEntity<String> createActivity(@RequestBody Activity activity) {
+	public ResponseEntity<String> createActivity(@RequestBody CreateActivity request) {
 		logger.info("ActivityController :: createActivity");
 		ResponseEntity<String> response = null;
-		Boolean exist = activityService.existByDate(activity.getDate());
-
-		response = processingResponseI.processResponseForString(exist,
+		Boolean activityExist = activityService.existByDate(request.getActivity().getDate());
+		User user = userService.getById(request.getUserId());
+		response = processingResponseI.processStringDualUserResponse(activityExist, user,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("La actividad ya existe"), () -> {
-					Activity newActivity = new Activity();
-					activityService.setAttributes(activity, newActivity);
+					Activity newActivity = activityService.activityDTOtoActivity(request.getActivity(), user);
 					activityService.create(newActivity);
 					return ResponseEntity.ok().body("Actividad creada correctamente.");
 				});
@@ -81,7 +82,7 @@ public class ActivityController {
 		logger.info("ActivityController :: getActivityById");
 		ResponseEntity<Optional<Activity>> response = null;
 		Optional<Activity> existingActivity = activityService.getOne(id);
-		response = processingResponseI.processResponseForEntity(existingActivity,
+		response = processingResponseI.processEntityResponse(existingActivity,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
 				() -> ResponseEntity.ok().body(existingActivity));
 		return response;
@@ -93,7 +94,7 @@ public class ActivityController {
 		logger.info("ActivityController :: getActivities");
 		ResponseEntity<Optional<Set<Activity>>> response = null;
 		Boolean existingUser = userService.existById(userId);
-		response = processingResponseI.processOptionalResponseForBoolean(existingUser,
+		response = processingResponseI.processOptionalBooleanResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
 				() -> ResponseEntity.ok().body(userService.getAllActivities(userId)));
 		return response;
@@ -105,7 +106,7 @@ public class ActivityController {
 		logger.info("ActivityController :: getCreatedActivities");
 		ResponseEntity<Optional<Set<Activity>>> response = null;
 		Boolean existingUser = userService.existById(userId);
-		response = processingResponseI.processOptionalResponseForBoolean(existingUser,
+		response = processingResponseI.processOptionalBooleanResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
 				() -> ResponseEntity.ok().body(userService.getCreatedActivities(userId)));
 		return response;
@@ -117,7 +118,7 @@ public class ActivityController {
 		logger.info("ActivityController :: getInvitedActivities");
 		ResponseEntity<Optional<Set<Activity>>> response = null;
 		Boolean existingUser = userService.existById(userId);
-		response = processingResponseI.processOptionalResponseForBoolean(existingUser,
+		response = processingResponseI.processOptionalBooleanResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
 				() -> ResponseEntity.ok().body(userService.getInvitedActivities(userId)));
 		return response;
@@ -145,7 +146,7 @@ public class ActivityController {
 		logger.info("ActivityController :: deleteActivity");
 		ResponseEntity<String> response = null;
 		boolean existingActivity = activityService.existById(id);
-		response = processingResponseI.processResponseForString(existingActivity,
+		response = processingResponseI.processStringResponse(existingActivity,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
 					activityService.deleteById(id);
 					return ResponseEntity.ok().body("Actividad ha eliminado correctamente");

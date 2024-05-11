@@ -76,7 +76,7 @@ public class AdminController {
 		logger.info("## AdminController :: updateUser");
 		ResponseEntity<String> response = null;
 		boolean exist = userService.existById(id);
-		response = processingResponseI.processResponseForString(exist,
+		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND), () -> {
 					userService.update(id, user);
 					return ResponseEntity.ok().body("Usuario actualizado");
@@ -90,7 +90,7 @@ public class AdminController {
 		logger.info("## AdminController :: updateNotification");
 		ResponseEntity<String> response = null;
 		Boolean exists = notificationService.existById(id);
-		response = processingResponseI.processResponseForString(exists,
+		response = processingResponseI.processStringResponse(exists,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND), () -> {
 					notificationService.update(id, notification);
 					return ResponseEntity.ok().body("Usuario actualizado");
@@ -104,7 +104,7 @@ public class AdminController {
 		logger.info("## AdminController :: updateActivity");
 		ResponseEntity<String> response = null;
 		Boolean exists = activityService.existById(id);
-		response = processingResponseI.processResponseForString(exists,
+		response = processingResponseI.processStringResponse(exists,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
 					activityService.update(id, activity);
 					return ResponseEntity.ok().body("Usuario actualizado");
@@ -118,7 +118,7 @@ public class AdminController {
 		logger.info("## AdminController :: deleteUser");
 		ResponseEntity<String> response = null;
 		Boolean exist = userService.existById(id);
-		response = processingResponseI.processResponseForString(exist,
+		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND), () -> {
 					userService.deleteById(id);
 					return ResponseEntity.ok().body("Usuario ha sido eliminado exitosamente");
@@ -132,7 +132,7 @@ public class AdminController {
 		logger.info("ActivityController :: deleteActivity");
 		ResponseEntity<String> response = null;
 		Boolean exist = activityService.existById(id);
-		response = processingResponseI.processResponseForString(exist,
+		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
 					activityService.deleteById(id);
 					return ResponseEntity.ok().body("Actividad ha eliminado correctamente");

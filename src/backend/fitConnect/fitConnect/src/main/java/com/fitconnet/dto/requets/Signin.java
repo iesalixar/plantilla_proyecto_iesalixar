@@ -3,7 +3,7 @@ package com.fitconnet.dto.requets;
 import lombok.Data;
 
 @Data
-public class SigninDTO {
+public class Signin {
 	private String email;
 	private String password;
 

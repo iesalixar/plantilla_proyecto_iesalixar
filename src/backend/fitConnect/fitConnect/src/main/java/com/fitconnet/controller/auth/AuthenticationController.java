@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.fitconnet.dto.requets.SignUpDTO;
-import com.fitconnet.dto.requets.SigninDTO;
+import com.fitconnet.dto.requets.SignUp;
+import com.fitconnet.dto.requets.Signin;
 import com.fitconnet.dto.response.JwtAuthenticationDTO;
 import com.fitconnet.error.ErrorDetailsResponse;
 import com.fitconnet.error.GlobalExceptionHandler;
@@ -36,14 +36,14 @@ public class AuthenticationController {
 	@PostMapping("/signup")
 	@Operation(summary = "Registro de usuario", description = "Registro de un nuevo usuario")
 	@ApiResponse(responseCode = "200", description = "Usuario registrado exitosamente")
-	public ResponseEntity<JwtAuthenticationDTO> signup(@RequestBody SignUpDTO request) {
+	public ResponseEntity<JwtAuthenticationDTO> signup(@RequestBody SignUp request) {
 		return ResponseEntity.ok(authenticationService.signup(request));
 	}
 
 	@PostMapping("/signin")
 	@Operation(summary = "Inicio de sesión", description = "Inicio de sesión de usuario")
 	@ApiResponse(responseCode = "200", description = "Inicio de sesión exitoso")
-	public ResponseEntity<JwtAuthenticationDTO> signin(@RequestBody SigninDTO request) {
+	public ResponseEntity<JwtAuthenticationDTO> signin(@RequestBody Signin request) {
 		return ResponseEntity.ok(authenticationService.signin(request));
 	}
 
