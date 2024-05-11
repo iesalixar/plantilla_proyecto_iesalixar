@@ -5,7 +5,7 @@ import com.fitconnet.dto.entities.ActivityDTO;
 import lombok.Data;
 
 @Data
-public class CreateActivity {
+public class GeneralActivity {
 	private ActivityDTO activity;
 	private Long userId;
 }
