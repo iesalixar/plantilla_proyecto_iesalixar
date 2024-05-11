@@ -34,26 +34,18 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(request -> request
-				// Permitir acceso a todos los métodos HTTP en /api/v1/auth para todos los roles
-				.requestMatchers("/api/v1/auth/**").permitAll()
-				// Permitir acceso de admin y usuario a todos los métodos HTTP en
-				// /api/v1/actividades
-				.requestMatchers("/api/v1/actividades/**")
-				.hasAnyAuthority(Role.ROLE_USER.toString(), Role.ROLE_ADMIN.toString())
-				// Permitir acceso de admin y usuario a todos los métodos HTTP en
-				// /api/v1/notification
-				.requestMatchers("/api/v1/notification/**")
-				.hasAnyAuthority(Role.ROLE_USER.toString(), Role.ROLE_ADMIN.toString())
-				// Permitir acceso de admin y usuario a todos los métodos HTTP en /api/v1/user
-				.requestMatchers("/api/v1/user/**")
-				.hasAnyAuthority(Role.ROLE_USER.toString(), Role.ROLE_ADMIN.toString())
-				// Restringir acceso a todos los métodos HTTP en /api/v1/admin para el rol de
-				// admin
-				.requestMatchers("/api/v1/admin/**").hasAnyAuthority(Role.ROLE_ADMIN.toString())
-				// Permitir acceso a la documentación de Swagger para todos los roles
-				.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll().anyRequest()
-				.authenticated()).sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
+		http.csrf(AbstractHttpConfigurer::disable)
+				.authorizeHttpRequests(request -> request.requestMatchers("/api/v1/auth/**").permitAll()
+						.requestMatchers("/api/v1/actividades/**")
+						.hasAnyAuthority(Role.ROLE_USER.toString(), Role.ROLE_ADMIN.toString())
+						.requestMatchers("/api/v1/notification/**")
+						.hasAnyAuthority(Role.ROLE_USER.toString(), Role.ROLE_ADMIN.toString())
+						.requestMatchers("/api/v1/user/**")
+						.hasAnyAuthority(Role.ROLE_USER.toString(), Role.ROLE_ADMIN.toString())
+						.requestMatchers("/api/v1/admin/**").hasAnyAuthority(Role.ROLE_ADMIN.toString())
+						.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+						.anyRequest().authenticated())
+				.sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
 				.authenticationProvider(authenticationProvider())
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
