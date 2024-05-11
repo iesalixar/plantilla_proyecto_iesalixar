@@ -1,5 +1,7 @@
 package com.fitconnet.controller.auth;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,25 +30,72 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AuthenticationController {
 
+	/**
+	 * The AuthenticationService instance.
+	 */
 	@Qualifier("authenticationService")
 	private final AuthenticationServiceI authenticationService;
+	/**
+	 * The GlobalExceptionHandler instance.
+	 */
 	@Qualifier("globalExceptionHandler")
 	private final GlobalExceptionHandler globalExceptionHandler;
 
+	/**
+	 * Logger instance for ActivityController class.
+	 */
+	private final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+
+	/**
+	 * User registration.
+	 * 
+	 * <p>
+	 * Registers a new user.
+	 * </p>
+	 * 
+	 * @param request The request body containing the user's signup information.
+	 * @return ResponseEntity<JwtAuthenticationDTO> The response entity containing
+	 *         authentication information upon successful registration.
+	 */
 	@PostMapping("/signup")
-	@Operation(summary = "Registro de usuario", description = "Registro de un nuevo usuario")
-	@ApiResponse(responseCode = "200", description = "Usuario registrado exitosamente")
+	@Operation(summary = "User Registration", description = "Registers a new user.")
+	@ApiResponse(responseCode = "200", description = "User registered successfully")
 	public ResponseEntity<JwtAuthenticationDTO> signup(@RequestBody SignUp request) {
+		logger.info("AuthenticationController :: signup");
 		return ResponseEntity.ok(authenticationService.signup(request));
 	}
 
+	/**
+	 * User sign-in.
+	 * 
+	 * <p>
+	 * Logs in an existing user.
+	 * </p>
+	 * 
+	 * @param request The request body containing the user's signin information.
+	 * @return ResponseEntity<JwtAuthenticationDTO> The response entity containing
+	 *         authentication information upon successful signin.
+	 */
 	@PostMapping("/signin")
-	@Operation(summary = "Inicio de sesión", description = "Inicio de sesión de usuario")
-	@ApiResponse(responseCode = "200", description = "Inicio de sesión exitoso")
+	@Operation(summary = "User Sign-in", description = "Logs in an existing user.")
+	@ApiResponse(responseCode = "200", description = "Sign-in successful")
 	public ResponseEntity<JwtAuthenticationDTO> signin(@RequestBody Signin request) {
+		logger.info("AuthenticationController :: signin");
 		return ResponseEntity.ok(authenticationService.signin(request));
 	}
 
+	/**
+	 * Handles NoHandlerFoundException.
+	 * 
+	 * <p>
+	 * Handles the case when no handler is found for a request.
+	 * </p>
+	 * 
+	 * @param ex      The NoHandlerFoundException instance.
+	 * @param request The web request.
+	 * @return ResponseEntity<ErrorDetailsResponse> The response entity containing
+	 *         details of the error.
+	 */
 	@ExceptionHandler(NoHandlerFoundException.class)
 	public ResponseEntity<ErrorDetailsResponse> handleNoHandlerFoundException(NoHandlerFoundException ex,
 			WebRequest request) {

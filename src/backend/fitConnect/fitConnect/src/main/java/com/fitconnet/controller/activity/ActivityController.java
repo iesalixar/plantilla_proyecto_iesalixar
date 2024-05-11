@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.fitconnet.dto.requets.CreateActivity;
+import com.fitconnet.dto.requets.GeneralActivity;
 import com.fitconnet.error.ErrorDetailsResponse;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.Activity;
@@ -33,6 +33,8 @@ import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -41,43 +43,100 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ActivityController {
 
+	/**
+	 * Dependency injection for the ActivityService interface.
+	 */
 	@Qualifier("activityService")
 	private final ActivityServiceI activityService;
+
+	/**
+	 * Dependency injection for the UserService interface.
+	 */
 	@Qualifier("userService")
 	private final UserServiceI userService;
+
+	/**
+	 * Dependency injection for the ProcessingResponse interface.
+	 */
 	@Qualifier("processingResponseI")
 	private final ProcessingResponseI processingResponseI;
+
+	/**
+	 * Dependency injection for the GlobalExceptionHandler.
+	 */
 	@Qualifier("globalExceptionHandler")
 	private final GlobalExceptionHandler globalExceptionHandler;
 
+	/**
+	 * Logger instance for ActivityController class.
+	 */
 	private final Logger logger = LoggerFactory.getLogger(ActivityController.class);
 
+	/**
+	 * Creates a new activity.
+	 * 
+	 * <p>
+	 * Registers a new activity in the system.
+	 * </p>
+	 * 
+	 * @param request The request body containing the information of the new
+	 *                activity.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the creation operation.
+	 */
 	@PostMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	public ResponseEntity<String> createActivity(@RequestBody CreateActivity request) {
+	@Operation(summary = "Create Activity", description = "Registers a new activity in the system.")
+	@ApiResponse(responseCode = "200", description = "Activity created successfully")
+	public ResponseEntity<String> createActivity(@RequestBody GeneralActivity request) {
 		logger.info("ActivityController :: createActivity");
 		ResponseEntity<String> response = null;
 		Boolean activityExist = activityService.existByDate(request.getActivity().getDate());
 		User user = userService.getById(request.getUserId());
 		response = processingResponseI.processStringDualUserResponse(activityExist, user,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("La actividad ya existe"), () -> {
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
 					Activity newActivity = activityService.activityDTOtoActivity(request.getActivity(), user);
 					activityService.create(newActivity);
-					return ResponseEntity.ok().body("Actividad creada correctamente.");
+					return ResponseEntity.ok().body("Activity created successfully.");
 				});
 		return response;
 	}
 
+	/**
+	 * Retrieves all activities.
+	 * 
+	 * <p>
+	 * Retrieves all activities registered in the system.
+	 * </p>
+	 * 
+	 * @return ResponseEntity<Optional<Set<Activity>>> The response entity
+	 *         containing the set of activities, if any.
+	 */
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Get All Activities", description = "Retrieves all activities registered in the system.")
+	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
 	public ResponseEntity<Optional<Set<Activity>>> getActivities() {
 		logger.info("ActivityController :: getActivities");
 		Optional<Set<Activity>> activities = activityService.getAll();
 		return ResponseEntity.ok().body(activities);
 	}
 
+	/**
+	 * Retrieves an activity by its ID.
+	 * 
+	 * <p>
+	 * Retrieves an activity with the specified ID.
+	 * </p>
+	 * 
+	 * @param id The ID of the activity to be retrieved.
+	 * @return ResponseEntity<Optional<Activity>> The response entity containing the
+	 *         activity, if found.
+	 */
 	@GetMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Get Activity by ID", description = "Retrieves an activity by its ID.")
+	@ApiResponse(responseCode = "200", description = "Activity retrieved successfully")
 	public ResponseEntity<Optional<Activity>> getActivityById(@PathVariable Long id) {
 		logger.info("ActivityController :: getActivityById");
 		ResponseEntity<Optional<Activity>> response = null;
@@ -88,8 +147,21 @@ public class ActivityController {
 		return response;
 	}
 
+	/**
+	 * Retrieves activities associated with a specific user.
+	 * 
+	 * <p>
+	 * Retrieves a set of activities associated with the specified user.
+	 * </p>
+	 * 
+	 * @param userId The ID of the user whose activities are to be retrieved.
+	 * @return ResponseEntity<Optional<Set<Activity>>> The response entity
+	 *         containing the set of activities associated with the user, if any.
+	 */
 	@GetMapping("/user/{userId}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Get Activities by User ID", description = "Retrieves activities associated with a specific user.")
+	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
 	public ResponseEntity<Optional<Set<Activity>>> getActivitiesByUserId(@PathVariable Long userId) {
 		logger.info("ActivityController :: getActivities");
 		ResponseEntity<Optional<Set<Activity>>> response = null;
@@ -100,8 +172,22 @@ public class ActivityController {
 		return response;
 	}
 
+	/**
+	 * Retrieves the activities created by the user.
+	 * 
+	 * <p>
+	 * Retrieves a set of activities created by the specified user.
+	 * </p>
+	 * 
+	 * @param userId The ID of the user whose created activities are to be
+	 *               retrieved.
+	 * @return ResponseEntity<Optional<Set<Activity>>> The response entity
+	 *         containing the set of created activities, if any.
+	 */
 	@GetMapping("/created/{userId}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
+	@Operation(summary = "Get Created Activities", description = "Retrieves a set of activities created by the user.")
+	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
 	public ResponseEntity<Optional<Set<Activity>>> getCreatedActivities(@PathVariable Long userId) {
 		logger.info("ActivityController :: getCreatedActivities");
 		ResponseEntity<Optional<Set<Activity>>> response = null;
@@ -112,8 +198,22 @@ public class ActivityController {
 		return response;
 	}
 
+	/**
+	 * Retrieves the activities in which the user has participated.
+	 * 
+	 * <p>
+	 * Retrieves a set of activities in which the specified user has participated.
+	 * </p>
+	 * 
+	 * @param userId The ID of the user whose participated activities are to be
+	 *               retrieved.
+	 * @return ResponseEntity<Optional<Set<Activity>>> The response entity
+	 *         containing the set of participated activities, if any.
+	 */
 	@GetMapping("/invited/{userId}")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
+	@Operation(summary = "Get Participated Activities", description = "Retrieves a set of activities in which the user has participated.")
+	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
 	public ResponseEntity<Optional<Set<Activity>>> getInvitedActivities(@PathVariable Long userId) {
 		logger.info("ActivityController :: getInvitedActivities");
 		ResponseEntity<Optional<Set<Activity>>> response = null;
@@ -124,24 +224,81 @@ public class ActivityController {
 		return response;
 	}
 
+	/**
+	 * Updates an activity by replacing it with another.
+	 * 
+	 * <p>
+	 * Replaces an existing activity with a new one.
+	 * </p>
+	 * 
+	 * @param id      The ID of the activity to be updated.
+	 * @param request The request body containing the new activity information.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the update operation.
+	 */
 	@PutMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
+	@Operation(summary = "Update Activity by Replacement", description = "Replaces an existing activity with another.")
+	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
+	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody GeneralActivity request) {
 		logger.info("ActivityController :: updateActivity");
-		activityService.update(id, activity);
-		return ResponseEntity.ok().body("Se ha actualizado correctamente");
+		ResponseEntity<String> response = null;
+		Boolean activityExist = activityService.existByDate(request.getActivity().getDate());
+		User user = userService.getById(request.getUserId());
+		response = processingResponseI.processStringDualUserResponse(activityExist, user,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
+					Activity newActivity = activityService.activityDTOtoActivity(request.getActivity(), user);
+					activityService.update(newActivity.getId(), newActivity);
+					return ResponseEntity.ok().body("Activity updated successfully.");
+				});
+		return response;
 	}
 
+	/**
+	 * Partially updates an activity.
+	 * 
+	 * <p>
+	 * Updates some of the attributes of an activity.
+	 * </p>
+	 * 
+	 * @param id      The ID of the activity to be updated.
+	 * @param request The request body containing the updated activity information.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the update operation.
+	 */
 	@PatchMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	public ResponseEntity<String> patchActivity(@PathVariable Long id, @RequestBody Activity activity) {
+	@Operation(summary = "Partial Update of an Activity", description = "Updates some of the attributes of an activity.")
+	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
+	public ResponseEntity<String> patchActivity(@PathVariable Long id, @RequestBody GeneralActivity request) {
 		logger.info("ActivityController :: patchActivity");
-		activityService.patch(id, activity);
-		return ResponseEntity.ok().body("Se ha actulizado correctamente");
+		ResponseEntity<String> response = null;
+		Boolean activityExist = activityService.existByDate(request.getActivity().getDate());
+		User user = userService.getById(request.getUserId());
+		response = processingResponseI.processStringDualUserResponse(activityExist, user,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
+					Activity newActivity = activityService.activityDTOtoActivity(request.getActivity(), user);
+					activityService.patch(newActivity.getId(), newActivity);
+					return ResponseEntity.ok().body("Activity updated successfully.");
+				});
+		return response;
 	}
 
+	/**
+	 * Deletes an activity.
+	 * 
+	 * <p>
+	 * A user can delete an activity only if they are the creator of it.
+	 * </p>
+	 * 
+	 * @param id The ID of the activity to be deleted.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the deletion operation.
+	 */
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER') and #id == authentication.principal.id")
+	@Operation(summary = "Delete Activity", description = "A user can delete an activity only if they are the creator of it.")
+	@ApiResponse(responseCode = "200", description = "Activity deleted successfully")
 	public ResponseEntity<String> deleteActivity(@PathVariable Long id) {
 		logger.info("ActivityController :: deleteActivity");
 		ResponseEntity<String> response = null;
@@ -149,11 +306,23 @@ public class ActivityController {
 		response = processingResponseI.processStringResponse(existingActivity,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
 					activityService.deleteById(id);
-					return ResponseEntity.ok().body("Actividad ha eliminado correctamente");
+					return ResponseEntity.ok().body("Activity deleted successfully");
 				});
 		return response;
 	}
 
+	/**
+	 * Handles NoHandlerFoundException.
+	 * 
+	 * <p>
+	 * Handles the case when no handler is found for a request.
+	 * </p>
+	 * 
+	 * @param ex      The NoHandlerFoundException instance.
+	 * @param request The web request.
+	 * @return ResponseEntity<ErrorDetailsResponse> The response entity containing
+	 *         details of the error.
+	 */
 	@ExceptionHandler(NoHandlerFoundException.class)
 	public ResponseEntity<ErrorDetailsResponse> handleException(Exception ex, WebRequest request) {
 		return globalExceptionHandler.handleCommonExceptions(ex, request);

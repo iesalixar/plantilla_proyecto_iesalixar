@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.fitconnet.error.ErrorDetailsResponse;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
@@ -27,6 +31,8 @@ import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -34,44 +40,96 @@ import lombok.AllArgsConstructor;
 @CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class NotificationController {
-
+	/**
+	 * Dependency injection for the NotificationServiceI interface.
+	 */
 	@Qualifier("notificationService")
 	private final NotificationServiceI notificationService;
+	/**
+	 * Dependency injection for the UserServiceI interface.
+	 */
 	@Qualifier("userService")
 	private final UserServiceI userService;
+	/**
+	 * Dependency injection for the ProcessingResponseI interface.
+	 */
 	@Qualifier("processingResponseI")
 	private final ProcessingResponseI processingResponseI;
+	/**
+	 * Dependency injection for the GlobalExceptionHandler.
+	 */
 	@Qualifier("globalExceptionHandler")
 	private final GlobalExceptionHandler globalExceptionHandler;
-
+	/**
+	 * Logger instance for ActivityController class.
+	 */
 	private final Logger logger = LoggerFactory.getLogger(NotificationController.class);
 
+	/**
+	 * Creates a new notification.
+	 * 
+	 * <p>
+	 * Registers a new notification in the system.
+	 * </p>
+	 * 
+	 * @param notification The request body containing the information of the new
+	 *                     notification.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the creation operation.
+	 */
 	@PostMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Create Notification", description = "Registers a new notification in the system.")
+	@ApiResponse(responseCode = "200", description = "Notification created successfully")
 	public ResponseEntity<String> createNotification(@RequestBody Notification notification) {
 		logger.info("NotificationController :: createNotification");
 		ResponseEntity<String> response = null;
 		Boolean exist = notificationService.existByDate(notification.getDate());
 		response = processingResponseI.processStringResponse(exist,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("La notificación ya existe"), () -> {
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The notification already exists"), () -> {
 					Notification newNotification = new Notification();
 					notificationService.setAttributes(notification, newNotification);
 					notificationService.create(newNotification);
-					return ResponseEntity.ok().body("Notificación creada correctamente.");
+					return ResponseEntity.ok().body("Notification created successfully.");
 				});
 		return response;
 	}
 
+	/**
+	 * Retrieves all notifications.
+	 * 
+	 * <p>
+	 * Retrieves all notifications registered in the system.
+	 * </p>
+	 * 
+	 * @return ResponseEntity<Optional<Set<Notification>>> The response entity
+	 *         containing the set of notifications, if any.
+	 */
 	@GetMapping()
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Get All Notifications", description = "Retrieves all notifications registered in the system.")
+	@ApiResponse(responseCode = "200", description = "Notifications retrieved successfully")
 	public ResponseEntity<Optional<Set<Notification>>> getNotifications() {
 		logger.info("## NotificationController :: getNotifications");
 		Optional<Set<Notification>> notifications = notificationService.getAll();
 		return ResponseEntity.ok().body(notifications);
 	}
 
+	/**
+	 * Retrieves notifications associated with a specific user.
+	 * 
+	 * <p>
+	 * Retrieves all notifications associated with the specified user.
+	 * </p>
+	 * 
+	 * @param id The ID of the user whose notifications are to be retrieved.
+	 * @return ResponseEntity<Optional<Set<Notification>>> The response entity
+	 *         containing the set of notifications associated with the user, if any.
+	 */
 	@GetMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+	@Operation(summary = "Get Notifications by User ID", description = "Retrieves notifications associated with a specific user.")
+	@ApiResponse(responseCode = "200", description = "Notifications retrieved successfully")
 	public ResponseEntity<Optional<Set<Notification>>> getNotificationsByUserId(@PathVariable Long id) {
 		logger.info("NotificationController :: getNotificationsByUserId");
 		ResponseEntity<Optional<Set<Notification>>> response = null;
@@ -83,8 +141,23 @@ public class NotificationController {
 		return response;
 	}
 
+	/**
+	 * Updates a notification.
+	 * 
+	 * <p>
+	 * Updates an existing notification with new information.
+	 * </p>
+	 * 
+	 * @param id           The ID of the notification to be updated.
+	 * @param notification The request body containing the updated notification
+	 *                     information.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the update operation.
+	 */
 	@PatchMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Update Notification", description = "Updates an existing notification with new information.")
+	@ApiResponse(responseCode = "200", description = "Notification updated successfully")
 	public ResponseEntity<String> patchNotification(@PathVariable Long id, @RequestBody Notification notification) {
 		logger.info("NotificationController :: patchNotification");
 		ResponseEntity<String> response = null;
@@ -92,13 +165,26 @@ public class NotificationController {
 		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND), () -> {
 					notificationService.patch(id, notification);
-					return ResponseEntity.ok().body("Usuario actualizado");
+					return ResponseEntity.ok().body("Notification updated successfully.");
 				});
 		return response;
 	}
 
+	/**
+	 * Deletes a notification.
+	 * 
+	 * <p>
+	 * Deletes an existing notification.
+	 * </p>
+	 * 
+	 * @param id The ID of the notification to be deleted.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the deletion operation.
+	 */
 	@DeleteMapping("/notification/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Delete Notification", description = "Deletes an existing notification.")
+	@ApiResponse(responseCode = "200", description = "Notification deleted successfully")
 	public ResponseEntity<String> deleteNotification(@PathVariable Long id) {
 		logger.info("ActivityController :: deleteNotification");
 		ResponseEntity<String> response = null;
@@ -106,9 +192,25 @@ public class NotificationController {
 		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND), () -> {
 					notificationService.delete(id);
-					return ResponseEntity.ok().body("Notificacion ha eliminado correctamente");
+					return ResponseEntity.ok().body("Notification deleted successfully.");
 				});
 		return response;
 	}
 
+	/**
+	 * Handles NoHandlerFoundException.
+	 * 
+	 * <p>
+	 * Handles the case when no handler is found for a request.
+	 * </p>
+	 * 
+	 * @param ex      The NoHandlerFoundException instance.
+	 * @param request The web request.
+	 * @return ResponseEntity<ErrorDetailsResponse> The response entity containing
+	 *         details of the error.
+	 */
+	@ExceptionHandler(NoHandlerFoundException.class)
+	public ResponseEntity<ErrorDetailsResponse> handleException(Exception ex, WebRequest request) {
+		return globalExceptionHandler.handleCommonExceptions(ex, request);
+	}
 }

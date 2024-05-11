@@ -36,6 +36,8 @@ import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -43,22 +45,51 @@ import lombok.AllArgsConstructor;
 @CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class AdminController {
-
+	/**
+	 * Dependency injection for the UserServiceI interface.
+	 */
 	@Qualifier("userService")
 	private final UserServiceI userService;
+	/**
+	 * Dependency injection for the ActivityServiceI interface.
+	 */
 	@Qualifier("activityService")
 	private final ActivityServiceI activityService;
+	/**
+	 * Dependency injection for the NotificationServiceI interface.
+	 */
 	@Qualifier("notificationService")
 	private final NotificationServiceI notificationService;
-	@Qualifier("globalExceptionHandler")
-	private final GlobalExceptionHandler globalExceptionHandler;
+	/**
+	 * Dependency injection for the ProcessingResponseI interface.
+	 */
 	@Qualifier("processingResponseI")
 	private final ProcessingResponseI processingResponseI;
-
+	/**
+	 * Dependency injection for the GlobalExceptionHandler.
+	 */
+	@Qualifier("globalExceptionHandler")
+	private final GlobalExceptionHandler globalExceptionHandler;
+	/**
+	 * Logger instance for AdminController class.
+	 */
 	private final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
+	/**
+	 * Retrieves dashboard data.
+	 * 
+	 * <p>
+	 * Retrieves data for the admin dashboard, including user information and
+	 * activities.
+	 * </p>
+	 * 
+	 * @return ResponseEntity<Map<String, Object>> The response entity containing
+	 *         the dashboard data.
+	 */
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Show Dashboard", description = "Retrieves data for the admin dashboard, including user information and activities.")
+	@ApiResponse(responseCode = "200", description = "Dashboard data retrieved successfully")
 	public ResponseEntity<Map<String, Object>> showDashboard() {
 		logger.info("## AdminController :: showDashboard");
 		List<User> userList = userService.userSetToSortedList();
@@ -70,8 +101,22 @@ public class AdminController {
 		return ResponseEntity.ok().body(dashboardData);
 	}
 
+	/**
+	 * Updates a user.
+	 * 
+	 * <p>
+	 * Updates an existing user with new information.
+	 * </p>
+	 * 
+	 * @param id   The ID of the user to be updated.
+	 * @param user The request body containing the updated user information.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the update operation.
+	 */
 	@PutMapping("/user/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Update User", description = "Updates an existing user with new information.")
+	@ApiResponse(responseCode = "200", description = "User updated successfully")
 	public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody User user) {
 		logger.info("## AdminController :: updateUser");
 		ResponseEntity<String> response = null;
@@ -79,13 +124,28 @@ public class AdminController {
 		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND), () -> {
 					userService.update(id, user);
-					return ResponseEntity.ok().body("Usuario actualizado");
+					return ResponseEntity.ok().body("User updated successfully.");
 				});
 		return response;
 	}
 
+	/**
+	 * Updates a notification.
+	 * 
+	 * <p>
+	 * Updates an existing notification with new information.
+	 * </p>
+	 * 
+	 * @param id           The ID of the notification to be updated.
+	 * @param notification The request body containing the updated notification
+	 *                     information.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the update operation.
+	 */
 	@PutMapping("/notification/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Update Notification", description = "Updates an existing notification with new information.")
+	@ApiResponse(responseCode = "200", description = "Notification updated successfully")
 	public ResponseEntity<String> updateNotification(@PathVariable Long id, @RequestBody Notification notification) {
 		logger.info("## AdminController :: updateNotification");
 		ResponseEntity<String> response = null;
@@ -93,13 +153,27 @@ public class AdminController {
 		response = processingResponseI.processStringResponse(exists,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND), () -> {
 					notificationService.update(id, notification);
-					return ResponseEntity.ok().body("Notificación actualizada.");
+					return ResponseEntity.ok().body("Notification updated successfully.");
 				});
 		return response;
 	}
 
+	/**
+	 * Updates an activity.
+	 * 
+	 * <p>
+	 * Updates an existing activity with new information.
+	 * </p>
+	 * 
+	 * @param id       The ID of the activity to be updated.
+	 * @param activity The request body containing the updated activity information.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the update operation.
+	 */
 	@PutMapping("/activity/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Update Activity", description = "Updates an existing activity with new information.")
+	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
 	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
 		logger.info("## AdminController :: updateActivity");
 		ResponseEntity<String> response = null;
@@ -107,13 +181,26 @@ public class AdminController {
 		response = processingResponseI.processStringResponse(exists,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
 					activityService.update(id, activity);
-					return ResponseEntity.ok().body("Actividad actualizada.");
+					return ResponseEntity.ok().body("Activity updated successfully.");
 				});
 		return response;
 	}
 
+	/**
+	 * Deletes a user.
+	 * 
+	 * <p>
+	 * Deletes the user with the specified ID.
+	 * </p>
+	 * 
+	 * @param id The ID of the user to be deleted.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the deletion operation.
+	 */
 	@DeleteMapping("/user/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Delete User", description = "Deletes a user.")
+	@ApiResponse(responseCode = "200", description = "User deleted successfully")
 	public ResponseEntity<String> deleteUser(@PathVariable Long id) {
 		logger.info("## AdminController :: deleteUser");
 		ResponseEntity<String> response = null;
@@ -121,13 +208,26 @@ public class AdminController {
 		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND), () -> {
 					userService.deleteById(id);
-					return ResponseEntity.ok().body("Usuario ha sido eliminado exitosamente");
+					return ResponseEntity.ok().body("User has been deleted successfully.");
 				});
 		return response;
 	}
 
+	/**
+	 * Deletes an activity.
+	 * 
+	 * <p>
+	 * Deletes the activity with the specified ID.
+	 * </p>
+	 * 
+	 * @param id The ID of the activity to be deleted.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the deletion operation.
+	 */
 	@DeleteMapping("/activity/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Delete Activity", description = "Deletes an activity.")
+	@ApiResponse(responseCode = "200", description = "Activity deleted successfully")
 	public ResponseEntity<String> deleteActivity(@PathVariable Long id) {
 		logger.info("ActivityController :: deleteActivity");
 		ResponseEntity<String> response = null;
@@ -135,11 +235,23 @@ public class AdminController {
 		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
 					activityService.deleteById(id);
-					return ResponseEntity.ok().body("Actividad ha eliminado correctamente");
+					return ResponseEntity.ok().body("Activity has been deleted successfully.");
 				});
 		return response;
 	}
 
+	/**
+	 * Handles NoHandlerFoundException.
+	 * 
+	 * <p>
+	 * Handles the case when no handler is found for a request.
+	 * </p>
+	 * 
+	 * @param ex      The NoHandlerFoundException instance.
+	 * @param request The web request.
+	 * @return ResponseEntity<ErrorDetailsResponse> The response entity containing
+	 *         details of the error.
+	 */
 	@ExceptionHandler(NoHandlerFoundException.class)
 	public ResponseEntity<ErrorDetailsResponse> handleException(Exception ex, WebRequest request) {
 		return globalExceptionHandler.handleCommonExceptions(ex, request);
