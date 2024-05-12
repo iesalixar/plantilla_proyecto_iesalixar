@@ -43,9 +43,8 @@ public class UserServicImpl implements UserServiceI {
 
 	@Override
 	public User getById(Long id) {
-		User user = userRepository.findById(id)
+		return userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return user;
 	}
 
 	@Override
@@ -127,6 +126,11 @@ public class UserServicImpl implements UserServiceI {
 		updateFieldIfDifferent(aux, user.getFirstName(), "firstName", aux::setFirstName);
 		updateFieldIfDifferent(aux, user.getLastName(), "lastName", aux::setLastName);
 		updateFieldIfDifferent(aux, user.getUsername(), "userName", aux::setUserName);
+		// Age Check and Set new value.
+		if (!user.getAge().equals(aux.getAge())) {
+			aux.setAge(user.getAge());
+		}
+
 		updateFieldIfDifferent(aux, user.getEmail(), "email", aux::setEmail);
 		updateFieldIfDifferent(aux, user.getPassword(), "password", aux::setPassword);
 	}
@@ -161,6 +165,7 @@ public class UserServicImpl implements UserServiceI {
 		user.setFirstName(request.getFirstName());
 		user.setLastName(request.getLastName());
 		user.setUserName(request.getUserName());
+		user.setAge(request.getAge());
 		user.setEmail(request.getEmail());
 		user.setPassword((request.getPassword()));
 		Set<Role> roles = new HashSet<>();
@@ -180,6 +185,7 @@ public class UserServicImpl implements UserServiceI {
 		response.setFirstName(user.getFirstName());
 		response.setLastName(user.getLastName());
 		response.setUserName(user.getUsername());
+		response.setAge(user.getAge());
 		response.setEmail(user.getEmail());
 		response.setPassword((user.getPassword()));
 		Set<Role> roles = new HashSet<>();

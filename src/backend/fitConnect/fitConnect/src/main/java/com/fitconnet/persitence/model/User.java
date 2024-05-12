@@ -32,6 +32,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -78,6 +80,14 @@ public class User implements UserDetails {
 	@Column(name = "C_USER_USERNAME", unique = true, nullable = false)
 	@Size(min = 3, max = 20, message = "The username must be between 3 and 20 characters.")
 	private String userName;
+
+	/**
+	 * The age of the user.
+	 */
+	@Column(name = "C_USER_AGE", nullable = false)
+	@Min(value = 18, message = "Age should not be less than 18")
+	@Max(value = 150, message = "Age should not be greater than 150")
+	private Integer age;
 
 	/**
 	 * The email address of the user.
