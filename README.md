@@ -12,27 +12,31 @@ El desarrollo de toda Aplicación Web requiere seguir un [proceso estructurado](
 
 ---
 
-# Título del Proyecto
+# FitConnet
 
-#### Curso Escolar 20XX-20XX
-#### Autor: [Nombre del alumno autor](Enlace a su cuenta de gitHub)
-#### Tutor: [Nombre del profesor tutor](Enlace a su cuenta de gitHub)
-#### Fecha de Inicio: DD-MM-YYYY
+#### Curso Escolar 2023-2024
+#### Autor: [Daniel Perez Serrano](https://github.com/Dani-Ps)
+#### Tutor: [Antonio Gabriel González Casado]([Enlace a su cuenta de gitHub](https://github.com/antonio-gabriel-gonzalez-casado))
+#### Fecha de Inicio: 15-03-2024
 #### Fecha de Finalización: DD-MM-YYYY
 
 ## Breve descripción del proyecto
 
-Si ya tienes una idea para tu aplicación, explícala brevemente. Si no es así, lo que realmente necesitas es **buscar un problema o necesidad a la que darle solución**, y estos **están por todas partes**. Así que trata de buscar problemas o necesidades en tu vida diaria y realiza una lista. Una vez que tengas una lista exhaustiva, ya puedes empezar a pensar en **cómo puedes resolverlos**.
+FitConnet es una aplicación cuyo fin es el ser de una red social que impacte positivamente en la salud de las personas y por tanto en su vida. En ella cada usuario podrá compartir sus entrenamientos, encontrar nuevos amigos incluso invitar a sus entrenos a otros usuarios con el fin de crear una comunidad enfocada en el deporte que junta se retroalimente en este sentido.
 
-En este apartado el alumno debe hacer una breve descripción del proyecto que vaya a realizar. Esta descripción no será ua descripción detallada, será una presentación general con no más de 10 líneas.
-
-## Definir el objetivo de la aplicación
-**Tener una gran idea** o encontrar un punto del mercado al que no se esté dando un producto o servicio es el punto de partida en cada nuevo proyecto. Antes de comenzar debes **definir claramente el propósito y la misión de la aplicación web**:
+## Definición del objetivo de la aplicación
 
 - **¿Qué va a hacer la aplicación?**
-- **¿Cuál es su atractivo principal?** 
-- **¿Qué problema concreto va a resolver?** 
+  - La aplicación permitirá el registro de usuarios mayores de 18 años, los cuales tendrán su perfil con amigos y entrenamientos, tanto los creados por ellos como los en los que han participado. Además, habrá una página de feed donde podrán ver los últimos entrenamientos que han subido sus amigos.
+
+- **¿Cuál es su atractivo principal?**
+  - El eslogan de mi aplicación es "Let's thrive", que se podría traducir como "¡Prosperemos!". El atractivo principal radica en proporcionar una red social alejada del estándar, enfocada en usuarios que desean iniciar actividades deportivas pero no encuentran la suficiente motivación para hacerlo solos. Aquí es donde cobra sentido la aplicación, al construir una comunidad donde compartir entrenamientos facilita el establecimiento de una rutina.
+
+- **¿Qué problema concreto va a resolver?**
+  - La aplicación aborda el problema de la falta de una red social similar a Instagram, pero enfocada exclusivamente en compartir entrenamientos. Mientras que en redes sociales como Instagram se pueden realizar acciones similares, también hay una multitud de otros temas y personas con distintos intereses. Con FitConnect, eliminamos ese 'ruido' generado por otras publicaciones de personas con otros intereses y nos centramos en mejorar nuestra rutina de ejercicio.
+
 - **¿Qué necesidad va a cubrir?**
+  - La aplicación cubrirá la necesidad de una red social especializada en compartir entrenamientos. Aunque existen algunas aplicaciones para deportes más concretos, estas carecen del componente de construir una comunidad de amigos/seguidores con quienes compartir entrenamientos.
 
 ## Estructura del Proyecto
 
