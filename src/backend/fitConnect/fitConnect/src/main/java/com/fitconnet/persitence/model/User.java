@@ -118,7 +118,7 @@ public class User implements UserDetails {
 	 * The friends of the user.
 	 */
 	@ManyToMany
-	@JoinTable(name = "T_USER_FRIENDS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
+	@JoinTable(name = "T_USER_FRIENDS", joinColumns = @JoinColumn(name = "C_USER_ID"), inverseJoinColumns = @JoinColumn(name = "C_FRIEND_ID"))
 	private List<User> friends = new ArrayList<>();
 
 	/**
