@@ -20,6 +20,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * Represents an activity entity.
+ */
 @Entity
 @Table(name = "T_ACTIVITY")
 @Data
@@ -27,39 +30,50 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Activity implements Serializable {
-
-	/** Serial Version */
 	private static final long serialVersionUID = 1L;
-
-	/** Identificador único de la actividad. */
+	/**
+	 * The unique identifier for the activity.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "C_PK_ACTIVITY_ID", unique = true, nullable = false)
 	private Long id;
 
-	/** Tipo de actividad (por ejemplo, correr, nadar, etc.). */
+	/**
+	 * The type of the activity.
+	 */
 	@Column(name = "C_ACTIVITY_TYPE", length = 30, nullable = false)
 	private String type;
 
-	/** Tiempo de duración en horas y/o minutos */
+	/**
+	 * The duration of the activity.
+	 */
 	@Column(name = "C_ACTIVITY_DURATION", length = 8, nullable = false)
 	private Duration duration;
 
-	/** Lugar asociado a esta actividad. */
+	/**
+	 * The place where the activity takes place.
+	 */
 	@Column(name = "C_ACTIVITY_PLACE", length = 100)
 	private String place;
 
-	/** Fecha asociado a esta actividad. */
+	/**
+	 * The date of the activity.
+	 */
 	@Column(name = "C_DATE", nullable = false)
 	private Date date;
 
-	/** Usuario asociado a esta actividad. */
+	/**
+	 * The creator of the activity.
+	 */
 	@ManyToOne
 	@JoinColumn(name = "C_ACTIVITY_CREATOR", referencedColumnName = "C_PK_USER_ID")
 	private User creator;
 
+	/**
+	 * The participants of the activity.
+	 */
 	@ManyToMany
 	@JoinTable(name = "T_ACTIVITY_PARTICIPANTS", joinColumns = @JoinColumn(name = "C_PK_ACTIVITY_ID"), inverseJoinColumns = @JoinColumn(name = "C_PK_USER_ID"))
 	private Set<User> participants;
-
 }

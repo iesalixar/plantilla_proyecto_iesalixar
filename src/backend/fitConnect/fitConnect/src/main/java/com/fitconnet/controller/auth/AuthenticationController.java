@@ -15,8 +15,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.fitconnet.dto.requets.SignUp;
 import com.fitconnet.dto.requets.Signin;
+import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.dto.response.JwtAuthenticationDTO;
-import com.fitconnet.error.ErrorDetailsResponse;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.service.interfaces.security.AuthenticationServiceI;
 
@@ -97,7 +97,7 @@ public class AuthenticationController {
 	 *         details of the error.
 	 */
 	@ExceptionHandler(NoHandlerFoundException.class)
-	public ResponseEntity<ErrorDetailsResponse> handleNoHandlerFoundException(NoHandlerFoundException ex,
+	public ResponseEntity<ErrorDetailsDTO> handleNoHandlerFoundException(NoHandlerFoundException ex,
 			WebRequest request) {
 		return globalExceptionHandler.handleNoHandlerFoundException(ex, request);
 	}

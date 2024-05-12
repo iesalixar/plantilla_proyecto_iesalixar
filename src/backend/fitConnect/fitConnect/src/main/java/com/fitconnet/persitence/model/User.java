@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,6 +38,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * Represents an user entity.
+ */
 @Entity
 @Table(name = "T_USER")
 @Data
@@ -45,90 +49,158 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
-	/** Identificador único del usuario. */
+
+	/**
+	 * The unique identifier for the user.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "C_PK_USER_ID", unique = true, nullable = false)
 	private Long id;
-	/** Nombre completo del usuario. */
+
+	/**
+	 * The first name of the user.
+	 */
 	@Column(name = "C_USER_FIRSTNAME", nullable = false)
-	@Size(min = 3, max = 20, message = "El nombre de usuario debe tener entre 3 y 20 caracteres.")
+	@Size(min = 3, max = 20, message = "The name must be between 3 and 20 characters.")
 	private String firstName;
+
+	/**
+	 * The last name of the user.
+	 */
 	@Column(name = "C_USER_LASTNAME")
-	@Size(min = 3, max = 20, message = "El nombre de usuario debe tener entre 3 y 20 caracteres.")
+	@Size(min = 3, max = 20, message = "The surname must be between 3 and 20 characters.")
 	private String lastName;
-	/** Nombre de usuario. */
+
+	/**
+	 * The username of the user.
+	 */
 	@Column(name = "C_USER_USERNAME", unique = true, nullable = false)
-	@Size(min = 3, max = 20, message = "El nombre de usuario debe tener entre 3 y 20 caracteres.")
+	@Size(min = 3, max = 20, message = "The username must be between 3 and 20 characters.")
 	private String userName;
-	/** Email del usuario. */
+
+	/**
+	 * The email address of the user.
+	 */
 	@Column(name = "C_USER_EMAIL", unique = true, nullable = false)
-	@Email(message = "Debe ser una dirección de correo electrónico válida")
+	@Email(message = "Must be a valid e-mail address")
 	private String email;
-	/** Contraseña del usuario. */
+
+	/**
+	 * The password of the user.
+	 */
 	@Column(name = "C_USER_PASSWORD")
-	@Size(min = 6, max = 30, message = "La contraseña debe tener entre 6 y 30 caracteres.")
+	@Size(min = 3, max = 20, message = "The password must be between 3 and 20 characters.")
 	private String password;
 
+	/**
+	 * The roles assigned to the user.
+	 */
 	@ElementCollection(fetch = FetchType.EAGER, targetClass = Role.class)
 	@Enumerated(EnumType.STRING)
 	@CollectionTable(name = "T_USER_ROLES", joinColumns = @JoinColumn(name = "C_PK_USER_ID"))
 	@Column(name = "C_USER_ROLES")
 	private Set<Role> roles = new HashSet<>();
 
-	/** Lista de actividades traqueadas por el usuario. */
+	/**
+	 * The activities created by the user.
+	 */
 	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
 	private Set<Activity> createdActivities = new LinkedHashSet<>();
 
+	/**
+	 * The activities the user is invited to.
+	 */
 	@ManyToMany(mappedBy = "participants", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<Activity> invitedActivities = new LinkedHashSet<>();
 
+	/**
+	 * The friends of the user.
+	 */
 	@ManyToMany
 	@JoinTable(name = "T_USER_FRIENDS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
 	private List<User> friends = new ArrayList<>();
 
+	/**
+	 * The notifications received by the user.
+	 */
 	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
 	private Set<Notification> notifications = new LinkedHashSet<>();
 
+	/**
+	 * Retrieves the authorities granted to the user.
+	 *
+	 * @return A collection of authorities granted to the user.
+	 */
 	@Transactional
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		if (roles.isEmpty()) {
 			return null;
 		} else {
-
-			return roles.stream().map(role -> new SimpleGrantedAuthority(role.name())).toList();
+			return roles.stream().map(role -> new SimpleGrantedAuthority(role.name())).collect(Collectors.toList());
 		}
 	}
 
+	/**
+	 * Retrieves the username used to authenticate the user.
+	 *
+	 * @return The username used to authenticate the user.
+	 */
 	@Override
 	public String getUsername() {
 		return email;
 	}
 
+	/**
+	 * Indicates whether the user's account has expired.
+	 *
+	 * @return true if the user's account is valid (i.e., not expired), false
+	 *         otherwise.
+	 */
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
+	/**
+	 * Indicates whether the user is locked or unlocked.
+	 *
+	 * @return true if the user is not locked, false otherwise.
+	 */
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 
+	/**
+	 * Indicates whether the user's credentials (password) has expired.
+	 *
+	 * @return true if the user's credentials are valid (i.e., not expired), false
+	 *         otherwise.
+	 */
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
+	/**
+	 * Indicates whether the user is enabled or disabled.
+	 *
+	 * @return true if the user is enabled, false otherwise.
+	 */
 	@Override
 	public boolean isEnabled() {
 		return true;
 	}
 
+	/**
+	 * Retrieves the password used to authenticate the user.
+	 *
+	 * @return The password used to authenticate the user.
+	 */
 	@Override
 	public String getPassword() {
 		return password;
 	}
-
 }

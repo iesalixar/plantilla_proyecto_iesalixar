@@ -22,8 +22,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.fitconnet.dto.entities.UserDTO;
+import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.enums.Role;
-import com.fitconnet.error.ErrorDetailsResponse;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.implementations.security.AuthenticationServiceImpl;
@@ -260,7 +260,7 @@ public class UserController {
 	 *         details of the error.
 	 */
 	@ExceptionHandler(NoHandlerFoundException.class)
-	public ResponseEntity<ErrorDetailsResponse> handleException(Exception ex, WebRequest request) {
+	public ResponseEntity<ErrorDetailsDTO> handleException(Exception ex, WebRequest request) {
 		return globalExceptionHandler.handleCommonExceptions(ex, request);
 	}
 
