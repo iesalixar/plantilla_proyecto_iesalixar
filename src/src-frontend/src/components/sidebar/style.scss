@@ -1,0 +1,14 @@
+aside{
+    max-width: 200px;
+    height: 15vh;
+}
+.sidebar-container{
+    .icon-section{
+      display: flex;
+      margin-left: 30px;
+      margin-top: 15px;
+        .txt{
+            margin-left: 20px;
+        }
+    }
+}
