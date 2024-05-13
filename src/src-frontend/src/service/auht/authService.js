@@ -1,11 +1,11 @@
-const signupService = async (email, password) => {
+const signupService = async (email, password, username, age) => {
     try {
         const response = await fetch('http://localhost:8080/api/v1/auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password, }),
+            body: JSON.stringify({ email, password, username, age, }),
         });
 
         if (!response.ok) {

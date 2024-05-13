@@ -31,7 +31,6 @@ public class DataInitializer implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-
 		if (DELETE_USER) {
 			userRepository.deleteAll();
 		}
@@ -42,6 +41,7 @@ public class DataInitializer implements CommandLineRunner {
 			admin.setLastName("");
 			admin.setUserName("bustaAdmin");
 			admin.setEmail("admin@admin.com");
+			admin.setAge(20);
 			admin.setPassword(passwordEncoder.encode("admin"));
 			admin.getRoles().add(Role.ROLE_ADMIN);
 			userRepository.save(admin);
@@ -52,6 +52,7 @@ public class DataInitializer implements CommandLineRunner {
 				user.setLastName(faker.name().lastName());
 				user.setUserName(faker.name().username());
 				user.setEmail(faker.internet().emailAddress());
+				user.setAge(faker.number().numberBetween(18, 80));
 				user.setPassword(passwordEncoder.encode(faker.internet().password()));
 				user.getRoles().add(Role.ROLE_USER);
 				userRepository.save(user);
