@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
   });
   useEffect(() => {
-    // Almacenar el usuario en el localStorage cuando cambie  // ESTO ME GUSTARIA CAMBIARLO PARA NO MOSTRAR DATOS SENSIBLES EN LAS COOKIES; SIN EMBARGO NO LO HE CONSEGUIDO, PIERDO EL CONTEXTO DE LA APP AL ACTUALIZAR
+    // Almacenar el usuario en el localStorage cuando cambie ESTO ME GUSTARIA CAMBIARLO PARA NO MOSTRAR DATOS SENSIBLES EN LAS COOKIES; SIN EMBARGO NO LO HE CONSEGUIDO, PIERDO EL CONTEXTO DE LA APP AL ACTUALIZAR
     localStorage.setItem('activeUser', JSON.stringify(activeUser));
   }, [activeUser]);
 
