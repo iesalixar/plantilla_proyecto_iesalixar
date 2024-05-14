@@ -137,11 +137,11 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Get Activity by ID", description = "Retrieves an activity by its ID.")
 	@ApiResponse(responseCode = "200", description = "Activity retrieved successfully")
-	public ResponseEntity<Optional<Activity>> getActivityById(@PathVariable Long id) {
+	public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
 		logger.info("ActivityController :: getActivityById");
-		ResponseEntity<Optional<Activity>> response = null;
-		Optional<Activity> existingActivity = activityService.getOne(id);
-		response = processingResponseI.processEntityResponse(existingActivity,
+		ResponseEntity<Activity> response = null;
+		Activity existingActivity = activityService.getOne(id);
+		response = processingResponseI.processActivityResponse(existingActivity,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
 				() -> ResponseEntity.ok().body(existingActivity));
 		return response;

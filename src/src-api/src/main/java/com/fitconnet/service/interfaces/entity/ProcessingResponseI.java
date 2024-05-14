@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import org.springframework.http.ResponseEntity;
 
+import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.persitence.model.User;
 
 /**
@@ -22,6 +23,18 @@ public interface ProcessingResponseI {
 	 * @return the ResponseEntity
 	 */
 	<T> ResponseEntity<T> processEntityResponse(Optional<?> entity, Supplier<ResponseEntity> conflictSupplier,
+			Supplier<ResponseEntity<T>> successSupplier);
+
+	/**
+	 * Processes the entity response.
+	 * 
+	 * @param entity           the entity to process
+	 * @param conflictSupplier supplier for conflict response entity
+	 * @param successSupplier  supplier for success response entity
+	 * @param <T>              the type of the response entity
+	 * @return the ResponseEntity
+	 */
+	<T> ResponseEntity<T> processActivityResponse(Activity entity, Supplier<ResponseEntity> conflictSupplier,
 			Supplier<ResponseEntity<T>> successSupplier);
 
 	/**
