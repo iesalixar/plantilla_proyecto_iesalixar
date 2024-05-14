@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -63,11 +65,11 @@ public class Activity implements Serializable {
 	@Column(name = "C_DATE", nullable = false)
 	private Date date;
 	/**
-	 * The date of the activity.
+	 * The image associated with the activity.
 	 */
-	@Column(name = "C_IMG", nullable = false)
-	private Image img;
-
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "C_IMG_ID", referencedColumnName = "id")
+	private Image image;
 	/**
 	 * The creator of the activity.
 	 */

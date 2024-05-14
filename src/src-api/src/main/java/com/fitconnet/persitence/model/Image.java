@@ -1,16 +1,18 @@
 package com.fitconnet.persitence.model;
 
-import org.springframework.data.annotation.Id;
+import java.sql.Blob;
 
-import com.mysql.cj.jdbc.Blob;
+import org.springframework.data.annotation.Id;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Represents an activity entity.
@@ -19,6 +21,7 @@ import lombok.Data;
 @Table(name = "T_IMAGE")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Image {
 	/**
 	 * The unique identifier for the image.
@@ -31,4 +34,10 @@ public class Image {
 	 */
 	@Lob
 	private Blob image;
+
+	/**
+	 * The activity associated with the image.
+	 */
+	@OneToOne(mappedBy = "image")
+	private Activity activity;
 }
