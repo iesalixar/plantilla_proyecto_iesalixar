@@ -299,7 +299,7 @@ public class AdminController {
 	 * @return ResponseEntity<String> The response entity indicating the success or
 	 *         failure of the deletion operation.
 	 */
-	@DeleteMapping("/activity/{id}")
+	@DeleteMapping("/image/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Delete Image", description = "Deletes an image.")
 	@ApiResponse(responseCode = "200", description = "Image deleted successfully")

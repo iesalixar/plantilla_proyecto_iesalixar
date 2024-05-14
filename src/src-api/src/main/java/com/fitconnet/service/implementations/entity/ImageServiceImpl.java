@@ -3,12 +3,15 @@ package com.fitconnet.service.implementations.entity;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.fitconnet.persitence.model.Image;
 import com.fitconnet.persitence.repository.ImageRepository;
 import com.fitconnet.service.interfaces.entity.ImageServiceI;
 
 import lombok.AllArgsConstructor;
 
+@Service
 @AllArgsConstructor
 public class ImageServiceImpl implements ImageServiceI {
 
