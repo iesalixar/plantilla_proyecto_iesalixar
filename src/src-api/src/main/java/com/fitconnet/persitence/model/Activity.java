@@ -62,6 +62,11 @@ public class Activity implements Serializable {
 	 */
 	@Column(name = "C_DATE", nullable = false)
 	private Date date;
+	/**
+	 * The date of the activity.
+	 */
+	@Column(name = "C_IMG", nullable = false)
+	private Image img;
 
 	/**
 	 * The creator of the activity.
