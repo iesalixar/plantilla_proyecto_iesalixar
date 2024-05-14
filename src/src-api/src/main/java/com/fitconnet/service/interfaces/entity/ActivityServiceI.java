@@ -27,7 +27,7 @@ public interface ActivityServiceI {
 	 * @param id The ID of the activity to retrieve.
 	 * @return An optional containing the activity with the specified ID, if found.
 	 */
-	Optional<Activity> getOne(Long id);
+	Activity getOne(Long id);
 
 	/**
 	 * Checks if an activity exists by its ID.

@@ -44,10 +44,9 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	}
 
 	@Override
-	public Optional<Activity> getOne(Long id) {
-		Activity activity = activityRepository.findById(id)
+	public Activity getOne(Long id) {
+		return activityRepository.findById(id)
 				.orElseThrow(() -> new ActivityNotFoundException(Constants.ACTIVITY_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return Optional.of(activity);
 	}
 
 	@Override
