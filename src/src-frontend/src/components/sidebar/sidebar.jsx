@@ -4,8 +4,12 @@ import { ReactComponent as HomeIcon } from '../../assest/sidebar-icons/home_icon
 import { ReactComponent as SearchIcon } from '../../assest/sidebar-icons/search_icon.svg';
 import { ReactComponent as NotificationsIcon } from '../../assest/sidebar-icons/notification_icon.svg';
 import { ReactComponent as CreateIcon } from '../../assest/sidebar-icons/create_icon.svg';
+import { ReactComponent as LogoutIcon } from '../../assest/sidebar-icons/logout_icon.svg';
+import { useAuth } from '../../authContext/autContext';
+
 
 const SidebarComponent = () => {
+    const { logout } = useAuth();
 
     const handleIconClick = (name) => {
         switch (name) {
@@ -17,6 +21,10 @@ const SidebarComponent = () => {
                 break;
             case 'Profile':
                 window.location.href = '/perfil';
+                break;
+            case 'Logout':
+                logout();
+                window.location.href = '/';
                 break;
             default:
                 break;
@@ -31,7 +39,8 @@ const SidebarComponent = () => {
                     { name: 'Search', component: <SearchIcon /> },
                     { name: 'Notifications', component: <NotificationsIcon /> },
                     { name: 'Create', component: <CreateIcon /> },
-                    { name: 'Profile', component: <ProfileIcon /> }
+                    { name: 'Profile', component: <ProfileIcon /> },
+                    { name: 'Logout', component: <LogoutIcon /> }
                 ].map((icon, index) => (
                     <div className="icon-section" key={index}>
                         <div className='icon-btn' onClick={() => handleIconClick(icon.name)}>{icon.component}</div>

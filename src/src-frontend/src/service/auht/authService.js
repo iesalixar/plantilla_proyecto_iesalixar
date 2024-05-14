@@ -20,14 +20,14 @@ const signupService = async (email, password, username, age) => {
 
 export { signupService };
 
-const signinService = async (email, password) => {
+const signinService = async (identifier, password) => {
     try {
         const response = await fetch('http://localhost:8080/api/v1/auth/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ identifier, password }),
         });
 
         if (!response.ok) {

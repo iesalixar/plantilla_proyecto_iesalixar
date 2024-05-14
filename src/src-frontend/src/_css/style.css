@@ -1,7 +1,14 @@
-.header {
-  display: flex;
-  align-items: center;
+aside {
+  max-width: 200px;
+  height: 15vh;
 }
-.header .logo-svg {
-  margin-left: 10px;
+
+.sidebar-container .icon-section {
+  display: flex;
+  margin-left: 30px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+.sidebar-container .icon-section .txt {
+  margin-left: 20px;
 }/*# sourceMappingURL=style.css.map */
