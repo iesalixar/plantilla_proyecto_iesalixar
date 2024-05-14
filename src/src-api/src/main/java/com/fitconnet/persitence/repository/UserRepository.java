@@ -30,7 +30,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * @return An optional containing the user with the specified username, if
 	 *         found.
 	 */
-	Optional<User> findByUserName(String userName);
+	Optional<User> findByUsername(String username);
 
 	/**
 	 * Finds users by last name.

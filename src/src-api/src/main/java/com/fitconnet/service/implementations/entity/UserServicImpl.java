@@ -49,7 +49,7 @@ public class UserServicImpl implements UserServiceI {
 
 	@Override
 	public Optional<User> getByUserName(String userName) {
-		User user = userRepository.findByUserName(userName)
+		User user = userRepository.findByUsername(userName)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
 		return Optional.of(user);
 	}
@@ -125,7 +125,7 @@ public class UserServicImpl implements UserServiceI {
 
 		updateFieldIfDifferent(aux, user.getFirstName(), "firstName", aux::setFirstName);
 		updateFieldIfDifferent(aux, user.getLastName(), "lastName", aux::setLastName);
-		updateFieldIfDifferent(aux, user.getUsername(), "userName", aux::setUserName);
+		updateFieldIfDifferent(aux, user.getUsername(), "userName", aux::setUsername);
 		// Age Check and Set new value.
 		if (!user.getAge().equals(aux.getAge())) {
 			aux.setAge(user.getAge());
@@ -164,7 +164,7 @@ public class UserServicImpl implements UserServiceI {
 	public void userDTOtoUSer(UserDTO request, User user, Role rol) {
 		user.setFirstName(request.getFirstName());
 		user.setLastName(request.getLastName());
-		user.setUserName(request.getUserName());
+		user.setUsername(request.getUserName());
 		user.setAge(request.getAge());
 		user.setEmail(request.getEmail());
 		user.setPassword((request.getPassword()));

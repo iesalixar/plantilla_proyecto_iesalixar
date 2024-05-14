@@ -3,6 +3,8 @@ package com.fitconnet.service.implementations.security;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,6 +34,10 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 	private final PasswordEncoder passwordEncoder;
 	private final JwtServiceI jwtService;
 	private final AuthenticationManager authenticationManager;
+	/**
+	 * Logger instance for ActivityController class.
+	 */
+	private final Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
 
 	@Override
 	public JwtAuthenticationDTO signup(SignUp request) {
@@ -43,7 +49,7 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 		User user = new User();
 		user.setFirstName(request.getFirstName());
 		user.setLastName(request.getLastName());
-		user.setUserName(request.getUsername());
+		user.setUsername(request.getUsername());
 		user.setEmail(request.getEmail());
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 		user.getRoles().add(Role.ROLE_USER);
@@ -55,14 +61,32 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 
 	@Override
 	public JwtAuthenticationDTO signin(Signin request) {
+
+		String identifier = request.getIdentifier();
+		boolean isEmail = identifier.contains("@");
+		User user = new User();
+
+		logger.info("AuthenticationServiceImpl - signin - IDENTIFIER: " + identifier);
+
 		Authentication authentication = authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+				.authenticate(new UsernamePasswordAuthenticationToken(identifier, request.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-		User user = userRepository.findByEmail(request.getEmail())
-				.orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+		if (!isEmail) {
+			user = userRepository.findByUsername(identifier)
+					.orElseThrow(() -> new IllegalArgumentException("Invalid username or password."));
+			logger.info("AuthenticationServiceImpl - signin - BUSCANDO POR USER");
+
+		} else {
+			user = userRepository.findByEmail(request.getIdentifier())
+					.orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+			logger.info("AuthenticationServiceImpl - signin - BUSCANDO POR EMAIL");
+
+		}
+
 		String jwt = jwtService.generateToken(user);
+
 		return JwtAuthenticationDTO.builder().token(jwt).build();
 	}
 
@@ -86,7 +110,7 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 		User user = new User();
 		user.setFirstName(request.getFirstName());
 		user.setLastName(request.getLastName());
-		user.setUserName(request.getUserName());
+		user.setUsername(request.getUserName());
 		user.setEmail(request.getEmail());
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 		Set<Role> roles = new HashSet<>();

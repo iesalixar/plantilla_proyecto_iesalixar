@@ -79,7 +79,7 @@ public class User implements UserDetails {
 	 */
 	@Column(name = "C_USER_USERNAME", unique = true, nullable = false)
 	@Size(min = 3, max = 20, message = "The username must be between 3 and 20 characters.")
-	private String userName;
+	private String username;
 
 	/**
 	 * The age of the user.
@@ -159,7 +159,7 @@ public class User implements UserDetails {
 	 */
 	@Override
 	public String getUsername() {
-		return email;
+		return username;
 	}
 
 	/**
@@ -213,4 +213,5 @@ public class User implements UserDetails {
 	public String getPassword() {
 		return password;
 	}
+
 }

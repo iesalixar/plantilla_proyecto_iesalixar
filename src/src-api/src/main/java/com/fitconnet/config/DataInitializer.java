@@ -39,18 +39,28 @@ public class DataInitializer implements CommandLineRunner {
 			User admin = new User();
 			admin.setFirstName("admin");
 			admin.setLastName("");
-			admin.setUserName("bustaAdmin");
+			admin.setUsername("bustaAdmin");
 			admin.setEmail("admin@admin.com");
 			admin.setAge(20);
 			admin.setPassword(passwordEncoder.encode("admin"));
 			admin.getRoles().add(Role.ROLE_ADMIN);
 			userRepository.save(admin);
+			User both = new User();
+			both.setFirstName("both");
+			both.setLastName("");
+			both.setUsername("bothAdUs");
+			both.setEmail("both@admin.com");
+			both.setAge(20);
+			both.setPassword(passwordEncoder.encode("admin"));
+			both.getRoles().add(Role.ROLE_ADMIN);
+			both.getRoles().add(Role.ROLE_USER);
+			userRepository.saveAndFlush(both);
 
-			for (int i = 0; i < 100; i++) {
+			for (int i = 0; i < 10; i++) {
 				User user = new User();
 				user.setFirstName(faker.name().firstName());
 				user.setLastName(faker.name().lastName());
-				user.setUserName(faker.name().username());
+				user.setUsername(faker.name().username());
 				user.setEmail(faker.internet().emailAddress());
 				user.setAge(faker.number().numberBetween(18, 80));
 				user.setPassword(passwordEncoder.encode(faker.internet().password()));

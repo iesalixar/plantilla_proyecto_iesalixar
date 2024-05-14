@@ -122,7 +122,7 @@ const SignupForm = () => {
                 <br />
                 <button type="submit">Registrarse</button>
             </form>
-            <Link to="/" >
+            <Link to="/login" >
                 <div>Login</div>
             </Link>
 

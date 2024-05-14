@@ -7,10 +7,11 @@ import lombok.Data;
  */
 @Data
 public class Signin {
+
 	/**
-	 * The email address used for signing in.
+	 * The email address or user name used for signing in.
 	 */
-	private String email;
+	private String identifier;
 
 	/**
 	 * The password used for signing in.
