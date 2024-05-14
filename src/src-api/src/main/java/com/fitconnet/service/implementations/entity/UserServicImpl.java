@@ -37,7 +37,7 @@ public class UserServicImpl implements UserServiceI {
 	@Override
 	public Optional<Set<User>> getAll() {
 		List<User> usersList = userRepository.findAll();
-		Set<User> usersSet = (Set<User>) usersList;
+		Set<User> usersSet = new HashSet<>(usersList); // Create a new HashSet from the list
 		return Optional.of(usersSet);
 	}
 
@@ -147,7 +147,7 @@ public class UserServicImpl implements UserServiceI {
 	public List<User> userSetToSortedList() {
 		Optional<Set<User>> userSet = getAll();
 		return userSet.orElse(new HashSet<>()).stream().filter(user -> !user.getRoles().contains(Role.ROLE_ADMIN))
-				.sorted(Comparator.comparing(User::getUsername)).toList();
+				.sorted(Comparator.comparing(User::getUsername)).collect(Collectors.toList());
 	}
 
 	@Override

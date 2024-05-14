@@ -62,28 +62,27 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 	@Override
 	public JwtAuthenticationDTO signin(Signin request) {
 
-		String identifier = request.getIdentifier();
-		boolean isEmail = identifier.contains("@");
-		User user = new User();
+//		String identifier = request.getIdentifier();
+//		boolean isEmail = identifier.contains("@");
+//		User user = new User();
 
-		logger.info("AuthenticationServiceImpl - signin - IDENTIFIER: " + identifier);
+//		logger.info("AuthenticationServiceImpl - signin - IDENTIFIER: " + identifier);
 
 		Authentication authentication = authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(identifier, request.getPassword()));
+				.authenticate(new UsernamePasswordAuthenticationToken(request.getIdentifier(), request.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//		if (!isEmail) {
+//			user = userRepository.findByUsername(identifier)
+//					.orElseThrow(() -> new IllegalArgumentException("Invalid username or password."));
+//			logger.info("AuthenticationServiceImpl - signin - BUSCANDO POR USER");
+//
+//		} else {
+		User user = userRepository.findByEmail(request.getIdentifier())
+				.orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
 
-		if (!isEmail) {
-			user = userRepository.findByUsername(identifier)
-					.orElseThrow(() -> new IllegalArgumentException("Invalid username or password."));
-			logger.info("AuthenticationServiceImpl - signin - BUSCANDO POR USER");
-
-		} else {
-			user = userRepository.findByEmail(request.getIdentifier())
-					.orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
-			logger.info("AuthenticationServiceImpl - signin - BUSCANDO POR EMAIL");
-
-		}
+//		}
 
 		String jwt = jwtService.generateToken(user);
 

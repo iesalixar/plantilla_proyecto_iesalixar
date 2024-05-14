@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/user")
+@CrossOrigin(origins = "http://localhost:3000")
 @AllArgsConstructor
 public class UserController {
 	/**
