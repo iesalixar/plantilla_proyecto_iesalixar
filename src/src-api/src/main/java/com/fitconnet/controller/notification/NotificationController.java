@@ -37,7 +37,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/notification")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:3000")
 @AllArgsConstructor
 public class NotificationController {
 	/**

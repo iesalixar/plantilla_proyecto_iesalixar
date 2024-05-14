@@ -1,11 +1,16 @@
 package com.fitconnet.controller.user;
 
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+
+import javax.sql.rowset.serial.SerialException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,16 +26,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.Activity;
+import com.fitconnet.persitence.model.Image;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
+import com.fitconnet.service.interfaces.entity.ImageServiceI;
 import com.fitconnet.service.interfaces.entity.NotificationServiceI;
 import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
@@ -40,9 +49,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.AllArgsConstructor;
 
+/**
+ * REST Controller for managing admin operations.
+ */
 @RestController
 @RequestMapping("/api/v1/admin")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:3000")
 @AllArgsConstructor
 public class AdminController {
 	/**
@@ -60,6 +72,10 @@ public class AdminController {
 	 */
 	@Qualifier("notificationService")
 	private final NotificationServiceI notificationService;
+	/**
+	 * Dependency injection for the ImageServiceI interface.
+	 */
+	private final ImageServiceI imageService;
 	/**
 	 * Dependency injection for the ProcessingResponseI interface.
 	 */
@@ -97,7 +113,6 @@ public class AdminController {
 		Map<String, Object> dashboardData = new HashMap<>();
 		dashboardData.put("users", userList);
 		dashboardData.put("activities", activities.orElse(new HashSet<>()));
-
 		return ResponseEntity.ok().body(dashboardData);
 	}
 
@@ -187,6 +202,39 @@ public class AdminController {
 	}
 
 	/**
+	 * Updates an image.
+	 * 
+	 * <p>
+	 * Updates an existing image with new information.
+	 * </p>
+	 * 
+	 * @param id    The ID of the image to be updated.
+	 * @param image The request body containing the updated image information.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the update operation.
+	 */
+	@PutMapping("/image/{id}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Update Activity by Replacement", description = "Replaces an existing activity with another.")
+	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
+	public ResponseEntity<String> updateImage(@PathVariable Long id, @RequestParam("image") MultipartFile file)
+			throws IOException, SerialException, SQLException {
+		logger.info("ImageController :: updateImage");
+		ResponseEntity<String> response = null;
+		Boolean exist = imageService.existById(id);
+		Image newImage = new Image();
+		byte[] bytes = file.getBytes();
+		Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
+		newImage.setImage(blob);
+		response = processingResponseI.processStringResponse(exist,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.IMAGE_NOT_FOUND), () -> {
+					imageService.update(id, newImage);
+					return ResponseEntity.ok().body("Image has been deleted successfully.");
+				});
+		return response;
+	}
+
+	/**
 	 * Deletes a user.
 	 * 
 	 * <p>
@@ -229,13 +277,40 @@ public class AdminController {
 	@Operation(summary = "Delete Activity", description = "Deletes an activity.")
 	@ApiResponse(responseCode = "200", description = "Activity deleted successfully")
 	public ResponseEntity<String> deleteActivity(@PathVariable Long id) {
-		logger.info("ActivityController :: deleteActivity");
+		logger.info("AdminController :: deleteActivity");
 		ResponseEntity<String> response = null;
 		Boolean exist = activityService.existById(id);
 		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
 					activityService.deleteById(id);
 					return ResponseEntity.ok().body("Activity has been deleted successfully.");
+				});
+		return response;
+	}
+
+	/**
+	 * Deletes an activity.
+	 * 
+	 * <p>
+	 * Deletes the activity with the specified ID.
+	 * </p>
+	 * 
+	 * @param id The ID of the activity to be deleted.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the deletion operation.
+	 */
+	@DeleteMapping("/activity/{id}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Delete Image", description = "Deletes an image.")
+	@ApiResponse(responseCode = "200", description = "Image deleted successfully")
+	public ResponseEntity<String> deleteImage(@PathVariable Long id) {
+		logger.info("AdminController :: deleteImage");
+		ResponseEntity<String> response = null;
+		Boolean exist = activityService.existById(id);
+		response = processingResponseI.processStringResponse(exist,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.IMAGE_NOT_FOUND), () -> {
+					imageService.delete(id);
+					return ResponseEntity.ok().body("Image has been deleted successfully.");
 				});
 		return response;
 	}

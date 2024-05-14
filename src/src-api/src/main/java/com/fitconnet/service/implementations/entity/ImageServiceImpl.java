@@ -20,8 +20,8 @@ public class ImageServiceImpl implements ImageServiceI {
 	}
 
 	@Override
-	public Optional<Image> getById(Long id) {
-		return imageRepository.findById(id);
+	public Image getById(Long id) {
+		return imageRepository.findById(id).get();
 	}
 
 	@Override
@@ -42,6 +42,11 @@ public class ImageServiceImpl implements ImageServiceI {
 			imageRepository.save(img);
 		}
 
+	}
+
+	@Override
+	public Boolean existById(Long id) {
+		return imageRepository.existsById(id);
 	}
 
 }
