@@ -1,5 +1,5 @@
 const axios = require('axios');
-
+const API_IMAGE_PATH = 'http://localhost:8080/api/v1/image';
 // Función para obtener el token del localStorage
 function getToken() {
     return localStorage.getItem('token');
@@ -22,7 +22,7 @@ async function uploadImage(file, activityId) {
     formData.append('id', activityId);
 
     try {
-        const response = await axios.post('/api/v1/image', formData, getConfig());
+        const response = await axios.post(API_IMAGE_PATH, formData, getConfig());
         return response.data;
     } catch (error) {
         console.error('Error uploading image:', error.response.data);
@@ -33,7 +33,7 @@ async function uploadImage(file, activityId) {
 // Servicio para obtener todas las imágenes
 async function getAllImages() {
     try {
-        const response = await axios.get('/api/v1/image', getConfig());
+        const response = await axios.get(API_IMAGE_PATH, getConfig());
         return response.data;
     } catch (error) {
         console.error('Error getting images:', error.response.data);
@@ -44,7 +44,7 @@ async function getAllImages() {
 // Servicio para obtener una imagen por su ID
 async function getImageById(id) {
     try {
-        const response = await axios.get(`/api/v1/image/${id}`, getConfig());
+        const response = await axios.get(`${API_IMAGE_PATH}/${id}`, getConfig());
         return response.data;
     } catch (error) {
         console.error(`Error getting image with ID ${id}:`, error.response.data);
@@ -58,7 +58,7 @@ async function updateImage(id, file) {
     formData.append('image', file);
 
     try {
-        const response = await axios.put(`/api/v1/image/${id}`, formData, getConfig());
+        const response = await axios.delete(`${API_IMAGE_PATH}/${id}`, getConfig());
         return response.data;
     } catch (error) {
         console.error(`Error updating image with ID ${id}:`, error.response.data);
@@ -69,7 +69,7 @@ async function updateImage(id, file) {
 // Servicio para eliminar una imagen por su ID
 async function deleteImage(id) {
     try {
-        const response = await axios.delete(`/api/v1/image/${id}`, getConfig());
+        const response = await axios.delete(`API_IMAGE_PATH/${id}`, getConfig());
         return response.data;
     } catch (error) {
         console.error(`Error deleting image with ID ${id}:`, error.response.data);

@@ -1,4 +1,5 @@
 const axios = require('axios');
+const API_ADMIN_PATH = 'http://localhost:8080/api/v1/admin';
 
 // Función para obtener el token del localStorage
 function getToken() {
@@ -17,7 +18,7 @@ function getConfig() {
 // Servicio para mostrar el dashboard
 async function showDashboard() {
     try {
-        const response = await axios.get('/api/admin', getConfig());
+        const response = await axios.get(`${API_ADMIN_PATH}`, getConfig());
         return response.data;
     } catch (error) {
         console.error('Error showing dashboard:', error.response.data);
@@ -28,7 +29,7 @@ async function showDashboard() {
 // Servicio para actualizar un usuario por su ID
 async function updateUser(id, userData) {
     try {
-        const response = await axios.put(`/api/admin/user/${id}`, userData, getConfig());
+        const response = await axios.put(`${API_ADMIN_PATH}/user/${id}`, userData, getConfig());
         return response.data;
     } catch (error) {
         console.error(`Error updating user with ID ${id}:`, error.response.data);
@@ -39,7 +40,7 @@ async function updateUser(id, userData) {
 // Servicio para actualizar una notificación por su ID
 async function updateNotification(id, notification) {
     try {
-        const response = await axios.put(`/api/admin/notification/${id}`, notification, getConfig());
+        const response = await axios.put(`${API_ADMIN_PATH}/notification/${id}`, notification, getConfig());
         return response.data;
     } catch (error) {
         console.error(`Error updating notification with ID ${id}:`, error.response.data);
@@ -50,7 +51,7 @@ async function updateNotification(id, notification) {
 // Servicio para actualizar una actividad por su ID
 async function updateActivity(id, activity) {
     try {
-        const response = await axios.put(`/api/admin/activity/${id}`, activity, getConfig());
+        const response = await axios.put(`${API_ADMIN_PATH}/activity/${id}`, activity, getConfig());
         return response.data;
     } catch (error) {
         console.error(`Error updating activity with ID ${id}:`, error.response.data);
@@ -61,7 +62,7 @@ async function updateActivity(id, activity) {
 // Servicio para eliminar un usuario por su ID
 async function deleteUser(id) {
     try {
-        const response = await axios.delete(`/api/admin/user/${id}`, getConfig());
+        const response = await axios.delete(`${API_ADMIN_PATH}/user/${id}`, getConfig());
         return response.data;
     } catch (error) {
         console.error(`Error deleting user with ID ${id}:`, error.response.data);
@@ -72,7 +73,7 @@ async function deleteUser(id) {
 // Servicio para eliminar una actividad por su ID
 async function deleteActivity(id) {
     try {
-        const response = await axios.delete(`/api/admin/activity/${id}`, getConfig());
+        const response = await axios.delete(`${API_ADMIN_PATH}/activity/${id}`, getConfig());
         return response.data;
     } catch (error) {
         console.error(`Error deleting activity with ID ${id}:`, error.response.data);

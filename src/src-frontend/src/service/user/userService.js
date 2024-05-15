@@ -1,4 +1,5 @@
-const axios = require('axios');
+import axios from 'axios';
+const API_USER_PATH = 'http://localhost:8080/api/v1/user';
 
 // Función para obtener el token del localStorage
 function getToken() {
@@ -17,7 +18,7 @@ function getConfig() {
 // Servicio para crear un usuario
 async function createUser(userDTO) {
     try {
-        const response = await axios.post('/api/createUser', userDTO, getConfig());
+        const response = await axios.post(`${API_USER_PATH}`, userDTO, getConfig());
         return response.data;
     } catch (error) {
         console.error('Error creating user:', error.response.data);
@@ -28,7 +29,7 @@ async function createUser(userDTO) {
 // Servicio para crear un usuario administrador
 async function createAdmin(userDTO) {
     try {
-        const response = await axios.post('/api/add/admin', userDTO, getConfig());
+        const response = await axios.post(`${API_USER_PATH}/add/admin`, userDTO, getConfig());
         return response.data;
     } catch (error) {
         console.error('Error creating admin user:', error.response.data);
@@ -50,7 +51,7 @@ async function getUsers() {
 // Servicio para obtener un usuario por su ID
 async function getUserById(id) {
     try {
-        const response = await axios.get(`/api/${id}`, getConfig());
+        const response = await axios.get(`${API_USER_PATH}/${id}`, getConfig());
         return response.data;
     } catch (error) {
         console.error(`Error getting user with ID ${id}:`, error.response.data);
@@ -61,7 +62,7 @@ async function getUserById(id) {
 // Servicio para obtener los amigos de un usuario por su ID
 async function getUserFriends(id) {
     try {
-        const response = await axios.get(`/api/friends/${id}`, getConfig());
+        const response = await axios.get(`${API_USER_PATH}/friends/${id}`, getConfig());
         return response.data;
     } catch (error) {
         console.error(`Error getting friends of user with ID ${id}:`, error.response.data);
@@ -72,7 +73,7 @@ async function getUserFriends(id) {
 // Servicio para actualizar un usuario por su ID
 async function updateUser(id, userData) {
     try {
-        const response = await axios.patch(`/api/${id}`, userData, getConfig());
+        const response = await axios.patch(`${API_USER_PATH}/${id}`, userData, getConfig());
         return response.data;
     } catch (error) {
         console.error(`Error updating user with ID ${id}:`, error.response.data);
@@ -83,7 +84,7 @@ async function updateUser(id, userData) {
 // Servicio para eliminar un usuario por su ID
 async function deleteUser(id) {
     try {
-        const response = await axios.delete(`/api/${id}`, getConfig());
+        const response = await axios.delete(`${API_USER_PATH}/${id}`, getConfig());
         return response.data;
     } catch (error) {
         console.error(`Error deleting user with ID ${id}:`, error.response.data);
@@ -92,7 +93,7 @@ async function deleteUser(id) {
 }
 
 // Exportar los servicios de usuario
-module.exports = {
+export default {
     createUser,
     createAdmin,
     getUsers,
