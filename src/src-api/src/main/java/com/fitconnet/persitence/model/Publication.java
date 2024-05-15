@@ -1,5 +1,6 @@
 package com.fitconnet.persitence.model;
 
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -45,6 +46,12 @@ public class Publication {
 	 */
 	@OneToMany(mappedBy = "publication")
 	private List<Comment> comments;
+
+	/**
+	 * The date of the activity.
+	 */
+	@Column(name = "C_DATE", nullable = false)
+	private Date date;
 
 	/**
 	 * The activity associated with the publication.
