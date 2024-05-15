@@ -181,7 +181,7 @@ public class NotificationController {
 	 * @return ResponseEntity<String> The response entity indicating the success or
 	 *         failure of the deletion operation.
 	 */
-	@DeleteMapping("/notification/{id}")
+	@DeleteMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Delete Notification", description = "Deletes an existing notification.")
 	@ApiResponse(responseCode = "200", description = "Notification deleted successfully")
