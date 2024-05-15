@@ -83,4 +83,10 @@ public class Activity implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "T_ACTIVITY_PARTICIPANTS", joinColumns = @JoinColumn(name = "C_PK_ACTIVITY_ID"), inverseJoinColumns = @JoinColumn(name = "C_PK_USER_ID"))
 	private Set<User> participants;
+	/**
+	 * The Publication made by of the activity.
+	 */
+	@OneToOne(mappedBy = "activity", cascade = CascadeType.ALL)
+	private Publication publication;
+
 }

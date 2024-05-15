@@ -136,6 +136,11 @@ public class User implements UserDetails {
 	 */
 	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
 	private Set<Notification> notifications = new LinkedHashSet<>();
+	/**
+	 * The comments that the user have made.
+	 */
+	@OneToMany(mappedBy = "user")
+	private List<Comment> comments;
 
 	/**
 	 * Retrieves the authorities granted to the user.
