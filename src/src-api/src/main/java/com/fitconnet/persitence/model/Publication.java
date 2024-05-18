@@ -57,7 +57,7 @@ public class Publication {
 	 * The activity associated with the publication.
 	 */
 	@OneToOne
-	@JoinColumn(name = "C_PK_ACTIVITY_ID")
+	@JoinColumn(name = "C_PK_ACTIVITY_ID", nullable = false)
 	private Activity activity;
 
 }

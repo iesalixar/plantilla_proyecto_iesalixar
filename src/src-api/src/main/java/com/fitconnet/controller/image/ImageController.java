@@ -93,9 +93,9 @@ public class ImageController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	@Operation(summary = "Create Image", description = "Uploads a new image.")
 	@ApiResponse(responseCode = "200", description = "Image uploaded successfully")
-	public ResponseEntity<String> createImage(
+	public ResponseEntity<String> createActivityImage(
 			@Parameter(description = "Image file to upload", required = true) @RequestParam("image") MultipartFile file,
-			@Parameter(description = "ID associated with the activity", required = true) @RequestParam("id") Long activityId)
+			@Parameter(description = "ID associated with the activity", required = true) @RequestParam("activityId") Long activityId)
 			throws SerialException, SQLException, IOException {
 		logger.info("ImageController :: createImage");
 		ResponseEntity<String> response = null;
@@ -110,7 +110,6 @@ public class ImageController {
 			// Create a new image and setting valeues
 			Image image = new Image();
 			image.setImage(blob);
-			image.setActivity(activityService.getOne(activityId));
 			imageService.create(image);
 
 			response = ResponseEntity.ok().body("Image uploaded successfully");

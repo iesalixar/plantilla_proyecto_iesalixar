@@ -3,12 +3,15 @@ package com.fitconnet.persitence.model;
 import java.sql.Blob;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Lob;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +22,8 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(name = "T_IMAGE")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "C_IMAGE_TYPE", discriminatorType = DiscriminatorType.STRING)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,9 +43,4 @@ public class Image {
 	@Column(name = "C_IMAGE_BLOB", unique = true, nullable = false)
 	private Blob image;
 
-	/**
-	 * The activity associated with the image.
-	 */
-	@OneToOne(mappedBy = "image")
-	private Activity activity;
 }

@@ -69,7 +69,7 @@ public class Activity implements Serializable {
 	 */
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "C_IMG_ID", referencedColumnName = "C_PK_IMAGE_ID")
-	private Image image;
+	private ActivityImg image;
 	/**
 	 * The creator of the activity.
 	 */
