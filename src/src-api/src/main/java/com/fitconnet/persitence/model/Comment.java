@@ -48,7 +48,7 @@ public class Comment {
 	 * The publication to which the comment belongs.
 	 */
 	@ManyToOne
-	@JoinColumn(name = "C_PK_PUBLICATION_ID")
-	private Publication publication;
+	@JoinColumn(name = "C_PK_ACTIVITY_ID")
+	private Activity activity;
 
 }

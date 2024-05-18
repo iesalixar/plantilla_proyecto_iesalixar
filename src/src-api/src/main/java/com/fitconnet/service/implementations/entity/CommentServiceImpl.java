@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.fitconnet.dto.entities.CommentDTO;
 import com.fitconnet.persitence.model.Comment;
 import com.fitconnet.persitence.repository.CommentRepository;
 import com.fitconnet.service.interfaces.entity.CommentServiceI;
@@ -50,6 +51,15 @@ public class CommentServiceImpl implements CommentServiceI {
 	@Override
 	public void delete(Long id) {
 		commentRepo.deleteById(id);
+	}
+
+	@Override
+	public Comment commentDtoToComment(CommentDTO dto) {
+		Comment comment = new Comment();
+		comment.setContent(dto.getContent());
+		comment.setActivity(dto.getActivity());
+		comment.setUser(dto.getUser());
+		return comment;
 	}
 
 }

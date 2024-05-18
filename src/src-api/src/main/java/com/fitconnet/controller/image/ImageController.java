@@ -60,7 +60,7 @@ public class ImageController {
 	@Qualifier("imageService")
 	private final ImageServiceI imageService;
 	/**
-	 * Dependency injection for the ImageServiceI interface.
+	 * Dependency injection for the ActivityServiceI interface.
 	 */
 	@Qualifier("imageService")
 	private final ActivityServiceI activityService;

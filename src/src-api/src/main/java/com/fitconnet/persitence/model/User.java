@@ -29,6 +29,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Email;
@@ -141,6 +142,12 @@ public class User implements UserDetails {
 	 */
 	@OneToMany(mappedBy = "user")
 	private List<Comment> comments;
+	/**
+	 * The profile picture.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "C_IMG_ID", referencedColumnName = "C_PK_IMAGE_ID")
+	private ProfileImg profilePicture;
 
 	/**
 	 * Retrieves the authorities granted to the user.

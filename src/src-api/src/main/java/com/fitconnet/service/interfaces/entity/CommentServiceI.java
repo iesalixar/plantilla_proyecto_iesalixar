@@ -2,6 +2,7 @@ package com.fitconnet.service.interfaces.entity;
 
 import java.util.List;
 
+import com.fitconnet.dto.entities.CommentDTO;
 import com.fitconnet.persitence.model.Comment;
 
 /**
@@ -53,4 +54,10 @@ public interface CommentServiceI {
 	 * @param id the unique identifier of the comment to delete
 	 */
 	void delete(Long id);
+	/**
+	 * Transform a dto into a comment.
+	 *
+	 * @param dto.
+	 */
+	Comment commentDtoToComment(CommentDTO dto);
 }

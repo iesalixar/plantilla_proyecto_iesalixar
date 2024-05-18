@@ -3,6 +3,7 @@ package com.fitconnet.persitence.model;
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -15,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -40,7 +42,11 @@ public class Activity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "C_PK_ACTIVITY_ID", unique = true, nullable = false)
 	private Long id;
-
+	/**
+	 * The title of the publication.
+	 */
+	@Column(name = "C_ACTIVITY_TITLE", nullable = false)
+	private String title;
 	/**
 	 * The type of the activity.
 	 */
@@ -84,9 +90,9 @@ public class Activity implements Serializable {
 	@JoinTable(name = "T_ACTIVITY_PARTICIPANTS", joinColumns = @JoinColumn(name = "C_PK_ACTIVITY_ID"), inverseJoinColumns = @JoinColumn(name = "C_PK_USER_ID"))
 	private Set<User> participants;
 	/**
-	 * The Publication made by of the activity.
+	 * The comments of the activity.
 	 */
-	@OneToOne(mappedBy = "activity", cascade = CascadeType.ALL)
-	private Publication publication;
+	@OneToMany(mappedBy = "user")
+	private List<Comment> comments;
 
 }
