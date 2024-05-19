@@ -255,14 +255,14 @@ public class AdminController {
 	 */
 	@PutMapping("/comment/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	@Operation(summary = "Update Activity by Replacement", description = "Replaces an existing activity with another.")
-	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
+	@Operation(summary = "Update Comment by Replacement", description = "Replaces an existing comment with another.")
+	@ApiResponse(responseCode = "200", description = "Comment updated successfully")
 	public ResponseEntity<String> updateComment(@PathVariable Long id, @RequestParam CommentDTO request) {
 		logger.info("AdminController :: updateComment");
 		ResponseEntity<String> response = null;
 		Boolean exist = commentService.existById(id);
 		response = processingResponseI.processStringResponse(exist,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.IMAGE_NOT_FOUND), () -> {
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.COMMENT_NOT_FOUND), () -> {
 					Comment aux = commentService.commentDtoToComment(request);
 					commentService.update(id, aux);
 					return ResponseEntity.ok().body("Image has been deleted successfully.");
@@ -371,7 +371,7 @@ public class AdminController {
 		ResponseEntity<String> response = null;
 		Boolean exist = commentService.existById(id);
 		response = processingResponseI.processStringResponse(exist,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.IMAGE_NOT_FOUND), () -> {
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.COMMENT_NOT_FOUND), () -> {
 					commentService.delete(id);
 					return ResponseEntity.ok().body("Image has been deleted successfully.");
 				});
