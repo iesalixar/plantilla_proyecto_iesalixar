@@ -1,13 +1,10 @@
 package com.fitconnet.service.implementations.entity;
 
 import java.security.InvalidParameterException;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.http.HttpStatus;
@@ -36,10 +33,8 @@ public class UserServicImpl implements UserServiceI {
 	private final UserRepository userRepository;
 
 	@Override
-	public Optional<Set<User>> getAll() {
-		List<User> usersList = userRepository.findAll();
-		Set<User> usersSet = new HashSet<>(usersList); // Create a new HashSet from the list
-		return Optional.of(usersSet);
+	public List<User> getAll() {
+		return userRepository.findAll();
 	}
 
 	@Override
@@ -49,50 +44,46 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public Optional<User> getByUserName(String userName) {
-		User user = userRepository.findByUsername(userName)
+	public User getByUserName(String userName) {
+
+		return userRepository.findByUsername(userName)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return Optional.of(user);
 	}
 
 	@Override
-	public Optional<List<User>> getFriends(Long id) {
+	public List<User> getFriends(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return Optional.of(user.getFriends());
+		return user.getFriends();
 	}
 
 	@Override
-	public Optional<Set<Activity>> getCreatedActivities(Long id) {
+	public List<Activity> getCreatedActivities(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return Optional.of(user.getCreatedActivities());
+		return user.getCreatedActivities();
 	}
 
 	@Override
-	public Optional<Set<Activity>> getInvitedActivities(Long id) {
+	public List<Activity> getInvitedActivities(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return Optional.of(user.getInvitedActivities());
+		return user.getInvitedActivities();
 	}
 
 	@Override
-	public Optional<Set<Activity>> getAllActivities(Long id) {
+	public List<Activity> getAllActivities(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-
-		Set<Activity> allActivities = Stream
-				.concat(user.getCreatedActivities().stream(), user.getInvitedActivities().stream())
-				.collect(Collectors.toSet());
-		return Optional.of(allActivities);
+		return Stream.concat(user.getCreatedActivities().stream(), user.getInvitedActivities().stream()).toList();
 	}
 
 	@Override
-	public Optional<Set<Notification>> getNotifications(Long id) {
+	public List<Notification> getNotifications(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
 
-		return Optional.of(user.getNotifications());
+		return user.getNotifications();
 	}
 
 	@Override
@@ -132,7 +123,6 @@ public class UserServicImpl implements UserServiceI {
 		updateFieldIfDifferent(aux, user.getFirstName(), "firstName", aux::setFirstName);
 		updateFieldIfDifferent(aux, user.getLastName(), "lastName", aux::setLastName);
 		updateFieldIfDifferent(aux, user.getUsername(), "userName", aux::setUsername);
-		// Age Check and Set new value.
 		if (!user.getAge().equals(aux.getAge())) {
 			aux.setAge(user.getAge());
 		}
@@ -147,13 +137,6 @@ public class UserServicImpl implements UserServiceI {
 			throw new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
 		}
 		userRepository.deleteById(id);
-	}
-
-	@Override
-	public List<User> userSetToSortedList() {
-		Optional<Set<User>> userSet = getAll();
-		return userSet.orElse(new HashSet<>()).stream().filter(user -> !user.getRoles().contains(Role.ROLE_ADMIN))
-				.sorted(Comparator.comparing(User::getUsername)).collect(Collectors.toList());
 	}
 
 	@Override

@@ -138,7 +138,7 @@ public class UserController {
 	@ApiResponse(responseCode = "200", description = "Users retrieved successfully")
 	public ResponseEntity<List<User>> showUsers() {
 		logger.info("## UserController :: showUsers");
-		List<User> userList = userService.userSetToSortedList();
+		List<User> userList = userService.getAll();
 		return ResponseEntity.ok().body(userList);
 	}
 

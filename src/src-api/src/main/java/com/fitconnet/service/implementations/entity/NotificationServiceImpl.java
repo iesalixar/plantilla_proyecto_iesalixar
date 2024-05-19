@@ -13,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.fitconnet.dto.entities.NotificationDTO;
 import com.fitconnet.error.exception.notifications.NotificationCreationException;
 import com.fitconnet.error.exception.notifications.NotificationNotFoundException;
 import com.fitconnet.error.exception.user.UserNotFoundException;
@@ -134,6 +135,15 @@ public class NotificationServiceImpl implements NotificationServiceI {
 		default:
 			throw new IllegalArgumentException("Campo desconocido: " + fieldName);
 		}
+	}
+
+	@Override
+	public Notification DtoToNotification(NotificationDTO dto) {
+		Notification newNotification = new Notification();
+		newNotification.setDate(dto.getDate());
+		newNotification.setMessage(dto.getMessage());
+		newNotification.setReceiver(dto.getReceiver());
+		return newNotification;
 	}
 
 }

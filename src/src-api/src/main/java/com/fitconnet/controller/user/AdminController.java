@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 import javax.sql.rowset.serial.SerialException;
 
@@ -115,11 +112,11 @@ public class AdminController {
 	@ApiResponse(responseCode = "200", description = "Dashboard data retrieved successfully")
 	public ResponseEntity<Map<String, Object>> showDashboard() {
 		logger.info("## AdminController :: showDashboard");
-		List<User> userList = userService.userSetToSortedList();
-		Optional<Set<Activity>> activities = activityService.getAll();
+		List<User> userList = userService.getAll();
+		List<Activity> activities = activityService.getAll();
 		Map<String, Object> dashboardData = new HashMap<>();
 		dashboardData.put("users", userList);
-		dashboardData.put("activities", activities.orElse(new HashSet<>()));
+		dashboardData.put("activities", activities);
 		return ResponseEntity.ok().body(dashboardData);
 	}
 

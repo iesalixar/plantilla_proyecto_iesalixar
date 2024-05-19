@@ -3,7 +3,6 @@ package com.fitconnet.persitence.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -117,13 +116,13 @@ public class User implements UserDetails {
 	 * The activities created by the user.
 	 */
 	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
-	private Set<Activity> createdActivities = new LinkedHashSet<>();
+	private List<Activity> createdActivities = new ArrayList<>();
 
 	/**
 	 * The activities the user is invited to.
 	 */
 	@ManyToMany(mappedBy = "participants", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private Set<Activity> invitedActivities = new LinkedHashSet<>();
+	private List<Activity> invitedActivities = new ArrayList<>();
 
 	/**
 	 * The friends of the user.
@@ -136,7 +135,7 @@ public class User implements UserDetails {
 	 * The notifications received by the user.
 	 */
 	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-	private Set<Notification> notifications = new LinkedHashSet<>();
+	private List<Notification> notifications = new ArrayList<>();
 	/**
 	 * The comments that the user have made.
 	 */

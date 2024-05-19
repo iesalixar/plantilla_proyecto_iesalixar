@@ -1,8 +1,6 @@
 package com.fitconnet.service.interfaces.entity;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -23,7 +21,7 @@ public interface UserServiceI {
 	 * 
 	 * @return the optional set of users
 	 */
-	Optional<Set<User>> getAll();
+	List<User> getAll();
 
 	/**
 	 * Retrieves a user by id.
@@ -39,7 +37,7 @@ public interface UserServiceI {
 	 * @param userName the username of the user to retrieve
 	 * @return the optional user
 	 */
-	Optional<User> getByUserName(String userName);
+	User getByUserName(String userName);
 
 	/**
 	 * Retrieves the friends of a user.
@@ -47,7 +45,7 @@ public interface UserServiceI {
 	 * @param id the id of the user
 	 * @return the optional list of friends
 	 */
-	Optional<List<User>> getFriends(Long id);
+	List<User> getFriends(Long id);
 
 	/**
 	 * Retrieves the activities created by a user.
@@ -55,7 +53,7 @@ public interface UserServiceI {
 	 * @param id the id of the user
 	 * @return the optional set of created activities
 	 */
-	Optional<Set<Activity>> getCreatedActivities(Long id);
+	List<Activity> getCreatedActivities(Long id);
 
 	/**
 	 * Retrieves the activities invited to by a user.
@@ -63,7 +61,7 @@ public interface UserServiceI {
 	 * @param id the id of the user
 	 * @return the optional set of invited activities
 	 */
-	Optional<Set<Activity>> getInvitedActivities(Long id);
+	List<Activity> getInvitedActivities(Long id);
 
 	/**
 	 * Retrieves all activities related to a user.
@@ -71,7 +69,7 @@ public interface UserServiceI {
 	 * @param id the id of the user
 	 * @return the optional set of all activities
 	 */
-	Optional<Set<Activity>> getAllActivities(Long id);
+	List<Activity> getAllActivities(Long id);
 
 	/**
 	 * Retrieves the notifications of a user.
@@ -79,7 +77,7 @@ public interface UserServiceI {
 	 * @param id the id of the user
 	 * @return the optional set of notifications
 	 */
-	Optional<Set<Notification>> getNotifications(Long id);
+	List<Notification> getNotifications(Long id);
 
 	/**
 	 * Retrieves the notifications of a user.
@@ -88,13 +86,6 @@ public interface UserServiceI {
 	 * @return the optional set of notifications
 	 */
 	List<Comment> getComments(User user);
-
-	/**
-	 * Converts the user set to a sorted list.
-	 * 
-	 * @return the sorted list of users
-	 */
-	List<User> userSetToSortedList();
 
 	/**
 	 * Retrieves the user details service.

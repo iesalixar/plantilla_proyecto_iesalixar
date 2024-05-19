@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
+import com.fitconnet.dto.entities.NotificationDTO;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
 
@@ -37,6 +38,8 @@ public interface NotificationServiceI {
 	 *         found.
 	 */
 	Optional<Notification> getById(Long id);
+
+	Notification DtoToNotification(NotificationDTO dto);
 
 	/**
 	 * Checks if a notification exists by its ID.
@@ -91,4 +94,5 @@ public interface NotificationServiceI {
 	 * @param newNotification The new notification containing updated attributes.
 	 */
 	void setAttributes(Notification notification, Notification newNotification);
+
 }
