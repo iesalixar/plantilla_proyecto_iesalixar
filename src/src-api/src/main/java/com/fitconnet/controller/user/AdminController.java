@@ -32,13 +32,16 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.fitconnet.dto.entities.CommentDTO;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.persitence.model.Activity;
+import com.fitconnet.persitence.model.Comment;
 import com.fitconnet.persitence.model.Image;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
+import com.fitconnet.service.interfaces.entity.CommentServiceI;
 import com.fitconnet.service.interfaces.entity.ImageServiceI;
 import com.fitconnet.service.interfaces.entity.NotificationServiceI;
 import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
@@ -76,6 +79,10 @@ public class AdminController {
 	 * Dependency injection for the ImageServiceI interface.
 	 */
 	private final ImageServiceI imageService;
+	/**
+	 * Dependency injection for the CommentServiceI interface.
+	 */
+	private final CommentServiceI commentService;
 	/**
 	 * Dependency injection for the ProcessingResponseI interface.
 	 */
@@ -235,6 +242,35 @@ public class AdminController {
 	}
 
 	/**
+	 * Updates a comment.
+	 * 
+	 * <p>
+	 * Updates an existing comment with new information.
+	 * </p>
+	 * 
+	 * @param id    The ID of the comment to be updated.
+	 * @param image The request body containing the updated comment information.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the update operation.
+	 */
+	@PutMapping("/comment/{id}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Update Activity by Replacement", description = "Replaces an existing activity with another.")
+	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
+	public ResponseEntity<String> updateComment(@PathVariable Long id, @RequestParam CommentDTO request) {
+		logger.info("AdminController :: updateComment");
+		ResponseEntity<String> response = null;
+		Boolean exist = commentService.existById(id);
+		response = processingResponseI.processStringResponse(exist,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.IMAGE_NOT_FOUND), () -> {
+					Comment aux = commentService.commentDtoToComment(request);
+					commentService.update(id, aux);
+					return ResponseEntity.ok().body("Image has been deleted successfully.");
+				});
+		return response;
+	}
+
+	/**
 	 * Deletes a user.
 	 * 
 	 * <p>
@@ -289,13 +325,13 @@ public class AdminController {
 	}
 
 	/**
-	 * Deletes an activity.
+	 * Deletes an image.
 	 * 
 	 * <p>
-	 * Deletes the activity with the specified ID.
+	 * Deletes the image with the specified ID.
 	 * </p>
 	 * 
-	 * @param id The ID of the activity to be deleted.
+	 * @param id The ID of the image to be deleted.
 	 * @return ResponseEntity<String> The response entity indicating the success or
 	 *         failure of the deletion operation.
 	 */
@@ -310,6 +346,33 @@ public class AdminController {
 		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.IMAGE_NOT_FOUND), () -> {
 					imageService.delete(id);
+					return ResponseEntity.ok().body("Image has been deleted successfully.");
+				});
+		return response;
+	}
+
+	/**
+	 * Deletes an comment.
+	 * 
+	 * <p>
+	 * Deletes the comment with the specified ID.
+	 * </p>
+	 * 
+	 * @param id The ID of the comment to be deleted.
+	 * @return ResponseEntity<String> The response entity indicating the success or
+	 *         failure of the deletion operation.
+	 */
+	@DeleteMapping("/comment/{id}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@Operation(summary = "Delete comment", description = "Deletes a comment.")
+	@ApiResponse(responseCode = "200", description = "Comment deleted successfully")
+	public ResponseEntity<String> deleteComment(@PathVariable Long id) {
+		logger.info("AdminController :: deleteComment");
+		ResponseEntity<String> response = null;
+		Boolean exist = commentService.existById(id);
+		response = processingResponseI.processStringResponse(exist,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.IMAGE_NOT_FOUND), () -> {
+					commentService.delete(id);
 					return ResponseEntity.ok().body("Image has been deleted successfully.");
 				});
 		return response;
