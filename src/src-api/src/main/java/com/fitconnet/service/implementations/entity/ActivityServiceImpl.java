@@ -84,12 +84,12 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	}
 
 	@Override
-	public Boolean existById(Long id) {
+	public boolean existById(Long id) {
 		return activityRepository.existsById(id);
 	}
 
 	@Override
-	public Boolean existByDate(Date date) {
+	public boolean existByDate(Date date) {
 		return activityRepository.existByDate(date);
 	}
 

@@ -37,6 +37,7 @@ public interface ProcessingResponseI {
 	 */
 	<T> ResponseEntity<T> processActivityResponse(Activity entity, Supplier<ResponseEntity> conflictSupplier,
 			Supplier<ResponseEntity<T>> successSupplier);
+
 	/**
 	 * Processes the entity response.
 	 * 

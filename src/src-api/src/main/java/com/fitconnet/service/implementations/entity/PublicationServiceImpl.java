@@ -27,7 +27,7 @@ public class PublicationServiceImpl implements PublicationServiceI {
 	}
 
 	@Override
-	public Boolean existById(Long id) {
+	public boolean existById(Long id) {
 		return publicationRepo.existsById(id);
 	}
 

@@ -31,7 +31,7 @@ public interface CommentServiceI {
 	 * @param id the unique identifier of the comment
 	 * @return true if the comment exists, false otherwise
 	 */
-	Boolean existById(Long id);
+	boolean existById(Long id);
 
 	/**
 	 * Creates a new comment.
@@ -54,6 +54,7 @@ public interface CommentServiceI {
 	 * @param id the unique identifier of the comment to delete
 	 */
 	void delete(Long id);
+
 	/**
 	 * Transform a dto into a comment.
 	 *

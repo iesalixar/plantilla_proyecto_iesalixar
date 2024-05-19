@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.enums.Role;
 import com.fitconnet.persitence.model.Activity;
+import com.fitconnet.persitence.model.Comment;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
 
@@ -81,6 +82,14 @@ public interface UserServiceI {
 	Optional<Set<Notification>> getNotifications(Long id);
 
 	/**
+	 * Retrieves the notifications of a user.
+	 * 
+	 * @param id the id of the user
+	 * @return the optional set of notifications
+	 */
+	List<Comment> getComments(User user);
+
+	/**
 	 * Converts the user set to a sorted list.
 	 * 
 	 * @return the sorted list of users
@@ -108,7 +117,7 @@ public interface UserServiceI {
 	 * @param email the email of the user
 	 * @return true if the user exists, false otherwise
 	 */
-	Boolean existByEmail(String email);
+	boolean existByEmail(String email);
 
 	/**
 	 * Creates a new user.

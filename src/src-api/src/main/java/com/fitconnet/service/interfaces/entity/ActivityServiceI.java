@@ -35,7 +35,7 @@ public interface ActivityServiceI {
 	 * @param id The ID of the activity to check.
 	 * @return true if an activity exists with the specified ID, false otherwise.
 	 */
-	Boolean existById(Long id);
+	boolean existById(Long id);
 
 	/**
 	 * Checks if an activity exists for a given date.
@@ -43,7 +43,7 @@ public interface ActivityServiceI {
 	 * @param date The date to check.
 	 * @return true if an activity exists for the given date, false otherwise.
 	 */
-	Boolean existByDate(Date date);
+	boolean existByDate(Date date);
 
 	/**
 	 * Converts an activity entity to an activity DTO.

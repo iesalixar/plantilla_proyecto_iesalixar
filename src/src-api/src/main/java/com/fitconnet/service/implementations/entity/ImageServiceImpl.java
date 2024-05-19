@@ -48,7 +48,7 @@ public class ImageServiceImpl implements ImageServiceI {
 	}
 
 	@Override
-	public Boolean existById(Long id) {
+	public boolean existById(Long id) {
 		return imageRepository.existsById(id);
 	}
 

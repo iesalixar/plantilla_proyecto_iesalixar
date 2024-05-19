@@ -16,6 +16,6 @@ public interface ImageServiceI {
 
 	void update(Long id, Image img);
 
-	Boolean existById(Long id);
+	boolean existById(Long id);
 
 }

@@ -30,7 +30,7 @@ public interface PublicationServiceI {
 	 * @param id the unique identifier of the publication
 	 * @return true if the publication exists, false otherwise
 	 */
-	Boolean existById(Long id);
+	boolean existById(Long id);
 
 	/**
 	 * Creates a new publication.

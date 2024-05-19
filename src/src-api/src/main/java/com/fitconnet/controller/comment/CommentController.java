@@ -1,7 +1,6 @@
 package com.fitconnet.controller.comment;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,17 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.fitconnet.controller.image.ImageController;
 import com.fitconnet.dto.entities.CommentDTO;
-import com.fitconnet.dto.requets.GeneralActivity;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.error.GlobalExceptionHandler;
-import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.persitence.model.Comment;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.service.interfaces.entity.CommentServiceI;
 import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
+import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -51,12 +47,17 @@ public class CommentController {
 	/**
 	 * Dependency injection for the CommentServiceI interface.
 	 */
-	@Qualifier("imageService")
+	@Qualifier("commentService")
 	private final CommentServiceI commentService;
+	/**
+	 * Dependency injection for the UserServiceI interface.
+	 */
+	@Qualifier("userService")
+	private final UserServiceI userService;
 	/**
 	 * Dependency injection for the ActivityServiceI interface.
 	 */
-	@Qualifier("imageService")
+	@Qualifier("activityService")
 	private final ActivityServiceI activityService;
 	/**
 	 * Dependency injection for the ProcessingResponseI interface.
@@ -71,7 +72,7 @@ public class CommentController {
 	/**
 	 * Logger instance for AdminController class.
 	 */
-	private final Logger logger = LoggerFactory.getLogger(ImageController.class);
+	private final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
 	/**
 	 * Creates a new activity.
@@ -87,16 +88,16 @@ public class CommentController {
 	 */
 	@PostMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	@Operation(summary = "Create Activity", description = "Registers a new activity in the system.")
-	@ApiResponse(responseCode = "200", description = "Activity created successfully")
+	@Operation(summary = "Create Comment", description = "Registers a new comment in the activity.")
+	@ApiResponse(responseCode = "200", description = "Comment created successfully")
 	public ResponseEntity<String> createComment(@RequestBody CommentDTO request) {
-		logger.info("ActivityController :: createComment");
+		logger.info("CommentController :: createComment");
 		ResponseEntity<String> response = null;
 		Comment newComment = commentService.commentDtoToComment(request);
-				response = processingResponseI.processCommentResponse(newComment,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
+		response = processingResponseI.processCommentResponse(newComment,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The comment cannot be published"), () -> {
 					commentService.create(newComment);
-				 ResponseEntity.ok().body("Activity created successfully.");
+					return ResponseEntity.ok().body("Comment created successfully.");
 				});
 		return response;
 	}
@@ -105,181 +106,105 @@ public class CommentController {
 	 * Retrieves all activities.
 	 * 
 	 * <p>
-	 * Retrieves all activities registered in the system.
+	 * Retrieves all comments registered in the system.
 	 * </p>
 	 * 
-	 * @return ResponseEntity<Optional<Set<Activity>>> The response entity
-	 *         containing the set of activities, if any.
+	 * @return ResponseEntity<List<Comment>> The response entity containing the list
+	 *         of comments, if any.
 	 */
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	@Operation(summary = "Get All Activities", description = "Retrieves all activities registered in the system.")
-	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
-	public ResponseEntity<Optional<Set<Activity>>> getActivities() {
-		logger.info("ActivityController :: getActivities");
-		Optional<Set<Activity>> activities = activityService.getAll();
-		return ResponseEntity.ok().body(activities);
+	@Operation(summary = "Get All Comments", description = "Retrieves all comments registered in the system.")
+	@ApiResponse(responseCode = "200", description = "Comments retrieved successfully")
+	public ResponseEntity<List<Comment>> getComments() {
+		logger.info("CommentController :: getComments");
+		return ResponseEntity.ok().body(commentService.getAll());
 	}
 
 	/**
-	 * Retrieves an activity by its ID.
+	 * Retrieves an comment by its ID.
 	 * 
 	 * <p>
-	 * Retrieves an activity with the specified ID.
+	 * Retrieves an comment with the specified ID.
 	 * </p>
 	 * 
-	 * @param id The ID of the activity to be retrieved.
+	 * @param id The ID of the comment to be retrieved.
 	 * @return ResponseEntity<Optional<Activity>> The response entity containing the
 	 *         activity, if found.
 	 */
 	@GetMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	@Operation(summary = "Get Activity by ID", description = "Retrieves an activity by its ID.")
-	@ApiResponse(responseCode = "200", description = "Activity retrieved successfully")
-	public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
-		logger.info("ActivityController :: getActivityById");
-		ResponseEntity<Activity> response = null;
-		Activity existingActivity = activityService.getOne(id);
-		response = processingResponseI.processActivityResponse(existingActivity,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
-				() -> ResponseEntity.ok().body(existingActivity));
+	@Operation(summary = "Get Comment by ID", description = "Retrieves an comment by its ID.")
+	@ApiResponse(responseCode = "200", description = "Comment retrieved successfully")
+	public ResponseEntity<Comment> getCommentById(@PathVariable Long id) {
+		logger.info("CommentController :: getCommentById");
+		ResponseEntity<Comment> response = null;
+		Comment existingComment = commentService.getById(id);
+		response = processingResponseI.processCommentResponse(existingComment,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.COMMENT_NOT_FOUND),
+				() -> ResponseEntity.ok().body(existingComment));
 		return response;
 	}
 
 	/**
-	 * Retrieves activities associated with a specific user.
+	 * Retrieves comments associated with a specific user.
 	 * 
 	 * <p>
-	 * Retrieves a set of activities associated with the specified user.
+	 * Retrieves comments associated with a specific user by user ID.
 	 * </p>
 	 * 
-	 * @param userId The ID of the user whose activities are to be retrieved.
-	 * @return ResponseEntity<Optional<Set<Activity>>> The response entity
-	 *         containing the set of activities associated with the user, if any.
+	 * @param userId The ID of the user whose comments are to be retrieved.
+	 * @return ResponseEntity<List<Comment>> The response entity containing the list
+	 *         of comments associated with the user, if any.
 	 */
 	@GetMapping("/user/{userId}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	@Operation(summary = "Get Activities by User ID", description = "Retrieves activities associated with a specific user.")
-	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
-	public ResponseEntity<Optional<Set<Activity>>> getActivitiesByUserId(@PathVariable Long userId) {
-		logger.info("ActivityController :: getActivities");
-		ResponseEntity<Optional<Set<Activity>>> response = null;
-		Boolean existingUser = userService.existById(userId);
-		response = processingResponseI.processOptionalBooleanResponse(existingUser,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
-				() -> ResponseEntity.ok().body(userService.getAllActivities(userId)));
-		return response;
+	@Operation(summary = "Get Comments by User ID", description = "Retrieves comments associated with a specific user.")
+	@ApiResponse(responseCode = "200", description = "Comments retrieved successfully")
+	@ApiResponse(responseCode = "409", description = "User not found")
+	public ResponseEntity<?> getCommentsByUserId(@PathVariable Long userId) {
+		logger.info("CommentController :: getCommentsByUserId :: userId={}", userId);
+		User user = userService.getById(userId);
+
+		if (user == null) {
+			logger.error("User with ID {} not found", userId);
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("User not found");
+		} else {
+			List<Comment> comments = userService.getComments(user);
+			return ResponseEntity.ok().body(comments);
+		}
 	}
 
 	/**
-	 * Retrieves the activities created by the user.
+	 * Updates an comment by replacing it with another.
 	 * 
 	 * <p>
-	 * Retrieves a set of activities created by the specified user.
+	 * Replaces an existing comment with a new one.
 	 * </p>
 	 * 
-	 * @param userId The ID of the user whose created activities are to be
-	 *               retrieved.
-	 * @return ResponseEntity<Optional<Set<Activity>>> The response entity
-	 *         containing the set of created activities, if any.
-	 */
-	@GetMapping("/created/{userId}")
-	@PreAuthorize("hasAuthority('ROLE_USER')")
-	@Operation(summary = "Get Created Activities", description = "Retrieves a set of activities created by the user.")
-	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
-	public ResponseEntity<Optional<Set<Activity>>> getCreatedActivities(@PathVariable Long userId) {
-		logger.info("ActivityController :: getCreatedActivities");
-		ResponseEntity<Optional<Set<Activity>>> response = null;
-		Boolean existingUser = userService.existById(userId);
-		response = processingResponseI.processOptionalBooleanResponse(existingUser,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
-				() -> ResponseEntity.ok().body(userService.getCreatedActivities(userId)));
-		return response;
-	}
-
-	/**
-	 * Retrieves the activities in which the user has participated.
-	 * 
-	 * <p>
-	 * Retrieves a set of activities in which the specified user has participated.
-	 * </p>
-	 * 
-	 * @param userId The ID of the user whose participated activities are to be
-	 *               retrieved.
-	 * @return ResponseEntity<Optional<Set<Activity>>> The response entity
-	 *         containing the set of participated activities, if any.
-	 */
-	@GetMapping("/invited/{userId}")
-	@PreAuthorize("hasAuthority('ROLE_USER')")
-	@Operation(summary = "Get Participated Activities", description = "Retrieves a set of activities in which the user has participated.")
-	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
-	public ResponseEntity<Optional<Set<Activity>>> getInvitedActivities(@PathVariable Long userId) {
-		logger.info("ActivityController :: getInvitedActivities");
-		ResponseEntity<Optional<Set<Activity>>> response = null;
-		Boolean existingUser = userService.existById(userId);
-		response = processingResponseI.processOptionalBooleanResponse(existingUser,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
-				() -> ResponseEntity.ok().body(userService.getInvitedActivities(userId)));
-		return response;
-	}
-
-	/**
-	 * Updates an activity by replacing it with another.
-	 * 
-	 * <p>
-	 * Replaces an existing activity with a new one.
-	 * </p>
-	 * 
-	 * @param id      The ID of the activity to be updated.
-	 * @param request The request body containing the new activity information.
+	 * @param id      The ID of the comment to be updated.
+	 * @param request The request body containing the new comment information.
 	 * @return ResponseEntity<String> The response entity indicating the success or
 	 *         failure of the update operation.
 	 */
 	@PutMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	@Operation(summary = "Update Activity by Replacement", description = "Replaces an existing activity with another.")
-	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
-	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody GeneralActivity request) {
-		logger.info("ActivityController :: updateActivity");
+	@Operation(summary = "Update Comment by Replacement", description = "Replaces an existing comment with another.")
+	@ApiResponse(responseCode = "200", description = "Comment updated successfully")
+	public ResponseEntity<String> updateComment(@PathVariable Long id, @RequestBody CommentDTO request) {
+		logger.info("CommentController :: updateComment");
 		ResponseEntity<String> response = null;
-		Boolean activityExist = activityService.existByDate(request.getActivity().getDate());
-		User user = userService.getById(request.getUserId());
-		response = processingResponseI.processStringDualUserResponse(activityExist, user,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
-					Activity newActivity = activityService.activityDTOtoActivity(request.getActivity(), user);
-					activityService.update(newActivity.getId(), newActivity);
-					return ResponseEntity.ok().body("Activity updated successfully.");
-				});
-		return response;
-	}
+		boolean commentExist = commentService.existById(id);
+		if (!commentExist) {
+			response = ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.COMMENT_NOT_FOUND);
+		} else {
+			Comment aux = commentService.getById(id);
+			request.setUser(aux.getUser());
+			request.setActivity(aux.getActivity());
+			commentService.commentDtoToComment(request);
+			response = ResponseEntity.ok().body("Comment succesfully update");
 
-	/**
-	 * Partially updates an activity.
-	 * 
-	 * <p>
-	 * Updates some of the attributes of an activity.
-	 * </p>
-	 * 
-	 * @param id      The ID of the activity to be updated.
-	 * @param request The request body containing the updated activity information.
-	 * @return ResponseEntity<String> The response entity indicating the success or
-	 *         failure of the update operation.
-	 */
-	@PatchMapping("/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	@Operation(summary = "Partial Update of an Activity", description = "Updates some of the attributes of an activity.")
-	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
-	public ResponseEntity<String> patchActivity(@PathVariable Long id, @RequestBody GeneralActivity request) {
-		logger.info("ActivityController :: patchActivity");
-		ResponseEntity<String> response = null;
-		Boolean activityExist = activityService.existByDate(request.getActivity().getDate());
-		User user = userService.getById(request.getUserId());
-		response = processingResponseI.processStringDualUserResponse(activityExist, user,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
-					Activity newActivity = activityService.activityDTOtoActivity(request.getActivity(), user);
-					activityService.patch(newActivity.getId(), newActivity);
-					return ResponseEntity.ok().body("Activity updated successfully.");
-				});
+		}
 		return response;
 	}
 
@@ -296,20 +221,21 @@ public class CommentController {
 	 */
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER') and #id == authentication.principal.id")
-	@Operation(summary = "Delete Activity", description = "A user can delete an activity only if they are the creator of it.")
-	@ApiResponse(responseCode = "200", description = "Activity deleted successfully")
-	public ResponseEntity<String> deleteActivity(@PathVariable Long id) {
-		logger.info("ActivityController :: deleteActivity");
+	@Operation(summary = "Delete Comment", description = "A user can delete a comment only if they are the creator of it.")
+	@ApiResponse(responseCode = "200", description = "Comment deleted successfully")
+	public ResponseEntity<String> deleteComment(@PathVariable Long id) {
+		logger.info("CommentController :: deleteComment");
 		ResponseEntity<String> response = null;
-		boolean existingActivity = activityService.existById(id);
-		response = processingResponseI.processStringResponse(existingActivity,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
-					activityService.deleteById(id);
-					return ResponseEntity.ok().body("Activity deleted successfully");
-				});
+		if (commentService.existById(id)) {
+			commentService.delete(id);
+			response = ResponseEntity.ok().body("Comment has been succesfully deleted.");
+		} else {
+			response = ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.COMMENT_NOT_FOUND);
+		}
+
 		return response;
 	}
-	
+
 	/**
 	 * Handles NoHandlerFoundException.
 	 * 
@@ -326,6 +252,5 @@ public class CommentController {
 	public ResponseEntity<ErrorDetailsDTO> handleException(Exception ex, WebRequest request) {
 		return globalExceptionHandler.handleCommonExceptions(ex, request);
 	}
-	
 
 }

@@ -18,6 +18,7 @@ import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.enums.Role;
 import com.fitconnet.error.exception.user.UserNotFoundException;
 import com.fitconnet.persitence.model.Activity;
+import com.fitconnet.persitence.model.Comment;
 import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.UserRepository;
@@ -95,6 +96,11 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
+	public List<Comment> getComments(User user) {
+		return user.getComments();
+	}
+
+	@Override
 	public UserDetailsService userDetailsService() {
 		return username -> userRepository.findByEmail(username)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
@@ -156,7 +162,7 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public Boolean existByEmail(String email) {
+	public boolean existByEmail(String email) {
 		return userRepository.existsByEmail(email);
 	}
 

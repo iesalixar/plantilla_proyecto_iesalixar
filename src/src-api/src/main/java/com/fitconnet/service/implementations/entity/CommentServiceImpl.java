@@ -28,7 +28,7 @@ public class CommentServiceImpl implements CommentServiceI {
 	}
 
 	@Override
-	public Boolean existById(Long id) {
+	public boolean existById(Long id) {
 		return commentRepo.existsById(id);
 	}
 
