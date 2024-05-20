@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import com.fitconnet.dto.entities.CommentDTO;
 import com.fitconnet.persitence.model.Comment;
 import com.fitconnet.persitence.repository.CommentRepository;
+import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.service.interfaces.entity.CommentServiceI;
+import com.fitconnet.service.interfaces.entity.UserServiceI;
 
 import lombok.AllArgsConstructor;
 
@@ -16,15 +18,17 @@ import lombok.AllArgsConstructor;
 public class CommentServiceImpl implements CommentServiceI {
 
 	private final CommentRepository commentRepo;
+	private final UserServiceI userService;
+	private final ActivityServiceI activityService;
 
 	@Override
-	public Comment getById(Long id) {
-		return commentRepo.findById(id).get();
+	public CommentDTO getById(Long id) {
+		return commentToCommentDTO(commentRepo.findById(id).get());
 	}
 
 	@Override
-	public List<Comment> getAll() {
-		return commentRepo.findAll();
+	public List<CommentDTO> getAll() {
+		return commentRepo.findAll().stream().map(this::commentToCommentDTO).toList();
 	}
 
 	@Override
@@ -33,17 +37,17 @@ public class CommentServiceImpl implements CommentServiceI {
 	}
 
 	@Override
-	public void create(Comment comment) {
-		commentRepo.save(comment);
+	public void create(CommentDTO commentDTO) {
+		commentRepo.save(commentDtoToComment(commentDTO));
 	}
 
 	@Override
-	public void update(Long id, Comment comment) {
+	public void update(Long id, CommentDTO commentDTO) {
 
 		if (existById(id)) {
 			Comment aux = commentRepo.findById(id).get();
 			commentRepo.delete(aux);
-			commentRepo.save(comment);
+			commentRepo.save(commentDtoToComment(commentDTO));
 		}
 
 	}
@@ -54,12 +58,21 @@ public class CommentServiceImpl implements CommentServiceI {
 	}
 
 	@Override
-	public Comment commentDtoToComment(CommentDTO dto) {
+	public Comment commentDtoToComment(CommentDTO commentDTO) {
 		Comment comment = new Comment();
-		comment.setContent(dto.getContent());
-		comment.setActivity(dto.getActivity());
-		comment.setUser(dto.getUser());
+		comment.setContent(commentDTO.getContent());
+		comment.setActivity(activityService.activityDTOtoActivity(commentDTO.getActivity()));
+		comment.setUser(userService.userDTOtoUser(commentDTO.getUser()));
 		return comment;
+	}
+
+	@Override
+	public CommentDTO commentToCommentDTO(Comment comment) {
+		CommentDTO commentDTO = new CommentDTO();
+		commentDTO.setContent(comment.getContent());
+		commentDTO.setUser(userService.userToUserDTO(comment.getUser()));
+		commentDTO.setActivity(activityService.activityToActivityDTO(comment.getActivity()));
+		return commentDTO;
 	}
 
 }

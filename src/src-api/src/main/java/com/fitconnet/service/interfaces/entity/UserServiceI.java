@@ -8,7 +8,6 @@ import com.fitconnet.dto.entities.ActivityDTO;
 import com.fitconnet.dto.entities.CommentDTO;
 import com.fitconnet.dto.entities.NotificationDTO;
 import com.fitconnet.dto.entities.UserDTO;
-import com.fitconnet.enums.Role;
 import com.fitconnet.persitence.model.User;
 
 /**
@@ -85,7 +84,7 @@ public interface UserServiceI {
 	 * @param user The user.
 	 * @return A list of comments by the specified user.
 	 */
-	List<CommentDTO> getComments(User user);
+	List<CommentDTO> getComments(UserDTO user);
 
 	/**
 	 * Retrieves the user details service.
@@ -147,7 +146,7 @@ public interface UserServiceI {
 	 * @param user    The User to fill.
 	 * @param rol     The role of the user.
 	 */
-	User userDTOtoUSer(UserDTO request, Role rol);
+	User userDTOtoUser(UserDTO request);
 
 	/**
 	 * Converts a User to a UserDTO.
@@ -156,5 +155,5 @@ public interface UserServiceI {
 	 * @param user     The User to convert.
 	 * @param rol      The role of the user.
 	 */
-	UserDTO usertoUserDTO(User user, Role rol);
+	UserDTO userToUserDTO(User user);
 }

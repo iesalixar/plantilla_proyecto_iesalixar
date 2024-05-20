@@ -1,29 +1,29 @@
 package com.fitconnet.service.implementations.entity;
 
 import java.security.InvalidParameterException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import com.fitconnet.dto.entities.ActivityDTO;
+import com.fitconnet.dto.entities.CommentDTO;
+import com.fitconnet.dto.entities.NotificationDTO;
 import com.fitconnet.dto.entities.UserDTO;
-import com.fitconnet.enums.Role;
 import com.fitconnet.error.exception.user.UserNotFoundException;
 import com.fitconnet.persitence.model.Activity;
-import com.fitconnet.persitence.model.Comment;
-import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.UserRepository;
+import com.fitconnet.service.interfaces.entity.ActivityServiceI;
+import com.fitconnet.service.interfaces.entity.CommentServiceI;
+import com.fitconnet.service.interfaces.entity.NotificationServiceI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
 
 import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -31,63 +31,73 @@ import lombok.AllArgsConstructor;
 public class UserServicImpl implements UserServiceI {
 
 	private final UserRepository userRepository;
+	private final ActivityServiceI activityService;
+	private final NotificationServiceI notificationService;
+	private final CommentServiceI commentService;
 
 	@Override
-	public List<User> getAll() {
-		return userRepository.findAll();
+	public List<UserDTO> getAll() {
+		return userRepository.findAll().stream().map(this::userToUserDTO).toList();
 	}
 
 	@Override
-	public User getById(Long id) {
-		return userRepository.findById(id)
-				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-	}
-
-	@Override
-	public User getByUserName(String userName) {
-
-		return userRepository.findByUsername(userName)
-				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-	}
-
-	@Override
-	public List<User> getFriends(Long id) {
+	public UserDTO getById(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return user.getFriends();
+		return userToUserDTO(user);
 	}
 
 	@Override
-	public List<Activity> getCreatedActivities(Long id) {
+	public UserDTO getByUserName(String userName) {
+		User user = userRepository.findByUsername(userName)
+				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+		return userToUserDTO(user);
+	}
+
+	@Override
+	public List<UserDTO> getFriends(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return user.getCreatedActivities();
+		return user.getFriends().stream().map(this::userToUserDTO).toList();
 	}
 
 	@Override
-	public List<Activity> getInvitedActivities(Long id) {
+	public List<ActivityDTO> getCreatedActivities(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return user.getInvitedActivities();
+		return user.getCreatedActivities().stream().map(activity -> activityService.activityToActivityDTO(activity))
+				.toList();
 	}
 
 	@Override
-	public List<Activity> getAllActivities(Long id) {
+	public List<ActivityDTO> getInvitedActivities(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return Stream.concat(user.getCreatedActivities().stream(), user.getInvitedActivities().stream()).toList();
+		return user.getInvitedActivities().stream().map(activity -> activityService.activityToActivityDTO(activity))
+				.toList();
 	}
 
 	@Override
-	public List<Notification> getNotifications(Long id) {
+	public List<ActivityDTO> getAllActivities(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
 
-		return user.getNotifications();
+		List<Activity> allActivities = new ArrayList<>();
+		allActivities.addAll(user.getCreatedActivities());
+		allActivities.addAll(user.getInvitedActivities());
+
+		return allActivities.stream().map(activityService::activityToActivityDTO).toList();
 	}
 
 	@Override
-	public List<Comment> getComments(User user) {
+	public List<NotificationDTO> getNotifications(Long id) {
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+		return user.getNotifications().stream().map(notificationService::notificationToNotificationDTO).toList();
+	}
+
+	@Override
+	public List<CommentDTO> getComments(UserDTO user) {
 		return user.getComments();
 	}
 
@@ -98,12 +108,12 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public void create(User user) {
-		userRepository.save(user);
+	public void create(UserDTO user) {
+		userRepository.save(userDTOtoUser(user));
 	}
 
 	@Override
-	public void update(Long id, User user) {
+	public void update(Long id, UserDTO user) {
 
 		if (!userRepository.findById(id).isPresent()) {
 			throw new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
@@ -111,12 +121,12 @@ public class UserServicImpl implements UserServiceI {
 
 		deleteById(id);
 
-		userRepository.save(user);
+		userRepository.save(userDTOtoUser(user));
 
 	}
 
 	@Override
-	public void patch(Long id, @Valid User user) {
+	public void patch(Long id, UserDTO user) {
 		User aux = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
 
@@ -150,42 +160,30 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public void userDTOtoUSer(UserDTO request, User user, Role rol) {
+	public User userDTOtoUser(UserDTO request) {
+		User user = new User();
 		user.setFirstName(request.getFirstName());
 		user.setLastName(request.getLastName());
-		user.setUsername(request.getUserName());
+		user.setUsername(request.getUsername());
 		user.setAge(request.getAge());
 		user.setEmail(request.getEmail());
 		user.setPassword((request.getPassword()));
-		Set<Role> roles = new HashSet<>();
-		if (rol.equals(Role.ROLE_USER)) {
-			roles.add(Role.ROLE_USER);
-		} else {
-			roles.add(Role.ROLE_ADMIN);
-		}
-
-		user.setRoles(roles);
+		user.setRoles(request.getRoles());
+		return user;
 
 	}
 
 	@Override
-	public void usertoUserDTO(UserDTO response, User user, Role rol) {
-
+	public UserDTO userToUserDTO(User user) {
+		UserDTO response = new UserDTO();
 		response.setFirstName(user.getFirstName());
 		response.setLastName(user.getLastName());
-		response.setUserName(user.getUsername());
+		response.setUsername(user.getUsername());
 		response.setAge(user.getAge());
 		response.setEmail(user.getEmail());
 		response.setPassword((user.getPassword()));
-		Set<Role> roles = new HashSet<>();
-		if (rol.equals(Role.ROLE_USER)) {
-			roles.add(Role.ROLE_USER);
-		} else {
-			roles.add(Role.ROLE_ADMIN);
-		}
-
-		response.setRoles(roles);
-
+		response.setRoles(user.getRoles());
+		return response;
 	}
 
 	private void updateFieldIfDifferent(User user, String newValue, String fieldName, Consumer<String> setter) {

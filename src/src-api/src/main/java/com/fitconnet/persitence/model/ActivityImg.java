@@ -1,5 +1,7 @@
 package com.fitconnet.persitence.model;
 
+import com.fitconnet.dto.entities.ImageDTO;
+
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -19,4 +21,8 @@ public class ActivityImg extends Image {
 	@JoinColumn(name = "C_FK_ACTIVITY_ID", nullable = false)
 	private Activity actividad;
 
+	public ActivityImg(ImageDTO imageDTO, Activity actividad) {
+		super(null, imageDTO.getImage());
+		this.actividad = actividad;
+	}
 }

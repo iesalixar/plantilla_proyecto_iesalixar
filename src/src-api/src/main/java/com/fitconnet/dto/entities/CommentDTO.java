@@ -1,17 +1,20 @@
 package com.fitconnet.dto.entities;
 
-import com.fitconnet.persitence.model.Activity;
-import com.fitconnet.persitence.model.User;
-
 import lombok.Data;
 
 @Data
 public class CommentDTO {
-	
+	/**
+	 * The content of the comment.
+	 */
 	private String content;
-	
-	private User user;
-	
-	private Activity activity;
+	/**
+	 * The user who made the comment.
+	 */
+	private UserDTO user;
+	/**
+	 * The activity associated with the comment.
+	 */
+	private ActivityDTO activity;
 
 }

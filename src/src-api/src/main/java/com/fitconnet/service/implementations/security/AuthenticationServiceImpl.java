@@ -34,6 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 	private final PasswordEncoder passwordEncoder;
 	private final JwtServiceI jwtService;
 	private final AuthenticationManager authenticationManager;
+
 	/**
 	 * Logger instance for ActivityController class.
 	 */
@@ -109,7 +110,7 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 		User user = new User();
 		user.setFirstName(request.getFirstName());
 		user.setLastName(request.getLastName());
-		user.setUsername(request.getUserName());
+		user.setUsername(request.getUsername());
 		user.setEmail(request.getEmail());
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 		Set<Role> roles = new HashSet<>();

@@ -10,13 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.fitconnet.dto.entities.NotificationDTO;
+import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.error.exception.notifications.NotificationCreationException;
 import com.fitconnet.error.exception.notifications.NotificationNotFoundException;
 import com.fitconnet.error.exception.user.UserNotFoundException;
 import com.fitconnet.persitence.model.Notification;
-import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.NotificationRepository;
 import com.fitconnet.service.interfaces.entity.NotificationServiceI;
+import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
 
 import jakarta.validation.ConstraintViolationException;
@@ -26,22 +27,24 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class NotificationServiceImpl implements NotificationServiceI {
 	private final NotificationRepository notificationRepository;
+	private final UserServiceI userService;
 
 	@Override
-	public List<Notification> getAll() {
-
-		return notificationRepository.findAll();
+	public List<NotificationDTO> getAll() {
+		return notificationRepository.findAll().stream().map(this::notificationToNotificationDTO).toList();
 	}
 
 	@Override
-	public Notification getById(Long id) {
-		return notificationRepository.findById(id)
+	public NotificationDTO getById(Long id) {
+		Notification notification = notificationRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND));
+		return notificationToNotificationDTO(notification);
 	}
 
 	@Override
-	public List<Notification> getByRecipient(User user) {
-		List<Notification> notifications = notificationRepository.findByRecipient(user);
+	public List<NotificationDTO> getByRecipient(UserDTO user) {
+		List<NotificationDTO> notifications = notificationRepository.findByRecipient(userService.userDTOtoUser(user))
+				.stream().map(this::notificationToNotificationDTO).toList();
 		if (notifications.isEmpty()) {
 			throw new NotificationNotFoundException(Constants.NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND);
 		}
@@ -49,10 +52,10 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	}
 
 	@Override
-	public void create(Notification notification) {
+	public void create(NotificationDTO notificationDTO) {
 
 		try {
-			notificationRepository.save(notification);
+			notificationRepository.save(notificationDTOtoNotification(notificationDTO));
 		} catch (DataIntegrityViolationException | ConstraintViolationException e) {
 			throw new NotificationCreationException("Error creating notification", e, HttpStatus.BAD_REQUEST);
 		}
@@ -68,18 +71,19 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	}
 
 	@Override
-	public void update(Long id, Notification notification) {
-		Notification aux = notificationRepository.findById(id).orElseThrow(
+	public void update(Long id, NotificationDTO notificationDTO) {
+		notificationRepository.findById(id).orElseThrow(
 				() -> new NotificationNotFoundException(Constants.NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND));
 		notificationRepository.deleteById(id);
-		notificationRepository.save(aux);
+		notificationRepository.save(notificationDTOtoNotification(notificationDTO));
 
 	}
 
 	@Override
-	public void patch(Long id, Notification notification) {
+	public void patch(Long id, NotificationDTO notificationDTO) {
 		Notification aux = notificationRepository.findById(id).orElseThrow(
 				() -> new NotificationNotFoundException(Constants.NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND));
+		Notification notification = notificationDTOtoNotification(notificationDTO);
 		updateFieldIfDifferent(aux, notification.getMessage(), "message", aux::setMessage);
 		updateFieldIfDifferent(aux, notification.getDate(), "date", aux::setDate);
 		updateFieldIfDifferent(aux, notification.getReceiver(), "receiver", aux::setReceiver);
@@ -91,13 +95,13 @@ public class NotificationServiceImpl implements NotificationServiceI {
 		return notificationRepository.existsById(id);
 	}
 
-	@Override
-	public void setAttributes(Notification notification, Notification newNotification) {
-		newNotification.setDate(notification.getDate());
-		newNotification.setMessage(notification.getMessage());
-		newNotification.setReceiver(notification.getReceiver());
-
-	}
+//	@Override
+//	public void setAttributes(NotificationDTO notificationDTO, Notification newNotification) {
+//		newNotification.setDate(notification.getDate());
+//		newNotification.setMessage(notification.getMessage());
+//		newNotification.setReceiver(notification.getReceiver());
+//
+//	}
 
 	@Override
 	public boolean existByDate(Date date) {
@@ -130,12 +134,21 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	}
 
 	@Override
-	public Notification DtoToNotification(NotificationDTO dto) {
+	public Notification notificationDTOtoNotification(NotificationDTO dto) {
 		Notification newNotification = new Notification();
 		newNotification.setDate(dto.getDate());
 		newNotification.setMessage(dto.getMessage());
-		newNotification.setReceiver(dto.getReceiver());
+		newNotification.setReceiver(userService.userDTOtoUser(dto.getReceiver()));
 		return newNotification;
+	}
+
+	@Override
+	public NotificationDTO notificationToNotificationDTO(Notification notification) {
+		NotificationDTO notificationDTO = new NotificationDTO();
+		notificationDTO.setDate(notification.getDate());
+		notificationDTO.setMessage(notification.getMessage());
+		notificationDTO.setReceiver(userService.userToUserDTO(notification.getReceiver()));
+		return notificationDTO;
 	}
 
 }

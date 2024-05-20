@@ -3,6 +3,11 @@ package com.fitconnet.service.interfaces.entity;
 import java.util.List;
 
 import com.fitconnet.dto.entities.ImageDTO;
+import com.fitconnet.persitence.model.Activity;
+import com.fitconnet.persitence.model.ActivityImg;
+import com.fitconnet.persitence.model.Image;
+import com.fitconnet.persitence.model.ProfileImg;
+import com.fitconnet.persitence.model.User;
 
 /**
  * Interface for managing images.
@@ -53,5 +58,43 @@ public interface ImageServiceI {
 	 * @return true if an image exists with the specified ID, false otherwise.
 	 */
 	boolean existById(Long id);
+
+	ImageDTO imageToImageDTO(Image img);
+
+	Image imageDTOtoImage(ImageDTO dto);
+
+	/**
+	 * Converts an ImageDTO to an ActivityImg entity.
+	 *
+	 * @param imageDTO The ImageDTO to convert.
+	 * @param activity The Activity entity to associate with the image.
+	 * @return The resulting ActivityImg entity.
+	 */
+	ActivityImg imageDTOToActivityImg(ImageDTO imageDTO, Activity activity);
+
+	/**
+	 * Converts an ActivityImg entity to an ImageDTO.
+	 *
+	 * @param activityImg The ActivityImg entity to convert.
+	 * @return The resulting ImageDTO.
+	 */
+	ImageDTO activityImgToImageDTO(ActivityImg activityImg);
+
+	/**
+	 * Converts an ImageDTO to a ProfileImg entity.
+	 *
+	 * @param imageDTO The ImageDTO to convert.
+	 * @param user     The User entity to associate with the image.
+	 * @return The resulting ProfileImg entity.
+	 */
+	ProfileImg imageDTOToProfileImg(ImageDTO imageDTO, User user);
+
+	/**
+	 * Converts a ProfileImg entity to an ImageDTO.
+	 *
+	 * @param profileImg The ProfileImg entity to convert.
+	 * @return The resulting ImageDTO.
+	 */
+	ImageDTO profileImgToImageDTO(ProfileImg profileImg);
 
 }

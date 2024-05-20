@@ -38,7 +38,7 @@ public interface CommentServiceI {
 	 *
 	 * @param comment the comment to create
 	 */
-	void create(CommentDTO comment);
+	void create(CommentDTO commentDTO);
 
 	/**
 	 * Updates an existing comment.
@@ -46,7 +46,7 @@ public interface CommentServiceI {
 	 * @param id      the unique identifier of the comment to update
 	 * @param comment the updated comment details
 	 */
-	void update(Long id, CommentDTO comment);
+	void update(Long id, CommentDTO commentDTO);
 
 	/**
 	 * Deletes a comment by its unique identifier.
@@ -61,7 +61,7 @@ public interface CommentServiceI {
 	 * @param dto the DTO to transform
 	 * @return the transformed Comment object
 	 */
-	Comment commentDtoToComment(CommentDTO dto);
+	Comment commentDtoToComment(CommentDTO commentDTO);
 
 	/**
 	 * Transform a comment into a dto.

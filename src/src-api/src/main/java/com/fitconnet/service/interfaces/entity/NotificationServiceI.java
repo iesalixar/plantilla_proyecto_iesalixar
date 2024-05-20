@@ -41,7 +41,7 @@ public interface NotificationServiceI {
 	 * @param dto The notification DTO to convert.
 	 * @return The notification entity corresponding to the DTO.
 	 */
-	Notification dtoToNotification(NotificationDTO dto);
+	Notification notificationDTOtoNotification(NotificationDTO notificationDTO);
 
 	/**
 	 * Converts a notification entity to a notification DTO.
@@ -49,7 +49,7 @@ public interface NotificationServiceI {
 	 * @param dto The notification entity to convert.
 	 * @return The notification DTO corresponding to the entity.
 	 */
-	NotificationDTO notificationToNotificationDTO(Notification dto);
+	NotificationDTO notificationToNotificationDTO(Notification notification);
 
 	/**
 	 * Checks if a notification exists by its ID.
@@ -97,12 +97,12 @@ public interface NotificationServiceI {
 	 */
 	void patch(Long id, NotificationDTO notification);
 
-	/**
-	 * Sets attributes of a notification from another notification.
-	 *
-	 * @param notification    The notification to update.
-	 * @param newNotification The new notification containing updated attributes.
-	 */
-	void setAttributes(Notification notification, Notification newNotification);
+//	/**
+//	 * Sets attributes of a notification from another notification.
+//	 *
+//	 * @param notification    The notification to update.
+//	 * @param newNotification The new notification containing updated attributes.
+//	 */
+//	void setAttributes(NotificationDTO notificationDTO, Notification newNotification);
 
 }
