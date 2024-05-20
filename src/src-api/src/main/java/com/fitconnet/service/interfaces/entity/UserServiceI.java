@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.fitconnet.dto.entities.ActivityDTO;
+import com.fitconnet.dto.entities.CommentDTO;
+import com.fitconnet.dto.entities.NotificationDTO;
 import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.enums.Role;
-import com.fitconnet.persitence.model.Activity;
-import com.fitconnet.persitence.model.Comment;
-import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
 
 /**
@@ -19,142 +19,142 @@ public interface UserServiceI {
 	/**
 	 * Retrieves all users.
 	 * 
-	 * @return the optional set of users
+	 * @return A list of all users.
 	 */
-	List<User> getAll();
+	List<UserDTO> getAll();
 
 	/**
 	 * Retrieves a user by id.
 	 * 
-	 * @param id the id of the user to retrieve
-	 * @return the user
+	 * @param id The id of the user to retrieve.
+	 * @return The user with the specified id, if found.
 	 */
-	User getById(Long id);
+	UserDTO getById(Long id);
 
 	/**
 	 * Retrieves a user by username.
 	 * 
-	 * @param userName the username of the user to retrieve
-	 * @return the optional user
+	 * @param userName The username of the user to retrieve.
+	 * @return The user with the specified username, if found.
 	 */
-	User getByUserName(String userName);
+	UserDTO getByUserName(String userName);
 
 	/**
 	 * Retrieves the friends of a user.
 	 * 
-	 * @param id the id of the user
-	 * @return the optional list of friends
+	 * @param id The id of the user.
+	 * @return A list of friends of the specified user.
 	 */
-	List<User> getFriends(Long id);
+	List<UserDTO> getFriends(Long id);
 
 	/**
 	 * Retrieves the activities created by a user.
 	 * 
-	 * @param id the id of the user
-	 * @return the optional set of created activities
+	 * @param id The id of the user.
+	 * @return A list of activities created by the specified user.
 	 */
-	List<Activity> getCreatedActivities(Long id);
+	List<ActivityDTO> getCreatedActivities(Long id);
 
 	/**
 	 * Retrieves the activities invited to by a user.
 	 * 
-	 * @param id the id of the user
-	 * @return the optional set of invited activities
+	 * @param id The id of the user.
+	 * @return A list of activities invited to by the specified user.
 	 */
-	List<Activity> getInvitedActivities(Long id);
+	List<ActivityDTO> getInvitedActivities(Long id);
 
 	/**
 	 * Retrieves all activities related to a user.
 	 * 
-	 * @param id the id of the user
-	 * @return the optional set of all activities
+	 * @param id The id of the user.
+	 * @return A list of all activities related to the specified user.
 	 */
-	List<Activity> getAllActivities(Long id);
+	List<ActivityDTO> getAllActivities(Long id);
 
 	/**
 	 * Retrieves the notifications of a user.
 	 * 
-	 * @param id the id of the user
-	 * @return the optional set of notifications
+	 * @param id The id of the user.
+	 * @return A list of notifications for the specified user.
 	 */
-	List<Notification> getNotifications(Long id);
+	List<NotificationDTO> getNotifications(Long id);
 
 	/**
-	 * Retrieves the notifications of a user.
+	 * Retrieves the comments of a user.
 	 * 
-	 * @param id the id of the user
-	 * @return the optional set of notifications
+	 * @param user The user.
+	 * @return A list of comments by the specified user.
 	 */
-	List<Comment> getComments(User user);
+	List<CommentDTO> getComments(User user);
 
 	/**
 	 * Retrieves the user details service.
 	 * 
-	 * @return the user details service
+	 * @return The user details service.
 	 */
 	UserDetailsService userDetailsService();
 
 	/**
 	 * Checks if a user exists by id.
 	 * 
-	 * @param id the id of the user
-	 * @return true if the user exists, false otherwise
+	 * @param id The id of the user.
+	 * @return true if the user exists, false otherwise.
 	 */
 	Boolean existById(Long id);
 
 	/**
 	 * Checks if a user exists by email.
 	 * 
-	 * @param email the email of the user
-	 * @return true if the user exists, false otherwise
+	 * @param email The email of the user.
+	 * @return true if the user exists, false otherwise.
 	 */
 	boolean existByEmail(String email);
 
 	/**
 	 * Creates a new user.
 	 * 
-	 * @param user the user to create
+	 * @param user The user to create.
 	 */
-	void create(User user);
+	void create(UserDTO user);
 
 	/**
 	 * Updates a user.
 	 * 
-	 * @param id   the id of the user to update
-	 * @param user the updated user
+	 * @param id   The id of the user to update.
+	 * @param user The updated user.
 	 */
-	void update(Long id, User user);
+	void update(Long id, UserDTO user);
 
 	/**
 	 * Patches a user.
 	 * 
-	 * @param id   the id of the user to patch
-	 * @param user the patched user
+	 * @param id   The id of the user to patch.
+	 * @param user The patched user.
 	 */
-	void patch(Long id, User user);
+	void patch(Long id, UserDTO user);
 
 	/**
 	 * Deletes a user by id.
 	 * 
-	 * @param id the id of the user to delete
+	 * @param id The id of the user to delete.
 	 */
 	void deleteById(Long id);
 
 	/**
 	 * Converts a UserDTO to a User.
 	 * 
-	 * @param request the UserDTO request
-	 * @param user    the User to fill
-	 * @param rol     the role of the user
+	 * @param request The UserDTO request.
+	 * @param user    The User to fill.
+	 * @param rol     The role of the user.
 	 */
-	void userDTOtoUSer(UserDTO request, User user, Role rol);
+	User userDTOtoUSer(UserDTO request, Role rol);
 
 	/**
 	 * Converts a User to a UserDTO.
 	 * 
-	 * @param response the UserDTO response
-	 * @param user     the User to convert
-	 * @param rol      the role of the user
+	 * @param response The UserDTO response.
+	 * @param user     The User to convert.
+	 * @param rol      The role of the user.
 	 */
-	void usertoUserDTO(UserDTO response, User user, Role rol);
+	UserDTO usertoUserDTO(User user, Role rol);
 }

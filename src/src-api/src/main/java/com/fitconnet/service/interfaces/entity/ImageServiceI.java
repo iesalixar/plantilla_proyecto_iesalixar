@@ -2,20 +2,56 @@ package com.fitconnet.service.interfaces.entity;
 
 import java.util.List;
 
-import com.fitconnet.persitence.model.Image;
+import com.fitconnet.dto.entities.ImageDTO;
 
+/**
+ * Interface for managing images.
+ */
 public interface ImageServiceI {
 
-	List<Image> getAll();
+	/**
+	 * Retrieves all images.
+	 *
+	 * @return A list of all images.
+	 */
+	List<ImageDTO> getAll();
 
-	Image getById(Long id);
+	/**
+	 * Retrieves an image by its ID.
+	 *
+	 * @param id The ID of the image to retrieve.
+	 * @return The image with the specified ID, if found.
+	 */
+	ImageDTO getById(Long id);
 
+	/**
+	 * Deletes an image by its ID.
+	 *
+	 * @param id The ID of the image to delete.
+	 */
 	void delete(Long id);
 
-	void create(Image img);
+	/**
+	 * Creates a new image.
+	 *
+	 * @param img The image to create.
+	 */
+	void create(ImageDTO img);
 
-	void update(Long id, Image img);
+	/**
+	 * Updates an existing image.
+	 *
+	 * @param id  The ID of the image to update.
+	 * @param img The updated image.
+	 */
+	void update(Long id, ImageDTO img);
 
+	/**
+	 * Checks if an image exists by its ID.
+	 *
+	 * @param id The ID of the image to check.
+	 * @return true if an image exists with the specified ID, false otherwise.
+	 */
 	boolean existById(Long id);
 
 }

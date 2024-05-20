@@ -4,10 +4,10 @@ import java.util.function.Supplier;
 
 import org.springframework.http.ResponseEntity;
 
-import com.fitconnet.persitence.model.Activity;
-import com.fitconnet.persitence.model.Comment;
-import com.fitconnet.persitence.model.Notification;
-import com.fitconnet.persitence.model.User;
+import com.fitconnet.dto.entities.ActivityDTO;
+import com.fitconnet.dto.entities.CommentDTO;
+import com.fitconnet.dto.entities.NotificationDTO;
+import com.fitconnet.dto.entities.UserDTO;
 
 /**
  * Interface for processing response entities.
@@ -15,7 +15,7 @@ import com.fitconnet.persitence.model.User;
 public interface ProcessingResponseI {
 
 	/**
-	 * Processes the entity response.
+	 * Processes the entity response for UserDTO.
 	 * 
 	 * @param entity           the entity to process
 	 * @param conflictSupplier supplier for conflict response entity
@@ -23,11 +23,11 @@ public interface ProcessingResponseI {
 	 * @param <T>              the type of the response entity
 	 * @return the ResponseEntity
 	 */
-	<T> ResponseEntity<T> processUserResponse(User entity, Supplier<ResponseEntity> conflictSupplier,
+	<T> ResponseEntity<T> processUserResponse(UserDTO entity, Supplier<ResponseEntity> conflictSupplier,
 			Supplier<ResponseEntity<T>> successSupplier);
 
 	/**
-	 * Processes the entity response.
+	 * Processes the entity response for NotificationDTO.
 	 * 
 	 * @param entity           the entity to process
 	 * @param conflictSupplier supplier for conflict response entity
@@ -35,11 +35,11 @@ public interface ProcessingResponseI {
 	 * @param <T>              the type of the response entity
 	 * @return the ResponseEntity
 	 */
-	<T> ResponseEntity<T> processNotificationResponse(Notification entity, Supplier<ResponseEntity> conflictSupplier,
+	<T> ResponseEntity<T> processNotificationResponse(NotificationDTO entity, Supplier<ResponseEntity> conflictSupplier,
 			Supplier<ResponseEntity<T>> successSupplier);
 
 	/**
-	 * Processes the entity response.
+	 * Processes the entity response for ActivityDTO.
 	 * 
 	 * @param entity           the entity to process
 	 * @param conflictSupplier supplier for conflict response entity
@@ -47,11 +47,11 @@ public interface ProcessingResponseI {
 	 * @param <T>              the type of the response entity
 	 * @return the ResponseEntity
 	 */
-	<T> ResponseEntity<T> processActivityResponse(Activity entity, Supplier<ResponseEntity> conflictSupplier,
+	<T> ResponseEntity<T> processActivityResponse(ActivityDTO entity, Supplier<ResponseEntity> conflictSupplier,
 			Supplier<ResponseEntity<T>> successSupplier);
 
 	/**
-	 * Processes the entity response.
+	 * Processes the entity response for CommentDTO.
 	 * 
 	 * @param entity           the entity to process
 	 * @param conflictSupplier supplier for conflict response entity
@@ -59,7 +59,7 @@ public interface ProcessingResponseI {
 	 * @param <T>              the type of the response entity
 	 * @return the ResponseEntity
 	 */
-	<T> ResponseEntity<T> processCommentResponse(Comment entity, Supplier<ResponseEntity> conflictSupplier,
+	<T> ResponseEntity<T> processCommentResponse(CommentDTO entity, Supplier<ResponseEntity> conflictSupplier,
 			Supplier<ResponseEntity<T>> successSupplier);
 
 	/**
@@ -73,18 +73,5 @@ public interface ProcessingResponseI {
 	 */
 	<T> ResponseEntity<T> processStringResponse(boolean condition, Supplier<ResponseEntity> conflictSupplier,
 			Supplier<ResponseEntity<T>> successSupplier);
-
-	/**
-	 * Processes the string dual user response.
-	 * 
-	 * @param condition        the condition for processing
-	 * @param entity           the user entity to process
-	 * @param conflictSupplier supplier for conflict response entity
-	 * @param successSupplier  supplier for success response entity
-	 * @param <T>              the type of the response entity
-	 * @return the ResponseEntity
-	 */
-	<T> ResponseEntity<T> processStringDualUserResponse(boolean condition, User entity,
-			Supplier<ResponseEntity> conflictSupplier, Supplier<ResponseEntity<T>> successSupplier);
 
 }

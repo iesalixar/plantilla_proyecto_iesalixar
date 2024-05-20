@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.fitconnet.dto.entities.NotificationDTO;
+import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.persitence.model.Notification;
-import com.fitconnet.persitence.model.User;
 
 /**
  * Interface for managing notifications.
@@ -15,30 +15,41 @@ public interface NotificationServiceI {
 	/**
 	 * Retrieves all notifications.
 	 *
-	 * @return An optional containing a set of all notifications, if any.
+	 * @return A list of all notifications.
 	 */
-	List<Notification> getAll();
+	List<NotificationDTO> getAll();
 
 	/**
 	 * Retrieves notifications by recipient.
 	 *
-	 * @param user An optional containing the user who is the recipient of the
-	 *             notifications.
-	 * @return An optional containing a set of notifications received by the
-	 *         specified user.
+	 * @param user The user who is the recipient of the notifications.
+	 * @return A list of notifications received by the specified user.
 	 */
-	List<Notification> getByRecipient(User user);
+	List<NotificationDTO> getByRecipient(UserDTO user);
 
 	/**
 	 * Retrieves a notification by its ID.
 	 *
 	 * @param id The ID of the notification to retrieve.
-	 * @return An optional containing the notification with the specified ID, if
-	 *         found.
+	 * @return The notification with the specified ID, if found.
 	 */
-	Notification getById(Long id);
+	NotificationDTO getById(Long id);
 
-	Notification DtoToNotification(NotificationDTO dto);
+	/**
+	 * Converts a notification DTO to a notification entity.
+	 *
+	 * @param dto The notification DTO to convert.
+	 * @return The notification entity corresponding to the DTO.
+	 */
+	Notification dtoToNotification(NotificationDTO dto);
+
+	/**
+	 * Converts a notification entity to a notification DTO.
+	 *
+	 * @param dto The notification entity to convert.
+	 * @return The notification DTO corresponding to the entity.
+	 */
+	NotificationDTO notificationToNotificationDTO(Notification dto);
 
 	/**
 	 * Checks if a notification exists by its ID.
@@ -61,7 +72,7 @@ public interface NotificationServiceI {
 	 *
 	 * @param notification The notification to create.
 	 */
-	void create(Notification notification);
+	void create(NotificationDTO notification);
 
 	/**
 	 * Deletes a notification by its ID.
@@ -76,7 +87,7 @@ public interface NotificationServiceI {
 	 * @param id           The ID of the notification to update.
 	 * @param notification The updated notification.
 	 */
-	void update(Long id, Notification notification);
+	void update(Long id, NotificationDTO notification);
 
 	/**
 	 * Partially updates an existing notification.
@@ -84,7 +95,7 @@ public interface NotificationServiceI {
 	 * @param id           The ID of the notification to update.
 	 * @param notification The partial update for the notification.
 	 */
-	void patch(Long id, Notification notification);
+	void patch(Long id, NotificationDTO notification);
 
 	/**
 	 * Sets attributes of a notification from another notification.

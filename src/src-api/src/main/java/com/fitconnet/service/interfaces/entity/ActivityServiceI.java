@@ -16,17 +16,17 @@ public interface ActivityServiceI {
 	/**
 	 * Retrieves all activities.
 	 *
-	 * @return An optional containing a set of all activities, if any.
+	 * @return A list of all activities.
 	 */
-	List<Activity> getAll();
+	List<ActivityDTO> getAll();
 
 	/**
 	 * Retrieves an activity by its ID.
 	 *
 	 * @param id The ID of the activity to retrieve.
-	 * @return An optional containing the activity with the specified ID, if found.
+	 * @return The activity with the specified ID, if found.
 	 */
-	Activity getOne(Long id);
+	ActivityDTO getOne(Long id);
 
 	/**
 	 * Checks if an activity exists by its ID.
@@ -51,7 +51,7 @@ public interface ActivityServiceI {
 	 * @param userDTO  The user DTO associated with the activity.
 	 * @return The activity DTO corresponding to the activity entity.
 	 */
-	ActivityDTO activityToActivityDTO(Activity activity, UserDTO userDTO);
+	ActivityDTO activityToActivityDTO(Activity activity);
 
 	/**
 	 * Converts an activity DTO to an activity entity.
@@ -60,13 +60,13 @@ public interface ActivityServiceI {
 	 * @param user        The user entity associated with the activity.
 	 * @return The activity entity corresponding to the activity DTO.
 	 */
-	Activity activityDTOtoActivity(ActivityDTO activityDTO, User user);
+	Activity activityDTOtoActivity(ActivityDTO activityDTO);
 
 	/**
 	 * Converts participant DTOs to participant entities.
 	 *
-	 * @param participantsDTO The set of participant DTOs to convert.
-	 * @return The set of participant entities corresponding to the participant
+	 * @param participantsDTO The list of participant DTOs to convert.
+	 * @return The list of participant entities corresponding to the participant
 	 *         DTOs.
 	 */
 	List<User> participantsDTOtoParticipants(List<UserDTO> participantsDTO);
@@ -74,8 +74,8 @@ public interface ActivityServiceI {
 	/**
 	 * Converts participant entities to participant DTOs.
 	 *
-	 * @param participants The set of participant entities to convert.
-	 * @return The set of participant DTOs corresponding to the participant
+	 * @param participants The list of participant entities to convert.
+	 * @return The list of participant DTOs corresponding to the participant
 	 *         entities.
 	 */
 	List<UserDTO> participantstoParticipantsDTO(List<User> participants);
@@ -85,7 +85,7 @@ public interface ActivityServiceI {
 	 *
 	 * @param activity The activity to create.
 	 */
-	void create(Activity activity);
+	void create(ActivityDTO activity);
 
 	/**
 	 * Updates an existing activity.
@@ -93,7 +93,7 @@ public interface ActivityServiceI {
 	 * @param id       The ID of the activity to update.
 	 * @param activity The updated activity.
 	 */
-	void update(Long id, Activity activity);
+	void update(Long id, ActivityDTO activity);
 
 	/**
 	 * Partially updates an existing activity.
@@ -101,7 +101,7 @@ public interface ActivityServiceI {
 	 * @param id       The ID of the activity to update.
 	 * @param activity The partial update for the activity.
 	 */
-	void patch(Long id, Activity activity);
+	void patch(Long id, ActivityDTO activity);
 
 	/**
 	 * Deletes an activity by its ID.

@@ -16,14 +16,14 @@ public interface CommentServiceI {
 	 * @param id the unique identifier of the comment
 	 * @return the comment with the specified id
 	 */
-	Comment getById(Long id);
+	CommentDTO getById(Long id);
 
 	/**
 	 * Retrieves all comments.
 	 *
 	 * @return a list of all comments
 	 */
-	List<Comment> getAll();
+	List<CommentDTO> getAll();
 
 	/**
 	 * Checks if a comment exists by its unique identifier.
@@ -38,7 +38,7 @@ public interface CommentServiceI {
 	 *
 	 * @param comment the comment to create
 	 */
-	void create(Comment comment);
+	void create(CommentDTO comment);
 
 	/**
 	 * Updates an existing comment.
@@ -46,7 +46,7 @@ public interface CommentServiceI {
 	 * @param id      the unique identifier of the comment to update
 	 * @param comment the updated comment details
 	 */
-	void update(Long id, Comment comment);
+	void update(Long id, CommentDTO comment);
 
 	/**
 	 * Deletes a comment by its unique identifier.
@@ -58,7 +58,16 @@ public interface CommentServiceI {
 	/**
 	 * Transform a dto into a comment.
 	 *
-	 * @param dto.
+	 * @param dto the DTO to transform
+	 * @return the transformed Comment object
 	 */
 	Comment commentDtoToComment(CommentDTO dto);
+
+	/**
+	 * Transform a comment into a dto.
+	 *
+	 * @param comment the Comment object to transform
+	 * @return the transformed CommentDTO object
+	 */
+	CommentDTO commentToCommentDTO(Comment comment);
 }
