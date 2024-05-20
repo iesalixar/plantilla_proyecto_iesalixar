@@ -4,9 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fitconnet.dto.entities.ActivityDTO;
-import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.persitence.model.Activity;
-import com.fitconnet.persitence.model.User;
 
 /**
  * Interface for managing activities.
@@ -63,22 +61,28 @@ public interface ActivityServiceI {
 	Activity activityDTOtoActivity(ActivityDTO activityDTO);
 
 	/**
-	 * Converts participant DTOs to participant entities.
-	 *
-	 * @param participantsDTO The list of participant DTOs to convert.
-	 * @return The list of participant entities corresponding to the participant
-	 *         DTOs.
+	 * Retrieves the activities created by a user.
+	 * 
+	 * @param id The id of the user.
+	 * @return A list of activities created by the specified user.
 	 */
-	List<User> participantsDTOtoParticipants(List<UserDTO> participantsDTO);
+	List<ActivityDTO> getCreatedActivities(Long id);
 
 	/**
-	 * Converts participant entities to participant DTOs.
-	 *
-	 * @param participants The list of participant entities to convert.
-	 * @return The list of participant DTOs corresponding to the participant
-	 *         entities.
+	 * Retrieves the activities invited to by a user.
+	 * 
+	 * @param id The id of the user.
+	 * @return A list of activities invited to by the specified user.
 	 */
-	List<UserDTO> participantstoParticipantsDTO(List<User> participants);
+	List<ActivityDTO> getInvitedActivities(Long id);
+
+	/**
+	 * Retrieves all activities related to a user.
+	 * 
+	 * @param id The id of the user.
+	 * @return A list of all activities related to the specified user.
+	 */
+	List<ActivityDTO> getAllActivities(Long id);
 
 	/**
 	 * Creates a new activity.

@@ -22,10 +22,9 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.fitconnet.dto.entities.CommentDTO;
+import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.error.GlobalExceptionHandler;
-import com.fitconnet.persitence.model.Comment;
-import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.service.interfaces.entity.CommentServiceI;
 import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
@@ -93,10 +92,9 @@ public class CommentController {
 	public ResponseEntity<String> createComment(@RequestBody CommentDTO request) {
 		logger.info("CommentController :: createComment");
 		ResponseEntity<String> response = null;
-		Comment newComment = commentService.commentDtoToComment(request);
-		response = processingResponseI.processCommentResponse(newComment,
+		response = processingResponseI.processCommentResponse(request,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The comment cannot be published"), () -> {
-					commentService.create(newComment);
+					commentService.create(request);
 					return ResponseEntity.ok().body("Comment created successfully.");
 				});
 		return response;
@@ -116,7 +114,7 @@ public class CommentController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Get All Comments", description = "Retrieves all comments registered in the system.")
 	@ApiResponse(responseCode = "200", description = "Comments retrieved successfully")
-	public ResponseEntity<List<Comment>> getComments() {
+	public ResponseEntity<List<CommentDTO>> getComments() {
 		logger.info("CommentController :: getComments");
 		return ResponseEntity.ok().body(commentService.getAll());
 	}
@@ -136,10 +134,10 @@ public class CommentController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Get Comment by ID", description = "Retrieves an comment by its ID.")
 	@ApiResponse(responseCode = "200", description = "Comment retrieved successfully")
-	public ResponseEntity<Comment> getCommentById(@PathVariable Long id) {
+	public ResponseEntity<CommentDTO> getCommentById(@PathVariable Long id) {
 		logger.info("CommentController :: getCommentById");
-		ResponseEntity<Comment> response = null;
-		Comment existingComment = commentService.getById(id);
+		ResponseEntity<CommentDTO> response = null;
+		CommentDTO existingComment = commentService.getById(id);
 		response = processingResponseI.processCommentResponse(existingComment,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.COMMENT_NOT_FOUND),
 				() -> ResponseEntity.ok().body(existingComment));
@@ -164,13 +162,12 @@ public class CommentController {
 	@ApiResponse(responseCode = "409", description = "User not found")
 	public ResponseEntity<?> getCommentsByUserId(@PathVariable Long userId) {
 		logger.info("CommentController :: getCommentsByUserId :: userId={}", userId);
-		User user = userService.getById(userId);
-
+		UserDTO user = userService.getById(userId);
 		if (user == null) {
 			logger.error("User with ID {} not found", userId);
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("User not found");
 		} else {
-			List<Comment> comments = userService.getComments(user);
+			List<CommentDTO> comments = commentService.getComments(user);
 			return ResponseEntity.ok().body(comments);
 		}
 	}
@@ -198,10 +195,8 @@ public class CommentController {
 		if (!commentExist) {
 			response = ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.COMMENT_NOT_FOUND);
 		} else {
-			Comment aux = commentService.getById(id);
-			request.setUser(aux.getUser());
-			request.setActivity(aux.getActivity());
-			commentService.commentDtoToComment(request);
+			commentService.delete(id);
+			commentService.create(request);
 			response = ResponseEntity.ok().body("Comment succesfully update");
 
 		}

@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.fitconnet.dto.entities.NotificationDTO;
-import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.persitence.model.Notification;
 
 /**
@@ -20,12 +19,12 @@ public interface NotificationServiceI {
 	List<NotificationDTO> getAll();
 
 	/**
-	 * Retrieves notifications by recipient.
-	 *
-	 * @param user The user who is the recipient of the notifications.
-	 * @return A list of notifications received by the specified user.
+	 * Retrieves the notifications of a user.
+	 * 
+	 * @param id The id of the user.
+	 * @return A list of notifications for the specified user.
 	 */
-	List<NotificationDTO> getByRecipient(UserDTO user);
+	List<NotificationDTO> getNotifications(Long userId);
 
 	/**
 	 * Retrieves a notification by its ID.

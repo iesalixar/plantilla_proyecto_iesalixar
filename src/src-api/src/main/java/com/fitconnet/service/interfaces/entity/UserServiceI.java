@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import com.fitconnet.dto.entities.ActivityDTO;
-import com.fitconnet.dto.entities.CommentDTO;
-import com.fitconnet.dto.entities.NotificationDTO;
 import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.persitence.model.User;
 
@@ -47,44 +44,22 @@ public interface UserServiceI {
 	List<UserDTO> getFriends(Long id);
 
 	/**
-	 * Retrieves the activities created by a user.
-	 * 
-	 * @param id The id of the user.
-	 * @return A list of activities created by the specified user.
+	 * Converts participant DTOs to participant entities.
+	 *
+	 * @param participantsDTO The list of participant DTOs to convert.
+	 * @return The list of participant entities corresponding to the participant
+	 *         DTOs.
 	 */
-	List<ActivityDTO> getCreatedActivities(Long id);
+	List<User> participantsDTOtoParticipants(List<UserDTO> participantsDTO);
 
 	/**
-	 * Retrieves the activities invited to by a user.
-	 * 
-	 * @param id The id of the user.
-	 * @return A list of activities invited to by the specified user.
+	 * Converts participant entities to participant DTOs.
+	 *
+	 * @param participants The list of participant entities to convert.
+	 * @return The list of participant DTOs corresponding to the participant
+	 *         entities.
 	 */
-	List<ActivityDTO> getInvitedActivities(Long id);
-
-	/**
-	 * Retrieves all activities related to a user.
-	 * 
-	 * @param id The id of the user.
-	 * @return A list of all activities related to the specified user.
-	 */
-	List<ActivityDTO> getAllActivities(Long id);
-
-	/**
-	 * Retrieves the notifications of a user.
-	 * 
-	 * @param id The id of the user.
-	 * @return A list of notifications for the specified user.
-	 */
-	List<NotificationDTO> getNotifications(Long id);
-
-	/**
-	 * Retrieves the comments of a user.
-	 * 
-	 * @param user The user.
-	 * @return A list of comments by the specified user.
-	 */
-	List<CommentDTO> getComments(UserDTO user);
+	List<UserDTO> participantstoParticipantsDTO(List<User> participants);
 
 	/**
 	 * Retrieves the user details service.

@@ -29,14 +29,13 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.fitconnet.dto.entities.ActivityDTO;
 import com.fitconnet.dto.entities.CommentDTO;
+import com.fitconnet.dto.entities.ImageDTO;
+import com.fitconnet.dto.entities.NotificationDTO;
+import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.error.GlobalExceptionHandler;
-import com.fitconnet.persitence.model.Activity;
-import com.fitconnet.persitence.model.Comment;
-import com.fitconnet.persitence.model.Image;
-import com.fitconnet.persitence.model.Notification;
-import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.service.interfaces.entity.CommentServiceI;
 import com.fitconnet.service.interfaces.entity.ImageServiceI;
@@ -112,8 +111,8 @@ public class AdminController {
 	@ApiResponse(responseCode = "200", description = "Dashboard data retrieved successfully")
 	public ResponseEntity<Map<String, Object>> showDashboard() {
 		logger.info("## AdminController :: showDashboard");
-		List<User> userList = userService.getAll();
-		List<Activity> activities = activityService.getAll();
+		List<UserDTO> userList = userService.getAll();
+		List<ActivityDTO> activities = activityService.getAll();
 		Map<String, Object> dashboardData = new HashMap<>();
 		dashboardData.put("users", userList);
 		dashboardData.put("activities", activities);
@@ -136,7 +135,7 @@ public class AdminController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Update User", description = "Updates an existing user with new information.")
 	@ApiResponse(responseCode = "200", description = "User updated successfully")
-	public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody User user) {
+	public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody UserDTO user) {
 		logger.info("## AdminController :: updateUser");
 		ResponseEntity<String> response = null;
 		boolean exist = userService.existById(id);
@@ -165,7 +164,7 @@ public class AdminController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Update Notification", description = "Updates an existing notification with new information.")
 	@ApiResponse(responseCode = "200", description = "Notification updated successfully")
-	public ResponseEntity<String> updateNotification(@PathVariable Long id, @RequestBody Notification notification) {
+	public ResponseEntity<String> updateNotification(@PathVariable Long id, @RequestBody NotificationDTO notification) {
 		logger.info("## AdminController :: updateNotification");
 		ResponseEntity<String> response = null;
 		Boolean exists = notificationService.existById(id);
@@ -193,7 +192,7 @@ public class AdminController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Update Activity", description = "Updates an existing activity with new information.")
 	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
-	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
+	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody ActivityDTO activity) {
 		logger.info("## AdminController :: updateActivity");
 		ResponseEntity<String> response = null;
 		Boolean exists = activityService.existById(id);
@@ -226,7 +225,7 @@ public class AdminController {
 		logger.info("ImageController :: updateImage");
 		ResponseEntity<String> response = null;
 		Boolean exist = imageService.existById(id);
-		Image newImage = new Image();
+		ImageDTO newImage = new ImageDTO();
 		byte[] bytes = file.getBytes();
 		Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
 		newImage.setImage(blob);
@@ -260,8 +259,7 @@ public class AdminController {
 		Boolean exist = commentService.existById(id);
 		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.COMMENT_NOT_FOUND), () -> {
-					Comment aux = commentService.commentDtoToComment(request);
-					commentService.update(id, aux);
+					commentService.update(id, request);
 					return ResponseEntity.ok().body("Image has been deleted successfully.");
 				});
 		return response;

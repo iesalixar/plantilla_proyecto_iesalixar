@@ -24,8 +24,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import com.fitconnet.dto.entities.NotificationDTO;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.error.GlobalExceptionHandler;
-import com.fitconnet.persitence.model.Notification;
-import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.interfaces.entity.NotificationServiceI;
 import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
@@ -87,8 +85,7 @@ public class NotificationController {
 		boolean exist = notificationService.existByDate(request.getDate());
 		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The notification already exists"), () -> {
-					Notification newNotification = notificationService.DtoToNotification(request);
-					notificationService.create(newNotification);
+					notificationService.create(request);
 					return ResponseEntity.ok().body("Notification created successfully.");
 				});
 		return response;
@@ -108,9 +105,9 @@ public class NotificationController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Get All Notifications", description = "Retrieves all notifications registered in the system.")
 	@ApiResponse(responseCode = "200", description = "Notifications retrieved successfully")
-	public ResponseEntity<List<Notification>> getNotifications() {
+	public ResponseEntity<List<NotificationDTO>> getNotifications() {
 		logger.info("## NotificationController :: getNotifications");
-		List<Notification> notifications = notificationService.getAll();
+		List<NotificationDTO> notifications = notificationService.getAll();
 		return ResponseEntity.ok().body(notifications);
 	}
 
@@ -129,14 +126,13 @@ public class NotificationController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	@Operation(summary = "Get Notifications by User ID", description = "Retrieves notifications associated with a specific user.")
 	@ApiResponse(responseCode = "200", description = "Notifications retrieved successfully")
-	public ResponseEntity<List<Notification>> getNotificationsByUserId(@PathVariable Long id) {
+	public ResponseEntity<List<NotificationDTO>> getNotificationsByUserId(@PathVariable Long id) {
 		logger.info("NotificationController :: getNotificationsByUserId");
-		ResponseEntity<List<Notification>> response = null;
-		User user = userService.getById(id);
-		User existingUser = user;
-		response = processingResponseI.processUserResponse(existingUser,
+		ResponseEntity<List<NotificationDTO>> response = null;
+		boolean existingUser = userService.existById(id);
+		response = processingResponseI.processStringResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND),
-				() -> ResponseEntity.ok().body(notificationService.getByRecipient(existingUser)));
+				() -> ResponseEntity.ok().body(notificationService.getNotifications(id)));
 		return response;
 	}
 
@@ -163,8 +159,7 @@ public class NotificationController {
 		boolean exist = notificationService.existById(id);
 		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND), () -> {
-					Notification aux = notificationService.DtoToNotification(request);
-					notificationService.patch(id, aux);
+					notificationService.patch(id, request);
 					return ResponseEntity.ok().body("Notification updated successfully.");
 				});
 		return response;

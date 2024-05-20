@@ -3,6 +3,7 @@ package com.fitconnet.service.interfaces.entity;
 import java.util.List;
 
 import com.fitconnet.dto.entities.CommentDTO;
+import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.persitence.model.Comment;
 
 /**
@@ -24,6 +25,14 @@ public interface CommentServiceI {
 	 * @return a list of all comments
 	 */
 	List<CommentDTO> getAll();
+
+	/**
+	 * Retrieves the comments of a user.
+	 * 
+	 * @param user The user.
+	 * @return A list of comments by the specified user.
+	 */
+	List<CommentDTO> getComments(UserDTO user);
 
 	/**
 	 * Checks if a comment exists by its unique identifier.

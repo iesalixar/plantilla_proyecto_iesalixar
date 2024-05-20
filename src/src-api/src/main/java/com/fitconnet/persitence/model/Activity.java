@@ -96,7 +96,7 @@ public class Activity implements Serializable {
 	/**
 	 * The comments of the activity.
 	 */
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "activity")
 	private List<Comment> comments;
 
 }

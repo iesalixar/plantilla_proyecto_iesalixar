@@ -5,17 +5,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.fitconnet.dto.entities.NotificationDTO;
-import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.error.exception.notifications.NotificationCreationException;
 import com.fitconnet.error.exception.notifications.NotificationNotFoundException;
 import com.fitconnet.error.exception.user.UserNotFoundException;
 import com.fitconnet.persitence.model.Notification;
+import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.NotificationRepository;
+import com.fitconnet.persitence.repository.UserRepository;
 import com.fitconnet.service.interfaces.entity.NotificationServiceI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
@@ -27,7 +29,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class NotificationServiceImpl implements NotificationServiceI {
 	private final NotificationRepository notificationRepository;
+	@Lazy
 	private final UserServiceI userService;
+	private final UserRepository userRepository;
 
 	@Override
 	public List<NotificationDTO> getAll() {
@@ -42,13 +46,10 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	}
 
 	@Override
-	public List<NotificationDTO> getByRecipient(UserDTO user) {
-		List<NotificationDTO> notifications = notificationRepository.findByRecipient(userService.userDTOtoUser(user))
-				.stream().map(this::notificationToNotificationDTO).toList();
-		if (notifications.isEmpty()) {
-			throw new NotificationNotFoundException(Constants.NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND);
-		}
-		return notifications;
+	public List<NotificationDTO> getNotifications(Long userId) {
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+		return user.getNotifications().stream().map(this::notificationToNotificationDTO).toList();
 	}
 
 	@Override

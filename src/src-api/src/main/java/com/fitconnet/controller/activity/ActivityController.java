@@ -22,11 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.fitconnet.dto.requets.GeneralActivity;
+import com.fitconnet.dto.entities.ActivityDTO;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.error.GlobalExceptionHandler;
-import com.fitconnet.persitence.model.Activity;
-import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
@@ -87,15 +85,13 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	@Operation(summary = "Create Activity", description = "Registers a new activity in the system.")
 	@ApiResponse(responseCode = "200", description = "Activity created successfully")
-	public ResponseEntity<String> createActivity(@RequestBody GeneralActivity request) {
+	public ResponseEntity<String> createActivity(@RequestBody ActivityDTO request) {
 		logger.info("ActivityController :: createActivity");
 		ResponseEntity<String> response = null;
-		boolean activityExist = activityService.existByDate(request.getActivity().getDate());
-		User user = userService.getById(request.getUserId());
-		response = processingResponseI.processStringDualUserResponse(activityExist, user,
+		boolean activityExist = activityService.existByDate(request.getDate());
+		response = processingResponseI.processStringResponse(activityExist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
-					Activity newActivity = activityService.activityDTOtoActivity(request.getActivity(), user);
-					activityService.create(newActivity);
+					activityService.create(request);
 					return ResponseEntity.ok().body("Activity created successfully.");
 				});
 		return response;
@@ -115,9 +111,9 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Get All Activities", description = "Retrieves all activities registered in the system.")
 	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
-	public ResponseEntity<List<Activity>> getActivities() {
+	public ResponseEntity<List<ActivityDTO>> getActivities() {
 		logger.info("ActivityController :: getActivities");
-		List<Activity> activities = activityService.getAll();
+		List<ActivityDTO> activities = activityService.getAll();
 		return ResponseEntity.ok().body(activities);
 	}
 
@@ -136,10 +132,10 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Get Activity by ID", description = "Retrieves an activity by its ID.")
 	@ApiResponse(responseCode = "200", description = "Activity retrieved successfully")
-	public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
+	public ResponseEntity<ActivityDTO> getActivityById(@PathVariable Long id) {
 		logger.info("ActivityController :: getActivityById");
-		ResponseEntity<Activity> response = null;
-		Activity existingActivity = activityService.getOne(id);
+		ResponseEntity<ActivityDTO> response = null;
+		ActivityDTO existingActivity = activityService.getOne(id);
 		response = processingResponseI.processActivityResponse(existingActivity,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
 				() -> ResponseEntity.ok().body(existingActivity));
@@ -161,13 +157,13 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Get Activities by User ID", description = "Retrieves activities associated with a specific user.")
 	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
-	public ResponseEntity<List<Activity>> getActivitiesByUserId(@PathVariable Long userId) {
+	public ResponseEntity<List<ActivityDTO>> getActivitiesByUserId(@PathVariable Long userId) {
 		logger.info("ActivityController :: getActivities");
-		ResponseEntity<List<Activity>> response = null;
+		ResponseEntity<List<ActivityDTO>> response = null;
 		boolean existingUser = userService.existById(userId);
 		response = processingResponseI.processStringResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
-				() -> ResponseEntity.ok().body(userService.getAllActivities(userId)));
+				() -> ResponseEntity.ok().body(activityService.getAllActivities(userId)));
 		return response;
 	}
 
@@ -187,13 +183,13 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	@Operation(summary = "Get Created Activities", description = "Retrieves a set of activities created by the user.")
 	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
-	public ResponseEntity<List<Activity>> getCreatedActivities(@PathVariable Long userId) {
+	public ResponseEntity<List<ActivityDTO>> getCreatedActivities(@PathVariable Long userId) {
 		logger.info("ActivityController :: getCreatedActivities");
-		ResponseEntity<List<Activity>> response = null;
+		ResponseEntity<List<ActivityDTO>> response = null;
 		boolean existingUser = userService.existById(userId);
 		response = processingResponseI.processStringResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
-				() -> ResponseEntity.ok().body(userService.getCreatedActivities(userId)));
+				() -> ResponseEntity.ok().body(activityService.getCreatedActivities(userId)));
 		return response;
 	}
 
@@ -213,14 +209,14 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	@Operation(summary = "Get Participated Activities", description = "Retrieves a set of activities in which the user has participated.")
 	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
-	public ResponseEntity<List<Activity>> getInvitedActivities(@PathVariable Long userId) {
+	public ResponseEntity<List<ActivityDTO>> getInvitedActivities(@PathVariable Long userId) {
 		logger.info("ActivityController :: getInvitedActivities");
-		ResponseEntity<List<Activity>> response = null;
+		ResponseEntity<List<ActivityDTO>> response = null;
 		boolean existingUser = userService.existById(userId);
 
 		response = processingResponseI.processStringResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
-				() -> ResponseEntity.ok().body(userService.getInvitedActivities(userId)));
+				() -> ResponseEntity.ok().body(activityService.getInvitedActivities(userId)));
 		return response;
 	}
 
@@ -240,15 +236,13 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	@Operation(summary = "Update Activity by Replacement", description = "Replaces an existing activity with another.")
 	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
-	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody GeneralActivity request) {
+	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody ActivityDTO request) {
 		logger.info("ActivityController :: updateActivity");
 		ResponseEntity<String> response = null;
-		boolean activityExist = activityService.existByDate(request.getActivity().getDate());
-		User user = userService.getById(request.getUserId());
-		response = processingResponseI.processStringDualUserResponse(activityExist, user,
+		boolean activityExist = activityService.existByDate(request.getDate());
+		response = processingResponseI.processStringResponse(activityExist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
-					Activity newActivity = activityService.activityDTOtoActivity(request.getActivity(), user);
-					activityService.update(newActivity.getId(), newActivity);
+					activityService.update(id, request);
 					return ResponseEntity.ok().body("Activity updated successfully.");
 				});
 		return response;
@@ -270,15 +264,13 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	@Operation(summary = "Partial Update of an Activity", description = "Updates some of the attributes of an activity.")
 	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
-	public ResponseEntity<String> patchActivity(@PathVariable Long id, @RequestBody GeneralActivity request) {
+	public ResponseEntity<String> patchActivity(@PathVariable Long id, @RequestBody ActivityDTO request) {
 		logger.info("ActivityController :: patchActivity");
 		ResponseEntity<String> response = null;
-		boolean activityExist = activityService.existByDate(request.getActivity().getDate());
-		User user = userService.getById(request.getUserId());
-		response = processingResponseI.processStringDualUserResponse(activityExist, user,
+		boolean activityExist = activityService.existByDate(request.getDate());
+		response = processingResponseI.processStringResponse(activityExist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
-					Activity newActivity = activityService.activityDTOtoActivity(request.getActivity(), user);
-					activityService.patch(newActivity.getId(), newActivity);
+					activityService.patch(id, request);
 					return ResponseEntity.ok().body("Activity updated successfully.");
 				});
 		return response;

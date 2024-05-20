@@ -6,17 +6,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.fitconnet.dto.entities.ActivityDTO;
 import com.fitconnet.dto.entities.ImageDTO;
-import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.error.exception.activity.ActivityNotFoundException;
+import com.fitconnet.error.exception.user.UserNotFoundException;
 import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.persitence.model.ActivityImg;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.ActivityRepository;
+import com.fitconnet.persitence.repository.UserRepository;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.service.interfaces.entity.ImageServiceI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
@@ -30,7 +32,10 @@ import lombok.AllArgsConstructor;
 public class ActivityServiceImpl implements ActivityServiceI {
 
 	private final ActivityRepository activityRepository;
+
+	@Lazy
 	private final UserServiceI userService;
+	private final UserRepository userRepository;
 	private final ImageServiceI imageService;
 
 	@Override
@@ -99,7 +104,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		activity.setDate(activityDTO.getDate());
 		activity.setLikes(activityDTO.getLikes());
 		activity.setCreator(userService.userDTOtoUser(activityDTO.getCreator()));
-		activity.setParticipants(participantsDTOtoParticipants(activityDTO.getParticipants()));
+		activity.setParticipants(userService.participantsDTOtoParticipants(activityDTO.getParticipants()));
 		ActivityImg activityImg = imageService.imageDTOToActivityImg(activityDTO.getActivityImg(), activity);
 		activity.setImage(activityImg);
 		return activity;
@@ -112,7 +117,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		dto.setCreator(userService.userToUserDTO(activity.getCreator()));
 		dto.setDate(activity.getDate());
 		dto.setDuration(activity.getDuration());
-		dto.setParticipants(participantstoParticipantsDTO(activity.getParticipants()));
+		dto.setParticipants(userService.participantstoParticipantsDTO(activity.getParticipants()));
 		dto.setPlace(activity.getPlace());
 		dto.setType(activity.getType());
 		dto.setLikes(activity.getLikes());
@@ -122,29 +127,29 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	}
 
 	@Override
-	public List<User> participantsDTOtoParticipants(List<UserDTO> partipantsDTO) {
-
-		List<User> participats = new ArrayList<>();
-
-		for (UserDTO dto : partipantsDTO) {
-
-			userService.userDTOtoUser(dto);
-		}
-
-		return participats;
+	public List<ActivityDTO> getCreatedActivities(Long id) {
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+		return user.getCreatedActivities().stream().map(activity -> activityToActivityDTO(activity)).toList();
 	}
 
 	@Override
-	public List<UserDTO> participantstoParticipantsDTO(List<User> partipants) {
+	public List<ActivityDTO> getInvitedActivities(Long id) {
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+		return user.getInvitedActivities().stream().map(activity -> activityToActivityDTO(activity)).toList();
+	}
 
-		List<UserDTO> partipantsDTO = new ArrayList<>();
+	@Override
+	public List<ActivityDTO> getAllActivities(Long id) {
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
 
-		for (User user : partipants) {
+		List<Activity> allActivities = new ArrayList<>();
+		allActivities.addAll(user.getCreatedActivities());
+		allActivities.addAll(user.getInvitedActivities());
 
-			userService.userToUserDTO(user);
-		}
-
-		return partipantsDTO;
+		return allActivities.stream().map(this::activityToActivityDTO).toList();
 	}
 
 	private <T> void updateFieldIfDifferent(Activity activity, T newValue, String fieldName, Consumer<T> setter) {

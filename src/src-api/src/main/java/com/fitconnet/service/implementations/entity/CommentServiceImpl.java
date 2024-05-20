@@ -2,9 +2,11 @@ package com.fitconnet.service.implementations.entity;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.fitconnet.dto.entities.CommentDTO;
+import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.persitence.model.Comment;
 import com.fitconnet.persitence.repository.CommentRepository;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
@@ -18,12 +20,18 @@ import lombok.AllArgsConstructor;
 public class CommentServiceImpl implements CommentServiceI {
 
 	private final CommentRepository commentRepo;
+	@Lazy
 	private final UserServiceI userService;
 	private final ActivityServiceI activityService;
 
 	@Override
 	public CommentDTO getById(Long id) {
 		return commentToCommentDTO(commentRepo.findById(id).get());
+	}
+
+	@Override
+	public List<CommentDTO> getComments(UserDTO user) {
+		return user.getComments();
 	}
 
 	@Override

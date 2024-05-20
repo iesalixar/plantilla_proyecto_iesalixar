@@ -25,7 +25,6 @@ import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.enums.Role;
 import com.fitconnet.error.GlobalExceptionHandler;
-import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.implementations.security.AuthenticationServiceImpl;
 import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
@@ -86,7 +85,7 @@ public class UserController {
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The user already exists"), () -> {
 					Role role = Role.ROLE_USER;
 					authenticationServiceImpl.createUser(user, role);
-					return ResponseEntity.ok().body("User: " + user.getUserName() + ", created successfully.");
+					return ResponseEntity.ok().body("User: " + user.getUsername() + ", created successfully.");
 				});
 	}
 
@@ -113,7 +112,7 @@ public class UserController {
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The user already exists"), () -> {
 					Role role = Role.ROLE_ADMIN;
 					authenticationServiceImpl.createUser(user, role);
-					return ResponseEntity.ok().body("User: " + user.getUserName() + ", created successfully.");
+					return ResponseEntity.ok().body("User: " + user.getUsername() + ", created successfully.");
 				});
 	}
 
@@ -131,9 +130,9 @@ public class UserController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Show Users", description = "Retrieves all users registered in the system.")
 	@ApiResponse(responseCode = "200", description = "Users retrieved successfully")
-	public ResponseEntity<List<User>> showUsers() {
+	public ResponseEntity<List<UserDTO>> showUsers() {
 		logger.info("## UserController :: showUsers");
-		List<User> userList = userService.getAll();
+		List<UserDTO> userList = userService.getAll();
 		return ResponseEntity.ok().body(userList);
 	}
 
@@ -152,14 +151,13 @@ public class UserController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	@Operation(summary = "Get User by ID", description = "Retrieves a user by ID.")
 	@ApiResponse(responseCode = "200", description = "User retrieved successfully")
-	public ResponseEntity<User> getUser(@PathVariable Long id) {
+	public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
 		logger.info("UserController :: getUser");
-		ResponseEntity<User> response = null;
-		User user = userService.getById(id);
-		User existingUser = user;
-		response = processingResponseI.processUserResponse(existingUser,
+		ResponseEntity<UserDTO> response = null;
+		UserDTO user = userService.getById(id);
+		response = processingResponseI.processUserResponse(user,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
-				() -> ResponseEntity.ok().body(existingUser));
+				() -> ResponseEntity.ok().body(user));
 		return response;
 	}
 
@@ -178,14 +176,13 @@ public class UserController {
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	@Operation(summary = "Get Friends by User ID", description = "Retrieves friends of a user by ID.")
 	@ApiResponse(responseCode = "200", description = "Friends retrieved successfully")
-	public ResponseEntity<List<User>> getFriends(@PathVariable Long id) {
+	public ResponseEntity<List<UserDTO>> getFriends(@PathVariable Long id) {
 		logger.info("UserController :: getFriends");
-		ResponseEntity<List<User>> response = null;
-		User user = userService.getById(id);
-		User existingUser = user;
-		response = processingResponseI.processUserResponse(existingUser,
+		ResponseEntity<List<UserDTO>> response = null;
+		UserDTO user = userService.getById(id);
+		response = processingResponseI.processUserResponse(user,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
-				() -> ResponseEntity.ok().body(existingUser.getFriends()));
+				() -> ResponseEntity.ok().body(user.getFriends()));
 		return response;
 	}
 
@@ -205,7 +202,7 @@ public class UserController {
 	@PreAuthorize("hasAuthority('ROLE_USER') and #id == authentication.principal.id")
 	@Operation(summary = "Update User", description = "Updates an existing user with new information.")
 	@ApiResponse(responseCode = "200", description = "User updated successfully")
-	public ResponseEntity<String> patchUser(@PathVariable Long id, @RequestBody User user) {
+	public ResponseEntity<String> patchUser(@PathVariable Long id, @RequestBody UserDTO user) {
 		logger.info("UserController :: patchUser");
 		ResponseEntity<String> response = null;
 		Boolean exist = userService.existById(id);

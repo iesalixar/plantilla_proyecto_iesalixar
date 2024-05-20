@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,9 +28,9 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.fitconnet.dto.entities.ImageDTO;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.error.GlobalExceptionHandler;
-import com.fitconnet.persitence.model.Image;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.service.interfaces.entity.ImageServiceI;
 import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
@@ -78,45 +77,41 @@ public class ImageController {
 	 * Logger instance for AdminController class.
 	 */
 	private final Logger logger = LoggerFactory.getLogger(ImageController.class);
-
-	/**
-	 * Creates a new image.
-	 *
-	 * @param file The image file to upload.
-	 * @return ResponseEntity<String> The response entity indicating the success or
-	 *         failure of the creation operation.
-	 * @throws SerialException If a database access error occurs.
-	 * @throws SQLException    If a database access error occurs.
-	 * @throws IOException     If an I/O error occurs.
-	 */
-	@PostMapping
-	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	@Operation(summary = "Create Image", description = "Uploads a new image.")
-	@ApiResponse(responseCode = "200", description = "Image uploaded successfully")
-	public ResponseEntity<String> createActivityImage(
-			@Parameter(description = "Image file to upload", required = true) @RequestParam("image") MultipartFile file,
-			@Parameter(description = "ID associated with the activity", required = true) @RequestParam("activityId") Long activityId)
-			throws SerialException, SQLException, IOException {
-		logger.info("ImageController :: createImage");
-		ResponseEntity<String> response = null;
-		Boolean exist = activityService.existById(activityId);
-		if (!exist) {
-			response = ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.IMAGE_NOT_FOUND);
-		} else {
-			// Get image info
-			byte[] bytes = file.getBytes();
-			// Casting to datatype to be store
-			Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-			// Create a new image and setting valeues
-			Image image = new Image();
-			image.setImage(blob);
-			imageService.create(image);
-
-			response = ResponseEntity.ok().body("Image uploaded successfully");
-		}
-		return response;
-
-	}
+//
+//	/**
+//	 * Creates a new image.
+//	 *
+//	 * @param file The image file to upload.
+//	 * @return ResponseEntity<String> The response entity indicating the success or
+//	 *         failure of the creation operation.
+//	 * @throws SerialException If a database access error occurs.
+//	 * @throws SQLException    If a database access error occurs.
+//	 * @throws IOException     If an I/O error occurs.
+//	 */
+//	@PostMapping
+//	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+//	@Operation(summary = "Create Image", description = "Uploads a new image.")
+//	@ApiResponse(responseCode = "200", description = "Image uploaded successfully")
+//	public ResponseEntity<String> createActivityImage(
+//			@Parameter(description = "Image file to upload", required = true) @RequestParam("image") MultipartFile file,
+//			@Parameter(description = "ID associated with the activity", required = true) @RequestParam("activityId") Long activityId)
+//			throws SerialException, SQLException, IOException {
+//		logger.info("ImageController :: createImage");
+//		ResponseEntity<String> response = null;
+//		boolean exist = activityService.existById(activityId);
+//		if (!exist) {
+//			response = ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.IMAGE_NOT_FOUND);
+//		} else {
+//			byte[] bytes = file.getBytes();
+//			Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
+//			ActivityImg image = new ActivityImg();
+//			image.setImage(blob);
+//			imageService.create(image);
+//			response = ResponseEntity.ok().body("Image uploaded successfully");
+//		}
+//		return response;
+//
+//	}
 
 	/**
 	 * Retrieves all images.
@@ -131,9 +126,9 @@ public class ImageController {
 	@ApiResponse(responseCode = "200", description = "Images retrieved successfully")
 	public ResponseEntity<List<byte[]>> showImages() throws SQLException {
 		logger.info("ImageController :: getAllImages");
-		List<Image> images = imageService.getAll();
+		List<ImageDTO> images = imageService.getAll();
 		List<byte[]> imageBytesList = new ArrayList<>();
-		for (Image image : images) {
+		for (ImageDTO image : images) {
 			byte[] imageBytes = image.getImage().getBytes(1, (int) image.getImage().length());
 			imageBytesList.add(imageBytes);
 		}
@@ -155,7 +150,7 @@ public class ImageController {
 			@Parameter(description = "ID of the image to retrieve", required = true) @PathVariable Long id)
 			throws SQLException {
 		logger.info("ImageController :: getImageById");
-		Image image = imageService.getById(id);
+		ImageDTO image = imageService.getById(id);
 		byte[] imageBytes = image.getImage().getBytes(1, (int) image.getImage().length());
 		return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
 	}
@@ -205,8 +200,8 @@ public class ImageController {
 			throws IOException, SerialException, SQLException {
 		logger.info("ImageController :: updateImage");
 		ResponseEntity<String> response = null;
-		Boolean exist = imageService.existById(id);
-		Image newImage = new Image();
+		boolean exist = imageService.existById(id);
+		ImageDTO newImage = new ImageDTO();
 		byte[] bytes = file.getBytes();
 		Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
 		newImage.setImage(blob);
