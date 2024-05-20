@@ -1,7 +1,6 @@
 package com.fitconnet.controller.notification;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +84,7 @@ public class NotificationController {
 	public ResponseEntity<String> createNotification(@RequestBody NotificationDTO request) {
 		logger.info("NotificationController :: createNotification");
 		ResponseEntity<String> response = null;
-		Boolean exist = notificationService.existByDate(request.getDate());
+		boolean exist = notificationService.existByDate(request.getDate());
 		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The notification already exists"), () -> {
 					Notification newNotification = notificationService.DtoToNotification(request);
@@ -109,9 +108,9 @@ public class NotificationController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Get All Notifications", description = "Retrieves all notifications registered in the system.")
 	@ApiResponse(responseCode = "200", description = "Notifications retrieved successfully")
-	public ResponseEntity<Optional<Set<Notification>>> getNotifications() {
+	public ResponseEntity<List<Notification>> getNotifications() {
 		logger.info("## NotificationController :: getNotifications");
-		Optional<Set<Notification>> notifications = notificationService.getAll();
+		List<Notification> notifications = notificationService.getAll();
 		return ResponseEntity.ok().body(notifications);
 	}
 
@@ -130,12 +129,12 @@ public class NotificationController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	@Operation(summary = "Get Notifications by User ID", description = "Retrieves notifications associated with a specific user.")
 	@ApiResponse(responseCode = "200", description = "Notifications retrieved successfully")
-	public ResponseEntity<Optional<Set<Notification>>> getNotificationsByUserId(@PathVariable Long id) {
+	public ResponseEntity<List<Notification>> getNotificationsByUserId(@PathVariable Long id) {
 		logger.info("NotificationController :: getNotificationsByUserId");
-		ResponseEntity<Optional<Set<Notification>>> response = null;
+		ResponseEntity<List<Notification>> response = null;
 		User user = userService.getById(id);
-		Optional<User> existingUser = Optional.of(user);
-		response = processingResponseI.processOptionalResponse(existingUser,
+		User existingUser = user;
+		response = processingResponseI.processUserResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND),
 				() -> ResponseEntity.ok().body(notificationService.getByRecipient(existingUser)));
 		return response;
@@ -161,7 +160,7 @@ public class NotificationController {
 	public ResponseEntity<String> patchNotification(@PathVariable Long id, @RequestBody NotificationDTO request) {
 		logger.info("NotificationController :: patchNotification");
 		ResponseEntity<String> response = null;
-		Boolean exist = notificationService.existById(id);
+		boolean exist = notificationService.existById(id);
 		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND), () -> {
 					Notification aux = notificationService.DtoToNotification(request);
@@ -189,7 +188,7 @@ public class NotificationController {
 	public ResponseEntity<String> deleteNotification(@PathVariable Long id) {
 		logger.info("ActivityController :: deleteNotification");
 		ResponseEntity<String> response = null;
-		Boolean exist = notificationService.existById(id);
+		boolean exist = notificationService.existById(id);
 		response = processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND), () -> {
 					notificationService.delete(id);

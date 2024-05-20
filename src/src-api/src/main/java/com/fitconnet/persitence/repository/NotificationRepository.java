@@ -1,8 +1,7 @@
 package com.fitconnet.persitence.repository;
 
 import java.util.Date;
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,7 +25,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 	 *         specified user.
 	 */
 	@Query("SELECT n FROM Notification n WHERE n.receiver = ?1")
-	Optional<Set<Notification>> findByRecipient(Optional<User> user);
+	List<Notification> findByRecipient(User user);
 
 	/**
 	 * Checks if a notification exists for a given date.

@@ -1,8 +1,7 @@
 package com.fitconnet.service.interfaces.entity;
 
 import java.util.Date;
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 import com.fitconnet.dto.entities.ActivityDTO;
 import com.fitconnet.dto.entities.UserDTO;
@@ -19,7 +18,7 @@ public interface ActivityServiceI {
 	 *
 	 * @return An optional containing a set of all activities, if any.
 	 */
-	Optional<Set<Activity>> getAll();
+	List<Activity> getAll();
 
 	/**
 	 * Retrieves an activity by its ID.
@@ -70,7 +69,7 @@ public interface ActivityServiceI {
 	 * @return The set of participant entities corresponding to the participant
 	 *         DTOs.
 	 */
-	Set<User> participantsDTOtoParticipants(Set<UserDTO> participantsDTO);
+	List<User> participantsDTOtoParticipants(List<UserDTO> participantsDTO);
 
 	/**
 	 * Converts participant entities to participant DTOs.
@@ -79,7 +78,7 @@ public interface ActivityServiceI {
 	 * @return The set of participant DTOs corresponding to the participant
 	 *         entities.
 	 */
-	Set<UserDTO> participantstoParticipantsDTO(Set<User> participants);
+	List<UserDTO> participantstoParticipantsDTO(List<User> participants);
 
 	/**
 	 * Creates a new activity.

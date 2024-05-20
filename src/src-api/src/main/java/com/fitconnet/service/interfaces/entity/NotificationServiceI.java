@@ -1,8 +1,7 @@
 package com.fitconnet.service.interfaces.entity;
 
 import java.util.Date;
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 import com.fitconnet.dto.entities.NotificationDTO;
 import com.fitconnet.persitence.model.Notification;
@@ -18,7 +17,7 @@ public interface NotificationServiceI {
 	 *
 	 * @return An optional containing a set of all notifications, if any.
 	 */
-	Optional<Set<Notification>> getAll();
+	List<Notification> getAll();
 
 	/**
 	 * Retrieves notifications by recipient.
@@ -28,7 +27,7 @@ public interface NotificationServiceI {
 	 * @return An optional containing a set of notifications received by the
 	 *         specified user.
 	 */
-	Optional<Set<Notification>> getByRecipient(Optional<User> user);
+	List<Notification> getByRecipient(User user);
 
 	/**
 	 * Retrieves a notification by its ID.
@@ -37,7 +36,7 @@ public interface NotificationServiceI {
 	 * @return An optional containing the notification with the specified ID, if
 	 *         found.
 	 */
-	Optional<Notification> getById(Long id);
+	Notification getById(Long id);
 
 	Notification DtoToNotification(NotificationDTO dto);
 

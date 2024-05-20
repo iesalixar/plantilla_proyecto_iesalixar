@@ -1,7 +1,6 @@
 package com.fitconnet.controller.activity;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,7 +90,7 @@ public class ActivityController {
 	public ResponseEntity<String> createActivity(@RequestBody GeneralActivity request) {
 		logger.info("ActivityController :: createActivity");
 		ResponseEntity<String> response = null;
-		Boolean activityExist = activityService.existByDate(request.getActivity().getDate());
+		boolean activityExist = activityService.existByDate(request.getActivity().getDate());
 		User user = userService.getById(request.getUserId());
 		response = processingResponseI.processStringDualUserResponse(activityExist, user,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
@@ -116,9 +115,9 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Get All Activities", description = "Retrieves all activities registered in the system.")
 	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
-	public ResponseEntity<Optional<Set<Activity>>> getActivities() {
+	public ResponseEntity<List<Activity>> getActivities() {
 		logger.info("ActivityController :: getActivities");
-		Optional<Set<Activity>> activities = activityService.getAll();
+		List<Activity> activities = activityService.getAll();
 		return ResponseEntity.ok().body(activities);
 	}
 
@@ -162,11 +161,11 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Get Activities by User ID", description = "Retrieves activities associated with a specific user.")
 	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
-	public ResponseEntity<Optional<Set<Activity>>> getActivitiesByUserId(@PathVariable Long userId) {
+	public ResponseEntity<List<Activity>> getActivitiesByUserId(@PathVariable Long userId) {
 		logger.info("ActivityController :: getActivities");
-		ResponseEntity<Optional<Set<Activity>>> response = null;
-		Boolean existingUser = userService.existById(userId);
-		response = processingResponseI.processOptionalBooleanResponse(existingUser,
+		ResponseEntity<List<Activity>> response = null;
+		boolean existingUser = userService.existById(userId);
+		response = processingResponseI.processStringResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
 				() -> ResponseEntity.ok().body(userService.getAllActivities(userId)));
 		return response;
@@ -188,11 +187,11 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	@Operation(summary = "Get Created Activities", description = "Retrieves a set of activities created by the user.")
 	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
-	public ResponseEntity<Optional<Set<Activity>>> getCreatedActivities(@PathVariable Long userId) {
+	public ResponseEntity<List<Activity>> getCreatedActivities(@PathVariable Long userId) {
 		logger.info("ActivityController :: getCreatedActivities");
-		ResponseEntity<Optional<Set<Activity>>> response = null;
-		Boolean existingUser = userService.existById(userId);
-		response = processingResponseI.processOptionalBooleanResponse(existingUser,
+		ResponseEntity<List<Activity>> response = null;
+		boolean existingUser = userService.existById(userId);
+		response = processingResponseI.processStringResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
 				() -> ResponseEntity.ok().body(userService.getCreatedActivities(userId)));
 		return response;
@@ -214,11 +213,12 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	@Operation(summary = "Get Participated Activities", description = "Retrieves a set of activities in which the user has participated.")
 	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
-	public ResponseEntity<Optional<Set<Activity>>> getInvitedActivities(@PathVariable Long userId) {
+	public ResponseEntity<List<Activity>> getInvitedActivities(@PathVariable Long userId) {
 		logger.info("ActivityController :: getInvitedActivities");
-		ResponseEntity<Optional<Set<Activity>>> response = null;
-		Boolean existingUser = userService.existById(userId);
-		response = processingResponseI.processOptionalBooleanResponse(existingUser,
+		ResponseEntity<List<Activity>> response = null;
+		boolean existingUser = userService.existById(userId);
+
+		response = processingResponseI.processStringResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
 				() -> ResponseEntity.ok().body(userService.getInvitedActivities(userId)));
 		return response;
@@ -243,7 +243,7 @@ public class ActivityController {
 	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody GeneralActivity request) {
 		logger.info("ActivityController :: updateActivity");
 		ResponseEntity<String> response = null;
-		Boolean activityExist = activityService.existByDate(request.getActivity().getDate());
+		boolean activityExist = activityService.existByDate(request.getActivity().getDate());
 		User user = userService.getById(request.getUserId());
 		response = processingResponseI.processStringDualUserResponse(activityExist, user,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
@@ -273,7 +273,7 @@ public class ActivityController {
 	public ResponseEntity<String> patchActivity(@PathVariable Long id, @RequestBody GeneralActivity request) {
 		logger.info("ActivityController :: patchActivity");
 		ResponseEntity<String> response = null;
-		Boolean activityExist = activityService.existByDate(request.getActivity().getDate());
+		boolean activityExist = activityService.existByDate(request.getActivity().getDate());
 		User user = userService.getById(request.getUserId());
 		response = processingResponseI.processStringDualUserResponse(activityExist, user,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {

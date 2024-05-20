@@ -2,7 +2,7 @@ package com.fitconnet.dto.entities;
 
 import java.time.Duration;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import lombok.Data;
 
@@ -37,7 +37,12 @@ public class ActivityDTO {
 	private UserDTO creator;
 
 	/**
+	 * The image of the activity.
+	 */
+	private ImageDTO activityImg;
+
+	/**
 	 * The participants of the activity.
 	 */
-	private Set<UserDTO> participants;
+	private List<UserDTO> participants;
 }

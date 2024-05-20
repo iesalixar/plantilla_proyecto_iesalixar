@@ -1,6 +1,5 @@
 package com.fitconnet.service.implementations.entity;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.springframework.http.ResponseEntity;
@@ -8,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.fitconnet.persitence.model.Activity;
 import com.fitconnet.persitence.model.Comment;
+import com.fitconnet.persitence.model.Notification;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 
@@ -15,10 +15,10 @@ import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 public class ProcessingResponseImpl implements ProcessingResponseI {
 
 	@Override
-	public <T> ResponseEntity<T> processEntityResponse(Optional<?> entity, Supplier<ResponseEntity> conflictSupplier,
+	public <T> ResponseEntity<T> processUserResponse(User entity, Supplier<ResponseEntity> conflictSupplier,
 			Supplier<ResponseEntity<T>> successSupplier) {
 		ResponseEntity<T> outcome;
-		if (!entity.isPresent()) {
+		if (entity == null) {
 			outcome = conflictSupplier.get();
 		} else {
 			outcome = successSupplier.get();
@@ -27,10 +27,10 @@ public class ProcessingResponseImpl implements ProcessingResponseI {
 	}
 
 	@Override
-	public <T> ResponseEntity<Optional<T>> processOptionalResponse(Optional<?> entity,
-			Supplier<ResponseEntity> conflictSupplier, Supplier<ResponseEntity<Optional<T>>> successSupplier) {
-		ResponseEntity<Optional<T>> outcome;
-		if (!entity.isPresent()) {
+	public <T> ResponseEntity<T> processNotificationResponse(Notification entity,
+			Supplier<ResponseEntity> conflictSupplier, Supplier<ResponseEntity<T>> successSupplier) {
+		ResponseEntity<T> outcome;
+		if (entity == null) {
 			outcome = conflictSupplier.get();
 		} else {
 			outcome = successSupplier.get();
@@ -39,59 +39,21 @@ public class ProcessingResponseImpl implements ProcessingResponseI {
 	}
 
 	@Override
-	public <T> ResponseEntity<T> processStringResponse(Boolean condition, Supplier<ResponseEntity> conflictSupplier,
+	public <T> ResponseEntity<T> processStringResponse(boolean condition, Supplier<ResponseEntity> conflictSupplier,
 			Supplier<ResponseEntity<T>> successSupplier) {
 		ResponseEntity<T> outcome;
-		if (condition.booleanValue()) {
-			outcome = conflictSupplier.get();
-		} else {
-			outcome = successSupplier.get();
-		}
-		return outcome;
-	}
-
-	@Override
-	public <T> ResponseEntity<Optional<T>> processOptionalBooleanResponse(Boolean condition,
-			Supplier<ResponseEntity> conflictSupplier, Supplier<ResponseEntity<Optional<T>>> successSupplier) {
-		ResponseEntity<Optional<T>> outcome;
 		if (!condition) {
-			outcome = successSupplier.get();
-		} else {
 			outcome = conflictSupplier.get();
+		} else {
+			outcome = successSupplier.get();
 		}
 		return outcome;
 	}
 
 	@Override
-	public <T> ResponseEntity<T> procesDualStringResponse(Boolean condition, Optional<?> entity,
-			Supplier<ResponseEntity> conflictSupplier, Supplier<ResponseEntity<T>> successSupplier) {
+	public <T> ResponseEntity<T> processCommentResponse(Comment entity, Supplier<ResponseEntity> conflictSupplier,
+			Supplier<ResponseEntity<T>> successSupplier) {
 		ResponseEntity<T> outcome;
-		if (!condition) {
-			outcome = successSupplier.get();
-		} else {
-			outcome = conflictSupplier.get();
-		}
-		return outcome;
-	}
-
-	@Override
-	public <T> ResponseEntity<T> processStringDualUserResponse(Boolean condition, User entity,
-			Supplier<ResponseEntity> conflictSupplier, Supplier<ResponseEntity<T>> successSupplier) {
-		ResponseEntity<T> outcome;
-		if (!condition) {
-			outcome = successSupplier.get();
-		} else {
-			outcome = conflictSupplier.get();
-		}
-		return outcome;
-	}
-
-	@Override
-	public <T> ResponseEntity<Optional<T>> processOptionalUserResponse(User entity,
-			Supplier<ResponseEntity> conflictSupplier, Supplier<ResponseEntity<Optional<T>>> successSupplier) {
-
-		ResponseEntity<Optional<T>> outcome;
-
 		if (entity == null) {
 			outcome = conflictSupplier.get();
 		} else {
@@ -111,14 +73,15 @@ public class ProcessingResponseImpl implements ProcessingResponseI {
 		}
 		return outcome;
 	}
+
 	@Override
-	public <T> ResponseEntity<T> processCommentResponse(Comment entity, Supplier<ResponseEntity> conflictSupplier,
-			Supplier<ResponseEntity<T>> successSupplier) {
+	public <T> ResponseEntity<T> processStringDualUserResponse(boolean condition, User entity,
+			Supplier<ResponseEntity> conflictSupplier, Supplier<ResponseEntity<T>> successSupplier) {
 		ResponseEntity<T> outcome;
-		if (entity == null) {
-			outcome = conflictSupplier.get();
-		} else {
+		if (!condition) {
 			outcome = successSupplier.get();
+		} else {
+			outcome = conflictSupplier.get();
 		}
 		return outcome;
 	}

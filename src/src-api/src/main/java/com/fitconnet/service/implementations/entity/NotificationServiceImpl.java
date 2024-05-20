@@ -1,13 +1,9 @@
 package com.fitconnet.service.implementations.entity;
 
 import java.security.InvalidParameterException;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -32,24 +28,20 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	private final NotificationRepository notificationRepository;
 
 	@Override
-	public Optional<Set<Notification>> getAll() {
-		List<Notification> notificationList = notificationRepository.findAll();
-		Set<Notification> sortedNotifications;
-		sortedNotifications = notificationList.stream().sorted(Comparator.comparing(Notification::getDate))
-				.collect(Collectors.toSet());
-		return Optional.of(sortedNotifications);
+	public List<Notification> getAll() {
+
+		return notificationRepository.findAll();
 	}
 
 	@Override
-	public Optional<Notification> getById(Long id) {
-		Notification notification = notificationRepository.findById(id)
+	public Notification getById(Long id) {
+		return notificationRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return Optional.of(notification);
 	}
 
 	@Override
-	public Optional<Set<Notification>> getByRecipient(Optional<User> user) {
-		Optional<Set<Notification>> notifications = notificationRepository.findByRecipient(user);
+	public List<Notification> getByRecipient(User user) {
+		List<Notification> notifications = notificationRepository.findByRecipient(user);
 		if (notifications.isEmpty()) {
 			throw new NotificationNotFoundException(Constants.NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND);
 		}

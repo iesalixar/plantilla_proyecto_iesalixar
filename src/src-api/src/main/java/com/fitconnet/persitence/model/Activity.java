@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -88,7 +87,7 @@ public class Activity implements Serializable {
 	 */
 	@ManyToMany
 	@JoinTable(name = "T_ACTIVITY_PARTICIPANTS", joinColumns = @JoinColumn(name = "C_PK_ACTIVITY_ID"), inverseJoinColumns = @JoinColumn(name = "C_PK_USER_ID"))
-	private Set<User> participants;
+	private List<User> participants;
 	/**
 	 * The comments of the activity.
 	 */

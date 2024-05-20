@@ -1,14 +1,11 @@
 package com.fitconnet.service.implementations.entity;
 
 import java.security.InvalidParameterException;
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -35,12 +32,9 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	private final UserServiceI userService;
 
 	@Override
-	public Optional<Set<Activity>> getAll() {
-		List<Activity> activitiesList = activityRepository.findAll();
-		Set<Activity> sortedActivities;
-		sortedActivities = activitiesList.stream().sorted(Comparator.comparing(Activity::getDate))
-				.collect(Collectors.toSet());
-		return Optional.of(sortedActivities);
+	public List<Activity> getAll() {
+
+		return activityRepository.findAll();
 	}
 
 	@Override
@@ -121,9 +115,9 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	}
 
 	@Override
-	public Set<User> participantsDTOtoParticipants(Set<UserDTO> partipantsDTO) {
+	public List<User> participantsDTOtoParticipants(List<UserDTO> partipantsDTO) {
 		User user = new User();
-		Set<User> participats = new LinkedHashSet<>();
+		List<User> participats = new ArrayList<>();
 
 		for (UserDTO dto : partipantsDTO) {
 			Set<Role> roles = dto.getRoles();
@@ -139,9 +133,9 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	}
 
 	@Override
-	public Set<UserDTO> participantstoParticipantsDTO(Set<User> partipants) {
+	public List<UserDTO> participantstoParticipantsDTO(List<User> partipants) {
 
-		Set<UserDTO> partipantsDTO = new LinkedHashSet<>();
+		List<UserDTO> partipantsDTO = new ArrayList<>();
 		UserDTO dto = new UserDTO();
 
 		for (User user : partipants) {

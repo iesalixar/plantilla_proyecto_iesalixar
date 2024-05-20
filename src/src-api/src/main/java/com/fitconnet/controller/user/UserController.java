@@ -1,7 +1,6 @@
 package com.fitconnet.controller.user;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,15 +81,13 @@ public class UserController {
 	@ApiResponse(responseCode = "200", description = "User created successfully")
 	public ResponseEntity<String> createUser(@RequestBody UserDTO user) {
 		logger.info("UserController :: createUser");
-		ResponseEntity<String> response = null;
-		Boolean exist = userService.existByEmail(user.getEmail());
-		response = processingResponseI.processStringResponse(exist,
+		boolean exist = userService.existByEmail(user.getEmail());
+		return processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The user already exists"), () -> {
 					Role role = Role.ROLE_USER;
 					authenticationServiceImpl.createUser(user, role);
 					return ResponseEntity.ok().body("User: " + user.getUserName() + ", created successfully.");
 				});
-		return response;
 	}
 
 	/**
@@ -111,15 +108,13 @@ public class UserController {
 	@ApiResponse(responseCode = "200", description = "Admin user created successfully")
 	public ResponseEntity<String> createAdmin(@RequestBody UserDTO user) {
 		logger.info("UserController :: createAdmin");
-		ResponseEntity<String> response = null;
 		Boolean exist = userService.existByEmail(user.getEmail());
-		response = processingResponseI.processStringResponse(exist,
+		return processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The user already exists"), () -> {
 					Role role = Role.ROLE_ADMIN;
 					authenticationServiceImpl.createUser(user, role);
 					return ResponseEntity.ok().body("User: " + user.getUserName() + ", created successfully.");
 				});
-		return response;
 	}
 
 	/**
@@ -157,12 +152,12 @@ public class UserController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	@Operation(summary = "Get User by ID", description = "Retrieves a user by ID.")
 	@ApiResponse(responseCode = "200", description = "User retrieved successfully")
-	public ResponseEntity<Optional<User>> getUser(@PathVariable Long id) {
+	public ResponseEntity<User> getUser(@PathVariable Long id) {
 		logger.info("UserController :: getUser");
-		ResponseEntity<Optional<User>> response = null;
+		ResponseEntity<User> response = null;
 		User user = userService.getById(id);
-		Optional<User> existingUser = Optional.of(user);
-		response = processingResponseI.processEntityResponse(existingUser,
+		User existingUser = user;
+		response = processingResponseI.processUserResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
 				() -> ResponseEntity.ok().body(existingUser));
 		return response;
@@ -187,10 +182,10 @@ public class UserController {
 		logger.info("UserController :: getFriends");
 		ResponseEntity<List<User>> response = null;
 		User user = userService.getById(id);
-		Optional<User> existingUser = Optional.of(user);
-		response = processingResponseI.processEntityResponse(existingUser,
+		User existingUser = user;
+		response = processingResponseI.processUserResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
-				() -> ResponseEntity.ok().body(existingUser.get().getFriends()));
+				() -> ResponseEntity.ok().body(existingUser.getFriends()));
 		return response;
 	}
 
