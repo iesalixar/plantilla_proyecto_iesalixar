@@ -32,6 +32,11 @@ public class ActivityDTO {
 	private Date date;
 
 	/**
+	 * The likes of the activity.
+	 */
+	private Integer likes;
+
+	/**
 	 * The creator of the activity.
 	 */
 	private UserDTO creator;

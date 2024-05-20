@@ -70,6 +70,11 @@ public class Activity implements Serializable {
 	@Column(name = "C_DATE", nullable = false)
 	private Date date;
 	/**
+	 * The likes of the activity.
+	 */
+	@Column(name = "C_LIKES", nullable = true)
+	private Integer likes;
+	/**
 	 * The image associated with the activity.
 	 */
 	@OneToOne(cascade = CascadeType.ALL)
