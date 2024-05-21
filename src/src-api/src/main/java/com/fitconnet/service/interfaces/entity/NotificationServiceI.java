@@ -96,12 +96,4 @@ public interface NotificationServiceI {
 	 */
 	void patch(Long id, NotificationDTO notification);
 
-//	/**
-//	 * Sets attributes of a notification from another notification.
-//	 *
-//	 * @param notification    The notification to update.
-//	 * @param newNotification The new notification containing updated attributes.
-//	 */
-//	void setAttributes(NotificationDTO notificationDTO, Notification newNotification);
-
 }

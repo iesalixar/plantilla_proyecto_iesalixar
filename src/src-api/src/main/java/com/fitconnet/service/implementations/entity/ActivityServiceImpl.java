@@ -32,10 +32,9 @@ import lombok.AllArgsConstructor;
 public class ActivityServiceImpl implements ActivityServiceI {
 
 	private final ActivityRepository activityRepository;
-
+	private final UserRepository userRepository;
 	@Lazy
 	private final UserServiceI userService;
-	private final UserRepository userRepository;
 	private final ImageServiceI imageService;
 
 	@Override

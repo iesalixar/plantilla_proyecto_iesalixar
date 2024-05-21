@@ -28,10 +28,11 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class NotificationServiceImpl implements NotificationServiceI {
+
 	private final NotificationRepository notificationRepository;
+	private final UserRepository userRepository;
 	@Lazy
 	private final UserServiceI userService;
-	private final UserRepository userRepository;
 
 	@Override
 	public List<NotificationDTO> getAll() {
@@ -95,14 +96,6 @@ public class NotificationServiceImpl implements NotificationServiceI {
 	public boolean existById(Long id) {
 		return notificationRepository.existsById(id);
 	}
-
-//	@Override
-//	public void setAttributes(NotificationDTO notificationDTO, Notification newNotification) {
-//		newNotification.setDate(notification.getDate());
-//		newNotification.setMessage(notification.getMessage());
-//		newNotification.setReceiver(notification.getReceiver());
-//
-//	}
 
 	@Override
 	public boolean existByDate(Date date) {
