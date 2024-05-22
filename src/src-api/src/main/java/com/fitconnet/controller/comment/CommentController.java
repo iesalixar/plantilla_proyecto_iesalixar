@@ -43,6 +43,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
 public class CommentController {
+
 	/**
 	 * Dependency injection for the CommentServiceI interface.
 	 */

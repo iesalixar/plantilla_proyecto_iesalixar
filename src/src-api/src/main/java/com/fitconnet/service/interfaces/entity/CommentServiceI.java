@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.fitconnet.dto.entities.CommentDTO;
 import com.fitconnet.dto.entities.UserDTO;
-import com.fitconnet.persitence.model.Comment;
 
 /**
  * Interface for the Comment Service.
@@ -64,19 +63,4 @@ public interface CommentServiceI {
 	 */
 	void delete(Long id);
 
-	/**
-	 * Transform a dto into a comment.
-	 *
-	 * @param dto the DTO to transform
-	 * @return the transformed Comment object
-	 */
-	Comment commentDtoToComment(CommentDTO commentDTO);
-
-	/**
-	 * Transform a comment into a dto.
-	 *
-	 * @param comment the Comment object to transform
-	 * @return the transformed CommentDTO object
-	 */
-	CommentDTO commentToCommentDTO(Comment comment);
 }

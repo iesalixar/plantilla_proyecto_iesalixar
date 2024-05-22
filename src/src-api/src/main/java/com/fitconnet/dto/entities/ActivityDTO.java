@@ -44,8 +44,11 @@ public class ActivityDTO {
 	/**
 	 * The image of the activity.
 	 */
-	private ImageDTO activityImg;
-
+	private String image;
+	/**
+	 * The comments of the activity.
+	 */
+	private List<CommentDTO> comments;
 	/**
 	 * The participants of the activity.
 	 */

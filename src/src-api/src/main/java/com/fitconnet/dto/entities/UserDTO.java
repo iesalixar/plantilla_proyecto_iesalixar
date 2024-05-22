@@ -46,7 +46,7 @@ public class UserDTO {
 	/**
 	 * The profile picture of the user.
 	 */
-	private ImageDTO profilePicture;
+	private String image;
 
 	/**
 	 * The roles associated with the user.

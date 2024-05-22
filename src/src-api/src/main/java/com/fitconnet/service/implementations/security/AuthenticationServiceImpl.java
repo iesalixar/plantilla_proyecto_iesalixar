@@ -1,8 +1,5 @@
 package com.fitconnet.service.implementations.security;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.dto.requets.SignUp;
 import com.fitconnet.dto.requets.Signin;
 import com.fitconnet.dto.response.JwtAuthenticationDTO;
@@ -30,9 +26,24 @@ import lombok.Builder;
 @AllArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationServiceI {
 
+	/**
+	 * Repository for user-related operations.
+	 */
 	private final UserRepository userRepository;
-	private final PasswordEncoder passwordEncoder;
+
+	/**
+	 * Service for JWT-related operations.
+	 */
 	private final JwtServiceI jwtService;
+
+	/**
+	 * Password encoder.
+	 */
+	private final PasswordEncoder passwordEncoder;
+
+	/**
+	 * Authentication manager.
+	 */
 	private final AuthenticationManager authenticationManager;
 
 	/**
@@ -63,63 +74,17 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 	@Override
 	public JwtAuthenticationDTO signin(Signin request) {
 
-//		String identifier = request.getIdentifier();
-//		boolean isEmail = identifier.contains("@");
-//		User user = new User();
-
-//		logger.info("AuthenticationServiceImpl - signin - IDENTIFIER: " + identifier);
-
 		Authentication authentication = authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(request.getIdentifier(), request.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//		if (!isEmail) {
-//			user = userRepository.findByUsername(identifier)
-//					.orElseThrow(() -> new IllegalArgumentException("Invalid username or password."));
-//			logger.info("AuthenticationServiceImpl - signin - BUSCANDO POR USER");
-//
-//		} else {
+
 		User user = userRepository.findByEmail(request.getIdentifier())
 				.orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
 
-//		}
-
 		String jwt = jwtService.generateToken(user);
 
 		return JwtAuthenticationDTO.builder().token(jwt).build();
-	}
-
-	@Override
-	public JwtAuthenticationDTO createUser(UserDTO request, Role rol) {
-		boolean emailExists = userRepository.existsByEmail(request.getEmail());
-		if (emailExists) {
-			throw new IllegalArgumentException("Email already in use.");
-		}
-		User user = setAttibutesFromDtoToUser(request, rol);
-
-		userRepository.save(user);
-
-		String jwt = jwtService.generateToken(user);
-		return JwtAuthenticationDTO.builder().token(jwt).build();
-
-	}
-
-	@Override
-	public User setAttibutesFromDtoToUser(UserDTO request, Role rol) {
-		User user = new User();
-		user.setFirstName(request.getFirstName());
-		user.setLastName(request.getLastName());
-		user.setUsername(request.getUsername());
-		user.setEmail(request.getEmail());
-		user.setPassword(passwordEncoder.encode(request.getPassword()));
-		Set<Role> roles = new HashSet<>();
-		if (rol.equals(Role.ROLE_USER)) {
-			roles.add(Role.ROLE_USER);
-		} else {
-			roles.add(Role.ROLE_ADMIN);
-		}
-		return user;
 	}
 
 }

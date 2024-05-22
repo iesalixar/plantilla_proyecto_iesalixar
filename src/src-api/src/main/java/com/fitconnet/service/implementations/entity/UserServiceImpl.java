@@ -1,54 +1,77 @@
 package com.fitconnet.service.implementations.entity;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fitconnet.dto.entities.UserDTO;
+import com.fitconnet.dto.response.JwtAuthenticationDTO;
+import com.fitconnet.enums.Role;
 import com.fitconnet.error.exception.user.UserNotFoundException;
 import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.UserRepository;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
+import com.fitconnet.service.interfaces.security.JwtServiceI;
 import com.fitconnet.utils.Constants;
+import com.fitconnet.utils.mappers.UserMapper;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class UserServicImpl implements UserServiceI {
-
+public class UserServiceImpl implements UserServiceI {
+	/**
+	 * Repository for user-related operations.
+	 */
 	private final UserRepository userRepository;
+
+	/**
+	 * Mapper for mapping between user entities and DTOs.
+	 */
+	private final UserMapper userMapper;
+
+	/**
+	 * Password encoder.
+	 */
+	private final PasswordEncoder passwordEncoder;
+
+	/**
+	 * Service for JWT-related operations.
+	 */
+	private final JwtServiceI jwtService;
 
 	@Override
 	public List<UserDTO> getAll() {
-		return userRepository.findAll().stream().map(this::userToUserDTO).toList();
+		return userRepository.findAll().stream().map(userMapper::userToUserDTO).toList();
 	}
 
 	@Override
 	public UserDTO getById(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return userToUserDTO(user);
+		return userMapper.userToUserDTO(user);
 	}
 
 	@Override
 	public UserDTO getByUserName(String userName) {
 		User user = userRepository.findByUsername(userName)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return userToUserDTO(user);
+		return userMapper.userToUserDTO(user);
 	}
 
 	@Override
 	public List<UserDTO> getFriends(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return user.getFriends().stream().map(this::userToUserDTO).toList();
+		return user.getFriends().stream().map(userMapper::userToUserDTO).toList();
 	}
 
 	@Override
@@ -58,8 +81,19 @@ public class UserServicImpl implements UserServiceI {
 	}
 
 	@Override
-	public void create(UserDTO user) {
-		userRepository.save(userDTOtoUser(user));
+	public JwtAuthenticationDTO create(UserDTO user) {
+		boolean emailExists = userRepository.existsByEmail(user.getEmail());
+		if (emailExists) {
+			throw new IllegalArgumentException("Email already in use.");
+
+		}
+		Set<Role> roles = new HashSet<>();
+		roles.add(Role.ROLE_USER);
+		user.setRoles(roles);
+		userRepository.save(userMapper.userDTOtoUser(user));
+		String jwt = jwtService.generateToken(userMapper.userDTOtoUser(user));
+		return JwtAuthenticationDTO.builder().token(jwt).build();
+
 	}
 
 	@Override
@@ -71,7 +105,7 @@ public class UserServicImpl implements UserServiceI {
 
 		deleteById(id);
 
-		userRepository.save(userDTOtoUser(user));
+		userRepository.save(userMapper.userDTOtoUser(user));
 
 	}
 
@@ -83,12 +117,15 @@ public class UserServicImpl implements UserServiceI {
 		updateFieldIfDifferent(aux, user.getFirstName(), "firstName", aux::setFirstName);
 		updateFieldIfDifferent(aux, user.getLastName(), "lastName", aux::setLastName);
 		updateFieldIfDifferent(aux, user.getUsername(), "userName", aux::setUsername);
+		updateFieldIfDifferent(aux, user.getEmail(), "email", aux::setEmail);
+		updateFieldIfDifferent(aux, user.getImage(), "image", aux::setImage);
 		if (!user.getAge().equals(aux.getAge())) {
 			aux.setAge(user.getAge());
 		}
+		if (!passwordEncoder.matches(user.getPassword(), aux.getPassword())) {
+			aux.setPassword(passwordEncoder.encode(user.getPassword()));
+		}
 
-		updateFieldIfDifferent(aux, user.getEmail(), "email", aux::setEmail);
-		updateFieldIfDifferent(aux, user.getPassword(), "password", aux::setPassword);
 	}
 
 	@Override
@@ -107,59 +144,6 @@ public class UserServicImpl implements UserServiceI {
 	@Override
 	public boolean existByEmail(String email) {
 		return userRepository.existsByEmail(email);
-	}
-
-	@Override
-	public User userDTOtoUser(UserDTO request) {
-		User user = new User();
-		user.setFirstName(request.getFirstName());
-		user.setLastName(request.getLastName());
-		user.setUsername(request.getUsername());
-		user.setAge(request.getAge());
-		user.setEmail(request.getEmail());
-		user.setPassword((request.getPassword()));
-		user.setRoles(request.getRoles());
-		return user;
-
-	}
-
-	@Override
-	public UserDTO userToUserDTO(User user) {
-		UserDTO response = new UserDTO();
-		response.setFirstName(user.getFirstName());
-		response.setLastName(user.getLastName());
-		response.setUsername(user.getUsername());
-		response.setAge(user.getAge());
-		response.setEmail(user.getEmail());
-		response.setPassword((user.getPassword()));
-		response.setRoles(user.getRoles());
-		return response;
-	}
-
-	@Override
-	public List<User> participantsDTOtoParticipants(List<UserDTO> participantsDTO) {
-		List<User> participats = new ArrayList<>();
-
-		for (UserDTO dto : participantsDTO) {
-
-			participats.add(userDTOtoUser(dto));
-		}
-
-		return participats;
-	}
-
-	@Override
-	public List<UserDTO> participantstoParticipantsDTO(List<User> participants) {
-		List<UserDTO> partipantsDTO = new ArrayList<>();
-
-		for (User user : participants) {
-
-			userToUserDTO(user);
-
-			partipantsDTO.add(userToUserDTO(user));
-		}
-
-		return partipantsDTO;
 	}
 
 	private void updateFieldIfDifferent(User user, String newValue, String fieldName, Consumer<String> setter) {
@@ -184,6 +168,8 @@ public class UserServicImpl implements UserServiceI {
 			return user.getEmail();
 		case "password":
 			return user.getPassword();
+		case "image":
+			return user.getImage();
 		default:
 			throw new IllegalArgumentException("Campo desconocido: " + fieldName);
 		}

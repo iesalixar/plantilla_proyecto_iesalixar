@@ -1,32 +1,40 @@
 package com.fitconnet.service.implementations.entity;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.fitconnet.dto.entities.CommentDTO;
 import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.persitence.model.Comment;
 import com.fitconnet.persitence.repository.CommentRepository;
-import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.service.interfaces.entity.CommentServiceI;
-import com.fitconnet.service.interfaces.entity.UserServiceI;
+import com.fitconnet.utils.mappers.CommentMapper;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class CommentServiceImpl implements CommentServiceI {
+	/**
+	 * Repository for comment-related operations.
+	 */
+	private final CommentRepository commentRepository;
 
-	private final CommentRepository commentRepo;
-	@Lazy
-	private final UserServiceI userService;
-	private final ActivityServiceI activityService;
+	/**
+	 * Mapper for mapping between comment entities and DTOs.
+	 */
+	private final CommentMapper commentMapper;
 
 	@Override
 	public CommentDTO getById(Long id) {
-		return commentToCommentDTO(commentRepo.findById(id).get());
+		Optional<Comment> optionalComment = commentRepository.findById(id);
+		if (optionalComment.isPresent()) {
+			return commentMapper.commentToCommentDTO(optionalComment.get());
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -36,51 +44,32 @@ public class CommentServiceImpl implements CommentServiceI {
 
 	@Override
 	public List<CommentDTO> getAll() {
-		return commentRepo.findAll().stream().map(this::commentToCommentDTO).toList();
+		return commentRepository.findAll().stream().map(commentMapper::commentToCommentDTO).toList();
 	}
 
 	@Override
 	public boolean existById(Long id) {
-		return commentRepo.existsById(id);
+		return commentRepository.existsById(id);
 	}
 
 	@Override
 	public void create(CommentDTO commentDTO) {
-		commentRepo.save(commentDtoToComment(commentDTO));
+		commentRepository.save(commentMapper.commentDtoToComment(commentDTO));
 	}
 
 	@Override
 	public void update(Long id, CommentDTO commentDTO) {
-
-		if (existById(id)) {
-			Comment aux = commentRepo.findById(id).get();
-			commentRepo.delete(aux);
-			commentRepo.save(commentDtoToComment(commentDTO));
+		Optional<Comment> optionalComment = commentRepository.findById(id);
+		if (optionalComment.isPresent()) {
+			Comment existingComment = optionalComment.get();
+			commentRepository.delete(existingComment);
+			commentRepository.save(commentMapper.commentDtoToComment(commentDTO));
 		}
-
 	}
 
 	@Override
 	public void delete(Long id) {
-		commentRepo.deleteById(id);
-	}
-
-	@Override
-	public Comment commentDtoToComment(CommentDTO commentDTO) {
-		Comment comment = new Comment();
-		comment.setContent(commentDTO.getContent());
-		comment.setActivity(activityService.activityDTOtoActivity(commentDTO.getActivity()));
-		comment.setUser(userService.userDTOtoUser(commentDTO.getUser()));
-		return comment;
-	}
-
-	@Override
-	public CommentDTO commentToCommentDTO(Comment comment) {
-		CommentDTO commentDTO = new CommentDTO();
-		commentDTO.setContent(comment.getContent());
-		commentDTO.setUser(userService.userToUserDTO(comment.getUser()));
-		commentDTO.setActivity(activityService.activityToActivityDTO(comment.getActivity()));
-		return commentDTO;
+		commentRepository.deleteById(id);
 	}
 
 }

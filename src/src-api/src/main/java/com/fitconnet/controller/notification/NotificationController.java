@@ -22,6 +22,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.fitconnet.dto.entities.NotificationDTO;
+import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.service.interfaces.entity.NotificationServiceI;
@@ -129,10 +130,10 @@ public class NotificationController {
 	public ResponseEntity<List<NotificationDTO>> getNotificationsByUserId(@PathVariable Long id) {
 		logger.info("NotificationController :: getNotificationsByUserId");
 		ResponseEntity<List<NotificationDTO>> response = null;
-		boolean existingUser = userService.existById(id);
-		response = processingResponseI.processStringResponse(existingUser,
+		UserDTO user = userService.getById(id);
+		response = processingResponseI.processUserResponse(user,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.NOTIFICATION_NOT_FOUND),
-				() -> ResponseEntity.ok().body(notificationService.getNotifications(id)));
+				() -> ResponseEntity.ok().body(user.getNotifications()));
 		return response;
 	}
 

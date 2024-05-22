@@ -1,13 +1,8 @@
 package com.fitconnet.controller.user;
 
-import java.io.IOException;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.sql.rowset.serial.SerialException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,19 +21,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.fitconnet.dto.entities.ActivityDTO;
 import com.fitconnet.dto.entities.CommentDTO;
-import com.fitconnet.dto.entities.ImageDTO;
 import com.fitconnet.dto.entities.NotificationDTO;
 import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.service.interfaces.entity.CommentServiceI;
-import com.fitconnet.service.interfaces.entity.ImageServiceI;
 import com.fitconnet.service.interfaces.entity.NotificationServiceI;
 import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
@@ -71,10 +63,7 @@ public class AdminController {
 	 */
 	@Qualifier("notificationService")
 	private final NotificationServiceI notificationService;
-	/**
-	 * Dependency injection for the ImageServiceI interface.
-	 */
-	private final ImageServiceI imageService;
+
 	/**
 	 * Dependency injection for the CommentServiceI interface.
 	 */
@@ -205,39 +194,6 @@ public class AdminController {
 	}
 
 	/**
-	 * Updates an image.
-	 * 
-	 * <p>
-	 * Updates an existing image with new information.
-	 * </p>
-	 * 
-	 * @param id    The ID of the image to be updated.
-	 * @param image The request body containing the updated image information.
-	 * @return ResponseEntity<String> The response entity indicating the success or
-	 *         failure of the update operation.
-	 */
-	@PutMapping("/image/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	@Operation(summary = "Update Activity by Replacement", description = "Replaces an existing activity with another.")
-	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
-	public ResponseEntity<String> updateImage(@PathVariable Long id, @RequestParam("image") MultipartFile file)
-			throws IOException, SerialException, SQLException {
-		logger.info("ImageController :: updateImage");
-		ResponseEntity<String> response = null;
-		Boolean exist = imageService.existById(id);
-		ImageDTO newImage = new ImageDTO();
-		byte[] bytes = file.getBytes();
-		Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-		newImage.setImage(blob);
-		response = processingResponseI.processStringResponse(exist,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.IMAGE_NOT_FOUND), () -> {
-					imageService.update(id, newImage);
-					return ResponseEntity.ok().body("Image has been deleted successfully.");
-				});
-		return response;
-	}
-
-	/**
 	 * Updates a comment.
 	 * 
 	 * <p>
@@ -315,33 +271,6 @@ public class AdminController {
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
 					activityService.deleteById(id);
 					return ResponseEntity.ok().body("Activity has been deleted successfully.");
-				});
-		return response;
-	}
-
-	/**
-	 * Deletes an image.
-	 * 
-	 * <p>
-	 * Deletes the image with the specified ID.
-	 * </p>
-	 * 
-	 * @param id The ID of the image to be deleted.
-	 * @return ResponseEntity<String> The response entity indicating the success or
-	 *         failure of the deletion operation.
-	 */
-	@DeleteMapping("/image/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	@Operation(summary = "Delete Image", description = "Deletes an image.")
-	@ApiResponse(responseCode = "200", description = "Image deleted successfully")
-	public ResponseEntity<String> deleteImage(@PathVariable Long id) {
-		logger.info("AdminController :: deleteImage");
-		ResponseEntity<String> response = null;
-		Boolean exist = activityService.existById(id);
-		response = processingResponseI.processStringResponse(exist,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.IMAGE_NOT_FOUND), () -> {
-					imageService.delete(id);
-					return ResponseEntity.ok().body("Image has been deleted successfully.");
 				});
 		return response;
 	}

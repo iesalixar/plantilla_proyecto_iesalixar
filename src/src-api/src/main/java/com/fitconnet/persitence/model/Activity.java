@@ -5,7 +5,6 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +15,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -74,12 +72,12 @@ public class Activity implements Serializable {
 	 */
 	@Column(name = "C_LIKES", nullable = true)
 	private Integer likes;
+
 	/**
-	 * The image associated with the activity.
+	 * The profile picture.
 	 */
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "C_IMG_ID", referencedColumnName = "C_PK_IMAGE_ID")
-	private ActivityImg image;
+	@Column(name = "C_ACTIVITY_IMAGE", columnDefinition = "TEXT")
+	private String image;
 	/**
 	 * The creator of the activity.
 	 */

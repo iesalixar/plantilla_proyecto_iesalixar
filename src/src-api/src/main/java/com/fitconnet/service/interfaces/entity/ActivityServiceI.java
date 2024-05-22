@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.fitconnet.dto.entities.ActivityDTO;
-import com.fitconnet.persitence.model.Activity;
 
 /**
  * Interface for managing activities.
@@ -25,40 +24,6 @@ public interface ActivityServiceI {
 	 * @return The activity with the specified ID, if found.
 	 */
 	ActivityDTO getOne(Long id);
-
-	/**
-	 * Checks if an activity exists by its ID.
-	 *
-	 * @param id The ID of the activity to check.
-	 * @return true if an activity exists with the specified ID, false otherwise.
-	 */
-	boolean existById(Long id);
-
-	/**
-	 * Checks if an activity exists for a given date.
-	 *
-	 * @param date The date to check.
-	 * @return true if an activity exists for the given date, false otherwise.
-	 */
-	boolean existByDate(Date date);
-
-	/**
-	 * Converts an activity entity to an activity DTO.
-	 *
-	 * @param activity The activity entity to convert.
-	 * @param userDTO  The user DTO associated with the activity.
-	 * @return The activity DTO corresponding to the activity entity.
-	 */
-	ActivityDTO activityToActivityDTO(Activity activity);
-
-	/**
-	 * Converts an activity DTO to an activity entity.
-	 *
-	 * @param activityDTO The activity DTO to convert.
-	 * @param user        The user entity associated with the activity.
-	 * @return The activity entity corresponding to the activity DTO.
-	 */
-	Activity activityDTOtoActivity(ActivityDTO activityDTO);
 
 	/**
 	 * Retrieves the activities created by a user.
@@ -83,6 +48,29 @@ public interface ActivityServiceI {
 	 * @return A list of all activities related to the specified user.
 	 */
 	List<ActivityDTO> getAllActivities(Long id);
+
+	/**
+	 * Retrieves all images for all the users.
+	 * 
+	 * @return A list of all images.
+	 */
+	List<String> getAllImages();
+
+	/**
+	 * Checks if an activity exists by its ID.
+	 *
+	 * @param id The ID of the activity to check.
+	 * @return true if an activity exists with the specified ID, false otherwise.
+	 */
+	boolean existById(Long id);
+
+	/**
+	 * Checks if an activity exists for a given date.
+	 *
+	 * @param date The date to check.
+	 * @return true if an activity exists for the given date, false otherwise.
+	 */
+	boolean existByDate(Date date);
 
 	/**
 	 * Creates a new activity.

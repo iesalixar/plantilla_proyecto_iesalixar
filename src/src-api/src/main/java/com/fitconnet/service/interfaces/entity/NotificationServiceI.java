@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.fitconnet.dto.entities.NotificationDTO;
-import com.fitconnet.persitence.model.Notification;
 
 /**
  * Interface for managing notifications.
@@ -19,36 +18,12 @@ public interface NotificationServiceI {
 	List<NotificationDTO> getAll();
 
 	/**
-	 * Retrieves the notifications of a user.
-	 * 
-	 * @param id The id of the user.
-	 * @return A list of notifications for the specified user.
-	 */
-	List<NotificationDTO> getNotifications(Long userId);
-
-	/**
 	 * Retrieves a notification by its ID.
 	 *
 	 * @param id The ID of the notification to retrieve.
 	 * @return The notification with the specified ID, if found.
 	 */
 	NotificationDTO getById(Long id);
-
-	/**
-	 * Converts a notification DTO to a notification entity.
-	 *
-	 * @param dto The notification DTO to convert.
-	 * @return The notification entity corresponding to the DTO.
-	 */
-	Notification notificationDTOtoNotification(NotificationDTO notificationDTO);
-
-	/**
-	 * Converts a notification entity to a notification DTO.
-	 *
-	 * @param dto The notification entity to convert.
-	 * @return The notification DTO corresponding to the entity.
-	 */
-	NotificationDTO notificationToNotificationDTO(Notification notification);
 
 	/**
 	 * Checks if a notification exists by its ID.

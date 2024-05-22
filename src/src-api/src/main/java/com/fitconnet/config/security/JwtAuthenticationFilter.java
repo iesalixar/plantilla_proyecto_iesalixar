@@ -3,7 +3,6 @@ package com.fitconnet.config.security;
 import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
@@ -31,14 +30,12 @@ import lombok.AllArgsConstructor;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	/**
-	 * Dependency injection for the JwtServiceI interface.
+	 * Service for handling jwt operations.
 	 */
 	private final JwtServiceI jwtService;
-
 	/**
-	 * Dependency injection for the UserServiceI interface.
+	 * Service for handling user-related operations.
 	 */
-	@Lazy
 	private final UserServiceI userService;
 
 	/**

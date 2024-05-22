@@ -25,7 +25,6 @@ import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.enums.Role;
 import com.fitconnet.error.GlobalExceptionHandler;
-import com.fitconnet.service.implementations.security.AuthenticationServiceImpl;
 import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.utils.Constants;
@@ -49,11 +48,6 @@ public class UserController {
 	 */
 	@Qualifier("processingResponseI")
 	private final ProcessingResponseI processingResponseI;
-	/**
-	 * Dependency injection for the AuthenticationServiceImpl interface.
-	 */
-	@Qualifier("processingResponseI")
-	private final AuthenticationServiceImpl authenticationServiceImpl;
 	/**
 	 * Dependency injection for the GlobalExceptionHandler.
 	 */
@@ -84,34 +78,7 @@ public class UserController {
 		return processingResponseI.processStringResponse(exist,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The user already exists"), () -> {
 					Role role = Role.ROLE_USER;
-					authenticationServiceImpl.createUser(user, role);
-					return ResponseEntity.ok().body("User: " + user.getUsername() + ", created successfully.");
-				});
-	}
-
-	/**
-	 * Creates a new admin user.
-	 * 
-	 * <p>
-	 * Registers a new admin user in the system.
-	 * </p>
-	 * 
-	 * @param user The request body containing the information of the new admin
-	 *             user.
-	 * @return ResponseEntity<String> The response entity indicating the success or
-	 *         failure of the creation operation.
-	 */
-	@PostMapping("/add/admin")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	@Operation(summary = "Create Admin User", description = "Registers a new admin user in the system.")
-	@ApiResponse(responseCode = "200", description = "Admin user created successfully")
-	public ResponseEntity<String> createAdmin(@RequestBody UserDTO user) {
-		logger.info("UserController :: createAdmin");
-		Boolean exist = userService.existByEmail(user.getEmail());
-		return processingResponseI.processStringResponse(exist,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The user already exists"), () -> {
-					Role role = Role.ROLE_ADMIN;
-					authenticationServiceImpl.createUser(user, role);
+					userService.create(user);
 					return ResponseEntity.ok().body("User: " + user.getUsername() + ", created successfully.");
 				});
 	}
@@ -155,6 +122,31 @@ public class UserController {
 		logger.info("UserController :: getUser");
 		ResponseEntity<UserDTO> response = null;
 		UserDTO user = userService.getById(id);
+		response = processingResponseI.processUserResponse(user,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
+				() -> ResponseEntity.ok().body(user));
+		return response;
+	}
+
+	/**
+	 * Retrieves a user by username.
+	 * 
+	 * <p>
+	 * Retrieves the user with the specified username.
+	 * </p>
+	 * 
+	 * @param id The username of the user to be retrieved.
+	 * @return ResponseEntity<Optional<User>> The response entity containing the
+	 *         user, if found.
+	 */
+	@GetMapping("/{username}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+	@Operation(summary = "Get User by ID", description = "Retrieves a user by ID.")
+	@ApiResponse(responseCode = "200", description = "User retrieved successfully")
+	public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
+		logger.info("UserController :: getUser");
+		ResponseEntity<UserDTO> response = null;
+		UserDTO user = userService.getByUserName(username);
 		response = processingResponseI.processUserResponse(user,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
 				() -> ResponseEntity.ok().body(user));

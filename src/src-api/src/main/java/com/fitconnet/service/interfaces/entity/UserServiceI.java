@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.fitconnet.dto.entities.UserDTO;
-import com.fitconnet.persitence.model.User;
+import com.fitconnet.dto.response.JwtAuthenticationDTO;
 
 /**
  * Interface for User service.
@@ -44,24 +44,6 @@ public interface UserServiceI {
 	List<UserDTO> getFriends(Long id);
 
 	/**
-	 * Converts participant DTOs to participant entities.
-	 *
-	 * @param participantsDTO The list of participant DTOs to convert.
-	 * @return The list of participant entities corresponding to the participant
-	 *         DTOs.
-	 */
-	List<User> participantsDTOtoParticipants(List<UserDTO> participantsDTO);
-
-	/**
-	 * Converts participant entities to participant DTOs.
-	 *
-	 * @param participants The list of participant entities to convert.
-	 * @return The list of participant DTOs corresponding to the participant
-	 *         entities.
-	 */
-	List<UserDTO> participantstoParticipantsDTO(List<User> participants);
-
-	/**
 	 * Retrieves the user details service.
 	 * 
 	 * @return The user details service.
@@ -89,7 +71,7 @@ public interface UserServiceI {
 	 * 
 	 * @param user The user to create.
 	 */
-	void create(UserDTO user);
+	JwtAuthenticationDTO create(UserDTO user);
 
 	/**
 	 * Updates a user.
@@ -113,22 +95,4 @@ public interface UserServiceI {
 	 * @param id The id of the user to delete.
 	 */
 	void deleteById(Long id);
-
-	/**
-	 * Converts a UserDTO to a User.
-	 * 
-	 * @param request The UserDTO request.
-	 * @param user    The User to fill.
-	 * @param rol     The role of the user.
-	 */
-	User userDTOtoUser(UserDTO request);
-
-	/**
-	 * Converts a User to a UserDTO.
-	 * 
-	 * @param response The UserDTO response.
-	 * @param user     The User to convert.
-	 * @param rol      The role of the user.
-	 */
-	UserDTO userToUserDTO(User user);
 }
