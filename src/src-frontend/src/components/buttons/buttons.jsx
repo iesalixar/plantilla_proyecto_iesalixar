@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import './style.scss';
 const LogingButton = () => {
     return (
         <Link to="/login">
-            <button>Login</button>
+            <button className='header-btn'><p>Login</p></button>
         </Link>
     );
 };
@@ -12,7 +12,7 @@ const LogingButton = () => {
 const RegisterButton = () => {
     return (
         <Link to="/register">
-            <button>Register</button>
+            <button className='header-btn'><p>Register</p></button>
         </Link>
     );
 };

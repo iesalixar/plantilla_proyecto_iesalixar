@@ -4,13 +4,16 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [activeUser, setActiveUser] = useState(() => {
-    const storedUser = localStorage.getItem('activeUser');
+    const storedUser = sessionStorage.getItem('activeUser');
     return storedUser ? JSON.parse(storedUser) : null;
-
   });
+
   useEffect(() => {
-    // Almacenar el usuario en el localStorage cuando cambie ESTO ME GUSTARIA CAMBIARLO PARA NO MOSTRAR DATOS SENSIBLES EN LAS COOKIES; SIN EMBARGO NO LO HE CONSEGUIDO, PIERDO EL CONTEXTO DE LA APP AL ACTUALIZAR
-    localStorage.setItem('activeUser', JSON.stringify(activeUser));
+    if (activeUser) {
+      sessionStorage.setItem('activeUser', JSON.stringify(activeUser));
+    } else {
+      sessionStorage.removeItem('activeUser');
+    }
   }, [activeUser]);
 
   const login = (userData) => {
@@ -19,7 +22,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setActiveUser(null);
-    localStorage.removeItem('activeUser');
+    sessionStorage.removeItem('activeUser');
   };
 
   const updateUser = (userData) => {
