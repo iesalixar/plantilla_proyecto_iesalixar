@@ -8,6 +8,7 @@ import ProtectedRoute from './components/protectedRouter.js';
 import "@fontsource/roboto"; // Defaults to weight 400
 import "@fontsource/roboto/400.css"; // Specify weight
 import "@fontsource/roboto/400-italic.css"; // Specify weight and styl
+import './App.css';
 
 function App() {
 

@@ -28,6 +28,7 @@ public class UserMapper {
 			user.setFirstName(userDTO.getFirstName());
 			user.setLastName(userDTO.getLastName());
 			user.setUsername(userDTO.getUsername());
+			System.out.println("DTO TO USER: AGE =" + userDTO.getAge());
 			user.setAge(userDTO.getAge());
 			user.setEmail(userDTO.getEmail());
 			user.setPassword(userDTO.getPassword());

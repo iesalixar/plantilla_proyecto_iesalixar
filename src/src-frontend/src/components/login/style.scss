@@ -1,13 +1,15 @@
-.form-container {
+.main-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 50px;
+    margin-bottom: 100px;
+
     h1, h2 {
         text-align: center;
     }
 
-    .login-form {
+    .input-container{
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -16,6 +18,7 @@
         border-radius: 10px;
         box-shadow: 0px 12px 8px rgb(0 0 0 / 16%);
         text-align: center;
+            
             input {
                 width: 300px;
                 margin: 10px;
@@ -84,7 +87,14 @@
     }
 
     .error-message {
-        margin-top: 20px;
+        text-align: center;
         color: rgb(235, 78, 78);
+        padding: 10px;
     }
+}
+
+#login-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

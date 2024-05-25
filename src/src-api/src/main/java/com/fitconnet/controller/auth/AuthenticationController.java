@@ -3,7 +3,9 @@ package com.fitconnet.controller.auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -79,9 +81,14 @@ public class AuthenticationController {
 	@PostMapping("/signin")
 	@Operation(summary = "User Sign-in", description = "Logs in an existing user.")
 	@ApiResponse(responseCode = "200", description = "Sign-in successful")
-	public ResponseEntity<JwtAuthenticationDTO> signin(@RequestBody Signin request) {
+	public ResponseEntity<?> signin(@RequestBody Signin request) {
 		logger.info("AuthenticationController :: signin");
-		return ResponseEntity.ok(authenticationService.signin(request));
+		try {
+			JwtAuthenticationDTO authenticationDTO = authenticationService.signin(request);
+			return ResponseEntity.ok(authenticationDTO);
+		} catch (AuthenticationException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password.");
+		}
 	}
 
 	/**

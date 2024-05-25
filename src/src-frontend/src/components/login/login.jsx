@@ -7,109 +7,163 @@ import { useAuth } from '../../authContext/autContext';
 const LoginForm = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
+
     const [loginInfo, setLoginInfo] = useState({
         identifier: '',
         password: '',
-        rememberMe: false, // Nuevo estado para recordar la selección del usuario
+        rememberMe: false,
     });
-    const [errors, setErrors] = useState({});
 
+    const [errors, setErrors] = useState({
+        identifier: '',
+        password: '',
+        generic: ''
+    });
+
+    //#region  VALIDATIONS
+    const validateEmail = (email) => {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
+    };
+
+    const validatePassword = (password) => {
+        return password.length > 3;
+    };
+    //#endregion
+
+    //#region HANDLECHANGE
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        const newValue = type === 'checkbox' ? checked : value; // Manejo especial para checkbox
-        setLoginInfo({ ...loginInfo, [name]: newValue });
-        if (type !== 'checkbox') {
-            validateField(name, newValue); // Solo validación para campos no checkbox
-        }
-    };
 
-    const validateField = (name, value) => {
-        let fieldError = null;
-        switch (name) {
-            case 'identifier':
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(value)) {
-                    fieldError = 'El email debe ser un email válido';
-                }
-                break;
-            case 'password':
-                if (value.length < 3 || value.length > 20) {
-                    fieldError = 'La contraseña debe tener entre 3 y 20 caracteres';
-                }
-                break;
-            default:
-                break;
-        }
-        setErrors((prevErrors) => ({ ...prevErrors, [name]: fieldError }));
-    };
-
-    const handleSubmit = async () => {
-        const formErrors = {};
-        Object.keys(loginInfo).forEach((name) => {
-            validateField(name, loginInfo[name]);
-            if (errors[name]) {
-                formErrors[name] = errors[name];
-            }
+        const { name, value, checked, type } = e.target;
+        const updatedValue = type === 'checkbox' ? checked : value;
+        // Update loginInfo state
+        setLoginInfo({
+            ...loginInfo,
+            [name]: updatedValue
         });
+        // Reset the specific error for the changed input
+        setErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: ''
+        }));
 
-        if (Object.keys(formErrors).length > 0) {
-            setErrors(formErrors);
-            return;
+        // Perform validation
+        if (name === 'identifier') {
+            if (!value) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    identifier: 'Email is required.'
+                }));
+            } else if (!validateEmail(value)) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    identifier: 'Please enter a valid email address.'
+                }));
+            }
         }
 
-        try {
-            const token = await signinService(loginInfo.identifier, loginInfo.password);
-            login({ token });
-            navigate('/');
-        } catch (error) {
-            console.error('Error al iniciar sesión:', error.message);
-            setErrors({ generic: 'Error al iniciar sesión' });
+        if (name === 'password') {
+            if (!value) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    password: 'Password is required.'
+                }));
+            } else if (!validatePassword(value)) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    password: 'Password must be more than 3 characters.'
+                }));
+            }
+        }
+    };
+    //#endregion
+
+    //#region HANDLE SUBMIT
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const newErrors = { identifier: '', password: '', generic: '' };
+
+        // Email validation
+        if (!validateEmail(loginInfo.identifier)) {
+            newErrors.identifier = 'Please enter a valid email address.';
+        }
+
+        // Password validation
+        if (!validatePassword(loginInfo.password)) {
+            newErrors.password = 'Password must be more than 3 characters.';
+        }
+
+        if (newErrors.identifier || newErrors.password) {
+            setErrors(newErrors);
+        } else {
+            try {
+                const result = await signinService(loginInfo.identifier, loginInfo.password);
+                if (result.success) {
+                    login({ token: result.token });
+                    navigate('/');
+                }
+            } catch (error) {
+                setErrors({ generic: error.message });
+            }
         }
     };
 
+    //#endregion
+
+    //#region  HTML
     return (
-        <div className='form-container'>
+        <div className='main-container'>
             <h1>Welcome back to <span style={{ color: '#00666B' }}>FitConnet</span></h1>
-            <div className="login-form">
-                <input
-                    type="text"
-                    name="identifier"
-                    value={loginInfo.identifier}
-                    onChange={handleChange}
-                    className={errors.identifier ? 'error' : 'success'}
-                    placeholder="Email"
-                />
-                {errors.identifier && <div className="error-message">{errors.identifier}</div>}
-                <input
-                    type="password"
-                    name="password"
-                    value={loginInfo.password}
-                    onChange={handleChange}
-                    className={errors.password ? 'error' : 'success'}
-                    placeholder="Password"
-                />
-                {errors.password && <div className="error-message">{errors.password}</div>}
-                <label>
+            <form onSubmit={handleSubmit} id='login-container'>
+                <div className="input-container">
                     <input
-                        type="checkbox"
-                        name="rememberMe"
-                        checked={loginInfo.rememberMe}
+                        type="text"
+                        name="identifier"
+                        value={loginInfo.identifier}
                         onChange={handleChange}
-                        className='check'
+                        className={errors.identifier ? 'error' : 'success'}
+                        placeholder="Email"
+                        required
                     />
-                    <span style={{ color: '#5E8A8C' }}>Save this information for next time.</span>
-                </label>
+                    <input
+                        type="password"
+                        name="password"
+                        value={loginInfo.password}
+                        onChange={handleChange}
+                        className={errors.password ? 'error' : 'success'}
+                        placeholder="Password"
+                        required
+                    />
 
-            </div>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="rememberMe"
+                            checked={loginInfo.rememberMe}
+                            onChange={handleChange}
+                            className='check'
+                        />
+                        <span style={{ color: '#5E8A8C' }}>Save this information for next time.</span>
+                    </label>
+                </div>
+                <button type="submit" className='submit-btn'>Sign In</button>
+            </form>
 
-            <button type="button" className='submit-btn' onClick={handleSubmit}>Sign In</button>
-            {errors.generic && <div className="error-message">{errors.generic}</div>}
             <div className="register-link">
                 <Link to="/">Forgot the password?</Link>
                 <Link to="/register">Create an account?</Link>
             </div>
-        </div >
+
+            <section>
+                {errors.identifier && <div className="error-message">{errors.identifier}</div>}
+                {errors.password && <div className="error-message">{errors.password}</div>}
+                {errors.generic && <div className="error-message">{errors.generic}</div>}
+            </section>
+        </div>
+
     );
+    //#endregion
 };
+
 
 export default LoginForm;

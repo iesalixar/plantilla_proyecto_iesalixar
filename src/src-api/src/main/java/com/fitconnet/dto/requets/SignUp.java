@@ -36,4 +36,5 @@ public class SignUp {
 	 * The password chosen by the user for signing up.
 	 */
 	private String password;
+
 }
