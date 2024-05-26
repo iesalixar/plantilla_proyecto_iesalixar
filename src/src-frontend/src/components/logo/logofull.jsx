@@ -1,10 +1,10 @@
 import * as React from "react"
-const SvgComponent = (props) => (
+const LogoFull = (props) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
-        width={298}
-        height={74}
+        width={275}
+        height={57}
         fill="none"
         {...props}
     >
@@ -14,7 +14,7 @@ const SvgComponent = (props) => (
                 mixBlendMode: "multiply",
             }}
         >
-            <rect width={298} height={72.816} y={0.592} fill="url(#b)" rx={5} />
+            <rect width={275} height={57.816} y={0.592} fill="url(#b)" rx={5} />
         </g>
         <defs>
             <pattern
@@ -56,4 +56,4 @@ const SvgComponent = (props) => (
         </defs>
     </svg>
 )
-export default SvgComponent
+export default LogoFull

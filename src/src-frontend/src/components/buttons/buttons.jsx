@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './style.scss';
-const LogingButton = () => {
+
+const LoginButton = () => {
     return (
         <Link to="/login">
             <button className='header-btn'><p>Login</p></button>
@@ -17,4 +18,4 @@ const RegisterButton = () => {
     );
 };
 
-export { LogingButton, RegisterButton };
+export { LoginButton, RegisterButton };

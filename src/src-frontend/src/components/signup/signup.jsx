@@ -76,7 +76,12 @@ const SignupForm = () => {
 
         switch (name) {
             case 'firstName':
-                if (!validateFirstName(updatedValue)) {
+                if (!value) {
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        identifier: 'Name is required.'
+                    }));
+                } else if (!isNaN(value) || !validateFirstName(updatedValue)) {
                     setErrors((prevErrors) => ({
                         ...prevErrors,
                         firstName: 'Please enter a valid name.'
@@ -84,7 +89,7 @@ const SignupForm = () => {
                 }
                 break;
             case 'lastName':
-                if (!validateLastName(updatedValue)) {
+                if (!isNaN(value) || !validateLastName(updatedValue)) {
                     setErrors((prevErrors) => ({
                         ...prevErrors,
                         lastName: 'Please enter a valid surname.'
@@ -92,15 +97,26 @@ const SignupForm = () => {
                 }
                 break;
             case 'username':
-                if (!validateUsername(updatedValue)) {
+                if (!value) {
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        identifier: 'Username is required.'
+                    }));
+                } else if (!isNaN(updatedValue) || !validateUsername(updatedValue)) {
                     setErrors((prevErrors) => ({
                         ...prevErrors,
                         username: 'Please enter a valid username.'
                     }));
+
                 }
                 break;
             case 'age':
-                if (!validateAge(updatedValue)) {
+                if (!value) {
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        identifier: 'Age is required.'
+                    }));
+                } else if (isNaN(updatedValue) || !validateAge(updatedValue)) {
                     setErrors((prevErrors) => ({
                         ...prevErrors,
                         age: 'Please enter a valid age, 18 or older.'
@@ -108,7 +124,12 @@ const SignupForm = () => {
                 }
                 break;
             case 'email':
-                if (!validateEmail(updatedValue)) {
+                if (!value) {
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        identifier: 'Email is required.'
+                    }));
+                } else if (!validateEmail(updatedValue)) {
                     setErrors((prevErrors) => ({
                         ...prevErrors,
                         email: 'Please enter a valid email address.'
@@ -116,7 +137,12 @@ const SignupForm = () => {
                 }
                 break;
             case 'password':
-                if (!validatePassword(updatedValue)) {
+                if (!value) {
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        identifier: 'Password is required.'
+                    }));
+                } if (!validatePassword(updatedValue)) {
                     setErrors((prevErrors) => ({
                         ...prevErrors,
                         password: 'Please enter a valid password.'
@@ -138,7 +164,8 @@ const SignupForm = () => {
     //#endregion
 
     //#region HANDLE SUBMIT
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         const newErrors = {
             firstName: '',
             lastName: '',
@@ -171,22 +198,15 @@ const SignupForm = () => {
         if (!validatePrivacyPolicy(registrationInfo.privacyPolicy)) {
             newErrors.privacyPolicy = 'Please accept our privacy policy.';
         }
-        const registrationInfoWithNumberAge = {
-            ...registrationInfo,
-            age: parseInt(registrationInfo.age)
-        };
         if (Object.values(newErrors).some(error => error)) {
             setErrors(newErrors);
         } else {
             try {
-                console.log(registrationInfoWithNumberAge);
-                const token = await signupService(registrationInfo);
-                login({ token });
-                console.log({ token });
+                const result = await signupService(registrationInfo);
+                login({ token: result.token });
                 navigate('/');
             } catch (error) {
-                console.error('Error al iniciar sesión:', error.message);
-                setErrors({ ...errors, generic: 'Error al iniciar sesión' });
+                setErrors({ generic: error.message });
             }
         }
     };
@@ -194,98 +214,101 @@ const SignupForm = () => {
 
     //#region HTML
     return (
-        <div className='form-container'>
+        <div className='main-container'>
             <h1>Welcome to <span style={{ color: '#00666B' }}>FitConnet</span></h1>
-            <div className="login-form">
-                <input
-                    type="text"
-                    name="firstName"
-                    value={registrationInfo.firstName}
-                    onChange={handleChange}
-                    placeholder='Firstname'
-                    className={errors.firstName ? 'error' : 'success'}
-                    required
-                />
-                {errors.firstName && <div className="error-message">{errors.firstName}</div>}
+            <form onSubmit={handleSubmit} id='login-container'>
+                <div className="input-container">
+                    <input
+                        type="text"
+                        name="firstName"
+                        value={registrationInfo.firstName}
+                        onChange={handleChange}
+                        placeholder='Firstname'
+                        className={errors.firstName ? 'error' : 'success'}
+                        required
+                    />
+                    {errors.firstName && <div className="error-message">{errors.firstName}</div>}
 
-                <input
-                    type="text"
-                    name="lastName"
-                    value={registrationInfo.lastName}
-                    onChange={handleChange}
-                    placeholder='Lastname'
-                    className={errors.lastName ? 'error' : 'success'}
-                />
-                {errors.lastName && <div className="error-message">{errors.lastName}</div>}
+                    <input
+                        type="text"
+                        name="lastName"
+                        value={registrationInfo.lastName}
+                        onChange={handleChange}
+                        placeholder='Lastname'
+                        className={errors.lastName ? 'error' : 'success'}
+                    />
+                    {errors.lastName && <div className="error-message">{errors.lastName}</div>}
 
-                <input
-                    type="text"
-                    name="username"
-                    value={registrationInfo.username}
-                    onChange={handleChange}
-                    placeholder='Username'
-                    className={errors.username ? 'error' : 'success'}
-                    required
-                />
-                {errors.username && <div className="error-message">{errors.username}</div>}
+                    <input
+                        type="text"
+                        name="username"
+                        value={registrationInfo.username}
+                        onChange={handleChange}
+                        placeholder='Username'
+                        className={errors.username ? 'error' : 'success'}
+                        required
+                    />
+                    {errors.username && <div className="error-message">{errors.username}</div>}
 
-                <input
-                    type="number"
-                    name="age"
-                    value={registrationInfo.age}
-                    onChange={handleChange}
-                    placeholder='Age'
-                    className={errors.age ? 'error' : 'success'}
-                    required
-                />
-                {errors.age && <div className="error-message">{errors.age}</div>}
+                    <input
+                        type="number"
+                        name="age"
+                        value={registrationInfo.age}
+                        onChange={handleChange}
+                        placeholder='Age'
+                        className={errors.age ? 'error' : 'success'}
+                        required
+                    />
+                    {errors.age && <div className="error-message">{errors.age}</div>}
 
-                <input
-                    type="email"
-                    name="email"
-                    value={registrationInfo.email}
-                    onChange={handleChange}
-                    placeholder='Email'
-                    className={errors.email ? 'error' : 'success'}
-                    required
-                />
-                {errors.email && <div className="error-message">{errors.email}</div>}
+                    <input
+                        type="email"
+                        name="email"
+                        value={registrationInfo.email}
+                        onChange={handleChange}
+                        placeholder='Email'
+                        className={errors.email ? 'error' : 'success'}
+                        required
+                    />
+                    {errors.email && <div className="error-message">{errors.email}</div>}
 
-                <input
-                    type="password"
-                    name="password"
-                    value={registrationInfo.password}
-                    onChange={handleChange}
-                    placeholder='Password'
-                    className={errors.password ? 'error' : 'success'}
-                    required
-                />
-                {errors.password && <div className="error-message">{errors.password}</div>}
+                    <input
+                        type="password"
+                        name="password"
+                        value={registrationInfo.password}
+                        onChange={handleChange}
+                        placeholder='Password'
+                        className={errors.password ? 'error' : 'success'}
+                        required
+                    />
+                    {errors.password && <div className="error-message">{errors.password}</div>}
 
-                <section>
-                    <label>
-                        <input
-                            type="checkbox"
-                            name="privacyPolicy"
-                            checked={registrationInfo.privacyPolicy}
-                            onChange={handleChange}
-                            className='check'
-                        />
-                        <span style={{ color: '#5E8A8C' }}>Accept the terms and conditions.</span>
-                    </label>
-                    <label>
-                        <input
-                            type="checkbox"
-                            name="rememberMe"
-                            checked={registrationInfo.rememberMe}
-                            onChange={handleChange}
-                            className='check'
-                        />
-                        <span style={{ color: '#5E8A8C' }}>Save this information for next time.</span>
-                    </label>
-                </section>
-            </div>
-            <button type="button" className='submit-btn' onClick={handleSubmit}>Sign Up</button>
+                    <section>
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="privacyPolicy"
+                                checked={registrationInfo.privacyPolicy}
+                                onChange={handleChange}
+                                className='check'
+                            />
+                            <span style={{ color: '#5E8A8C' }}>Agree the <span style={{ color: '#0071F6' }} className='term-link'>Terms and conditions.</span></span>
+                        </label>
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="rememberMe"
+                                checked={registrationInfo.rememberMe}
+                                onChange={handleChange}
+                                className='check'
+                            />
+                            <span style={{ color: '#5E8A8C' }}>Save this information for next time.</span>
+                        </label>
+                    </section>
+                </div>
+                <button type="button" className='submit-btn'>Sign Up</button>
+            </form>
+
             <div className="register-link">
                 <Link to="/login">Already registered?</Link>
             </div>

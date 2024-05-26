@@ -8,6 +8,7 @@ const LoginForm = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
 
+    //#region  SET STATES
     const [loginInfo, setLoginInfo] = useState({
         identifier: '',
         password: '',
@@ -19,6 +20,7 @@ const LoginForm = () => {
         password: '',
         generic: ''
     });
+    //#endregion
 
     //#region  VALIDATIONS
     const validateEmail = (email) => {

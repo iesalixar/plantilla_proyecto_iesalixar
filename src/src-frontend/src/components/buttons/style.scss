@@ -1,13 +1,24 @@
-.header-btn{
-    border: none;
+.header-btn {
+    border: 1px solid #00666B;
     border-radius: 10px;
-    margin-right: 100px;
-    width: 150px;
-    height: auto;
-   // box-shadow: 0px 12px 8px rgb(0 0 0 / 16%);
+    height: 30px;
+    min-width: 80px;
+    margin-right: 50px;
     cursor: pointer;
-    p{
-        font-size: 1rem;
-        font-weight: 600;
-     }
-}
+
+    p {
+        margin: 0;
+        font-size: 0.8rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        margin-right: 0; /* Quitar margin-right en pantallas pequeñas */
+
+        width: 100px; /* Modificar el ancho del botón */
+
+        p {
+            font-size: 0.8rem; /* Modificar el tamaño de la fuente */
+            font-weight: 500; /* Modificar el peso de la fuente */
+        }
+    }
+}   

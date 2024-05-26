@@ -1,7 +1,12 @@
-
+html, body{
+    height: 100%;
+    max-width: 100%;
+}
 body {
+    margin: 0;
     font-family: 'Roboto', sans-serif;
-    overflow-x: hidden;
+    min-height: 100vh;
+
 }
 main{
     min-height: 95vh;

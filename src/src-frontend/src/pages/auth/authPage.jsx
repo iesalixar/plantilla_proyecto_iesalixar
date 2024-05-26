@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import LoginForm from '../../components/login/login';
+import { RegisterHeader, IconHeader } from '../../components/header/headers';
 import FooterComponent from '../../components/footer/footer';
-import { DefaultHeader, IconHeader } from '../../components/header/headers';
-import SidebarComponent from '../../components/sidebar/sidebar';
 import Skeleton from '../../components/skeleton/skeleton';
+import { LoginButton, RegisterButton } from '../../components/buttons/buttons';
+import LogoFull from '../../components/logo/logofull';
+import SignupForm from '../../components/signup/signup';
 import Logoicon from '../../components/logo/logoIcon';
-import Logotext from '../../components/logo/logotext';
 
-const HomePage = () => {
+const AuthPage = () => {
+    const location = useLocation();
+    const pathname = location.pathname;
 
     const [isSmallScreen, setIsSmallScreen] = useState(false);
 
     const checkScreenSize = () => {
-        const isSmall = window.innerWidth <= 500;
+        const isSmall = window.innerWidth <= 500 || window.innerHeight <= 500;
         setIsSmallScreen(isSmall);
     };
     useEffect(() => {
@@ -21,26 +26,28 @@ const HomePage = () => {
             window.removeEventListener('resize', checkScreenSize);
         };
     }, []);
-    return (
 
+    return (
         <Skeleton
             mainContent={
                 <>
                     {isSmallScreen ? (
                         <IconHeader
                             leftContent={<Logoicon />}
-                            rightContent={<div></div>}
+                            rightContent={pathname === '/register' ? <LoginButton /> : <RegisterButton />}
                         />
                     ) : (
-                        <DefaultHeader
-                            leftContent={<Logotext />}
+                        <RegisterHeader
+                            leftContent={<LogoFull />}
+                            rightContent={pathname === '/register' ? <LoginButton /> : <RegisterButton />}
                         />
                     )}
-                    <SidebarComponent />
+                    {pathname === '/login' ? <LoginForm /> : <SignupForm />}
                 </>
             }
             footerContent={<FooterComponent />}
         />
     );
 };
-export default HomePage;
+
+export default AuthPage;

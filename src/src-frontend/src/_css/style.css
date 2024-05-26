@@ -1,88 +1,25 @@
-.main-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
-  margin-bottom: 100px;
-}
-.main-container h1, .main-container h2 {
-  text-align: center;
-}
-.main-container .input-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 500px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 12px 8px rgba(0, 0, 0, 0.16);
-  text-align: center;
-}
-.main-container .input-container input {
-  width: 300px;
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #8E8E8E;
-  border-radius: 10px;
-  transition: border-color 0.3s ease;
-}
-.main-container .input-container input:focus {
-  border-color: #5E8A8C;
-}
-.main-container .input-container input.error {
-  border-color: red;
-}
-.main-container .input-container input.success {
-  border-color: #8E8E8E;
-}
-.main-container .input-container label {
-  display: flex;
-  flex-direction: row;
-  margin-top: 10px;
-}
-.main-container .input-container label .check {
-  width: 15px;
-  margin: 0;
-  margin-right: 5px;
-  padding: 0;
-}
-.main-container .submit-btn {
-  width: 300px;
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  background-color: #00666B;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 20px;
-}
-.main-container .submit-btn:hover {
-  background-color: #5E8A8C;
-}
-.main-container .register-link {
-  display: flex;
-  flex-direction: column;
-  font-size: 0.8em;
-  text-align: center;
-  margin-top: 10px;
-  text-decoration: none;
-}
-.main-container .register-link a {
-  color: #5E8A8C;
-  margin-top: 10px;
-}
-.main-container .register-link a:hover {
-  color: #00666B;
-}
-.main-container .error-message {
-  text-align: center;
-  color: rgb(235, 78, 78);
-  padding: 10px;
+aside {
+  max-width: 200px;
+  height: 15vh;
 }
 
-#login-container {
+.sidebar-container .icon-section {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin-left: 30px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+@media screen and (max-width: 500px) {
+  .sidebar-container .icon-section {
+    margin-left: 15px;
+  }
+}
+.sidebar-container .icon-section .txt {
+  margin-left: 20px;
+}
+@media screen and (max-width: 500px) {
+  .sidebar-container {
+    width: min-content;
+    margin-left: 0;
+  }
 }/*# sourceMappingURL=style.css.map */

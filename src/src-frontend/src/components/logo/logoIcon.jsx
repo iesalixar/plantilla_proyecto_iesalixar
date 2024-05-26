@@ -3,18 +3,18 @@ const Logoicon = (props) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
-        width={29}
-        height={31}
+        width={58} // Doble del ancho original
+        height={62} // Doble de la altura original
         fill="none"
         {...props}
     >
         <rect
-            width={27.208}
-            height={29.173}
-            x={0.752}
-            y={0.729}
+            width={54.416} // Doble del ancho original
+            height={58.346} // Doble de la altura original
+            x={1.504} // Ajuste para mantener la posición
+            y={1.458} // Ajuste para mantener la posición
             fill="url(#a)"
-            rx={5}
+            rx={10} // Doble del radio de esquina original
             style={{
                 mixBlendMode: "multiply",
             }}
@@ -37,4 +37,4 @@ const Logoicon = (props) => (
         </defs>
     </svg>
 )
-export default Logoicon
+export default Logoicon;

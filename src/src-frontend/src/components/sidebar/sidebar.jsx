@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import './style.scss';
 import { ReactComponent as ProfileIcon } from '../../assest/sidebar-icons/profile_icon.svg';
 import { ReactComponent as HomeIcon } from '../../assest/sidebar-icons/home_icon.svg';
@@ -10,6 +11,14 @@ import { useAuth } from '../../authContext/autContext';
 
 const SidebarComponent = () => {
     const { logout } = useAuth();
+    const [isScreenSmall, setIsScreenSmall] = useState(window.innerWidth <= 500);
+    const handleResize = () => {
+        setIsScreenSmall(window.innerWidth <= 500);
+    };
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const handleIconClick = (name) => {
         switch (name) {
@@ -44,7 +53,7 @@ const SidebarComponent = () => {
                 ].map((icon, index) => (
                     <div className="icon-section" key={index}>
                         <div className='icon-btn' onClick={() => handleIconClick(icon.name)}>{icon.component}</div>
-                        <div className='txt'>{icon.name}</div>
+                        {!isScreenSmall && <div className='txt'>{icon.name}</div>}
                     </div>
                 ))}
             </div>

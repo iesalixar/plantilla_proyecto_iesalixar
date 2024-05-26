@@ -1,12 +1,25 @@
-.header {
-    width: 100vw;
+.header-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #8E8E8E;
-    border-radius: 10px;
+    border-radius: 5px;
+    .logo-container{
+
+        @media screen and (max-width: 768px) {
+            margin-left: 10px;
+        }
+    }
    .logo-svg{
     margin-left: 10px;
    }
+   .btn-container{
+    margin-right: 10px;
+
+   }
+   .option-container{
+    margin-right: 10px;
+   }
+
 
 }

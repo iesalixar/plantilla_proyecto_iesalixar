@@ -1,45 +1,39 @@
 import './style.scss';
-import { LogingButton, RegisterButton } from '../buttons/buttons';
-import { useLocation } from 'react-router-dom';
-import SvgComponent from '../logo/logofull.jsx';
-import Logoicon from '../logo/logoIcon.jsx';
-import Logotext from '../logo/logotext.jsx';
 import { Link } from 'react-router-dom';
 
 
-const DefaultHeader = () => {
+const DefaultHeader = ({ leftContent }) => {
     return (
-        <div className="header">
+        <div className="header-container">
             <div className='logo-container'>
-                <Link to="/home"><Logotext className="logo-svg"></Logotext></Link>
+                <Link to="/home">{leftContent}</Link>
             </div>
-
         </div>
-
     );
 };
-const RegisterHeader = () => {
-    const location = useLocation();
-    const pathname = location.pathname;
+
+
+const RegisterHeader = ({ leftContent, rightContent }) => {
     return (
-        <div className="header">
+        <div className="header-container">
             <div className='logo-container'>
-                <Link to="/home"> <SvgComponent></SvgComponent></Link>
+                <Link to="/home">{leftContent}</Link>
             </div>
             <div className='btn-container'>
-                {pathname === '/register' ? <LogingButton /> : <RegisterButton />}
+                {rightContent}
             </div>
         </div>
 
     );
 };
 
-const IconHeader = () => {
+const IconHeader = ({ leftContent, rightContent }) => {
     return (
-        <div className="header">
+        <div className="header-container">
             <div className='logo-container'>
-                <Link to="/home"><Logoicon></Logoicon></Link>
+                <Link to="/home">{leftContent}</Link>
             </div>
+            <div className='option-container'>{rightContent}</div>
         </div>
 
     );
