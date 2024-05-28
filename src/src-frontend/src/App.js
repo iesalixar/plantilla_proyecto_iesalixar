@@ -5,9 +5,9 @@ import HomePage from './pages/home/homePage';
 import AuthPage from './pages/auth/authPage.jsx';
 import ProtectedRoute from './components/protectedRouter.js';
 import "@fontsource/roboto"; // Defaults to weight 400
-import "@fontsource/roboto/400.css"; // Specify weight
-import "@fontsource/roboto/400-italic.css"; // Specify weight and styl
-import './App.css';
+import PublicationComponent from './components/publication/publication.jsx';
+import ImageUploadComponent from './components/imageUpload/imageUpload.jsx';
+import './app.scss'
 
 function App() {
 
@@ -19,6 +19,7 @@ function App() {
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/login" element={<AuthPage />} />
         <Route path="/register" element={<AuthPage />} />
+        <Route path="/pruebas" element={<PublicationComponent />} />
         <Route path="/home" element={
           <ProtectedRoute>
             <HomePage />

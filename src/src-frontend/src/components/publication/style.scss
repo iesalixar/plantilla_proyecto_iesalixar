@@ -1,0 +1,42 @@
+.publication-container{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 70 auto;
+    width: 80%;
+    
+    .publication{
+        border-bottom: 1px solid #8E8E8E;
+        .img-container{
+            background-color: #8E8E8E;
+            max-width: 400px;
+            height: 300px;
+            img{
+                min-width: 400px;
+    
+            }
+        }
+        .options-container{
+            width: 100%;
+            display: flex;
+            padding-top: 10px;
+            .icon{
+                padding-right: 10px;
+            }
+        }
+        .comment-container{
+            padding-top: 10px;
+            padding-bottom: 20px;
+
+            & span{
+                padding-right: 5px;
+            }
+            & #title{
+                font-weight: 900;
+            }
+    }
+    }
+
+}

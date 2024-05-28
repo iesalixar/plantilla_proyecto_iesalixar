@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import FooterComponent from '../../components/footer/footer';
-import { DefaultHeader, IconHeader } from '../../components/header/headers';
-import SidebarComponent from '../../components/sidebar/sidebar';
+import { IconHeader } from '../../components/header/headers';
+import SidebarComponent from '../../components/navbar/sidebar';
 import Skeleton from '../../components/skeleton/skeleton';
 import Logoicon from '../../components/logo/logoIcon';
-import Logotext from '../../components/logo/logotext';
+import PublicationComponent from '../../components/publication/publication';
+import FooterBarComponent from '../../components/navbar/footerBar';
+import { ReactComponent as LogoutIcon } from '../../assest/icons/sidebar-icons/logout_icon.svg';
 
 const HomePage = () => {
-
     const [isSmallScreen, setIsSmallScreen] = useState(false);
+    const [showSidebar, setShowSidebar] = useState(true);
 
     const checkScreenSize = () => {
-        const isSmall = window.innerWidth <= 500;
-        setIsSmallScreen(isSmall);
+        const isSmallHeader = window.innerWidth <= 500;
+        const isShowSidebar = window.innerWidth > 500;
+        setIsSmallScreen(isSmallHeader);
+        setShowSidebar(isShowSidebar);
     };
+
     useEffect(() => {
         checkScreenSize();
         window.addEventListener('resize', checkScreenSize);
@@ -21,26 +26,26 @@ const HomePage = () => {
             window.removeEventListener('resize', checkScreenSize);
         };
     }, []);
-    return (
 
+    return (
         <Skeleton
             mainContent={
                 <>
                     {isSmallScreen ? (
                         <IconHeader
                             leftContent={<Logoicon />}
-                            rightContent={<div></div>}
+                            rightContent={<LogoutIcon />}
                         />
                     ) : (
-                        <DefaultHeader
-                            leftContent={<Logotext />}
-                        />
+                        <SidebarComponent />
                     )}
-                    <SidebarComponent />
+                    {!showSidebar && <FooterBarComponent />}
+                    <PublicationComponent />
                 </>
             }
             footerContent={<FooterComponent />}
         />
     );
 };
+
 export default HomePage;
