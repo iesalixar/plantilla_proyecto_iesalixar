@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../authContext/autContext';
+import { useAuth } from '../../contexts/authentication';
 import { signupService } from '../../service/auht/authService';
 import './style.scss';
 

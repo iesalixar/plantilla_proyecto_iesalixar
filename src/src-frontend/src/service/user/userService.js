@@ -59,6 +59,17 @@ async function getUserById(id) {
     }
 }
 
+// Servicio para obtener un usuario por su ID
+async function getUserByUsername(username) {
+    try {
+        const response = await axios.get(`${API_USER_PATH}/${username}`, getConfig());
+        return response.data;
+    } catch (error) {
+        console.error(`Error getting user with ID ${username}:`, error.response.data);
+        throw error.response.data;
+    }
+}
+
 // Servicio para obtener los amigos de un usuario por su ID
 async function getUserFriends(id) {
     try {
@@ -93,12 +104,15 @@ async function deleteUser(id) {
 }
 
 // Exportar los servicios de usuario
-export default {
+const userService = {
     createUser,
     createAdmin,
     getUsers,
     getUserById,
     getUserFriends,
+    getUserByUsername,
     updateUser,
     deleteUser
 };
+
+export default userService;

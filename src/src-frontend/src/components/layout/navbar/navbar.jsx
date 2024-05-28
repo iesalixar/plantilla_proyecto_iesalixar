@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import './style.scss';
-import { ReactComponent as ProfileIcon } from '../../assest/icons/sidebar-icons/profile_icon.svg';
-import { ReactComponent as HomeIcon } from '../../assest/icons/sidebar-icons/home_icon.svg';
-import { ReactComponent as SearchIcon } from '../../assest/icons/sidebar-icons/search_icon.svg';
-import { ReactComponent as NotificationsIcon } from '../../assest/icons/sidebar-icons/notification_icon.svg';
-import { ReactComponent as CreateIcon } from '../../assest/icons/sidebar-icons/create_icon.svg';
-import { ReactComponent as LogoutIcon } from '../../assest/icons/sidebar-icons/logout_icon.svg';
-import { useAuth } from '../../authContext/autContext';
-import Logotext from '../../components/logo/logotext';
 import { Link } from 'react-router-dom';
-import Logoicon from '../logo/logoIcon';
+
+import { useAuth } from '../../../contexts/authentication';
+
+import { ReactComponent as ProfileIcon } from '../../../assest/icons/svg/sidebar-icons/profile_icon.svg';
+import { ReactComponent as HomeIcon } from '../../../assest/icons/svg/sidebar-icons/home_icon.svg';
+import { ReactComponent as SearchIcon } from '../../../assest/icons/svg/sidebar-icons/search_icon.svg';
+import { ReactComponent as NotificationsIcon } from '../../../assest/icons/svg/sidebar-icons/notification_icon.svg';
+import { ReactComponent as CreateIcon } from '../../../assest/icons/svg/sidebar-icons/create_icon.svg';
+import { ReactComponent as LogoutIcon } from '../../../assest/icons/svg/sidebar-icons/logout_icon.svg';
+import Logotext from '../../../assest/icons/components/logo/logotext';
+import Logoicon from '../../../assest/icons/components/logo/logoIcon';
+
+import './style.scss';
 
 const SidebarComponent = () => {
     const { logout } = useAuth();
-    const [isScreenSmall, setIsScreenSmall] = useState(window.innerWidth < 1100);
+    const [isScreenSmall, setIsScreenSmall] = useState(false);
 
     const handleResize = () => {
-        setIsScreenSmall(window.innerWidth <= 770);
+        setIsScreenSmall(window.innerWidth <= 1050);
     };
 
     useEffect(() => {

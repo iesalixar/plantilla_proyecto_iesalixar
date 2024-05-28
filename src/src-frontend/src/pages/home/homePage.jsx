@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import FooterComponent from '../../components/footer/footer';
-import { IconHeader } from '../../components/header/headers';
-import Skeleton from '../../components/skeleton/skeleton';
-import Logoicon from '../../components/logo/logoIcon';
+
+import Skeleton from '../../components/layout/skeleton/skeleton.jsx';
+import { IconHeader } from '../../components/layout/header/headers.jsx';
+import { FooterBarComponent, SidebarComponent } from '../../components/layout/navbar/navbar.jsx';
 import PublicationComponent from '../../components/publication/publication';
-import { FooterBarComponent, SidebarComponent } from '../../components/navbar/navbar.jsx';
-import { ReactComponent as LogoutIcon } from '../../assest/icons/sidebar-icons/logout_icon.svg';
+import FooterComponent from '../../components/layout/footer/footer.jsx';
+
+import { ReactComponent as LogoutIcon } from '../../assest/icons/svg/sidebar-icons/logout_icon.svg';
+import Logoicon from '../../assest/icons/components/logo/logoIcon.jsx';
 
 const HomePage = () => {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -38,7 +40,7 @@ const HomePage = () => {
                     </div>
                 </>
             }
-            footerContent={<FooterBarComponent />}
+            footerContent={isSmallScreen ? (<FooterBarComponent />) : <FooterComponent />}
         />
     );
 };

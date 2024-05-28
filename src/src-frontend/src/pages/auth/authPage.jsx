@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import LoginForm from '../../components/forms/login';
-import { RegisterHeader, IconHeader } from '../../components/header/headers';
-import FooterComponent from '../../components/footer/footer';
-import Skeleton from '../../components/skeleton/skeleton';
-import { LoginButton, RegisterButton } from '../../components/buttons/buttons';
-import LogoFull from '../../components/logo/logofull';
+import { RegisterHeader, IconHeader } from '../../components/layout/header/headers';
+import FooterComponent from '../../components/layout/footer/footer';
+import Skeleton from '../../components/layout/skeleton/skeleton';
+import { LoginButton, RegisterButton } from '../../components/layout/buttons/buttons';
 import SignupForm from '../../components/forms/signup';
-import Logoicon from '../../components/logo/logoIcon';
+
+import Logoicon from '../../assest/icons/components/logo/logoIcon';
+import LogoFull from '../../assest/icons/components/logo/logofull';
 
 const AuthPage = () => {
+
     const location = useLocation();
     const pathname = location.pathname;
 

@@ -11,8 +11,8 @@ const Logotext = (props) => (
         <rect
             width={159}
             height={37}
-            x={15}
-            y={9}
+            x={0}
+            y={0}
             fill="url(#a)"
             rx={5}
             style={{
