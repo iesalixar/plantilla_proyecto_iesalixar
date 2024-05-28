@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import LoginForm from '../../components/login/login';
+import LoginForm from '../../components/forms/login';
 import { RegisterHeader, IconHeader } from '../../components/header/headers';
 import FooterComponent from '../../components/footer/footer';
 import Skeleton from '../../components/skeleton/skeleton';
 import { LoginButton, RegisterButton } from '../../components/buttons/buttons';
 import LogoFull from '../../components/logo/logofull';
-import SignupForm from '../../components/signup/signup';
+import SignupForm from '../../components/forms/signup';
 import Logoicon from '../../components/logo/logoIcon';
 
 const AuthPage = () => {

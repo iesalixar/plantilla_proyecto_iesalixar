@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../authContext/autContext';
 import { signupService } from '../../service/auht/authService';
+import './style.scss';
 
 const SignupForm = () => {
 

@@ -1,0 +1,53 @@
+
+.sidebar-container{
+    width:min-content;
+    height: 100%;
+    border-right: 1px solid #8E8E8E;
+    padding: 16px;
+    font-weight: 900;
+    position: fixed;
+
+    .icon-section{
+      display: flex;
+      margin-top: 16px;
+      margin-left: 16px;
+      cursor: pointer;
+        .txt{
+            margin-left: 20px;
+            padding-right: 50px;
+            
+        }
+    }
+    .logout-section{
+        display: flex;
+        position: fixed;
+        bottom: 16px;
+        margin-top: 16px;
+        margin-left: 16px;
+        cursor: pointer;
+          .txt{
+              margin-left: 20px;
+              padding-right: 50px;
+
+          }
+      }
+}
+
+.footerbar-container{
+    width: 100%;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    justify-content: space-evenly;
+    border-top: 1px solid #8E8E8E;
+    align-items: center;
+    background-color: white;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-radius: 5px;
+            .icon-section{
+        display: flex;
+        cursor: pointer;
+        margin: 0;
+    }
+}

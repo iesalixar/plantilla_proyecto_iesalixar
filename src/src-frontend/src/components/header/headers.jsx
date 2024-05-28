@@ -2,17 +2,6 @@ import './style.scss';
 import { Link } from 'react-router-dom';
 
 
-const DefaultHeader = ({ leftContent }) => {
-    return (
-        <div className="header-container">
-            <div className='logo-container'>
-                <Link to="/home">{leftContent}</Link>
-            </div>
-        </div>
-    );
-};
-
-
 const RegisterHeader = ({ leftContent, rightContent }) => {
     return (
         <div className="header-container">
@@ -38,4 +27,4 @@ const IconHeader = ({ leftContent, rightContent }) => {
 
     );
 };
-export { DefaultHeader, RegisterHeader, IconHeader };
+export { RegisterHeader, IconHeader };

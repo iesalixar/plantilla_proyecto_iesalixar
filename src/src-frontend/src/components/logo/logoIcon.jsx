@@ -9,10 +9,10 @@ const Logoicon = (props) => (
         {...props}
     >
         <rect
-            width={54.416} // Doble del ancho original
-            height={58.346} // Doble de la altura original
-            x={1.504} // Ajuste para mantener la posición
-            y={1.458} // Ajuste para mantener la posición
+            width={50.416} // Doble del ancho original
+            height={54.346} // Doble de la altura original
+            x={1.05} // Ajuste para mantener la posición
+            y={2.458} // Ajuste para mantener la posición
             fill="url(#a)"
             rx={10} // Doble del radio de esquina original
             style={{
