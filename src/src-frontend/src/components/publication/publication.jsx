@@ -8,7 +8,7 @@ const PublicationComponent = () => {
         <div className="publication-container">
             <div className='publication'>
                 <div className="img-container">
-                    <img src="" alt="" />
+                    <img src={example} alt="" />
                 </div>
                 <div className='options-container'>
                     <div className='icon'><CommentIcon /></div>
@@ -20,7 +20,7 @@ const PublicationComponent = () => {
             </div>
             <div className='publication'>
                 <div className="img-container">
-                    <img src="" alt="" />
+                    <img src={example} alt="" />
                 </div>
                 <div className='options-container'>
                     <div className='icon'><CommentIcon /></div>
@@ -30,10 +30,20 @@ const PublicationComponent = () => {
                     <span id='title'>Username</span><span>Corriendo la maratón.</span>
                 </div>
             </div>
-
+            <div className='publication'>
+                <div className="img-container">
+                    <img src={example} alt="" />
+                </div>
+                <div className='options-container'>
+                    <div className='icon'><CommentIcon /></div>
+                    <div><LikeIcon className='icon' /></div>
+                </div>
+                <div className='comment-container'>
+                    <span id='title'>Username</span><span>Corriendo la maratón.</span>
+                </div>
+            </div>
         </div >
     );
-
 };
 
 export default PublicationComponent;

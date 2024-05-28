@@ -1,18 +1,105 @@
+/* styles.scss */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #fafafa;
+    overflow-x: hidden; /* Evitar el desbordamiento horizontal */
+}
 
-*{
-    position: relative;
-    html, body {
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        font-family: 'Roboto', sans-serif;
-        
-        footer{
+.body-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100vw;
+}
 
-            width: 100vw;
-            padding: 16px;
-        }
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
 
+.footerbar-container, .header-container, .sidebar-container {
+    background-color: white;
+}
+
+.header-container, .footerbar-container {
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    
+}
+
+.header-container {
+    top: 0;
+    border-bottom: 1px solid #8E8E8E;
+    border-radius: 5px;
+    .btn-container{
+        margin-right: 16px;
+    
+       }
+       .option-container{
+        margin-right: 10px;
+       }
+    
+       .logo-container{
+        margin-left: 16px;
+       }
+    
+}
+
+.footerbar-container {
+    bottom: 0;
+    flex-wrap: wrap;
+    border-top: 1px solid #8E8E8E;
+ 
+}
+
+.sidebar-container {
+    width: 250px;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-right: 1px solid #8E8E8E;
+}
+
+.icon-section, .logout-section {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px 0;
+}
+
+.icon-btn {
+    margin-right: 15px;
+}
+
+@media (max-width: 770px) {
+    .sidebar-container {
+        display: none;
+    }
+
+    .footerbar-container {
+        display: flex;
+        justify-content: space-around;
     }
 }
+
+@media (min-width: 770px) {
+    .footerbar-container {
+        display: none;
+    }
+}
+
