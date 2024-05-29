@@ -10,6 +10,7 @@ import SignupForm from '../../components/forms/signup';
 
 import Logoicon from '../../assest/icons/components/logo/logoIcon';
 import LogoFull from '../../assest/icons/components/logo/logofull';
+import { ToggleButton } from '../../components/layout/buttons/buttons';
 
 const AuthPage = () => {
 
@@ -37,13 +38,22 @@ const AuthPage = () => {
                     {isSmallScreen ? (
                         <IconHeader
                             leftContent={<Logoicon />}
-                            rightContent={pathname === '/register' ? <LoginButton /> : <RegisterButton />}
+                            rightContent={
+                                <>
+                                    <ToggleButton />
+                                    {pathname === '/register' ? <LoginButton /> : <RegisterButton />}
+                                </>}
                         />
                     ) : (
                         <RegisterHeader
                             leftContent={<LogoFull />}
-                            rightContent={pathname === '/register' ? <LoginButton /> : <RegisterButton />}
-                        />
+                            rightContent={
+                                <>
+                                    <ToggleButton />
+                                    {pathname === '/register' ? <LoginButton /> : <RegisterButton />}
+
+                                </>
+                            } />
                     )}
                     {pathname === '/login' ? <LoginForm /> : <SignupForm />}
                 </>

@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signinService } from '../../service/auht/authService';
 import './style.scss';
 import { useAuth } from '../../contexts/authentication';
+import { ThemeContext } from '../../contexts/theme';
 
 const LoginForm = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
+    const { theme } = useContext(ThemeContext);
 
     //#region  SET STATES
     const [loginInfo, setLoginInfo] = useState({
@@ -102,6 +104,7 @@ const LoginForm = () => {
                 const result = await signinService(loginInfo.identifier, loginInfo.password);
                 if (result.success) {
                     login({ token: result.token });
+
                     navigate('/');
                 }
             } catch (error) {
@@ -117,7 +120,7 @@ const LoginForm = () => {
         <div className='main-container'>
             <h1>Welcome back to <span style={{ color: '#00666B' }}>FitConnet</span></h1>
             <form onSubmit={handleSubmit} id='login-container'>
-                <div className="input-container">
+                <div className="input-container" style={{ borderColor: theme.gray7, borderWidth: '1px', borderStyle: 'solid' }}>
                     <input
                         type="text"
                         name="identifier"
@@ -149,7 +152,7 @@ const LoginForm = () => {
                     </label>
                 </div>
                 <button type="submit" className='submit-btn'>Sign In</button>
-            </form>
+            </form >
 
             <div className="register-link">
                 <Link to="/">Forgot the password?</Link>
@@ -161,7 +164,7 @@ const LoginForm = () => {
                 {errors.password && <div className="error-message">{errors.password}</div>}
                 {errors.generic && <div className="error-message">{errors.generic}</div>}
             </section>
-        </div>
+        </div >
 
     );
     //#endregion

@@ -22,3 +22,30 @@
         }
     }
 }   
+
+.toggle-container{
+    display: flex;
+    .icon{
+        width: 2em;  
+        height: 2em;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 768px) {
+    .toggle-container{
+        .icon{
+            width: 1.8em;
+            height: 1.8em;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .toggle-container{
+        .icon{
+            width: 1.5em;
+            height: 1.5em;
+        }
+    }
+}

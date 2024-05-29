@@ -11,6 +11,7 @@ import { ReactComponent as CreateIcon } from '../../../assest/icons/svg/sidebar-
 import { ReactComponent as LogoutIcon } from '../../../assest/icons/svg/sidebar-icons/logout_icon.svg';
 import Logotext from '../../../assest/icons/components/logo/logotext';
 import Logoicon from '../../../assest/icons/components/logo/logoIcon';
+import { ToggleButton } from '../buttons/buttons';
 
 import './style.scss';
 
@@ -60,6 +61,7 @@ const SidebarComponent = () => {
                 { name: 'Notifications', component: <NotificationsIcon /> },
                 { name: 'Create', component: <CreateIcon /> },
                 { name: 'Profile', component: <ProfileIcon /> },
+                { name: 'Color mode', component: <ToggleButton /> }
             ].map((icon, index) => (
                 <div className="icon-section" key={index}>
                     <div className='icon-btn' onClick={() => handleIconClick(icon.name)}>

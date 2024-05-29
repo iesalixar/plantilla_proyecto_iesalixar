@@ -6,7 +6,7 @@ const RegisterHeader = ({ leftContent, rightContent }) => {
             <div className='logo-container'>
                 <Link to="/home">{leftContent}</Link>
             </div>
-            <div className='btn-container'>
+            <div className='option-container'>
                 {rightContent}
             </div>
         </div>
