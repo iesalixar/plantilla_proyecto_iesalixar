@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/authentication';
 import { signupService } from '../../service/auht/authService';
 import './style.scss';
+import { ThemeContext } from '../../contexts/theme';
 
 const SignupForm = () => {
 
     const navigate = useNavigate();
     const { login } = useAuth();
+    const { theme } = useContext(ThemeContext);
+    const [focus, setFocus] = useState(false);
 
     //#region  SET STATES
     const [registrationInfo, setRegistrationInfo] = useState({
@@ -216,8 +219,8 @@ const SignupForm = () => {
     //#region HTML
     return (
         <div className='main-container'>
-            <h1>Welcome to <span style={{ color: '#00666B' }}>FitConnet</span></h1>
-            <form onSubmit={handleSubmit} id='login-container'>
+            <h1 style={{ color: theme.grayA12 }}>Welcome to <span style={{ color: theme.tealA12 }}>FitConnet</span></h1>
+            <form onSubmit={handleSubmit} className="signup-container" style={{ borderColor: theme.gray7, borderWidth: '1px', borderStyle: 'solid' }}>
                 <div className="input-container">
                     <input
                         type="text"
@@ -225,7 +228,7 @@ const SignupForm = () => {
                         value={registrationInfo.firstName}
                         onChange={handleChange}
                         placeholder='Firstname'
-                        className={errors.firstName ? 'error' : 'success'}
+                        style={{ color: theme.gray12, borderColor: theme.gray8 }}
                         required
                     />
                     {errors.firstName && <div className="error-message">{errors.firstName}</div>}
@@ -236,7 +239,8 @@ const SignupForm = () => {
                         value={registrationInfo.lastName}
                         onChange={handleChange}
                         placeholder='Lastname'
-                        className={errors.lastName ? 'error' : 'success'}
+                        style={{ color: theme.gray12, borderColor: theme.gray8 }}
+
                     />
                     {errors.lastName && <div className="error-message">{errors.lastName}</div>}
 
@@ -246,7 +250,7 @@ const SignupForm = () => {
                         value={registrationInfo.username}
                         onChange={handleChange}
                         placeholder='Username'
-                        className={errors.username ? 'error' : 'success'}
+                        style={{ color: theme.gray12, borderColor: theme.gray8 }}
                         required
                     />
                     {errors.username && <div className="error-message">{errors.username}</div>}
@@ -257,7 +261,7 @@ const SignupForm = () => {
                         value={registrationInfo.age}
                         onChange={handleChange}
                         placeholder='Age'
-                        className={errors.age ? 'error' : 'success'}
+                        style={{ color: theme.gray12, borderColor: theme.gray8 }}
                         required
                     />
                     {errors.age && <div className="error-message">{errors.age}</div>}
@@ -268,7 +272,7 @@ const SignupForm = () => {
                         value={registrationInfo.email}
                         onChange={handleChange}
                         placeholder='Email'
-                        className={errors.email ? 'error' : 'success'}
+                        style={{ color: theme.gray12, borderColor: theme.gray8 }}
                         required
                     />
                     {errors.email && <div className="error-message">{errors.email}</div>}
@@ -279,12 +283,12 @@ const SignupForm = () => {
                         value={registrationInfo.password}
                         onChange={handleChange}
                         placeholder='Password'
-                        className={errors.password ? 'error' : 'success'}
+                        style={{ color: theme.gray12, borderColor: theme.gray8 }}
+
                         required
                     />
                     {errors.password && <div className="error-message">{errors.password}</div>}
-
-                    <section>
+                    <div>
                         <label>
                             <input
                                 type="checkbox"
@@ -293,7 +297,7 @@ const SignupForm = () => {
                                 onChange={handleChange}
                                 className='check'
                             />
-                            <span style={{ color: '#5E8A8C' }}>Agree the <span style={{ color: '#0071F6' }} className='term-link'>Terms and conditions.</span></span>
+                            <span style={{ color: theme.gray11 }}>Agree the <span style={{ color: '#0071F6' }} className='term-link'>Terms and conditions.</span></span>
                         </label>
                         <label>
                             <input
@@ -303,15 +307,15 @@ const SignupForm = () => {
                                 onChange={handleChange}
                                 className='check'
                             />
-                            <span style={{ color: '#5E8A8C' }}>Save this information for next time.</span>
+                            <span style={{ color: theme.gray11 }}>Save this information for next time.</span>
                         </label>
-                    </section>
+                    </div>
                 </div>
-                <button type="button" className='submit-btn'>Sign Up</button>
+                <button type="submit" className='submit-btn' style={{ background: theme.teal11, color: theme.gray7, borderColor: theme.gray6 }}>Sign Up</button>
             </form>
 
             <div className="register-link">
-                <Link to="/login">Already registered?</Link>
+                <Link to="/login" style={{ color: theme.teal11 }}>Already registered?</Link>
             </div>
             <section>
                 {errors.privacyPolicy && <div className="error-message">{errors.privacyPolicy}</div>}

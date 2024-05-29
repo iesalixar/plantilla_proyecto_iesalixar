@@ -18,13 +18,21 @@
 
 .toggle-container{
     display: flex;
+    transition: background-color 0.3s ease; /* Agrega una transición suave */
+    width: fit-content; /* Aplica un efecto de difuminado */
+
     .icon{
         width: 2em;  
         height: 2em;
         cursor: pointer;
+        padding: 5px;
     }
 }
-
+.toggle-container.hovered {
+    border: 1px solid;
+    border-color: var(--gray-8);
+    border-radius: 5px;
+}
 @media (max-width: 768px) {
     .toggle-container{
         .icon{

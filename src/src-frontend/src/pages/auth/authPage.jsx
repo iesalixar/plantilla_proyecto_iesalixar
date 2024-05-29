@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import LoginForm from '../../components/forms/login';
-import { RegisterHeader, IconHeader } from '../../components/layout/header/headers';
+import { Header } from '../../components/layout/header/header';
 import FooterComponent from '../../components/layout/footer/footer';
 import Skeleton from '../../components/layout/skeleton/skeleton';
 import { LoginButton, RegisterButton } from '../../components/layout/buttons/buttons';
@@ -11,6 +11,7 @@ import SignupForm from '../../components/forms/signup';
 import LogoiconDark from '../../assest/icons/components/logo/logoIcon-dark';
 import LogoFullDark from '../../assest/icons/components/logo/logofull-dark';
 import LogoFullClear from '../../assest/icons/components/logo/logofull-clear';
+import LogoiconClear from '../../assest/icons/components/logo/logoicon-clear';
 
 import { ToggleButton } from '../../components/layout/buttons/buttons';
 
@@ -35,30 +36,41 @@ const AuthPage = () => {
         };
     }, []);
 
-    return (
-        <Skeleton
-            mainContent={
-                <>
-                    {isSmallScreen ? (
-                        <IconHeader
-                            leftContent={isDark ? <LogoiconDark /> : <LogoiconDark />}
+    if (isSmallScreen) {
+        return (
+            <Skeleton
+                mainContent={
+                    <>
+
+                        <Header
+                            leftContent={isDark ? <LogoiconDark /> : <LogoiconClear />}
                             rightContent={
                                 <>
                                     <ToggleButton />
                                 </>}
                         />
-                    ) : (
-                        <RegisterHeader
-                            leftContent={isDark ? <LogoFullDark /> : <LogoFullClear />}
-                            rightContent={
-                                <>
-                                    <ToggleButton />
-                                    {pathname === '/register' ? <LoginButton /> : <RegisterButton />}
+                        {pathname === '/login' ? <LoginForm /> : <SignupForm />}
+                    </>
+                }
+                footerContent={<FooterComponent />}
+            />
+        );
+    }
+    return (
+        <Skeleton
+            mainContent={
+                <>
+                    <Header
+                        leftContent={isDark ? <LogoFullDark /> : <LogoFullClear />}
+                        rightContent={
+                            <>
+                                <ToggleButton />
+                                {pathname === '/register' ? <LoginButton /> : <RegisterButton />}
 
-                                </>
-                            } />
-                    )}
+                            </>
+                        } />
                     {pathname === '/login' ? <LoginForm /> : <SignupForm />}
+
                 </>
             }
             footerContent={<FooterComponent />}

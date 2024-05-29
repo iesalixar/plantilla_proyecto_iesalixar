@@ -8,9 +8,9 @@ const LogoFullDark = (props) => {
     return (
         <svg
             width={308.49}
-            height={75.981}
+            height={90.981}
             className="logo-full-dark"
-            viewBox="0 0 406 99.998"
+            viewBox="2 15 406 99.998"
             {...props}
         >
             <g xmlns="http://www.w3.org/2000/svg" fill="#7adde3">

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeContext } from '../../../contexts/theme';
 
@@ -28,8 +28,24 @@ const RegisterButton = () => {
 
 const ToggleButton = () => {
     const { theme, isDark, toggleTheme } = useContext(ThemeContext);
+    const [isHovered, setIsHovered] = useState(false);
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
+
     return (
-        <div onClick={toggleTheme} className='toggle-container'>{isDark ? <SunIcon className='icon' style={{ color: theme.teal11 }} /> : <MoonIcon className='icon' style={{ color: theme.teal11 }} />}</div>
+        <div
+            onClick={toggleTheme}
+            className={`toggle-container ${isHovered ? 'hovered' : ''}`}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
+            {isDark ? <SunIcon className='icon' style={{ color: theme.teal11 }} /> : <MoonIcon className='icon' style={{ color: theme.teal11 }} />}
+        </div>
     );
 };
 

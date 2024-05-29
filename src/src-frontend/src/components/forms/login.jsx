@@ -9,6 +9,7 @@ const LoginForm = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
     const { theme } = useContext(ThemeContext);
+    const [focus, setFocus] = useState(false);
 
     //#region  SET STATES
     const [loginInfo, setLoginInfo] = useState({
@@ -37,7 +38,6 @@ const LoginForm = () => {
 
     //#region HANDLECHANGE
     const handleChange = (e) => {
-
         const { name, value, checked, type } = e.target;
         const updatedValue = type === 'checkbox' ? checked : value;
         // Update loginInfo state
@@ -88,8 +88,11 @@ const LoginForm = () => {
             ...prevErrors,
             [name]: ''
         }));
+        setFocus(true);
     };
-
+    const handleBlur = () => {
+        setFocus(false); // Cambia el estado de enfoque a falso cuando el input pierde foco
+    };
 
     //#region HANDLE SUBMIT
     const handleSubmit = async (e) => {
@@ -129,41 +132,42 @@ const LoginForm = () => {
         <div className='main-container'>
             <h1 style={{ color: theme.grayA12 }}>Welcome back to <span style={{ color: theme.tealA12 }}>FitConnet</span></h1>
             <form onSubmit={handleSubmit} className="form-container" style={{ borderColor: theme.gray7, borderWidth: '1px', borderStyle: 'solid' }}>
-                <input
-                    type="text"
-                    name="identifier"
-                    value={loginInfo.identifier}
-                    onChange={handleChange}
-                    className={errors.identifier ? 'error' : 'success'}
-                    placeholder="Email"
-                    style={{ color: theme.gray12 }}
-
-                    required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    value={loginInfo.password}
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    className={errors.password ? 'error' : 'success'}
-                    placeholder="Password"
-                    style={{ color: theme.gray12, borderColor: theme.gray8 }}
-                    required
-
-                />
-
-                <label>
+                <div className="input-container">
                     <input
-                        type="checkbox"
-                        name="rememberMe"
-                        checked={loginInfo.rememberMe}
+                        type="text"
+                        name="identifier"
+                        value={loginInfo.identifier}
                         onChange={handleChange}
                         onFocus={handleFocus}
-                        className='check'
+                        onBlur={handleBlur}
+                        placeholder="Email"
+                        style={{ color: theme.gray12, borderColor: theme.gray8 }}
+
+                        required
                     />
-                    <span style={{ color: theme.gray11 }}>Save this information for next time.</span>
-                </label>
+                    <input
+                        type="password"
+                        name="password"
+                        value={loginInfo.password}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                        placeholder="Password"
+                        style={{ color: theme.gray12, borderColor: theme.gray8 }}
+                        required
+
+                    />
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="rememberMe"
+                            checked={loginInfo.rememberMe}
+                            onChange={handleChange}
+                            className='check'
+                        />
+                        <span style={{ color: theme.gray11 }}>Save this information for next time.</span>
+                    </label>
+                </div>
                 <button type="submit" className='submit-btn' style={{ background: theme.teal11, color: theme.gray7, borderColor: theme.gray6 }}>Sign In</button>
             </form >
 

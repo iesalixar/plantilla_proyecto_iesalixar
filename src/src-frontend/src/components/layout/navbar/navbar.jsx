@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeContext } from '../../../contexts/theme';
-
+import './style.scss'
 import { useAuth } from '../../../contexts/authentication';
 
 import { ReactComponent as ProfileIcon } from '../../../assest/icons/svg/sidebar-icons/profile_icon.svg';
@@ -17,12 +17,12 @@ import { ToggleButton } from '../buttons/buttons';
 import './style.scss';
 
 const SidebarComponent = () => {
-    //#region CONTEXTS
 
     const { theme } = useContext(ThemeContext);
     const { logout } = useAuth();
-    //#endregion
+
     const [isScreenSmall, setIsScreenSmall] = useState(false);
+
     const handleResize = () => {
         setIsScreenSmall(window.innerWidth <= 1050);
     };
