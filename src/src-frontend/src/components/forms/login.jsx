@@ -82,6 +82,15 @@ const LoginForm = () => {
     };
     //#endregion
 
+    const handleFocus = (e) => {
+        const { name } = e.target;
+        setErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: ''
+        }));
+    };
+
+
     //#region HANDLE SUBMIT
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -118,45 +127,49 @@ const LoginForm = () => {
     //#region  HTML
     return (
         <div className='main-container'>
-            <h1>Welcome back to <span style={{ color: '#00666B' }}>FitConnet</span></h1>
-            <form onSubmit={handleSubmit} id='login-container'>
-                <div className="input-container" style={{ borderColor: theme.gray7, borderWidth: '1px', borderStyle: 'solid' }}>
-                    <input
-                        type="text"
-                        name="identifier"
-                        value={loginInfo.identifier}
-                        onChange={handleChange}
-                        className={errors.identifier ? 'error' : 'success'}
-                        placeholder="Email"
-                        required
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        value={loginInfo.password}
-                        onChange={handleChange}
-                        className={errors.password ? 'error' : 'success'}
-                        placeholder="Password"
-                        required
-                    />
+            <h1 style={{ color: theme.grayA12 }}>Welcome back to <span style={{ color: theme.tealA12 }}>FitConnet</span></h1>
+            <form onSubmit={handleSubmit} className="form-container" style={{ borderColor: theme.gray7, borderWidth: '1px', borderStyle: 'solid' }}>
+                <input
+                    type="text"
+                    name="identifier"
+                    value={loginInfo.identifier}
+                    onChange={handleChange}
+                    className={errors.identifier ? 'error' : 'success'}
+                    placeholder="Email"
+                    style={{ color: theme.gray12 }}
 
-                    <label>
-                        <input
-                            type="checkbox"
-                            name="rememberMe"
-                            checked={loginInfo.rememberMe}
-                            onChange={handleChange}
-                            className='check'
-                        />
-                        <span style={{ color: '#5E8A8C' }}>Save this information for next time.</span>
-                    </label>
-                </div>
-                <button type="submit" className='submit-btn'>Sign In</button>
+                    required
+                />
+                <input
+                    type="password"
+                    name="password"
+                    value={loginInfo.password}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    className={errors.password ? 'error' : 'success'}
+                    placeholder="Password"
+                    style={{ color: theme.gray12, borderColor: theme.gray8 }}
+                    required
+
+                />
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="rememberMe"
+                        checked={loginInfo.rememberMe}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        className='check'
+                    />
+                    <span style={{ color: theme.gray11 }}>Save this information for next time.</span>
+                </label>
+                <button type="submit" className='submit-btn' style={{ background: theme.teal11, color: theme.gray7, borderColor: theme.gray6 }}>Sign In</button>
             </form >
 
             <div className="register-link">
-                <Link to="/">Forgot the password?</Link>
-                <Link to="/register">Create an account?</Link>
+                <Link to="/" style={{ color: theme.teal11 }}>Forgot the password?</Link>
+                <Link to="/register" style={{ color: theme.teal11 }}>Create an account?</Link>
             </div>
 
             <section>

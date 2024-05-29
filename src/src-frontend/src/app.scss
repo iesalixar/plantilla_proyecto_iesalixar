@@ -22,19 +22,13 @@ main {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    justify-content: center;
 }
 
-.footerbar-container, .header-container, .sidebar-container {
+.footerbar-container {
     background-color: #E0F2F1;
 }
-.header-container{
-    .icon{
-      width: 2em;  
-      height: 2em;
-      cursor: pointer;
-  
-  }
-}
+
 @media (max-width: 768px) {
   .header-container{
     .icon{
@@ -66,25 +60,29 @@ main {
 
 .header-container {
     top: 0;
-    border-bottom: 1px solid #8E8E8E;
     border-radius: 5px;
     .btn-container{
         margin-right: 16px;
-    
        }
-       .option-container{
+    .option-container{
         display: flex;
         margin-right: 16px;
         align-items: center;
-
+        padding-top: 10px;
         div{
           padding-right:16px ;
         }
-       }
-    
-       .logo-container{
-        margin-left: 16px;
-       }
+    }
+    .logo-container{
+        margin-left: 46px;
+        margin-top: 16px;
+        .icon{
+          width: 2em;  
+          height: 2em;
+          cursor: pointer;
+      }
+    }
+      
     
 }
 
@@ -145,6 +143,7 @@ main {
         display: none;
     }
 }
+
 
 //#region DARK
 @supports (color: color(display-p3 1 1 1)) {

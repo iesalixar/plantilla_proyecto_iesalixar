@@ -7,7 +7,7 @@ import PublicationComponent from '../../components/publication/publication';
 import FooterComponent from '../../components/layout/footer/footer.jsx';
 
 import { ReactComponent as LogoutIcon } from '../../assest/icons/svg/sidebar-icons/logout_icon.svg';
-import Logoicon from '../../assest/icons/components/logo/logoIcon.jsx';
+import LogoiconDark from '../../assest/icons/components/logo/logoIcon-dark.jsx';
 import { ToggleButton } from '../../components/layout/buttons/buttons.jsx';
 
 const HomePage = () => {
@@ -31,7 +31,7 @@ const HomePage = () => {
                 <>
                     <header className="header-container">
                         {isSmallScreen ? (
-                            <IconHeader leftContent={<Logoicon />} rightContent={<><ToggleButton /><LogoutIcon className='icon' /></>} />
+                            <IconHeader leftContent={<LogoiconDark />} rightContent={<><ToggleButton /><LogoiconDark className='icon' /></>} />
                         ) : (
                             <SidebarComponent />
                         )}

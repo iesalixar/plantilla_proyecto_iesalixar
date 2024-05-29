@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { ThemeContext } from '../../../contexts/theme';
 
 import { useAuth } from '../../../contexts/authentication';
 
@@ -9,20 +10,22 @@ import { ReactComponent as SearchIcon } from '../../../assest/icons/svg/sidebar-
 import { ReactComponent as NotificationsIcon } from '../../../assest/icons/svg/sidebar-icons/notification_icon.svg';
 import { ReactComponent as CreateIcon } from '../../../assest/icons/svg/sidebar-icons/create_icon.svg';
 import { ReactComponent as LogoutIcon } from '../../../assest/icons/svg/sidebar-icons/logout_icon.svg';
-import Logotext from '../../../assest/icons/components/logo/logotext';
-import Logoicon from '../../../assest/icons/components/logo/logoIcon';
+import LogotextDark from '../../../assest/icons/components/logo/logotext-dark';
+import LogoiconDark from '../../../assest/icons/components/logo/logoIcon-dark';
 import { ToggleButton } from '../buttons/buttons';
 
 import './style.scss';
 
 const SidebarComponent = () => {
-    const { logout } = useAuth();
-    const [isScreenSmall, setIsScreenSmall] = useState(false);
+    //#region CONTEXTS
 
+    const { theme } = useContext(ThemeContext);
+    const { logout } = useAuth();
+    //#endregion
+    const [isScreenSmall, setIsScreenSmall] = useState(false);
     const handleResize = () => {
         setIsScreenSmall(window.innerWidth <= 1050);
     };
-
     useEffect(() => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
@@ -52,7 +55,7 @@ const SidebarComponent = () => {
         <div className="sidebar-container">
             <div className='logo-container'>
                 <Link to="/home">
-                    {!isScreenSmall ? <Logotext /> : <Logoicon />}
+                    {!isScreenSmall ? <LogotextDark /> : <LogoiconDark />}
                 </Link>
             </div>
             {[

@@ -55,6 +55,7 @@
   --gray-surface: #ffffffcc;
   --gray-indicator: #8b8d98;
   --gray-track: #8b8d98;
+  --background-gradient: linear-gradient(to bottom, #d6fafc, #e1faff, #edfaff, #f6faff, #fcfcfd);
 }
 
 @supports (color: color(display-p3 1 1 1)) {
@@ -214,6 +215,7 @@
   --gray-surface: rgba(0, 0, 0, 0.05);
   --gray-indicator: #6c6e79;
   --gray-track: #6c6e79;
+  --background-gradient: linear-gradient(to bottom, #0a2b2e, #0f242b, #131d24, #14171c, #111113);
 }
 
 @supports (color: color(display-p3 1 1 1)) {
@@ -282,6 +284,11 @@
   --color-background: #111;
 }
 
+.dark {
+  background: rgb(25, 25, 27);
+  background: radial-gradient(circle, rgb(25, 25, 27) 0%, rgb(25, 25, 27) 45%, rgb(0, 212, 255) 100%);
+}
+
 /* styles.scss */
 body, html {
   margin: 0;
@@ -304,16 +311,11 @@ main {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  justify-content: center;
 }
 
-.footerbar-container, .header-container, .sidebar-container {
+.footerbar-container {
   background-color: #E0F2F1;
-}
-
-.header-container .icon {
-  width: 2em;
-  height: 2em;
-  cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -340,7 +342,6 @@ main {
 
 .header-container {
   top: 0;
-  border-bottom: 1px solid #8E8E8E;
   border-radius: 5px;
 }
 .header-container .btn-container {
@@ -350,12 +351,19 @@ main {
   display: flex;
   margin-right: 16px;
   align-items: center;
+  padding-top: 10px;
 }
 .header-container .option-container div {
   padding-right: 16px;
 }
 .header-container .logo-container {
-  margin-left: 16px;
+  margin-left: 46px;
+  margin-top: 16px;
+}
+.header-container .logo-container .icon {
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
 }
 
 .footerbar-container {

@@ -8,8 +8,9 @@
 .main-container h1, .main-container h2 {
   text-align: center;
   font-weight: 900;
+  margin-bottom: 50px;
 }
-.main-container .input-container {
+.main-container .form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,31 +20,22 @@
   box-shadow: 0px 12px 8px rgba(0, 0, 0, 0.16);
   text-align: center;
   border: 1px;
-  background-color: rgba(203, 203, 249, 0.0431372549);
+  background-color: rgba(203, 203, 249, 0.1176470588);
 }
-.main-container .input-container input {
+.main-container .form-container input {
   width: 80%;
   margin: 10px;
   padding: 10px;
-  border: 1px solid #8E8E8E;
   border-radius: 10px;
-  transition: border-color 0.3s ease;
+  background-color: rgba(203, 203, 249, 0);
+  border: 1px solid;
 }
-.main-container .input-container input:focus {
-  border-color: #5E8A8C;
-}
-.main-container .input-container input.error {
-  border-color: red;
-}
-.main-container .input-container input.success {
-  border-color: #8E8E8E;
-}
-.main-container .input-container label {
+.main-container .form-container label {
   display: flex;
   flex-direction: row;
   margin-top: 10px;
 }
-.main-container .input-container label .check {
+.main-container .form-container label .check {
   width: 15px;
   margin: 0;
   margin-right: 5px;
@@ -52,17 +44,11 @@
 .main-container .submit-btn {
   width: 300px;
   padding: 10px;
-  border: none;
-  border-radius: 10px;
-  background-color: #00666B;
-  color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s ease;
   margin-top: 20px;
+  margin-bottom: 10px;
   font-weight: 700;
-}
-.main-container .submit-btn:hover {
-  background-color: #5E8A8C;
+  border-radius: 10px;
 }
 .main-container .register-link {
   display: flex;
@@ -83,12 +69,6 @@
   text-align: center;
   color: rgb(235, 78, 78);
   padding: 10px;
-}
-
-#login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .term-link {

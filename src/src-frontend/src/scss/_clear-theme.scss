@@ -61,6 +61,9 @@
     --gray-surface: #ffffffcc;
     --gray-indicator: #8b8d98;
     --gray-track: #8b8d98;
+
+    --background-gradient: linear-gradient(to bottom, #d6fafc, #e1faff, #edfaff, #f6faff, #fcfcfd);
+
   }
   
   @supports (color: color(display-p3 1 1 1)) {

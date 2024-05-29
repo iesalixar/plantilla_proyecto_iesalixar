@@ -1,10 +1,14 @@
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { ThemeContext } from '../../../contexts/theme';
 
 const RegisterHeader = ({ leftContent, rightContent }) => {
+    const { theme } = useContext(ThemeContext);
+
     return (
-        <div className="header-container">
+        <div className="header-container" >
             <div className='logo-container'>
-                <Link to="/home">{leftContent}</Link>
+                {leftContent}
             </div>
             <div className='option-container'>
                 {rightContent}
@@ -15,8 +19,10 @@ const RegisterHeader = ({ leftContent, rightContent }) => {
 };
 
 const IconHeader = ({ leftContent, rightContent }) => {
+    const { theme } = useContext(ThemeContext);
+
     return (
-        <div className="header-container">
+        <div className="header-container" >
             <div className='logo-container'>
                 <Link to="/home">{leftContent}</Link>
             </div>

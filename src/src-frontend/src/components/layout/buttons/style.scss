@@ -1,25 +1,18 @@
 .header-btn {
-    border: 1px solid #00666B;
     border-radius: 10px;
-    height: 30px;
-    min-width: 80px;
+    height: 40px;
+    min-width: 90px;
     margin-right: 50px;
     cursor: pointer;
 
     p {
         margin: 0;
         font-size: 0.8rem;
+        font-weight:600 ;
     }
 
     @media screen and (max-width: 768px) {
-        margin-right: 0; /* Quitar margin-right en pantallas pequeñas */
-
-        width: 100px; /* Modificar el ancho del botón */
-
-        p {
-            font-size: 0.8rem; /* Modificar el tamaño de la fuente */
-            font-weight: 500; /* Modificar el peso de la fuente */
-        }
+     display: none;
     }
 }   
 

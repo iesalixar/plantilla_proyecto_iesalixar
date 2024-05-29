@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './style.scss';
 import { Link } from 'react-router-dom';
-
+import { ThemeContext } from '../../../contexts/theme';
 const FooterComponent = () => {
+    const { theme } = useContext(ThemeContext);
+
     const [isScreenSmall, setIsScreenSmall] = useState(window.innerWidth <= 770); // Cambiado a 770px
     const handleResize = () => {
         setIsScreenSmall(window.innerWidth <= 770); // Cambiado a 770px
@@ -18,7 +20,7 @@ const FooterComponent = () => {
     }
 
     return (
-        <div className="footer-container">
+        <div className="footer-container" style={{ color: ThemeContext.gray11 }}>
             <div className="row-1">
                 <Link to="#"><span>About </span></Link>
                 <Link to="#"><span>Blog </span></Link>
