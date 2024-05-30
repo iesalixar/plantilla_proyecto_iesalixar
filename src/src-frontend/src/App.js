@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 
 import { AuthProvider } from './contexts/authentication.js';
 import { ThemeProvider } from './contexts/theme.js';
+import { ScreenProvider } from './contexts/screen.js';
 
 import HomePage from './pages/home/homePage';
 import AuthPage from './pages/auth/authPage.jsx';
@@ -34,7 +35,9 @@ function App() {
 const DefaultExport = () => (
   <AuthProvider>
     <ThemeProvider>
-      <App />
+      <ScreenProvider>
+        <App />
+      </ScreenProvider>
     </ThemeProvider>
   </AuthProvider>
 );

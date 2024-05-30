@@ -165,7 +165,7 @@ const LoginForm = () => {
                             onChange={handleChange}
                             className='check'
                         />
-                        <span style={{ color: theme.gray11 }}>Save this information for next time.</span>
+                        <span style={{ color: theme.gray11 }} className='small-text'>Save this information for next time.</span>
                     </label>
                 </div>
                 <button type="submit" className='submit-btn' style={{ background: theme.teal11, color: theme.gray7, borderColor: theme.gray6 }}>Sign In</button>

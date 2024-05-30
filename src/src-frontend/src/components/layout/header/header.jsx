@@ -1,32 +1,36 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
+
 import { ThemeContext } from '../../../contexts/theme';
+import { useScreen } from '../../../contexts/screen';
 import './style.scss';
 
-const Header = ({ leftContent, rightContent }) => {
+const Header = ({ style, leftContent, rightContent }) => {
     const { theme } = useContext(ThemeContext);
-    const [scrolled, setScrolled] = useState(false);
+    const { isScrolling } = useScreen();
+    const location = useLocation();
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const isScrolled = window.scrollY > 0;
-            setScrolled(isScrolled);
-        };
+    const getBackgroundColor = (path) => {
+        switch (path) {
+            case '/login':
+            case '/register':
+                return {
+                    background: isScrolling ? theme.gray2 : 'transparent',
+                    borderColor: theme.gray8,
+                };
+            default:
+                return {
+                    background: theme.colorBackground,
+                    borderColor: theme.gray8,
 
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
-
-    const headerStyle = {
-        background: scrolled ? theme.teal2 : 'transparent',
-        border: "1px",
-        borderColor: theme.gray8,
+                };
+        }
     };
 
+    const headerStyle = getBackgroundColor(location.pathname);
+
     return (
-        <div className="header-container" style={headerStyle}>
+        <div className="header-container" style={{ ...style, ...headerStyle }}>
             <div className='logo-container'>
                 {leftContent}
             </div>

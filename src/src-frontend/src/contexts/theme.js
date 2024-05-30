@@ -64,7 +64,7 @@ const themes = {
         grayIndicator: '#6c6e79',
         grayTrack: '#6c6e79',
         colorBackground: "#111",
-        backgroundGradient: "linear-gradient(to bottom, #0a2b2e, #0f242b, #131d24, #14171c, #111113)"
+        backgroundGradient: "radial-gradient(circle, #00474b, #0e3843, #172a35, #181d24, #111113)"
     },
     clear: {
         teal1: '#f9fefe',
@@ -129,7 +129,7 @@ const themes = {
         grayIndicator: '#8b8d98',
         grayTrack: '#8b8d98',
         colorBackground: "#fff",
-        backgroundGradient: "linear-gradient(to bottom, #d6fafc, #e1faff, #edfaff, #f6faff, #fcfcfd)"
+        backgroundGradient: "linear-gradient(to bottom, #ccf1f3, #d6f0f8, #e0eef8, #e9edf5, #eeeef0)"
     },
 };
 

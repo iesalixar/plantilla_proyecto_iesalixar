@@ -12,38 +12,78 @@ import LogoiconDark from '../../assest/icons/components/logo/logoIcon-dark';
 import LogoFullDark from '../../assest/icons/components/logo/logofull-dark';
 import LogoFullClear from '../../assest/icons/components/logo/logofull-clear';
 import LogoiconClear from '../../assest/icons/components/logo/logoicon-clear';
+import LogotextDark from '../../assest/icons/components/logo/logotext-dark';
+import LogotextClear from '../../assest/icons/components/logo/logotext-clear';
 
 import { ToggleButton } from '../../components/layout/buttons/buttons';
 
 import { ThemeContext } from '../../contexts/theme';
 
+import { useScreen } from '../../contexts/screen';
+
 const AuthPage = () => {
+
     const { theme, isDark } = useContext(ThemeContext);
     const location = useLocation();
     const pathname = location.pathname;
+    const { screenWidth } = useScreen();
 
-    const [isSmallScreen, setIsSmallScreen] = useState(false);
+    const [isScreenSmall, setIsScreenSmall] = useState(false);
+    const [isScreenMedium, setisScreenMedium] = useState(false);
 
-    const checkScreenSize = () => {
-        const isSmall = window.innerWidth <= 500 || window.innerHeight <= 500;
-        setIsSmallScreen(isSmall);
+
+    const handleResize = () => {
+        setIsScreenSmall(screenWidth <= 500);
+        setisScreenMedium(screenWidth <= 770 && screenWidth >= 500);
+
     };
     useEffect(() => {
-        checkScreenSize();
-        window.addEventListener('resize', checkScreenSize);
-        return () => {
-            window.removeEventListener('resize', checkScreenSize);
-        };
-    }, []);
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [screenWidth]);
 
-    if (isSmallScreen) {
+    const svgLogoProps = {
+        width: 340.99,
+        height: 80.981,
+        className: "logo-full",
+        viewBox: "140 0 100 100",
+    };
+    const svgLogoTextProps = {
+        width: 243.493,
+        height: 60,
+        className: "logo-text",
+        viewBox: "138 0 243.493 60",
+    };
+    const svgLogoIconProps = {
+        width: 50,
+        height: 50,
+        className: "logo-icon",
+        viewBox: "0 0 100 100",
+    };
+
+    let logoIcon;
+
+    if (isScreenMedium && !isScreenSmall) {
+        logoIcon = isDark ? <LogotextDark {...svgLogoTextProps} /> : <LogotextClear {...svgLogoTextProps} />;
+    } else {
+        logoIcon = isDark ? <LogoFullDark {...svgLogoProps} /> : <LogoFullClear {...svgLogoProps} />;
+    }
+
+    const leftContent = {
+        logoIcon: logoIcon
+    };
+
+
+
+    if (isScreenSmall) {
         return (
             <Skeleton
                 mainContent={
                     <>
 
                         <Header
-                            leftContent={isDark ? <LogoiconDark /> : <LogoiconClear />}
+                            leftContent={isDark ? <LogoiconDark {...svgLogoIconProps} /> : <LogoiconClear {...svgLogoIconProps} />}
                             rightContent={
                                 <>
                                     <ToggleButton />
@@ -61,7 +101,7 @@ const AuthPage = () => {
             mainContent={
                 <>
                     <Header
-                        leftContent={isDark ? <LogoFullDark /> : <LogoFullClear />}
+                        leftContent={leftContent.logoIcon}
                         rightContent={
                             <>
                                 <ToggleButton />

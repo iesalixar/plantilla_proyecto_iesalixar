@@ -219,8 +219,8 @@ const SignupForm = () => {
     //#region HTML
     return (
         <div className='main-container'>
-            <h1 style={{ color: theme.grayA12 }}>Welcome to <span style={{ color: theme.tealA12 }}>FitConnet</span></h1>
             <form onSubmit={handleSubmit} className="signup-container" style={{ borderColor: theme.gray7, borderWidth: '1px', borderStyle: 'solid' }}>
+                <h1 style={{ color: theme.grayA12 }}>Welcome to <span style={{ color: theme.tealA12 }}>FitConnet</span></h1>
                 <div className="input-container">
                     <input
                         type="text"
@@ -297,7 +297,7 @@ const SignupForm = () => {
                                 onChange={handleChange}
                                 className='check'
                             />
-                            <span style={{ color: theme.gray11 }}>Agree the <span style={{ color: '#0071F6' }} className='term-link'>Terms and conditions.</span></span>
+                            <span style={{ color: theme.gray11 }} className='small-text'>Agree the <span style={{ color: '#0071F6' }} className='term-link'>Terms and conditions.</span></span>
                         </label>
                         <label>
                             <input
@@ -307,7 +307,7 @@ const SignupForm = () => {
                                 onChange={handleChange}
                                 className='check'
                             />
-                            <span style={{ color: theme.gray11 }}>Save this information for next time.</span>
+                            <span style={{ color: theme.gray11 }} className='small-text'>Save this information for next time.</span>
                         </label>
                     </div>
                 </div>

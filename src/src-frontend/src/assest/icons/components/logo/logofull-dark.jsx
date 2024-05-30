@@ -7,10 +7,10 @@ const LogoFullDark = (props) => {
 
     return (
         <svg
-            width={308.49}
-            height={90.981}
-            className="logo-full-dark"
-            viewBox="2 15 406 99.998"
+            width={420.49}
+            height={100.981}
+            className="logo-full"
+            viewBox="120 0 100 100"
             {...props}
         >
             <g xmlns="http://www.w3.org/2000/svg" fill="#7adde3">

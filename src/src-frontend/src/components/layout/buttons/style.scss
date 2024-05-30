@@ -25,7 +25,6 @@
         width: 2em;  
         height: 2em;
         cursor: pointer;
-        padding: 5px;
     }
 }
 .toggle-container.hovered {
@@ -33,6 +32,7 @@
     border-color: var(--gray-8);
     border-radius: 5px;
 }
+/**
 @media (max-width: 768px) {
     .toggle-container{
         .icon{
@@ -40,13 +40,4 @@
             height: 1.8em;
         }
     }
-}
-
-@media (max-width: 768px) {
-    .toggle-container{
-        .icon{
-            width: 1.5em;
-            height: 1.5em;
-        }
-    }
-}
+}*/
