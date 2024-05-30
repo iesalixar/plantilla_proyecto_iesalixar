@@ -1,137 +1,54 @@
-@charset "UTF-8";
-.main-container {
+.sidebar-container {
+  width: fit-content;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-right: 1px solid #8E8E8E;
+}
+.sidebar-container .icon-section {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding-top: 20px;
+}
+.sidebar-container .icon-section .icon-text {
+  margin-left: 16px;
+}
+.sidebar-container .logout-section {
+  position: fixed;
+  bottom: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 5%;
-  margin-bottom: 10%;
-  justify-content: center;
-}
-.main-container h1 {
-  font-size: 3rem; /* Tamaño de fuente inicial */
-  text-align: center;
-  font-weight: 900;
-  color: var(--grayA12);
-  margin-bottom: 50px;
-}
-.main-container .form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 60%;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 12px 8px rgba(0, 0, 0, 0.16);
-  text-align: center;
-  border: 1px;
-  background-color: rgba(203, 203, 249, 0.1176470588);
-}
-.main-container .form-container input {
-  width: 80%;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: rgba(203, 203, 249, 0);
-  border: 1px solid;
-}
-.main-container .form-container input .focus {
-  border-color: var(--teal-8);
-}
-.main-container .form-container label {
-  width: 80%;
-  display: flex;
-  flex-direction: row;
-  padding: 10px;
+  justify-content: flex-start;
   margin: 0 auto;
 }
-.main-container .form-container label .check {
-  width: 15px;
-  margin: 0;
-  margin-right: 10px;
-  background-color: rgba(203, 203, 249, 0);
-  border: 1px solid;
+.sidebar-container .logout-section .toggle-section {
+  padding-bottom: 10px;
 }
-.main-container .signup-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 40%;
-  min-width: 348.8px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 12px 8px rgba(0, 0, 0, 0.16);
-  text-align: center;
-  border: 1px;
-  background-color: rgba(203, 203, 249, 0.1176470588);
-}
-.main-container .signup-container input {
-  width: 70%;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: rgba(203, 203, 249, 0);
-  border: 1px solid;
-}
-.main-container .signup-container input .focus {
-  border-color: var(--teal-8);
-}
-.main-container .signup-container label {
-  width: 70%;
-  display: flex;
-  flex-direction: row;
-  padding: 10px;
-  margin: 0 auto;
-}
-.main-container .signup-container label .check {
-  width: 15px;
-  margin: 0;
-  margin-right: 10px;
-  background-color: rgba(203, 203, 249, 0);
-  border: 1px solid;
-}
-.main-container .submit-btn {
-  width: 300px;
-  padding: 10px;
-  cursor: pointer;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-weight: 700;
-  border-radius: 10px;
-}
-.main-container .register-link {
-  display: flex;
-  flex-direction: column;
-  font-size: 0.8em;
-  text-align: center;
-  margin-top: 10px;
-  text-decoration: none;
-}
-.main-container .register-link a {
-  margin-top: 10px;
-}
-.main-container .error-message {
-  text-align: center;
-  color: rgb(235, 78, 78);
-  padding: 10px;
-}
-@media screen and (max-width: 600px) {
-  .main-container .signup-container {
-    width: 60%;
-  }
-  .main-container input, .main-container label {
-    width: 90%;
-  }
-  .main-container .submit-btn {
-    width: 90%;
-  }
-}
-@media (max-width: 768px) {
-  .main-container h1 {
-    font-size: 2rem;
-    margin-top: 20px;
-  }
+.sidebar-container .logout-section .logout-icon {
+  padding-top: 10px;
 }
 
-.term-link {
-  text-decoration: underline;
+.footerbar-container {
+  width: 97.8vw;
+  position: fixed;
+  left: 0;
+  z-index: 1000;
+  bottom: 0;
+  border-top: 1px solid var(--gray-7);
+  border-radius: 5px;
+}
+.footerbar-container .icon-container {
+  width: 78%;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  margin: 0 auto;
 }/*# sourceMappingURL=style.css.map */

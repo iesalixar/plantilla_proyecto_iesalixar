@@ -1,10 +1,10 @@
 import * as React from "react"
-const LogotextDark = (props) => (
+const LogotextClear = (props) => (
     <svg
-        width={370.37}
-        height={91.223}
-        className="looka-1j8o68f"
-        viewBox="0 0 406 99.998"
+        width={190}
+        height={70}
+        className=""
+        viewBox="212.5 0 100 100"
         {...props}
     >
         <path
@@ -13,4 +13,4 @@ const LogotextDark = (props) => (
         />
     </svg>
 )
-export default LogotextDark;
+export default LogotextClear;

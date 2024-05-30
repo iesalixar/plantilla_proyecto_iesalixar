@@ -1,10 +1,11 @@
 import * as React from "react"
+import './style.scss';
 const LogoiconDark = (props) => (
     <svg
-        width={120}
-        height={"50"}
-        className="looka-1j8o68f"
-        viewBox="0 15 406 99"
+        width={30}
+        height={"30"}
+        className=""
+        viewBox="0 0 100 100"
         {...props}
     >
         <g xmlns="http://www.w3.org/2000/svg" fill="#7adde3">

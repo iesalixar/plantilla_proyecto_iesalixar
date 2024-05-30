@@ -1,35 +1,71 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { ThemeContext } from '../../../contexts/theme';
-import './style.scss'
-import { useAuth } from '../../../contexts/authentication';
 
-import { ReactComponent as ProfileIcon } from '../../../assest/icons/svg/sidebar-icons/profile_icon.svg';
-import { ReactComponent as HomeIcon } from '../../../assest/icons/svg/sidebar-icons/home_icon.svg';
-import { ReactComponent as SearchIcon } from '../../../assest/icons/svg/sidebar-icons/search_icon.svg';
-import { ReactComponent as NotificationsIcon } from '../../../assest/icons/svg/sidebar-icons/notification_icon.svg';
-import { ReactComponent as CreateIcon } from '../../../assest/icons/svg/sidebar-icons/create_icon.svg';
-import { ReactComponent as LogoutIcon } from '../../../assest/icons/svg/sidebar-icons/logout_icon.svg';
+import { ThemeContext } from '../../../contexts/theme';
+import { useAuth } from '../../../contexts/authentication';
+import { useScreen } from '../../../contexts/screen';
+
 import LogotextDark from '../../../assest/icons/components/logo/logotext-dark';
+import LogotextClear from '../../../assest/icons/components/logo/logotext-clear';
+
 import LogoiconDark from '../../../assest/icons/components/logo/logoIcon-dark';
+import LogoiconClear from '../../../assest/icons/components/logo/logoicon-clear';
+
 import { ToggleButton } from '../buttons/buttons';
+
+import { CreateClear, HomeClear, LogoutClear, NotificationClear, ProfileClear, SearchClear } from '../../../assest/icons/components/sidebar/sidebarIcons-clear';
+import { CreateDark, HomeDark, LogoutDark, NotificationDark, ProfileDark, SearchDark } from '../../../assest/icons/components/sidebar/sidebarIcons-dark';
 
 import './style.scss';
 
 const SidebarComponent = () => {
 
-    const { theme } = useContext(ThemeContext);
+    const { theme, isDark } = useContext(ThemeContext);
     const { logout } = useAuth();
+    const { screenWidth } = useScreen();
 
     const [isScreenSmall, setIsScreenSmall] = useState(false);
 
     const handleResize = () => {
-        setIsScreenSmall(window.innerWidth <= 1050);
+        setIsScreenSmall(screenWidth <= 1050);
     };
+
     useEffect(() => {
+        handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    }, [screenWidth]);
+
+    const svgLogoIconProps = {
+        width: 50,
+        height: 50,
+        className: "logo-icon",
+        viewBox: "0 0 100 100",
+    };
+    const svgLogoTextProps = {
+        width: 190,
+        height: 46,
+        className: "",
+        viewBox: "138 0 260.493 60",
+    };
+    const darkIcons = {
+        Home: HomeDark,
+        Search: SearchDark,
+        Create: CreateDark,
+        Notification: NotificationDark,
+        Profile: ProfileDark,
+    };
+
+    const clearIcons = {
+        Home: HomeClear,
+        Search: SearchClear,
+        Create: CreateClear,
+        Notification: NotificationClear,
+        Profile: ProfileClear,
+    };
+
+
+    const icons = isDark ? darkIcons : clearIcons;
 
     const handleIconClick = (name) => {
         switch (name) {
@@ -50,41 +86,89 @@ const SidebarComponent = () => {
                 break;
         }
     };
-
+    if (isScreenSmall) {
+        return (
+            <div className="sidebar-container">
+                <div className='logo-container'>
+                    <Link to="/home">
+                        {isDark ? <LogoiconDark {...svgLogoIconProps} /> : <LogoiconClear {...svgLogoIconProps} />}
+                    </Link>
+                </div>
+                <div className="icon-section">
+                    {Object.keys(icons).map((key, index) => {
+                        const IconComponent = icons[key];
+                        return (
+                            <div className='icon-btn' onClick={() => handleIconClick(key)} key={index}>
+                                <IconComponent />
+                            </div>
+                        );
+                    })}
+                </div>
+                <div className='logout-section'>
+                    <div className='toggle-section'>
+                        <ToggleButton />
+                    </div>
+                    <div className='logout-icon' onClick={() => handleIconClick('Logout')}>
+                        {isDark ? <LogoutDark /> : <LogoutClear />}
+                    </div>
+                </div>
+            </div>
+        );
+    }
     return (
         <div className="sidebar-container">
             <div className='logo-container'>
                 <Link to="/home">
-                    {!isScreenSmall ? <LogotextDark /> : <LogoiconDark />}
+                    {isDark ? <LogotextDark {...svgLogoTextProps} /> : <LogotextClear {...svgLogoTextProps} />}
                 </Link>
             </div>
-            {[
-                { name: 'Home', component: <HomeIcon /> },
-                { name: 'Search', component: <SearchIcon /> },
-                { name: 'Notifications', component: <NotificationsIcon /> },
-                { name: 'Create', component: <CreateIcon /> },
-                { name: 'Profile', component: <ProfileIcon /> },
-                { name: 'Color mode', component: <ToggleButton /> }
-            ].map((icon, index) => (
-                <div className="icon-section" key={index}>
-                    <div className='icon-btn' onClick={() => handleIconClick(icon.name)}>
-                        {icon.component}
+            {Object.keys(icons).map((key) => {
+                const IconComponent = icons[key];
+                return (
+                    <div className="icon-section" key={key}>
+                        <div className='icon-btn' onClick={() => handleIconClick(key)}>
+                            <IconComponent />
+                        </div>
+                        <div className='icon-text' style={{ color: theme.gray11 }}>{key}</div>
                     </div>
-                    {!isScreenSmall && <div className='txt'>{icon.name}</div>}
-                </div>
-            ))}
+                );
+            })}
             <div className='logout-section'>
-                <div className='icon-btn' onClick={() => handleIconClick('Logout')}>
-                    <LogoutIcon />
+                <div className='toggle-section'>
+                    <ToggleButton />
                 </div>
-                {!isScreenSmall && <div className='txt'>Logout</div>}
+                <div className='logout-icon' onClick={() => handleIconClick('Logout')}>
+                    {isDark ? <LogoutDark /> : <LogoutClear />}
+                </div>
             </div>
-        </div>
+        </div >
     );
 };
-
 const FooterBarComponent = () => {
     const { logout } = useAuth();
+    const { theme, isDark } = useContext(ThemeContext);
+
+    const footerBarStyle = {
+        background: theme.colorBackground,
+        borderColor: theme.gray8,
+    }
+    const darkIcons = {
+        Home: HomeDark,
+        Search: SearchDark,
+        Create: CreateDark,
+        Notification: NotificationDark,
+        Profile: ProfileDark,
+    };
+
+    const clearIcons = {
+        Home: HomeClear,
+        Search: SearchClear,
+        Create: CreateClear,
+        Notification: NotificationClear,
+        Profile: ProfileClear,
+    };
+
+    const icons = isDark ? darkIcons : clearIcons;
 
     const handleIconClick = (name) => {
         switch (name) {
@@ -107,20 +191,19 @@ const FooterBarComponent = () => {
     };
 
     return (
-        <div className="footerbar-container">
-            {[
-                { name: 'Home', component: <HomeIcon /> },
-                { name: 'Search', component: <SearchIcon /> },
-                { name: 'Notifications', component: <NotificationsIcon /> },
-                { name: 'Create', component: <CreateIcon /> },
-                { name: 'Profile', component: <ProfileIcon /> },
-            ].map((icon, index) => (
-                <div className="icon-section" key={index}>
-                    <div className='icon-btn' onClick={() => handleIconClick(icon.name)}>
-                        {icon.component}
-                    </div>
-                </div>
-            ))}
+        <div className="footerbar-container" style={{ background: theme.colorBackground, borderColor: theme.gray8 }}>
+            <div className="icon-container">
+                {Object.keys(icons).map((key, index) => {
+                    const IconComponent = icons[key];
+                    return (
+                        <div className='icon-item' key={index}>
+                            <div className='icon-btn' onClick={() => handleIconClick(key)}>
+                                <IconComponent />
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 };

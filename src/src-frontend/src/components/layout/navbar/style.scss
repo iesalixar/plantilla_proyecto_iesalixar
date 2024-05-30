@@ -1,53 +1,59 @@
 
-.sidebar-container{
-    width: 250px;
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    border-right: 1px solid #8E8E8E;
+    .sidebar-container{
+        width: fit-content;
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        padding: 16px;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        border-right: 1px solid #8E8E8E;
 
-    .icon-section{
-      margin-top: 16px;
-      margin-left: 16px;
-        .txt{
-            margin-left: 20px;
-            padding-right: 50px;
+        .icon-section{
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            padding-top: 20px;
+            .icon-text{
+                margin-left: 16px;
+            }
+        }
+
+        .logout-section{
+            position: fixed;
+            bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            margin: 0 auto;
             
+            .toggle-section{
+                padding-bottom: 10px;
+            }
+            .logout-icon{
+                padding-top: 10px;
+            }
         }
     }
-    .logout-section{
-        position: fixed;
-        bottom: 16px;
-        margin-top: 16px;
-        margin-left: 16px;
-          .txt{
-              margin-left: 20px;
-              padding-right: 50px;
-
-          }
-      }
-}
 
 .footerbar-container{
-    width: 100vw;
+    width: 97.8vw;
     position: fixed;
     left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     z-index: 1000;
     bottom: 0;
-    flex-wrap: wrap;
-    border-top: 1px solid #8E8E8E;
+    border-top: 1px solid var(--gray-7);
+    border-radius: 5px;
 
-    .icon-section{
+    .icon-container{
+        width: 78%;
         display: flex;
+        justify-content: space-between;
         cursor: pointer;
-        margin: 0;
+        margin: 0 auto;
     }
 }
