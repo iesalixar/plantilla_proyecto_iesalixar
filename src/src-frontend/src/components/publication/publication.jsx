@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-//import userService from '../../service/user/userService';
-import { CommentIconDark, CommentIconClear, LikeIconDark, LikeIconClear, LikeIconFullDark, LikeIconFullClear, DefaultProfileImgDark, DefaultProfileImgClear } from '../../assest/icons/components/publicationIcon';
-import './style.scss'
+import { CommentIconDark, LikeIconDark } from '../../assest/icons/components/publicationIcon';
+import './style.scss';
 import example from '../../assest/examples/pexels-anush-gorak-1431282.jpg';
 import mockData from '../../data/mocker';
 import { ThemeContext } from '../../contexts/theme';
+import ProfilePictureCircle from './profilePicture/profilePicture';
+import avatar from '../../assest/examples/avatar.png';
 
 const PublicationComponent = () => {
     const participants = ['@user1', '@user2', '@user3', '@user4', '@user5'];
@@ -15,7 +16,7 @@ const PublicationComponent = () => {
             {mockData.map((data, index) => (
                 <div key={index} className='publication'>
                     <div className='publication-header'>
-                        <DefaultProfileImgClear className='icon' />
+                        <ProfilePictureCircle source={avatar} size={32} />
                         <span id='title' style={{ color: theme.teal12 }}>{data.username}</span>
                     </div>
                     <div className="img-container">

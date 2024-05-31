@@ -28,34 +28,50 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class ActivityServiceImpl implements ActivityServiceI {
-	 /**
-     * Repository for activity-related operations.
-     */
-    private final ActivityRepository activityRepository;
-    
-    /**
-     * Repository for user-related operations.
-     */
-    private final UserRepository userRepository;
-    
-    /**
-     * Mapper for mapping between activity entities and DTOs.
-     */
-    private final ActivityMapper activityMapper;
-    
-    /**
-     * Mapper for mapping between user entities and DTOs.
-     */
-    private final UserMapper userMapper;
-    
-    /**
-     * Mapper for mapping between comment entities and DTOs.
-     */
-    private final CommentMapper commentMapper;
+	/**
+	 * Repository for activity-related operations.
+	 */
+	private final ActivityRepository activityRepository;
+
+	/**
+	 * Repository for user-related operations.
+	 */
+	private final UserRepository userRepository;
+
+	/**
+	 * Mapper for mapping between activity entities and DTOs.
+	 */
+	private final ActivityMapper activityMapper;
+
+	/**
+	 * Mapper for mapping between user entities and DTOs.
+	 */
+	private final UserMapper userMapper;
+
+	/**
+	 * Mapper for mapping between comment entities and DTOs.
+	 */
+	private final CommentMapper commentMapper;
 
 	@Override
 	public List<ActivityDTO> getAll() {
 		return activityRepository.findAll().stream().map(activityMapper::activityToActivityDTO).toList();
+	}
+
+	@Override
+	public List<ActivityDTO> getAcyivitiesByUsername(String username) {
+		User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+		return user.getCreatedActivities().stream().map(activity -> activityMapper.activityToActivityDTO(activity))
+				.toList();
+	}
+
+	@Override
+	public List<ActivityDTO> getAcyivitiesByEmail(String email) {
+		User user = userRepository.findByEmail(email)
+				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+		return user.getCreatedActivities().stream().map(activity -> activityMapper.activityToActivityDTO(activity))
+				.toList();
 	}
 
 	@Override

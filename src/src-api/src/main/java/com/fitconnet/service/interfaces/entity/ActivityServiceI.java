@@ -34,6 +34,22 @@ public interface ActivityServiceI {
 	List<ActivityDTO> getCreatedActivities(Long id);
 
 	/**
+	 * Retrieves the activities created by a user.
+	 * 
+	 * @param username The username of the user.
+	 * @return A list of activities created by the specified user.
+	 */
+	List<ActivityDTO> getAcyivitiesByUsername(String username);
+
+	/**
+	 * Retrieves the activities created by a user.
+	 * 
+	 * @param username The username of the user.
+	 * @return A list of activities created by the specified user.
+	 */
+	List<ActivityDTO> getAcyivitiesByEmail(String email);
+
+	/**
 	 * Retrieves the activities invited to by a user.
 	 * 
 	 * @param id The id of the user.

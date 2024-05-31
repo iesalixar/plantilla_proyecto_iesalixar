@@ -55,7 +55,7 @@
   --gray-surface: #ffffffcc;
   --gray-indicator: #8b8d98;
   --gray-track: #8b8d98;
-  --background-gradient: linear-gradient(to bottom, #d6fafc, #e1faff, #edfaff, #f6faff, #fcfcfd);
+  --background-gradient: linear-gradient(to left top, #007e84, #5898aa, #93b2c6, #c5cedc, #eeeef0);
 }
 
 @supports (color: color(display-p3 1 1 1)) {
@@ -335,6 +335,7 @@ main {
   .header-container .logo-container {
     width: fit-content;
     margin: 0;
+    margin-left: 10px;
   }
   .header-container .option-container {
     width: fit-content;

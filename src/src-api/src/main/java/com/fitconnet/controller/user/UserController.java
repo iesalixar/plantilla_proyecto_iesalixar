@@ -94,7 +94,6 @@ public class UserController {
 	 *         users.
 	 */
 	@GetMapping
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Show Users", description = "Retrieves all users registered in the system.")
 	@ApiResponse(responseCode = "200", description = "Users retrieved successfully")
 	public ResponseEntity<List<UserDTO>> showUsers() {
@@ -141,7 +140,7 @@ public class UserController {
 	 */
 	@GetMapping("/{username}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	@Operation(summary = "Get User by ID", description = "Retrieves a user by ID.")
+	@Operation(summary = "Get User by username", description = "Retrieves a user by username.")
 	@ApiResponse(responseCode = "200", description = "User retrieved successfully")
 	public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
 		logger.info("UserController :: getUser");

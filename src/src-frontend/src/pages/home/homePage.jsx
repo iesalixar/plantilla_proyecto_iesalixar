@@ -18,12 +18,12 @@ import { LogoutClear } from '../../assest/icons/components/sidebar/sidebarIcons-
 import { LogoutDark } from '../../assest/icons/components/sidebar/sidebarIcons-dark.jsx';
 
 const HomePage = () => {
-
+    // CONTEXTS
     const { theme, isDark } = useContext(ThemeContext);
     const { screenWidth } = useScreen();
     const { logout } = useAuth();
 
-
+    //#region SCREEN STATE
     const [isScreenSmall, setIsScreenSmall] = useState(false);
 
     const handleResize = () => {
@@ -35,6 +35,7 @@ const HomePage = () => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, [screenWidth]);
+    //#endregion
 
     const handleLogoutClick = () => {
         logout();

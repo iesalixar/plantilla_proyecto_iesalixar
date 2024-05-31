@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.dto.requets.SignUp;
 import com.fitconnet.dto.requets.Signin;
 import com.fitconnet.dto.response.JwtAuthenticationDTO;
@@ -17,6 +18,7 @@ import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.UserRepository;
 import com.fitconnet.service.interfaces.security.AuthenticationServiceI;
 import com.fitconnet.service.interfaces.security.JwtServiceI;
+import com.fitconnet.utils.mappers.UserMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,6 +52,8 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 	 * Logger instance for ActivityController class.
 	 */
 	private final Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
+
+	private final UserMapper userMapper;
 
 	@Override
 	public JwtAuthenticationDTO signup(SignUp request) {
@@ -85,7 +89,11 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 
 		String jwt = jwtService.generateToken(user);
 
-		return JwtAuthenticationDTO.builder().token(jwt).build();
+		// Crear el UserDTO
+		UserDTO userDTO = userMapper.userToUserDTO(user);
+
+		// Construir el JwtAuthenticationDTO con el token JWT y el UserDTO
+		return JwtAuthenticationDTO.builder().token(jwt).userDTO(userDTO).build();
 	}
 
 }

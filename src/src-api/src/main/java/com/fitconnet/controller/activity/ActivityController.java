@@ -23,6 +23,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.fitconnet.dto.entities.ActivityDTO;
+import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
@@ -128,7 +129,7 @@ public class ActivityController {
 	 * @return ResponseEntity<Optional<Activity>> The response entity containing the
 	 *         activity, if found.
 	 */
-	@GetMapping("/{id}")
+	@GetMapping("/id/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@Operation(summary = "Get Activity by ID", description = "Retrieves an activity by its ID.")
 	@ApiResponse(responseCode = "200", description = "Activity retrieved successfully")
@@ -217,6 +218,36 @@ public class ActivityController {
 		response = processingResponseI.processStringResponse(existingUser,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
 				() -> ResponseEntity.ok().body(activityService.getInvitedActivities(userId)));
+		return response;
+	}
+
+	/**
+	 * Retrieves the activities in which the user has participated.
+	 * 
+	 * <p>
+	 * Retrieves a set of activities in which the specified user has participated.
+	 * </p>
+	 * 
+	 * @param userId The ID of the user whose participated activities are to be
+	 *               retrieved.
+	 * @return ResponseEntity<Optional<Set<Activity>>> The response entity
+	 *         containing the set of participated activities, if any.
+	 */
+	@GetMapping("/creator/{username}")
+	@PreAuthorize("hasAuthority('ROLE_USER')")
+	@Operation(summary = "Get Activities", description = "Retrieves a set of activities in which the user has participated.")
+	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
+	public ResponseEntity<List<ActivityDTO>> getActivitiesByUserName(@PathVariable String username) {
+		logger.info("ActivityController :: getInvitedActivities");
+		ResponseEntity<List<ActivityDTO>> response = null;
+		UserDTO user = userService.getByUserName(username);
+		boolean exist = false;
+		if (user != null) {
+			exist = true;
+		}
+		response = processingResponseI.processStringResponse(exist,
+				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
+				() -> ResponseEntity.ok().body(activityService.getAcyivitiesByUsername(username)));
 		return response;
 	}
 

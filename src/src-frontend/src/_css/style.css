@@ -1,54 +1,8 @@
-.sidebar-container {
-  width: fit-content;
-  height: 100dvh;
+.profile-picture-circle {
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
-  padding: 16px;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  border-right: 1px solid #8E8E8E;
-}
-.sidebar-container .icon-section {
-  display: flex;
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  padding-top: 20px;
-}
-.sidebar-container .icon-section .icon-text {
-  margin-left: 16px;
-}
-.sidebar-container .logout-section {
-  position: fixed;
-  bottom: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  margin: 0 auto;
-}
-.sidebar-container .logout-section .toggle-section {
-  padding-bottom: 10px;
-}
-.sidebar-container .logout-section .logout-icon {
-  padding-top: 10px;
-}
-
-.footerbar-container {
-  width: 97.8vw;
-  position: fixed;
-  left: 0;
-  z-index: 1000;
-  bottom: 0;
-  border-top: 1px solid var(--gray-7);
-  border-radius: 5px;
-}
-.footerbar-container .icon-container {
-  width: 78%;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  margin: 0 auto;
+  padding-left: 10px;
+  padding-right: 10px;
 }/*# sourceMappingURL=style.css.map */

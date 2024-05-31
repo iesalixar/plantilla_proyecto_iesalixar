@@ -43,4 +43,14 @@ public interface ActivityRepository extends JpaRepository<Activity, Long> {
 	 */
 	@Query("SELECT n FROM Activity n WHERE n.type = :activityType")
 	Optional<List<Activity>> findByActivityType(@Param("activityType") String activityType);
+
+	/**
+	 * Finds activities by the username of the creator.
+	 *
+	 * @param username The username of the creator.
+	 * @return An optional containing a list of activities created by the specified
+	 *         username.
+	 */
+	@Query("SELECT a FROM Activity a WHERE a.creator.username = :username")
+	Optional<List<Activity>> findByCreatorUsername(@Param("username") String username);
 }

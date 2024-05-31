@@ -13,6 +13,7 @@ import lombok.Data;
  */
 @Data
 public class UserDTO {
+	private Long id;
 	/**
 	 * The first name of the user.
 	 */

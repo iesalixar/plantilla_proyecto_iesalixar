@@ -297,7 +297,7 @@ const SignupForm = () => {
                                 onChange={handleChange}
                                 className='check'
                             />
-                            <span style={{ color: theme.gray11 }} className='small-text'>Agree the <span style={{ color: '#0071F6' }} className='term-link'>Terms and conditions.</span></span>
+                            <span style={{ color: theme.gray11 }} className='small-text'>Agree the <span style={{ color: '#0071F6' }} className='term-link small-text'>Terms and conditions.</span></span>
                         </label>
                         <label>
                             <input

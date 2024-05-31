@@ -59,11 +59,12 @@ const signinService = async (identifier, password) => {
         }
 
         if (contentType && contentType.includes('application/json')) {
-            const data = await response.json();
-            if (data && typeof data.token === 'string' && data.token.trim() !== '') {
-                return { success: true, token: data.token };
+            const { token, userDTO } = await response.json();
+            if (token && typeof token === 'string' && token.trim() !== '' && userDTO) {
+                delete userDTO.password; // Eliminar la contraseña del objeto userDTO
+                return { success: true, token, userDTO };
             } else {
-                throw new Error('Invalid token received');
+                throw new Error('Invalid token or user data received');
             }
         } else {
             throw new Error('Unexpected response format');

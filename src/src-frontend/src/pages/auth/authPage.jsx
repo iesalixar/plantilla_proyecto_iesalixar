@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 
+
+import { ThemeContext } from '../../contexts/theme';
+import { useScreen } from '../../contexts/screen';
+
 import LoginForm from '../../components/forms/login';
 import { Header } from '../../components/layout/header/header';
 import FooterComponent from '../../components/layout/footer/footer';
 import Skeleton from '../../components/layout/skeleton/skeleton';
 import { LoginButton, RegisterButton } from '../../components/layout/buttons/buttons';
 import SignupForm from '../../components/forms/signup';
+import { ToggleButton } from '../../components/layout/buttons/buttons';
 
 import LogoiconDark from '../../assest/icons/components/logo/logoIcon-dark';
 import LogoFullDark from '../../assest/icons/components/logo/logofull-dark';
@@ -15,34 +20,42 @@ import LogoiconClear from '../../assest/icons/components/logo/logoicon-clear';
 import LogotextDark from '../../assest/icons/components/logo/logotext-dark';
 import LogotextClear from '../../assest/icons/components/logo/logotext-clear';
 
-import { ToggleButton } from '../../components/layout/buttons/buttons';
 
-import { ThemeContext } from '../../contexts/theme';
-
-import { useScreen } from '../../contexts/screen';
 
 const AuthPage = () => {
 
+    // CONTEXTS
     const { theme, isDark } = useContext(ThemeContext);
     const location = useLocation();
     const pathname = location.pathname;
     const { screenWidth } = useScreen();
 
+    //
+    let logoIcon;
+
+
+    // METADATA TITLE
+    setMetaDataTitle();
+
+    //#region SCREEN STATE
+
     const [isScreenSmall, setIsScreenSmall] = useState(false);
     const [isScreenMedium, setisScreenMedium] = useState(false);
-
 
     const handleResize = () => {
         setIsScreenSmall(screenWidth <= 500);
         setisScreenMedium(screenWidth <= 770 && screenWidth >= 500);
-
     };
+
     useEffect(() => {
         handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, [screenWidth]);
 
+    //#endregion
+
+    //#region SVG PROPS
     const svgLogoProps = {
         width: 340.99,
         height: 80.981,
@@ -61,19 +74,15 @@ const AuthPage = () => {
         className: "logo-icon",
         viewBox: "0 0 100 100",
     };
+    //#endregion
 
-    let logoIcon;
+    // SETTEAR EL LOGO SEGUN TAMAÑO Y TEMA
 
-    if (isScreenMedium && !isScreenSmall) {
-        logoIcon = isDark ? <LogotextDark {...svgLogoTextProps} /> : <LogotextClear {...svgLogoTextProps} />;
-    } else {
-        logoIcon = isDark ? <LogoFullDark {...svgLogoProps} /> : <LogoFullClear {...svgLogoProps} />;
-    }
+    setIconFunction();
 
     const leftContent = {
         logoIcon: logoIcon
     };
-
 
 
     if (isScreenSmall) {
@@ -116,6 +125,23 @@ const AuthPage = () => {
             footerContent={<FooterComponent />}
         />
     );
+
+    function setMetaDataTitle() {
+        if (pathname == '/login') {
+            document.title = 'FitConnet - Login';
+
+        } else {
+            document.title = 'FitConnet - Sign Up';
+        }
+    }
+
+    function setIconFunction() {
+        if (isScreenMedium && !isScreenSmall) {
+            logoIcon = isDark ? <LogotextDark {...svgLogoTextProps} /> : <LogotextClear {...svgLogoTextProps} />;
+        } else {
+            logoIcon = isDark ? <LogoFullDark {...svgLogoProps} /> : <LogoFullClear {...svgLogoProps} />;
+        }
+    }
 };
 
 export default AuthPage;

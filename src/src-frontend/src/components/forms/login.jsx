@@ -115,7 +115,8 @@ const LoginForm = () => {
             try {
                 const result = await signinService(loginInfo.identifier, loginInfo.password);
                 if (result.success) {
-                    login({ token: result.token });
+                    // Guarda el token y la información del usuario en el contexto de autenticación
+                    login({ token: result.token, user: result.userDTO });
 
                     navigate('/');
                 }
@@ -131,7 +132,7 @@ const LoginForm = () => {
     return (
         <div className='main-container'>
             <h1 style={{ color: theme.grayA12 }}>Welcome back to <span style={{ color: theme.tealA12 }}>FitConnet</span></h1>
-            <form onSubmit={handleSubmit} className="form-container" style={{ borderColor: theme.gray7, borderWidth: '1px', borderStyle: 'solid' }}>
+            <form onSubmit={handleSubmit} className="login-container" style={{ borderColor: theme.gray7, borderWidth: '1px', borderStyle: 'solid' }}>
                 <div className="input-container">
                     <input
                         type="text"

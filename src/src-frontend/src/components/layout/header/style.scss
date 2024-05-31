@@ -18,6 +18,10 @@
         align-items: center;
         justify-content: flex-start;
         width: 50%;
+
+        @media screen and (max-width: 500px){
+            margin-left: 10px;
+        }
     }
     .option-container{
         width: 50%;
@@ -29,5 +33,6 @@
     .toggle-container{
         margin-right: 20px;
     }
+
 
 }

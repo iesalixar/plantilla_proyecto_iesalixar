@@ -25,13 +25,14 @@ public class UserMapper {
 			return null;
 		} else {
 			User user = new User();
+			user.setId(userDTO.getId());
 			user.setFirstName(userDTO.getFirstName());
 			user.setLastName(userDTO.getLastName());
 			user.setUsername(userDTO.getUsername());
-			System.out.println("DTO TO USER: AGE =" + userDTO.getAge());
 			user.setAge(userDTO.getAge());
 			user.setEmail(userDTO.getEmail());
 			user.setPassword(userDTO.getPassword());
+			user.setImage(userDTO.getImage());
 			user.setRoles(userDTO.getRoles());
 			return user;
 		}
@@ -48,11 +49,13 @@ public class UserMapper {
 			return null;
 		} else {
 			UserDTO response = new UserDTO();
+			response.setId(user.getId());
 			response.setFirstName(user.getFirstName());
 			response.setLastName(user.getLastName());
 			response.setUsername(user.getUsername());
 			response.setAge(user.getAge());
 			response.setEmail(user.getEmail());
+			response.setImage(user.getImage());
 			response.setPassword(user.getPassword());
 			response.setRoles(user.getRoles());
 			return response;
