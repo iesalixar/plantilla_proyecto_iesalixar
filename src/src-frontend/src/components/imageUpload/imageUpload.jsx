@@ -1,56 +1,32 @@
-// src/components/ImageUpload.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { resizeImage, toBase64 } from './imageService';
 
 const ImageUploadComponent = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [resizedImage, setResizedImage] = useState(null);
 
-    const handleFileChange = (event) => {
+    const handleFileChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
             setSelectedFile(file);
-            resizeImage(file);
+            try {
+                const resizedBlob = await resizeImage(file);
+                const resizedBase64 = await toBase64(resizedBlob);
+                setResizedImage(resizedBase64);
+            } catch (error) {
+                console.error("Error resizing image:", error);
+                alert("Failed to resize image. Please try again.");
+            }
         }
     };
 
-    const resizeImage = (file) => {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            const img = new Image();
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const maxWidth = 568;
-                const maxHeight = 584;
-                let width = img.width;
-                let height = img.height;
-
-                // Mantener el ratio de aspecto
-                if (width > maxWidth || height > maxHeight) {
-                    const widthRatio = maxWidth / width;
-                    const heightRatio = maxHeight / height;
-                    const ratio = Math.min(widthRatio, heightRatio);
-                    width = width * ratio;
-                    height = height * ratio;
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob((blob) => {
-                    const resizedFile = new File([blob], file.name, { type: file.type });
-                    const reader = new FileReader();
-                    reader.onloadend = () => {
-                        setResizedImage(reader.result);
-                    };
-                    reader.readAsDataURL(resizedFile);
-                }, file.type);
-            };
-            img.src = event.target.result;
+    useEffect(() => {
+        return () => {
+            if (resizedImage) {
+                URL.revokeObjectURL(resizedImage);
+            }
         };
-        reader.readAsDataURL(file);
-    };
+    }, [resizedImage]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -70,7 +46,8 @@ const ImageUploadComponent = () => {
         if (response.ok) {
             alert('Image uploaded successfully');
         } else {
-            alert('Failed to upload image');
+            const errorMessage = await response.text();
+            alert(`Failed to upload image: ${errorMessage}`);
         }
     };
 

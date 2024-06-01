@@ -1,9 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { signinService } from '../../service/auht/authService';
-import './style.scss';
-import { useAuth } from '../../contexts/authentication';
+//  CONTEXTS
+import { useAuth } from '../../contexts/user';
 import { ThemeContext } from '../../contexts/theme';
+//SERVICES
+import { signinService } from '../../service/auht/authService';
+//STYLE
+import './style.scss';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -117,8 +120,8 @@ const LoginForm = () => {
                 if (result.success) {
                     // Guarda el token y la información del usuario en el contexto de autenticación
                     login({ token: result.token, user: result.userDTO });
-
                     navigate('/');
+                    console.log('que pasa aqui')
                 }
             } catch (error) {
                 setErrors({ generic: error.message });

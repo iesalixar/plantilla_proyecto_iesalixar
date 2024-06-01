@@ -11,6 +11,8 @@ import lombok.Data;
  */
 @Data
 public class ActivityDTO {
+
+	private Long id;
 	/**
 	 * The type of activity.
 	 */

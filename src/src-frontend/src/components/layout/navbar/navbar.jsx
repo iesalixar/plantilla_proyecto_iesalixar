@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { ThemeContext } from '../../../contexts/theme';
-import { useAuth } from '../../../contexts/authentication';
+import { useAuth } from '../../../contexts/user';
 import { useScreen } from '../../../contexts/screen';
 
 import LogotextDark from '../../../assest/icons/components/logo/logotext-dark';

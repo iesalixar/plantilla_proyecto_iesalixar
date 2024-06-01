@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import { ThemeContext } from '../../contexts/theme';
 import { useScreen } from '../../contexts/screen.js';
-import { useAuth } from '../../contexts/authentication.js';
+import { useAuth } from '../../contexts/user.js';
 
 import Skeleton from '../../components/layout/skeleton/skeleton.jsx';
 import { Header } from '../../components/layout/header/header.jsx';

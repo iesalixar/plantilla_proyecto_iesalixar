@@ -1,9 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/authentication';
-import { signupService } from '../../service/auht/authService';
-import './style.scss';
+
+import { useAuth } from '../../contexts/user';
 import { ThemeContext } from '../../contexts/theme';
+
+import { signupService } from '../../service/auht/authService';
+
+import './style.scss';
 
 const SignupForm = () => {
 
