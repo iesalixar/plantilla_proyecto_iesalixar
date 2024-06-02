@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import './style.scss';
+import { ThemeContext } from "../../../../contexts/theme";
 
 const LogoFullDark = (props) => {
+    const { theme, isDark } = useContext(ThemeContext);
 
     return (
         <svg

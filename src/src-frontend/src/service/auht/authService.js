@@ -1,6 +1,3 @@
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../slices/userSlice';
-
 const signupService = async (registrationInfo) => {
     try {
         const response = await fetch('http://localhost:8080/api/v1/auth/signup', {
@@ -18,24 +15,22 @@ const signupService = async (registrationInfo) => {
                 throw new Error(errorData.message || 'Failed to sign up');
             } else {
                 const errorText = await response.text();
-                throw new Error(errorText || 'Failed to sign up');
+                throw new Error(errorText || 'Failed to sign up.');
             }
         }
-
         if (contentType && contentType.includes('application/json')) {
-            const { token, userDTO } = await response.json();
-            if (token && typeof token === 'string' && token.trim() !== '' && userDTO) {
-                delete userDTO.password;
-                return { success: true, token, userDTO };
+            const data = await response.json();
+            if (data && typeof data.token === 'string' && data.token.trim() !== '') {
+                return { success: true, token: data.token };
             } else {
-                throw new Error('Invalid token or user data received');
+                throw new Error('Invalid token received');
             }
         } else {
             throw new Error('Unexpected response format');
         }
     } catch (error) {
         console.error('Error:', error.message);
-        throw new Error(error.message || 'Failed to sign up');
+        throw new Error(error.message || 'Failed to sign in');
     }
 };
 
@@ -66,7 +61,7 @@ const signinService = async (identifier, password) => {
         if (contentType && contentType.includes('application/json')) {
             const { token, userDTO } = await response.json();
             if (token && typeof token === 'string' && token.trim() !== '' && userDTO) {
-                delete userDTO.password;
+                delete userDTO.password; // Eliminar la contraseña del objeto userDTO
                 return { success: true, token, userDTO };
             } else {
                 throw new Error('Invalid token or user data received');
@@ -74,6 +69,7 @@ const signinService = async (identifier, password) => {
         } else {
             throw new Error('Unexpected response format');
         }
+
     } catch (error) {
         console.error('Error:', error.message);
         throw new Error(error.message || 'Failed to sign in');

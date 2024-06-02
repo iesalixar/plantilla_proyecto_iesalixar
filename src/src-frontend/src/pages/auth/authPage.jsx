@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 
 
-import { ThemeContext } from '../../contexts/themeContexts';
-import { useScreen } from '../../contexts/screenContexts';
+import { ThemeContext } from '../../contexts/theme';
+import { useScreen } from '../../contexts/screen';
 
 import LoginForm from '../../components/forms/login';
 import { Header } from '../../components/layout/header/header';
@@ -25,7 +25,7 @@ import LogotextClear from '../../assest/icons/components/logo/logotext-clear';
 const AuthPage = () => {
 
     // CONTEXTS
-    const { isDark } = useContext(ThemeContext);
+    const { theme, isDark } = useContext(ThemeContext);
     const location = useLocation();
     const pathname = location.pathname;
     const { screenWidth } = useScreen();
@@ -39,13 +39,18 @@ const AuthPage = () => {
 
     //#region SCREEN STATE
 
-    // SCREEN STATE
     const [isScreenSmall, setIsScreenSmall] = useState(false);
-    const [isScreenMedium, setIsScreenMedium] = useState(false);
+    const [isScreenMedium, setisScreenMedium] = useState(false);
+
+    const handleResize = () => {
+        setIsScreenSmall(screenWidth <= 500);
+        setisScreenMedium(screenWidth <= 770 && screenWidth >= 500);
+    };
 
     useEffect(() => {
-        setIsScreenSmall(screenWidth <= 500);
-        setIsScreenMedium(screenWidth <= 770 && screenWidth >= 500);
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, [screenWidth]);
 
     //#endregion
@@ -122,7 +127,7 @@ const AuthPage = () => {
     );
 
     function setMetaDataTitle() {
-        if (pathname === '/login') {
+        if (pathname == '/login') {
             document.title = 'FitConnet - Login';
 
         } else {

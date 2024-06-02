@@ -62,14 +62,9 @@ public class AuthenticationController {
 	@PostMapping("/signup")
 	@Operation(summary = "User Registration", description = "Registers a new user.")
 	@ApiResponse(responseCode = "200", description = "User registered successfully")
-	public ResponseEntity<?> signup(@RequestBody SignUp request) {
+	public ResponseEntity<JwtAuthenticationDTO> signup(@RequestBody SignUp request) {
 		logger.info("AuthenticationController :: signup");
-		try {
-			JwtAuthenticationDTO authenticationDTO = authenticationService.signup(request);
-			return ResponseEntity.ok(authenticationDTO);
-		} catch (AuthenticationException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password.");
-		}
+		return ResponseEntity.ok(authenticationService.signup(request));
 	}
 
 	/**

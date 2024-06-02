@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { ThemeContext } from '../../contexts/themeContexts.js';
-import { useScreen } from '../../contexts/screenContexts.js';
-import { useAuth } from '../../contexts/userContexts.js';
+import { ThemeContext } from '../../contexts/theme';
+import { useScreen } from '../../contexts/screen.js';
+import { useAuth } from '../../contexts/user.js';
 
 import Skeleton from '../../components/layout/skeleton/skeleton.jsx';
 import { Header } from '../../components/layout/header/header.jsx';
@@ -19,15 +19,21 @@ import { LogoutDark } from '../../assest/icons/components/sidebar/sidebarIcons-d
 
 const HomePage = () => {
     // CONTEXTS
-    const { isDark } = useContext(ThemeContext);
+    const { theme, isDark } = useContext(ThemeContext);
     const { screenWidth } = useScreen();
     const { logout } = useAuth();
 
     //#region SCREEN STATE
     const [isScreenSmall, setIsScreenSmall] = useState(false);
 
-    useEffect(() => {
+    const handleResize = () => {
         setIsScreenSmall(screenWidth <= 770);
+    };
+
+    useEffect(() => {
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, [screenWidth]);
     //#endregion
 

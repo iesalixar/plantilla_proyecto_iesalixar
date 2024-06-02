@@ -1,20 +1,20 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-//REDUX
-import { useDispatch, useSelector } from 'react-redux';
-import { signin } from '../../slices/userSlice';
-//CONTEXTS
-import { ThemeContext } from '../../contexts/themeContexts';
+//  CONTEXTS
+import { useAuth } from '../../contexts/user';
+import { ThemeContext } from '../../contexts/theme';
+//SERVICES
+import { signinService } from '../../service/auht/authService';
 //STYLE
 import './style.scss';
 
 const LoginForm = () => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { login } = useAuth();
     const { theme } = useContext(ThemeContext);
+    const [focus, setFocus] = useState(false);
 
-    const { loading, error } = useSelector((state) => state.user);
-
+    //#region  SET STATES
     const [loginInfo, setLoginInfo] = useState({
         identifier: '',
         password: '',
@@ -26,39 +26,64 @@ const LoginForm = () => {
         password: '',
         generic: ''
     });
+    //#endregion
 
-    const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    //#region  VALIDATIONS
+    const validateEmail = (email) => {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
+    };
 
-    const validatePassword = (password) => password.length > 3;
+    const validatePassword = (password) => {
+        return password.length > 3;
+    };
+    //#endregion
 
+    //#region HANDLECHANGE
     const handleChange = (e) => {
         const { name, value, checked, type } = e.target;
         const updatedValue = type === 'checkbox' ? checked : value;
-
+        // Update loginInfo state
         setLoginInfo({
             ...loginInfo,
             [name]: updatedValue
         });
-
+        // Reset the specific error for the changed input
         setErrors((prevErrors) => ({
             ...prevErrors,
             [name]: ''
         }));
 
-        if (name === 'identifier' && !validateEmail(value)) {
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                identifier: 'Please enter a valid email address.'
-            }));
+        // Perform validation
+        if (name === 'identifier') {
+            if (!value) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    identifier: 'Email is required.'
+                }));
+            } else if (!validateEmail(value)) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    identifier: 'Please enter a valid email address.'
+                }));
+            }
         }
 
-        if (name === 'password' && !validatePassword(value)) {
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                password: 'Password must be more than 3 characters.'
-            }));
+        if (name === 'password') {
+            if (!value) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    password: 'Password is required.'
+                }));
+            } else if (!validatePassword(value)) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    password: 'Password must be more than 3 characters.'
+                }));
+            }
         }
     };
+    //#endregion
 
     const handleFocus = (e) => {
         const { name } = e.target;
@@ -66,18 +91,23 @@ const LoginForm = () => {
             ...prevErrors,
             [name]: ''
         }));
+        setFocus(true);
+    };
+    const handleBlur = () => {
+        setFocus(false); // Cambia el estado de enfoque a falso cuando el input pierde foco
     };
 
-    const handleBlur = () => { };
-
+    //#region HANDLE SUBMIT
     const handleSubmit = async (e) => {
         e.preventDefault();
         const newErrors = { identifier: '', password: '', generic: '' };
 
+        // Email validation
         if (!validateEmail(loginInfo.identifier)) {
             newErrors.identifier = 'Please enter a valid email address.';
         }
 
+        // Password validation
         if (!validatePassword(loginInfo.password)) {
             newErrors.password = 'Password must be more than 3 characters.';
         }
@@ -86,17 +116,22 @@ const LoginForm = () => {
             setErrors(newErrors);
         } else {
             try {
-                await dispatch(signin({
-                    identifier: loginInfo.identifier,
-                    password: loginInfo.password
-                })).unwrap();
-                navigate('/'); // Navegar a /home después de iniciar sesión correctamente
-            } catch (err) {
-                setErrors({ generic: err });
+                const result = await signinService(loginInfo.identifier, loginInfo.password);
+                if (result.success) {
+                    // Guarda el token y la información del usuario en el contexto de autenticación
+                    login({ token: result.token, user: result.userDTO });
+                    navigate('/');
+                    console.log('que pasa aqui')
+                }
+            } catch (error) {
+                setErrors({ generic: error.message });
             }
         }
     };
 
+    //#endregion
+
+    //#region  HTML
     return (
         <div className='main-container'>
             <h1 style={{ color: theme.grayA12 }}>Welcome back to <span style={{ color: theme.tealA12 }}>FitConnet</span></h1>
@@ -111,6 +146,7 @@ const LoginForm = () => {
                         onBlur={handleBlur}
                         placeholder="Email"
                         style={{ color: theme.gray12, borderColor: theme.gray8 }}
+
                         required
                     />
                     <input
@@ -123,6 +159,7 @@ const LoginForm = () => {
                         placeholder="Password"
                         style={{ color: theme.gray12, borderColor: theme.gray8 }}
                         required
+
                     />
                     <label>
                         <input
@@ -135,10 +172,8 @@ const LoginForm = () => {
                         <span style={{ color: theme.gray11 }} className='small-text'>Save this information for next time.</span>
                     </label>
                 </div>
-                <button type="submit" className='submit-btn' style={{ background: theme.teal11, color: theme.gray7, borderColor: theme.gray6 }} disabled={loading}>
-                    {loading ? 'Signing In...' : 'Sign In'}
-                </button>
-            </form>
+                <button type="submit" className='submit-btn' style={{ background: theme.teal11, color: theme.gray7, borderColor: theme.gray6 }}>Sign In</button>
+            </form >
 
             <div className="register-link">
                 <Link to="/" style={{ color: theme.teal11 }}>Forgot the password?</Link>
@@ -149,10 +184,12 @@ const LoginForm = () => {
                 {errors.identifier && <div className="error-message">{errors.identifier}</div>}
                 {errors.password && <div className="error-message">{errors.password}</div>}
                 {errors.generic && <div className="error-message">{errors.generic}</div>}
-                {error && <div className="error-message">{error}</div>}
             </section>
-        </div>
+        </div >
+
     );
+    //#endregion
 };
+
 
 export default LoginForm;

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ThemeContext } from '../../../contexts/themeContexts';
+import { ThemeContext } from '../../../contexts/theme';
 
 import './style.scss';
 

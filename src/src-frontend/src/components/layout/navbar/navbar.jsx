@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-// CONTEXTS 
-import { ThemeContext } from '../../../contexts/themeContexts';
-import { useAuth } from '../../../contexts/userContexts';
-import { useScreen } from '../../../contexts/screenContexts';
-// LOGOS
+
+import { ThemeContext } from '../../../contexts/theme';
+import { useAuth } from '../../../contexts/user';
+import { useScreen } from '../../../contexts/screen';
+
 import LogotextDark from '../../../assest/icons/components/logo/logotext-dark';
 import LogotextClear from '../../../assest/icons/components/logo/logotext-clear';
+
 import LogoiconDark from '../../../assest/icons/components/logo/logoIcon-dark';
 import LogoiconClear from '../../../assest/icons/components/logo/logoicon-clear';
-// COMPONENTS
+
 import { ToggleButton } from '../buttons/buttons';
-import { ProfilePictureCircle } from '../../profilePicture/profilePicture';
-//ICONS
+
 import { CreateClear, HomeClear, LogoutClear, NotificationClear, ProfileClear, SearchClear } from '../../../assest/icons/components/sidebar/sidebarIcons-clear';
 import { CreateDark, HomeDark, LogoutDark, NotificationDark, ProfileDark, SearchDark } from '../../../assest/icons/components/sidebar/sidebarIcons-dark';
 
@@ -21,11 +21,10 @@ import './style.scss';
 const SidebarComponent = () => {
 
     const { theme, isDark } = useContext(ThemeContext);
-    const { logout, user } = useAuth();
+    const { logout } = useAuth();
     const { screenWidth } = useScreen();
 
     const [isScreenSmall, setIsScreenSmall] = useState(false);
-
 
     const handleResize = () => {
         setIsScreenSmall(screenWidth <= 1050);
@@ -64,6 +63,7 @@ const SidebarComponent = () => {
         Notification: NotificationClear,
         Profile: ProfileClear,
     };
+
 
     const icons = isDark ? darkIcons : clearIcons;
 

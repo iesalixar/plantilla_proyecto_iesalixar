@@ -1,27 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './style.scss';
 import { Link } from 'react-router-dom';
-import { ThemeContext } from '../../../contexts/themeContexts';
-import { useScreen } from '../../../contexts/screenContexts';
-
+import { ThemeContext } from '../../../contexts/theme';
 const FooterComponent = () => {
     const { theme } = useContext(ThemeContext);
-    const { screenWidth } = useScreen();
 
-    //#region SCREEN STATE
-    const [isScreenSmall, setIsScreenSmall] = useState(false);
-
+    const [isScreenSmall, setIsScreenSmall] = useState(window.innerWidth <= 770); // Cambiado a 770px
+    const handleResize = () => {
+        setIsScreenSmall(window.innerWidth <= 770); // Cambiado a 770px
+    };
     useEffect(() => {
-        setIsScreenSmall(screenWidth <= 770);
-    }, [screenWidth]);
-    //#endregion
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
+    // Condición para renderizar el componente Footer solo si la pantalla es mayor o igual a 770px
     if (isScreenSmall) {
-        return null;
+        return null; // Retorna null si la pantalla es menor de 770px
     }
 
     return (
-        <div className="footer-container" style={{ color: theme.gray11 }}>
+        <div className="footer-container" style={{ color: ThemeContext.gray11 }}>
             <div className="row-1">
                 <Link to="#"><span>About </span></Link>
                 <Link to="#"><span>Blog </span></Link>
