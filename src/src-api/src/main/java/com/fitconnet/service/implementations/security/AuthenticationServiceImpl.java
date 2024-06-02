@@ -73,7 +73,8 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 		userRepository.save(user);
 
 		String jwt = jwtService.generateToken(user);
-		return JwtAuthenticationDTO.builder().token(jwt).build();
+		UserDTO userDTO = userMapper.userToUserDTO(user);
+		return JwtAuthenticationDTO.builder().token(jwt).userDTO(userDTO).build();
 	}
 
 	@Override
@@ -89,10 +90,8 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 
 		String jwt = jwtService.generateToken(user);
 
-		// Crear el UserDTO
 		UserDTO userDTO = userMapper.userToUserDTO(user);
 
-		// Construir el JwtAuthenticationDTO con el token JWT y el UserDTO
 		return JwtAuthenticationDTO.builder().token(jwt).userDTO(userDTO).build();
 	}
 
