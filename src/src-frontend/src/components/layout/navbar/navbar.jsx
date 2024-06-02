@@ -5,16 +5,14 @@ import { ThemeContext } from '../../../contexts/themeContexts';
 import { useAuth } from '../../../contexts/userContexts';
 import { useScreen } from '../../../contexts/screenContexts';
 
-import LogotextDark from '../../../assest/icons/components/logo/logotext-dark';
-import LogotextClear from '../../../assest/icons/components/logo/logotext-clear';
 
-import LogoiconDark from '../../../assest/icons/components/logo/logoIcon-dark';
-import LogoiconClear from '../../../assest/icons/components/logo/logoicon-clear';
+import { LogoFullDark, LogoiconDark, LogotextDark } from '../../common/icon/logo/logo-dark';
+import { LogoFullClear, LogoiconClear, LogotextClear } from '../../common/icon/logo/logo-clear';
 
 import { ToggleButton } from '../buttons/buttons';
 
-import { CreateClear, HomeClear, LogoutClear, NotificationClear, ProfileClear, SearchClear } from '../../../assest/icons/components/sidebar/sidebarIcons-clear';
-import { CreateDark, HomeDark, LogoutDark, NotificationDark, ProfileDark, SearchDark } from '../../../assest/icons/components/sidebar/sidebarIcons-dark';
+import { CreateClear, HomeClear, LogoutClear, NotificationClear, ProfileClear, SearchClear } from '../../common/icon/sidebar/sidebarIcons-clear';
+import { CreateDark, HomeDark, LogoutDark, NotificationDark, ProfileDark, SearchDark } from '../../common/icon/sidebar/sidebarIcons-dark';
 
 import './style.scss';
 

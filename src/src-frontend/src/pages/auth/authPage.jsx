@@ -5,21 +5,16 @@ import { useLocation } from 'react-router-dom';
 import { ThemeContext } from '../../contexts/themeContexts';
 import { useScreen } from '../../contexts/screenContexts';
 
-import LoginForm from '../../components/forms/login';
-import { Header } from '../../components/layout/header/header';
-import FooterComponent from '../../components/layout/footer/footer';
 import Skeleton from '../../components/layout/skeleton/skeleton';
+import { Header } from '../../components/layout/header/header';
 import { LoginButton, RegisterButton } from '../../components/layout/buttons/buttons';
-import SignupForm from '../../components/forms/signup';
 import { ToggleButton } from '../../components/layout/buttons/buttons';
+import LoginForm from '../../components/common/form/login';
+import SignupForm from '../../components/common/form/signup';
+import FooterComponent from '../../components/layout/footer/footer';
 
-import LogoiconDark from '../../assest/icons/components/logo/logoIcon-dark';
-import LogoFullDark from '../../assest/icons/components/logo/logofull-dark';
-import LogoFullClear from '../../assest/icons/components/logo/logofull-clear';
-import LogoiconClear from '../../assest/icons/components/logo/logoicon-clear';
-import LogotextDark from '../../assest/icons/components/logo/logotext-dark';
-import LogotextClear from '../../assest/icons/components/logo/logotext-clear';
-
+import { LogoFullDark, LogoiconDark, LogotextDark } from '../../components/common/icon/logo/logo-dark';
+import { LogoFullClear, LogoiconClear, LogotextClear } from '../../components/common/icon/logo/logo-clear';
 
 
 const AuthPage = () => {

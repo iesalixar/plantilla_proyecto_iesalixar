@@ -7,15 +7,15 @@ import { useAuth } from '../../contexts/userContexts.js';
 import Skeleton from '../../components/layout/skeleton/skeleton.jsx';
 import { Header } from '../../components/layout/header/header.jsx';
 import { FooterBarComponent, SidebarComponent } from '../../components/layout/navbar/navbar.jsx';
-import PublicationComponent from '../../components/publication/publication';
+import PublicationComponent from '../../components/common/publication/publication.jsx';
 import FooterComponent from '../../components/layout/footer/footer.jsx';
 import { ToggleButton } from '../../components/layout/buttons/buttons.jsx';
 
-import LogoiconDark from '../../assest/icons/components/logo/logoIcon-dark.jsx';
-import LogoiconClear from '../../assest/icons/components/logo/logoicon-clear';
+import { LogoiconDark } from '../../components/common/icon/logo/logo-dark.jsx';
+import { LogoiconClear } from '../../components/common/icon/logo/logo-clear.jsx';
 
-import { LogoutClear } from '../../assest/icons/components/sidebar/sidebarIcons-clear.jsx';
-import { LogoutDark } from '../../assest/icons/components/sidebar/sidebarIcons-dark.jsx';
+import { LogoutClear } from '../../components/common/icon/sidebar/sidebarIcons-clear.jsx';
+import { LogoutDark } from '../../components/common/icon/sidebar/sidebarIcons-dark.jsx';
 
 const HomePage = () => {
     // CONTEXTS

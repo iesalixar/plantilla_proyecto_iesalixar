@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 //  CONTEXTS
-import { useAuth } from '../../contexts/userContexts';
-import { ThemeContext } from '../../contexts/themeContexts';
+import { useAuth } from '../../../contexts/userContexts';
+import { ThemeContext } from '../../../contexts/themeContexts';
 //SERVICES
-import { signinService } from '../../service/auht/authService';
+import { signinService } from '../../../service/auht/authService';
 //STYLE
 import './style.scss';
 
