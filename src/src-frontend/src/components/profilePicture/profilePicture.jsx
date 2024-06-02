@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.scss';
 
 const ProfilePictureCircle = ({ source, size = 50 }) => {
     return (
