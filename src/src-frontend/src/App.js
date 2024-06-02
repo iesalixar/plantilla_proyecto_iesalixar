@@ -8,7 +8,7 @@ import { ScreenProvider } from './contexts/screenContexts.js';
 import HomePage from './pages/home/homePage';
 import AuthPage from './pages/auth/authPage.jsx';
 import ProtectedRoute from './service/navigation/routerProtectionService.js';
-
+import AddActivity from './components/common/form/PublicationForm.jsx';
 import "@fontsource/roboto";
 import './app.scss'
 
@@ -24,6 +24,7 @@ function App() {
         </ProtectedRoute>} />
         <Route path="/login" element={<AuthPage />} />
         <Route path="/register" element={<AuthPage />} />
+        <Route path="/add" element={<AddActivity />} />
       </Routes>
     </Router>
   );

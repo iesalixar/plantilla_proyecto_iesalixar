@@ -5,9 +5,10 @@ import { ThemeContext } from '../../../contexts/themeContexts';
 import { useAuth } from '../../../contexts/userContexts';
 import { useScreen } from '../../../contexts/screenContexts';
 
+import ProfilePictureComponent from '../../common/profilePicture/profilePicture';
 
-import { LogoFullDark, LogoiconDark, LogotextDark } from '../../common/icon/logo/logo-dark';
-import { LogoFullClear, LogoiconClear, LogotextClear } from '../../common/icon/logo/logo-clear';
+import { LogoiconDark, LogotextDark } from '../../common/icon/logo/logo-dark';
+import { LogoiconClear, LogotextClear } from '../../common/icon/logo/logo-clear';
 
 import { ToggleButton } from '../buttons/buttons';
 
@@ -19,10 +20,13 @@ import './style.scss';
 const SidebarComponent = () => {
 
     const { theme, isDark } = useContext(ThemeContext);
-    const { logout } = useAuth();
-    const { screenWidth } = useScreen();
 
+    const { logout, userData } = useAuth();
+
+    const { screenWidth } = useScreen();
     const [isScreenSmall, setIsScreenSmall] = useState(false);
+
+    const profileImage = userData.user.image;
 
     useEffect(() => {
         setIsScreenSmall(screenWidth <= 1050);
@@ -45,7 +49,6 @@ const SidebarComponent = () => {
         Search: SearchDark,
         Create: CreateDark,
         Notification: NotificationDark,
-        Profile: ProfileDark,
     };
 
     const clearIcons = {
@@ -53,7 +56,6 @@ const SidebarComponent = () => {
         Search: SearchClear,
         Create: CreateClear,
         Notification: NotificationClear,
-        Profile: ProfileClear,
     };
 
 
@@ -80,7 +82,7 @@ const SidebarComponent = () => {
     };
     if (isScreenSmall) {
         return (
-            <div className="sidebar-container">
+            <div className="sidebar-container" style={{ borderColor: theme.gray8 }}>
                 <div className='logo-container'>
                     <Link to="/home">
                         {isDark ? <LogoiconDark {...svgLogoIconProps} /> : <LogoiconClear {...svgLogoIconProps} />}
@@ -95,6 +97,7 @@ const SidebarComponent = () => {
                             </div>
                         );
                     })}
+                    <div className='icon-btn'><ProfilePictureComponent source={profileImage} size={35} /></div>
                 </div>
                 <div className='logout-section'>
                     <div className='toggle-section'>
@@ -108,23 +111,30 @@ const SidebarComponent = () => {
         );
     }
     return (
-        <div className="sidebar-container">
+        <div className="sidebar-container" style={{ borderColor: theme.gray8 }}>
             <div className='logo-container'>
                 <Link to="/home">
                     {isDark ? <LogotextDark {...svgLogoTextProps} /> : <LogotextClear {...svgLogoTextProps} />}
                 </Link>
             </div>
-            {Object.keys(icons).map((key) => {
-                const IconComponent = icons[key];
-                return (
-                    <div className="icon-section" key={key}>
-                        <div className='icon-btn' onClick={() => handleIconClick(key)}>
-                            <IconComponent />
+            <div className="icon-section">
+                {Object.keys(icons).map((key) => {
+                    const IconComponent = icons[key];
+                    return (
+                        <div className='icon-wrapper' key={key}>
+                            <div className='icon-btn' onClick={() => handleIconClick(key)}>
+                                <IconComponent />
+                            </div>
+                            <div className='icon-text' style={{ color: theme.gray11 }}>{key}</div>
                         </div>
-                        <div className='icon-text' style={{ color: theme.gray11 }}>{key}</div>
-                    </div>
-                );
-            })}
+                    );
+                })}
+                <div className='icon-wrapper'>
+                    <div className='icon-btn'><ProfilePictureComponent source={profileImage} size={35} /></div>
+                    <div className='icon-text' style={{ color: theme.gray11 }}>Profile</div>
+                </div>
+
+            </div>
             <div className='logout-section'>
                 <div className='toggle-section'>
                     <ToggleButton />
@@ -137,8 +147,10 @@ const SidebarComponent = () => {
     );
 };
 const FooterBarComponent = () => {
-    const { logout } = useAuth();
+    const { userData } = useAuth();
     const { theme, isDark } = useContext(ThemeContext);
+
+    const profileImage = userData.user.image;
 
     const footerBarStyle = {
         background: theme.colorBackground,
@@ -149,7 +161,6 @@ const FooterBarComponent = () => {
         Search: SearchDark,
         Create: CreateDark,
         Notification: NotificationDark,
-        Profile: ProfileDark,
     };
 
     const clearIcons = {
@@ -157,7 +168,6 @@ const FooterBarComponent = () => {
         Search: SearchClear,
         Create: CreateClear,
         Notification: NotificationClear,
-        Profile: ProfileClear,
     };
 
     const icons = isDark ? darkIcons : clearIcons;
@@ -172,10 +182,6 @@ const FooterBarComponent = () => {
                 break;
             case 'Profile':
                 window.location.href = '/perfil';
-                break;
-            case 'Logout':
-                logout();
-                window.location.href = '/';
                 break;
             default:
                 break;
@@ -195,6 +201,7 @@ const FooterBarComponent = () => {
                         </div>
                     );
                 })}
+                <div className='icon-btn'><ProfilePictureComponent source={profileImage} size={30} /></div>
             </div>
         </div>
     );

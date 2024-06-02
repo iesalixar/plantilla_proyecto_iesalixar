@@ -4,7 +4,7 @@ import { ThemeContext } from '../../../contexts/themeContexts';
 
 import './style.scss';
 
-import { SunIcon, MoonIcon } from '../../../assest/icons/components/themeIcons';
+import { SunIcon, MoonIcon } from '../../../components/common/icon/themeIcons';
 
 const LoginButton = () => {
     const { theme } = useContext(ThemeContext);

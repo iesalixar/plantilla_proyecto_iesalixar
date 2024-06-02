@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../../../contexts/themeContexts';
+
+import { ProfileClear } from '../icon/sidebar/sidebarIcons-clear';
+import { ProfileDark } from '../icon/sidebar/sidebarIcons-dark';
+
 import './style.scss';
 
-const ProfilePictureCircle = ({ source, size = 50 }) => {
+const ProfilePictureComponent = ({ source, size }) => {
+    const { isDark } = useContext(ThemeContext);
+
     return (
-        <div className="profile-picture-circle" style={{ width: size, height: size, borderRadius: '50%' }}>
-            <img src={source} alt="Profile" style={{ width: size, height: size, borderRadius: '50%' }} />
+        <div className="profile-picture-circle" style={{ width: size, height: size, borderRadius: '50%', overflow: 'hidden' }}>
+            {source ? (
+                <img src={`data:image/jpeg;base64,${source}`} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            ) : (
+                isDark ? <ProfileDark /> : <ProfileClear />
+            )}
         </div>
     );
 };
 
-export default ProfilePictureCircle;
+export default ProfilePictureComponent;

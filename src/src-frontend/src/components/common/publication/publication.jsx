@@ -14,7 +14,7 @@ const PublicationComponent = () => {
     const { theme, isDark } = useContext(ThemeContext);
     const { userData } = useAuth();
     const userList = [userData.user, ...userData.user.friends];
-
+    const profileImage = userData.user.image;
     return (
         <div className='publication-container'>
 

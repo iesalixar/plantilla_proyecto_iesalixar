@@ -37,8 +37,8 @@ const HomePage = () => {
     };
 
     const svgLogoIconProps = {
-        width: 35,
-        height: 35,
+        width: 45,
+        height: 45,
         className: "logo-icon-header",
         viewBox: "0 0 100 100",
     };
