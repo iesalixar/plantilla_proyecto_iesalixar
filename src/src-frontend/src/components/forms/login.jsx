@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 //  CONTEXTS
-import { useAuth } from '../../contexts/user';
-import { ThemeContext } from '../../contexts/theme';
+import { useAuth } from '../../contexts/userContexts';
+import { ThemeContext } from '../../contexts/themeContexts';
 //SERVICES
 import { signinService } from '../../service/auht/authService';
 //STYLE
@@ -12,7 +12,6 @@ const LoginForm = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
     const { theme } = useContext(ThemeContext);
-    const [focus, setFocus] = useState(false);
 
     //#region  SET STATES
     const [loginInfo, setLoginInfo] = useState({
@@ -85,18 +84,6 @@ const LoginForm = () => {
     };
     //#endregion
 
-    const handleFocus = (e) => {
-        const { name } = e.target;
-        setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: ''
-        }));
-        setFocus(true);
-    };
-    const handleBlur = () => {
-        setFocus(false); // Cambia el estado de enfoque a falso cuando el input pierde foco
-    };
-
     //#region HANDLE SUBMIT
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -121,7 +108,6 @@ const LoginForm = () => {
                     // Guarda el token y la información del usuario en el contexto de autenticación
                     login({ token: result.token, user: result.userDTO });
                     navigate('/');
-                    console.log('que pasa aqui')
                 }
             } catch (error) {
                 setErrors({ generic: error.message });
@@ -142,8 +128,6 @@ const LoginForm = () => {
                         name="identifier"
                         value={loginInfo.identifier}
                         onChange={handleChange}
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
                         placeholder="Email"
                         style={{ color: theme.gray12, borderColor: theme.gray8 }}
 
@@ -154,8 +138,6 @@ const LoginForm = () => {
                         name="password"
                         value={loginInfo.password}
                         onChange={handleChange}
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
                         placeholder="Password"
                         style={{ color: theme.gray12, borderColor: theme.gray8 }}
                         required

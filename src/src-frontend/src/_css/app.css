@@ -284,6 +284,10 @@
   --color-background: #111;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 /* styles.scss */
 body, html {
   margin: 0;
@@ -305,7 +309,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 100vw;
   justify-content: center;
 }
 

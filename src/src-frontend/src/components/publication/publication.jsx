@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { ThemeContext } from '../../contexts/theme';
-import { useAuth } from '../../contexts/user';
+import { ThemeContext } from '../../contexts/themeContexts';
+import { useAuth } from '../../contexts/userContexts';
 
 import { CommentIconDark, LikeIconDark } from '../../assest/icons/components/publicationIcon';
 import ProfilePictureCircle from './profilePicture/profilePicture';

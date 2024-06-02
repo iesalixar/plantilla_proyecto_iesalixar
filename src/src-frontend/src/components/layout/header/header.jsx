@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { ThemeContext } from '../../../contexts/theme';
-import { useScreen } from '../../../contexts/screen';
+import { ThemeContext } from '../../../contexts/themeContexts';
+import { useScreen } from '../../../contexts/screenContexts';
 import './style.scss';
 
 const Header = ({ style, leftContent, rightContent }) => {

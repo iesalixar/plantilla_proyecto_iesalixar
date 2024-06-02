@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
-import { AuthProvider } from './contexts/user.js';
-import { ThemeProvider } from './contexts/theme.js';
-import { ScreenProvider } from './contexts/screen.js';
+import { AuthProvider } from './contexts/userContexts.js';
+import { ThemeProvider } from './contexts/themeContexts.js';
+import { ScreenProvider } from './contexts/screenContexts.js';
 
 import HomePage from './pages/home/homePage';
 import AuthPage from './pages/auth/authPage.jsx';
@@ -19,14 +19,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/" element={<ProtectedRoute>
+          <HomePage />
+        </ProtectedRoute>} />
         <Route path="/login" element={<AuthPage />} />
         <Route path="/register" element={<AuthPage />} />
-        <Route path="/home" element={
-          <ProtectedRoute>
-            <HomePage />
-          </ProtectedRoute>
-        } />
       </Routes>
     </Router>
   );

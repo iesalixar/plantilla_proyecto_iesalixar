@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { ThemeContext } from '../../../contexts/theme';
-import { useAuth } from '../../../contexts/user';
-import { useScreen } from '../../../contexts/screen';
+import { ThemeContext } from '../../../contexts/themeContexts';
+import { useAuth } from '../../../contexts/userContexts';
+import { useScreen } from '../../../contexts/screenContexts';
 
 import LogotextDark from '../../../assest/icons/components/logo/logotext-dark';
 import LogotextClear from '../../../assest/icons/components/logo/logotext-clear';
@@ -26,14 +26,8 @@ const SidebarComponent = () => {
 
     const [isScreenSmall, setIsScreenSmall] = useState(false);
 
-    const handleResize = () => {
-        setIsScreenSmall(screenWidth <= 1050);
-    };
-
     useEffect(() => {
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        setIsScreenSmall(screenWidth <= 1050);
     }, [screenWidth]);
 
     const svgLogoIconProps = {

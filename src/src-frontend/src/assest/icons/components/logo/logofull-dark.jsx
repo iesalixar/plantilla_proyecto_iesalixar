@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import './style.scss';
-import { ThemeContext } from "../../../../contexts/theme";
+import { ThemeContext } from "../../../../contexts/themeContexts";
 
 const LogoFullDark = (props) => {
     const { theme, isDark } = useContext(ThemeContext);

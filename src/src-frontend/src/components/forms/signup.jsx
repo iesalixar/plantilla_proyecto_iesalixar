@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useAuth } from '../../contexts/user';
-import { ThemeContext } from '../../contexts/theme';
+import { useAuth } from '../../contexts/userContexts';
+import { ThemeContext } from '../../contexts/themeContexts';
 
 import { signupService } from '../../service/auht/authService';
 
@@ -223,7 +223,17 @@ const SignupForm = () => {
     return (
         <div className='main-container'>
             <form onSubmit={handleSubmit} className="signup-container" style={{ borderColor: theme.gray7, borderWidth: '1px', borderStyle: 'solid' }}>
-                <h1 style={{ color: theme.grayA12 }}>Welcome to <span style={{ color: theme.tealA12 }}>FitConnet</span></h1>
+                <h1 style={{ color: theme.grayA12 }}>Welcome to <span style={{ color: theme.tealA11 }}>FitConnet</span></h1>
+                <section className='error-container'>
+                    {errors.firstName && <div className="error-message">{errors.firstName}</div>}
+                    {errors.lastName && <div className="error-message">{errors.lastName}</div>}
+                    {errors.username && <div className="error-message">{errors.username}</div>}
+                    {errors.age && <div className="error-message">{errors.age}</div>}
+                    {errors.email && <div className="error-message">{errors.email}</div>}
+                    {errors.password && <div className="error-message">{errors.password}</div>}
+                    {errors.privacyPolicy && <div className="error-message">{errors.privacyPolicy}</div>}
+
+                </section>
                 <div className="input-container">
                     <input
                         type="text"
@@ -234,7 +244,6 @@ const SignupForm = () => {
                         style={{ color: theme.gray12, borderColor: theme.gray8 }}
                         required
                     />
-                    {errors.firstName && <div className="error-message">{errors.firstName}</div>}
 
                     <input
                         type="text"
@@ -245,7 +254,6 @@ const SignupForm = () => {
                         style={{ color: theme.gray12, borderColor: theme.gray8 }}
 
                     />
-                    {errors.lastName && <div className="error-message">{errors.lastName}</div>}
 
                     <input
                         type="text"
@@ -256,7 +264,6 @@ const SignupForm = () => {
                         style={{ color: theme.gray12, borderColor: theme.gray8 }}
                         required
                     />
-                    {errors.username && <div className="error-message">{errors.username}</div>}
 
                     <input
                         type="number"
@@ -267,7 +274,6 @@ const SignupForm = () => {
                         style={{ color: theme.gray12, borderColor: theme.gray8 }}
                         required
                     />
-                    {errors.age && <div className="error-message">{errors.age}</div>}
 
                     <input
                         type="email"
@@ -278,7 +284,6 @@ const SignupForm = () => {
                         style={{ color: theme.gray12, borderColor: theme.gray8 }}
                         required
                     />
-                    {errors.email && <div className="error-message">{errors.email}</div>}
 
                     <input
                         type="password"
@@ -290,7 +295,6 @@ const SignupForm = () => {
 
                         required
                     />
-                    {errors.password && <div className="error-message">{errors.password}</div>}
                     <div>
                         <label>
                             <input

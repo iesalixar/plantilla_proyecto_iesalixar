@@ -1,9 +1,11 @@
 import * as React from "react"
+import './style.scss'
 const CreateDark = (props) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         width={42}
         height={36}
+        className="sidebar-icon"
         viewBox="0 0 24 24"
         {...props}
     >
@@ -19,6 +21,7 @@ const HomeDark = (props) => (
         xmlns="http://www.w3.org/2000/svg"
         width={42}
         height={36}
+        className="sidebar-icon"
         viewBox="0 0 24 24"
         {...props}
     >
@@ -33,6 +36,7 @@ const LogoutDark = (props) => (
         xmlns="http://www.w3.org/2000/svg"
         width={42}
         height={36}
+        className="sidebar-icon"
         viewBox="0 -0.9956 24 24"
         {...props}
     >
@@ -48,6 +52,7 @@ const NotificationDark = (props) => (
         xmlns="http://www.w3.org/2000/svg"
         width={42}
         height={36}
+        className="sidebar-icon"
         viewBox="0 0 20 20"
         {...props}
     >
@@ -64,6 +69,7 @@ const ProfileDark = (props) => (
         xmlns="http://www.w3.org/2000/svg"
         width={42}
         height={36}
+        className="sidebar-icon"
         viewBox="0 0 24 24"
         {...props}
     >
@@ -79,6 +85,7 @@ const SearchDark = (props) => (
         xmlns="http://www.w3.org/2000/svg"
         width={42}
         height={36}
+        className="sidebar-icon"
         viewBox="0 0 24 24"
         {...props}
     >
