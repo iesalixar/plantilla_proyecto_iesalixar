@@ -11,8 +11,14 @@ import lombok.Data;
  */
 @Data
 public class ActivityDTO {
-
+	/**
+	 * The unique identifier for the activity.
+	 */
 	private Long id;
+	/**
+	 * The title of activity.
+	 */
+	private String title;
 	/**
 	 * The type of activity.
 	 */

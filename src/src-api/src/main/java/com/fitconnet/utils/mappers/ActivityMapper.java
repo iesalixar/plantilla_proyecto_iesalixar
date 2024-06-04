@@ -29,6 +29,7 @@ public class ActivityMapper {
 			return null;
 		} else {
 			Activity activity = new Activity();
+			activity.setTitle(activityDTO.getTitle());
 			activity.setType(activityDTO.getType());
 			activity.setDuration(activityDTO.getDuration());
 			activity.setPlace(activityDTO.getPlace());
