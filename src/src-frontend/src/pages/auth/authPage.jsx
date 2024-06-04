@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
 
-import { ThemeContext } from '../../contexts/themeContexts';
-import { useScreen } from '../../contexts/screenContexts';
+import { ThemeContext } from '../../contexts/ThemeProvider';
+import { useScreenContext } from '../../contexts/ScreenProvider';
 
 import Skeleton from '../../components/layout/skeleton/skeleton';
 import { Header } from '../../components/layout/header/header';
 import { LoginButton, RegisterButton } from '../../components/layout/buttons/buttons';
 import { ToggleButton } from '../../components/layout/buttons/buttons';
-import LoginForm from '../../components/common/form/login';
-import SignupForm from '../../components/common/form/signup';
 import FooterComponent from '../../components/layout/footer/footer';
+import LoginForm from './components/form/login';
+import SignupForm from './components/form/signup';
 
 import { LogoFullDark, LogoiconDark, LogotextDark } from '../../components/common/icon/logo/logo-dark';
 import { LogoFullClear, LogoiconClear, LogotextClear } from '../../components/common/icon/logo/logo-clear';
@@ -20,10 +20,10 @@ import { LogoFullClear, LogoiconClear, LogotextClear } from '../../components/co
 const AuthPage = () => {
 
     // CONTEXTS
-    const { theme, isDark } = useContext(ThemeContext);
+    const { isDark } = useContext(ThemeContext);
     const location = useLocation();
     const pathname = location.pathname;
-    const { screenWidth } = useScreen();
+    const { screenWidth } = useScreenContext();
 
     //
     let logoIcon;
@@ -34,20 +34,18 @@ const AuthPage = () => {
 
     //#region SCREEN STATE
 
-    const [isScreenSmall, setIsScreenSmall] = useState(false);
-    const [isScreenMedium, setisScreenMedium] = useState(false);
 
-    const handleResize = () => {
+    const [isScreenSmall, setIsScreenSmall] = useState(false);
+    const [isScreenMedium, setIsScreenMedium] = useState(false);
+
+    const handleResize = useCallback(() => {
         setIsScreenSmall(screenWidth <= 500);
-        setisScreenMedium(screenWidth <= 770 && screenWidth >= 500);
-    };
+        setIsScreenMedium(screenWidth <= 770 && screenWidth > 500);
+    }, [screenWidth]);
 
     useEffect(() => {
         handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, [screenWidth]);
-
+    }, [handleResize]);
     //#endregion
 
     //#region SVG PROPS
@@ -122,7 +120,7 @@ const AuthPage = () => {
     );
 
     function setMetaDataTitle() {
-        if (pathname == '/login') {
+        if (pathname === '/login') {
             document.title = 'FitConnet - Login';
 
         } else {

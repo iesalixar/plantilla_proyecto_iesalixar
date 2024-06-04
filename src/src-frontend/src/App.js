@@ -8,11 +8,9 @@ import { ModalProvider } from './contexts/ModalProvider.js';
 
 import HomePage from './pages/home/homePage';
 import AuthPage from './pages/auth/authPage.jsx';
-import ProtectedRoute from './service/navigation/routerProtectionService.js';
-import AddActivity from './components/common/form/PublicationForm.jsx';
+import ProtectedRoute from './service/routerProtectionService.js';
 import "@fontsource/roboto";
 import './app.scss'
-import DurationInput from './components/common/durationInput/durationInpunt.jsx';
 
 function App() {
   document.title = 'FitConnet';
@@ -23,7 +21,6 @@ function App() {
         <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
         <Route path="/login" element={<AuthPage />} />
         <Route path="/register" element={<AuthPage />} />
-        <Route path="/add" element={<DurationInput />} />
       </Routes>
     </Router>
   );

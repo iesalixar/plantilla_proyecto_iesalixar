@@ -4,15 +4,15 @@ import { useAuthContext } from '../../../contexts/AuthProvider';
 import { ThemeContext } from '../../../contexts/ThemeProvider';
 import { useModalContext } from '../../../contexts/ModalProvider';
 
-import { createActivity } from '../../../service/activity/activityService';
-import DurationInput from '../durationInput/durationInpunt';
+import { createActivity } from '../../../service/activityService';
+import DurationInput from './components/durationInput/durationInpunt';
 
-import { CloseIconClear, CloseIconDark } from '../icon/closeIcon';
-import { AddImageIconClear, AddImageIconDark } from '../icon/addImageIcon';
+import { CloseIconClear, CloseIconDark } from './components/icons/closeIcon';
+import { AddImageIconClear, AddImageIconDark } from './components/icons/addImageIcon';
 
-import activityTypes from '../../../types/ActivityTypes';
+import activityTypes from '../../../model/ActivityTypes';
 
-import './activityFormStyle.scss';
+import './style.scss';
 
 function convertImageToBase64(file) {
     return new Promise((resolve, reject) => {

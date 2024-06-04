@@ -1,28 +1,30 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { ThemeContext } from '../../contexts/themeContexts.js';
-import { useScreen } from '../../contexts/screenContexts.js';
-import { useAuth } from '../../contexts/userContexts.js';
+import { ThemeContext } from '../../contexts/ThemeProvider.js';
+import { useScreenContext } from '../../contexts/ScreenProvider.js';
+import { useAuthContext } from '../../contexts/AuthProvider.js';
+import { useModalContext } from '../../contexts/ModalProvider.js';
 
 import Skeleton from '../../components/layout/skeleton/skeleton.jsx';
 import { Header } from '../../components/layout/header/header.jsx';
 import { FooterBarComponent, SidebarComponent } from '../../components/layout/navbar/navbar.jsx';
-import PublicationComponent from '../../components/common/publication/publication.jsx';
+import ActivityPostComponent from '../../components/common/activity/activityPost.jsx';
 import FooterComponent from '../../components/layout/footer/footer.jsx';
 import { ToggleButton } from '../../components/layout/buttons/buttons.jsx';
+import AddActivityForm from '../../components/common/addActivity/addActivityCard.jsx';
 
 import { LogoiconDark } from '../../components/common/icon/logo/logo-dark.jsx';
 import { LogoiconClear } from '../../components/common/icon/logo/logo-clear.jsx';
 
-import { LogoutClear } from '../../components/common/icon/sidebar/sidebarIcons-clear.jsx';
-import { LogoutDark } from '../../components/common/icon/sidebar/sidebarIcons-dark.jsx';
+import { LogoutClear } from './components/icon/sidebarIcons-clear.jsx';
+import { LogoutDark } from './components/icon/sidebarIcons-dark.jsx';
 
 const HomePage = () => {
     // CONTEXTS
-    const { theme, isDark } = useContext(ThemeContext);
-    const { screenWidth } = useScreen();
-    const { logout } = useAuth();
-
+    const { isDark, theme } = useContext(ThemeContext);
+    const { screenWidth } = useScreenContext();
+    const { logout } = useAuthContext();
+    const { modalIsOpen, closeModal } = useModalContext();
     //#region SCREEN STATE
     const [isScreenSmall, setIsScreenSmall] = useState(false);
 
@@ -43,6 +45,7 @@ const HomePage = () => {
         viewBox: "0 0 100 100",
     };
 
+
     const Logout = isDark ? <LogoutDark /> : <LogoutClear />
     const headerLeftContent = isDark ? <LogoiconDark {...svgLogoIconProps} /> : <LogoiconClear  {...svgLogoIconProps} />;
 
@@ -61,7 +64,8 @@ const HomePage = () => {
                                 </>}
                         />
                         <div className="main-content">
-                            <PublicationComponent />
+                            <ActivityPostComponent />
+                            {modalIsOpen && <AddActivityForm />}
                         </div>
                     </>
                 }
@@ -76,7 +80,9 @@ const HomePage = () => {
                 <>
                     <SidebarComponent />
                     <div className="main-content">
-                        <PublicationComponent />
+                        <ActivityPostComponent />
+                        {modalIsOpen && <AddActivityForm />}
+
                     </div>
                 </>
             }

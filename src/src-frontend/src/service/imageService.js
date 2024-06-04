@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
+// Función para convertir un archivo de imagen a base64
 
 const ImagenService = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [resizedImage, setResizedImage] = useState(null);
 
-    const handleFileChange = (event) => {
+    const handleFileChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
             setSelectedFile(file);
-            resizeImage(file);
+            const base64Image = await convertImageToBase64(file);
+            setResizedImage(base64Image);
         }
     };
 

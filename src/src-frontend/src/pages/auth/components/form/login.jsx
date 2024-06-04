@@ -1,16 +1,16 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 //  CONTEXTS
-import { useAuth } from '../../../contexts/userContexts';
-import { ThemeContext } from '../../../contexts/themeContexts';
+import { useAuthContext } from '../../../../contexts/AuthProvider';
+import { ThemeContext } from '../../../../contexts/ThemeProvider';
 //SERVICES
-import { signinService } from '../../../service/auht/authService';
+import { signinService } from '../../../../service/authService';
 //STYLE
 import './style.scss';
 
 const LoginForm = () => {
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { login } = useAuthContext();
     const { theme } = useContext(ThemeContext);
 
     //#region  SET STATES

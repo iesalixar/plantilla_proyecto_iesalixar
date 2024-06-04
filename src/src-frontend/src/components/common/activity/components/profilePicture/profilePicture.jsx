@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { ThemeContext } from '../../../contexts/themeContexts';
+import { ThemeContext } from '../../../../../contexts/ThemeProvider';
 
-import { ProfileClear } from '../icon/sidebar/sidebarIcons-clear';
-import { ProfileDark } from '../icon/sidebar/sidebarIcons-dark';
+import { ProfileClear } from '../icon/sidebarIcons-clear';
+import { ProfileDark } from '../icon/sidebarIcons-dark';
 
 import './style.scss';
 

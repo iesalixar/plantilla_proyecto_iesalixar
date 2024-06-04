@@ -1,37 +1,42 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { ThemeContext } from '../../../contexts/themeContexts';
-import { useAuth } from '../../../contexts/userContexts';
-import { useScreen } from '../../../contexts/screenContexts';
 
-import ProfilePictureComponent from '../../common/profilePicture/profilePicture';
+import { ThemeContext } from '../../../contexts/ThemeProvider';
+import { useAuthContext } from '../../../contexts/AuthProvider';
+import { useScreenContext } from '../../../contexts/ScreenProvider';
+import { useModalContext } from '../../../contexts/ModalProvider';
+
+import ProfilePictureComponent from './components/profilePicture/profilePicture';
 
 import { LogoiconDark, LogotextDark } from '../../common/icon/logo/logo-dark';
 import { LogoiconClear, LogotextClear } from '../../common/icon/logo/logo-clear';
 
 import { ToggleButton } from '../buttons/buttons';
 
-import { CreateClear, HomeClear, LogoutClear, NotificationClear, ProfileClear, SearchClear } from '../../common/icon/sidebar/sidebarIcons-clear';
-import { CreateDark, HomeDark, LogoutDark, NotificationDark, ProfileDark, SearchDark } from '../../common/icon/sidebar/sidebarIcons-dark';
+import { CreateClear, HomeClear, LogoutClear, NotificationClear, ProfileClear, SearchClear } from './components/icon/sidebarIcons-clear';
+import { CreateDark, HomeDark, LogoutDark, NotificationDark, ProfileDark, SearchDark } from './components/icon/sidebarIcons-dark';
 
 import './style.scss';
 
-const SidebarComponent = () => {
+const SidebarComponent = ({ }) => {
 
     const { theme, isDark } = useContext(ThemeContext);
+    const { logout, userData } = useAuthContext();
+    const { openModal } = useModalContext();
 
-    const { logout, userData } = useAuth();
 
-    const { screenWidth } = useScreen();
-    const [isScreenSmall, setIsScreenSmall] = useState(false);
-
-    const profileImage = userData.user.image;
+    const { screenWidth } = useScreenContext();
+    const [isScreenSmall, setIsScreenSmall] = useState();
 
     useEffect(() => {
         setIsScreenSmall(screenWidth <= 1050);
     }, [screenWidth]);
 
+    const profileImage = userData.user.image;
+
+
+    //#region ICON PROPS
     const svgLogoIconProps = {
         width: 50,
         height: 50,
@@ -58,8 +63,8 @@ const SidebarComponent = () => {
         Notification: NotificationClear,
     };
 
-
     const icons = isDark ? darkIcons : clearIcons;
+    //#endregion
 
     const handleIconClick = (name) => {
         switch (name) {
@@ -68,6 +73,7 @@ const SidebarComponent = () => {
             case 'Notifications':
                 break;
             case 'Create':
+                openModal();
                 break;
             case 'Profile':
                 window.location.href = '/perfil';
@@ -80,6 +86,8 @@ const SidebarComponent = () => {
                 break;
         }
     };
+
+
     if (isScreenSmall) {
         return (
             <div className="sidebar-container" style={{ borderColor: theme.gray8 }}>
@@ -147,15 +155,12 @@ const SidebarComponent = () => {
     );
 };
 const FooterBarComponent = () => {
-    const { userData } = useAuth();
+    const { userData } = useAuthContext();
     const { theme, isDark } = useContext(ThemeContext);
+    const { openModal } = useModalContext();
 
     const profileImage = userData.user.image;
 
-    const footerBarStyle = {
-        background: theme.colorBackground,
-        borderColor: theme.gray8,
-    }
     const darkIcons = {
         Home: HomeDark,
         Search: SearchDark,
@@ -179,6 +184,7 @@ const FooterBarComponent = () => {
             case 'Notifications':
                 break;
             case 'Create':
+                openModal();
                 break;
             case 'Profile':
                 window.location.href = '/perfil';

@@ -1,17 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useAuth } from '../../../contexts/userContexts';
-import { ThemeContext } from '../../../contexts/themeContexts';
+import { useAuthContext } from '../../../../contexts/AuthProvider';
+import { ThemeContext } from '../../../../contexts/ThemeProvider';
 
-import { signupService } from '../../../service/auht/authService';
+import { signupService } from '../../../../service/authService';
 
 import './style.scss';
 
 const SignupForm = () => {
 
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { login } = useAuthContext();
     const { theme } = useContext(ThemeContext);
     const [focus, setFocus] = useState(false);
 

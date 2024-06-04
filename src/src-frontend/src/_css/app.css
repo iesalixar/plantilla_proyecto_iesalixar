@@ -289,12 +289,14 @@
 }
 
 /* styles.scss */
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
   font-family: "Roboto", sans-serif;
   background-color: #E0F2F1;
-  overflow-x: hidden; /* Evitar el desbordamiento horizontal */
+  overflow-x: hidden;
+  /* Evitar el desbordamiento horizontal */
 }
 
 .body-container {
@@ -311,6 +313,11 @@ main {
   align-items: center;
   width: 100vw;
   justify-content: center;
+}
+
+.blur-background {
+  filter: blur(5px);
+  transition: filter 0.3s ease;
 }
 
 @media (min-width: 770px) and (max-width: 1050px) {
@@ -377,7 +384,8 @@ main {
 }*/
 @supports (color: color(display-p3 1 1 1)) {
   @media (color-gamut: p3) {
-    .dark, .dark-theme {
+    .dark,
+    .dark-theme {
       --teal-1: oklch(17.8% 0.013 200.8);
       --teal-2: oklch(21.5% 0.018 200.8);
       --teal-3: oklch(27.3% 0.041 200.8);
@@ -437,13 +445,17 @@ main {
     }
   }
 }
-.dark, .dark-theme, :is(.dark, .dark-theme) :where(.radix-themes:not(.light, .light-theme)) {
+.dark,
+.dark-theme,
+:is(.dark, .dark-theme) :where(.radix-themes:not(.light, .light-theme)) {
   --color-background: #111;
 }
 
 @supports (color: color(display-p3 1 1 1)) {
   @media (color-gamut: p3) {
-    :root, .light, .light-theme {
+    :root,
+    .light,
+    .light-theme {
       --gray-1: oklch(99.1% 0.001 277.7);
       --gray-2: oklch(98.2% 0.003 277.7);
       --gray-3: oklch(95.6% 0.005 277.7);
@@ -475,6 +487,9 @@ main {
     }
   }
 }
-:root, .light, .light-theme, .radix-themes {
+:root,
+.light,
+.light-theme,
+.radix-themes {
   --color-background: #fff;
 }/*# sourceMappingURL=app.css.map */
