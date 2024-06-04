@@ -1,5 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
-
+import { useState, useEffect } from 'react';
 const themes = {
     dark: {
         teal1: '#0a1313',
@@ -133,24 +132,23 @@ const themes = {
     },
 };
 
-export const ThemeContext = createContext();
-
-export const ThemeProvider = ({ children }) => {
+const useTheme = () => {
     const [isDark, setIsDark] = useState(false);
-    const theme = isDark ? themes.dark : themes.clear;
-    const toggleTheme = () => {
-        localStorage.setItem('isDark', JSON.stringify(!isDark));
-        setIsDark(!isDark);
-    };
 
     useEffect(() => {
-        const isDark = localStorage.getItem('isDark') === "true";
-        setIsDark(isDark)
+        const storedIsDark = localStorage.getItem('isDark') === "true";
+        setIsDark(storedIsDark);
     }, []);
 
-    return (
-        <ThemeContext.Provider value={{ theme, isDark, toggleTheme }}>
-            {children}
-        </ThemeContext.Provider>
-    );
+    const toggleTheme = () => {
+        const newIsDark = !isDark;
+        localStorage.setItem('isDark', JSON.stringify(newIsDark));
+        setIsDark(newIsDark);
+    };
+
+    const theme = isDark ? themes.dark : themes.clear;
+
+    return { theme, isDark, toggleTheme };
 };
+
+export default useTheme;

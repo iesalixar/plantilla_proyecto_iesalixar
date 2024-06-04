@@ -1,8 +1,7 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { useState, useEffect } from 'react';
 
-const ScreenContext = createContext();
+const useScreen = () => {
 
-export const ScreenProvider = ({ children }) => {
     const [isScrolling, setIsScrolling] = useState(false);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
@@ -24,11 +23,9 @@ export const ScreenProvider = ({ children }) => {
         };
     }, []);
 
-    return (
-        <ScreenContext.Provider value={{ isScrolling, screenWidth }}>
-            {children}
-        </ScreenContext.Provider>
-    );
+    return {
+        isScrolling,
+        screenWidth
+    };
 };
-
-export const useScreen = () => useContext(ScreenContext);
+export default useScreen;
