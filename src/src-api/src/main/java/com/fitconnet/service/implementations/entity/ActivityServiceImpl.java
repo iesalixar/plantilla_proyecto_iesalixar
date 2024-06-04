@@ -1,6 +1,8 @@
 package com.fitconnet.service.implementations.entity;
 
 import java.security.InvalidParameterException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -126,7 +128,11 @@ public class ActivityServiceImpl implements ActivityServiceI {
 
 	@Override
 	public void create(ActivityDTO activity) {
-		activityRepository.save(activityMapper.activityDTOtoActivity(activity));
+		Activity newActivity = activityMapper.activityDTOtoActivity(activity);
+		LocalDateTime now = LocalDateTime.now();
+		Date date = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+		newActivity.setDate(date);
+		activityRepository.save(newActivity);
 	}
 
 	@Override

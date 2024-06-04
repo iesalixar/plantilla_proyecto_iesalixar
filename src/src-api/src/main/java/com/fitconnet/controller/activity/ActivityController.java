@@ -89,12 +89,13 @@ public class ActivityController {
 	public ResponseEntity<String> createActivity(@RequestBody ActivityDTO request) {
 		logger.info("ActivityController :: createActivity");
 		ResponseEntity<String> response = null;
-		boolean activityExist = activityService.existByDate(request.getDate());
-		response = processingResponseI.processStringResponse(activityExist,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
-					activityService.create(request);
-					return ResponseEntity.ok().body("Activity created successfully.");
-				});
+		try {
+			activityService.create(request);
+			response = ResponseEntity.ok().body("Activity succeflly created");
+		} catch (Exception e) {
+			response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Can not create the activity");
+		}
+
 		return response;
 	}
 

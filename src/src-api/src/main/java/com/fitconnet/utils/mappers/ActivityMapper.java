@@ -32,7 +32,6 @@ public class ActivityMapper {
 			activity.setType(activityDTO.getType());
 			activity.setDuration(activityDTO.getDuration());
 			activity.setPlace(activityDTO.getPlace());
-			activity.setDate(activityDTO.getDate());
 			activity.setLikes(activityDTO.getLikes());
 			activity.setCreator(userMapper.userDTOtoUser(activityDTO.getCreator()));
 			activity.setParticipants(userMapper.userDTOsToUsers(activityDTO.getParticipants()));
