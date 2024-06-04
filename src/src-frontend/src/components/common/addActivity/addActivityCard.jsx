@@ -32,7 +32,7 @@ function convertImageToBase64(file) {
 const AddActivityForm = ({ style }) => {
     const { userData } = useAuthContext();
     const { theme, isDark } = useContext(ThemeContext);
-    const { modalIsOpen, closeModal } = useModalContext();
+    const { closeModal } = useModalContext();
 
     const [activityType, setActivityType] = useState('');
     const [title, setTitle] = useState('');
@@ -120,7 +120,7 @@ const AddActivityForm = ({ style }) => {
                 creator: userData.user,
                 image: imageBase64,
                 comments: [],
-                participants: [], // Aquí puedes agregar los amigos seleccionados como participantes
+                participants: [],
             };
 
             const token = userData.token;
