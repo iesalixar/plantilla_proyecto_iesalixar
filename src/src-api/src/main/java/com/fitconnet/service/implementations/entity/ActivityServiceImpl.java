@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +56,8 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	 * Mapper for mapping between comment entities and DTOs.
 	 */
 	private final CommentMapper commentMapper;
+
+	private final Logger logger = LoggerFactory.getLogger(ActivityServiceImpl.class);
 
 	@Override
 	public List<ActivityDTO> getAll() {
@@ -128,6 +132,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 
 	@Override
 	public void create(ActivityDTO activity) {
+		logger.info("ACTIVITY SERVICE:: CREATE: IN");
 		Activity newActivity = activityMapper.activityDTOtoActivity(activity);
 		LocalDateTime now = LocalDateTime.now();
 		Date date = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
