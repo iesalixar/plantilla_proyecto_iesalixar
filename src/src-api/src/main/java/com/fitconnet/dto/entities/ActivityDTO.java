@@ -1,6 +1,5 @@
 package com.fitconnet.dto.entities;
 
-import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class ActivityDTO {
 	/**
 	 * The duration of the activity.
 	 */
-	private Duration duration;
+//	private Duration duration;
 
 	/**
 	 * The place where the activity takes place.

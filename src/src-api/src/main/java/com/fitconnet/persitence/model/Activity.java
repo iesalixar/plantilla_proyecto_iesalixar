@@ -1,7 +1,6 @@
 package com.fitconnet.persitence.model;
 
 import java.io.Serializable;
-import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 
@@ -53,8 +52,8 @@ public class Activity implements Serializable {
 	/**
 	 * The duration of the activity.
 	 */
-	@Column(name = "C_ACTIVITY_DURATION", length = 8, nullable = false)
-	private Duration duration;
+//	@Column(name = "C_ACTIVITY_DURATION", length = 8, nullable = false)
+//	private Duration duration;
 
 	/**
 	 * The place where the activity takes place.
@@ -76,7 +75,7 @@ public class Activity implements Serializable {
 	/**
 	 * The profile picture.
 	 */
-	@Column(name = "C_ACTIVITY_IMAGE", columnDefinition = "TEXT")
+	@Column(name = "C_ACTIVITY_IMAGE", columnDefinition = "LONGTEXT")
 	private String image;
 	/**
 	 * The creator of the activity.

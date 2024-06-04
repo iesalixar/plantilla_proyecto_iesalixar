@@ -1,6 +1,5 @@
 package com.fitconnet.service.interfaces.entity;
 
-import java.util.Date;
 import java.util.List;
 
 import com.fitconnet.dto.entities.ActivityDTO;
@@ -86,7 +85,7 @@ public interface ActivityServiceI {
 	 * @param date The date to check.
 	 * @return true if an activity exists for the given date, false otherwise.
 	 */
-	boolean existByDate(Date date);
+	// boolean existByDate(Date date);
 
 	/**
 	 * Creates a new activity.
