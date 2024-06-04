@@ -1,30 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ThemeContext } from '../../../contexts/ThemeProvider';
+import { ThemeContext } from '../../../../../contexts/ThemeProvider';
 
 import './style.scss';
 
 import { SunIcon, MoonIcon } from './components/icon/themeIcons';
-
-const LoginButton = () => {
-    const { theme } = useContext(ThemeContext);
-
-    return (
-        <Link to="/login">
-            <button className='header-btn' style={{ background: theme.teal11, color: theme.gray7, borderColor: theme.gray6 }}><p style={{ color: theme.gray7 }}>Login</p></button>
-        </Link>
-    );
-};
-
-const RegisterButton = () => {
-    const { theme } = useContext(ThemeContext);
-
-    return (
-        <Link to="/register">
-            <button className='header-btn' style={{ background: theme.teal11, color: theme.gray7, borderColor: theme.gray6 }}><p style={{ color: theme.gray7 }}>Register</p></button>
-        </Link>
-    );
-};
 
 const ToggleButton = () => {
     const { theme, isDark, toggleTheme } = useContext(ThemeContext);
@@ -49,4 +28,4 @@ const ToggleButton = () => {
     );
 };
 
-export { LoginButton, RegisterButton, ToggleButton };
+export { ToggleButton };

@@ -10,11 +10,11 @@ import { Header } from '../../components/layout/header/header.jsx';
 import { FooterBarComponent, SidebarComponent } from '../../components/layout/navbar/navbar.jsx';
 import ActivityPostComponent from '../../components/common/activity/activityPost.jsx';
 import FooterComponent from '../../components/layout/footer/footer.jsx';
-import { ToggleButton } from '../../components/layout/buttons/buttons.jsx';
+import { ToggleButton } from './components/buttons/buttons.jsx';
 import AddActivityForm from '../../components/common/addActivity/addActivityCard.jsx';
 
-import { LogoiconDark } from '../../components/common/icon/logo/logo-dark.jsx';
-import { LogoiconClear } from '../../components/common/icon/logo/logo-clear.jsx';
+import { LogoiconDark } from './components/icon/logo-dark.jsx';
+import { LogoiconClear } from './components/icon/logo-clear.jsx';
 
 import { LogoutClear } from './components/icon/sidebarIcons-clear.jsx';
 import { LogoutDark } from './components/icon/sidebarIcons-dark.jsx';

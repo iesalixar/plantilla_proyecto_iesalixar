@@ -7,14 +7,13 @@ import { useScreenContext } from '../../contexts/ScreenProvider';
 
 import Skeleton from '../../components/layout/skeleton/skeleton';
 import { Header } from '../../components/layout/header/header';
-import { LoginButton, RegisterButton } from '../../components/layout/buttons/buttons';
-import { ToggleButton } from '../../components/layout/buttons/buttons';
+import { LoginButton, RegisterButton, ToggleButton } from './components/buttons/buttons';
 import FooterComponent from '../../components/layout/footer/footer';
 import LoginForm from './components/form/login';
 import SignupForm from './components/form/signup';
 
-import { LogoFullDark, LogoiconDark, LogotextDark } from '../../components/common/icon/logo/logo-dark';
-import { LogoFullClear, LogoiconClear, LogotextClear } from '../../components/common/icon/logo/logo-clear';
+import { LogoFullDark, LogoiconDark, LogotextDark } from './components/icon/logo-dark';
+import { LogoFullClear, LogoiconClear, LogotextClear } from './components/icon/logo-clear';
 
 
 const AuthPage = () => {

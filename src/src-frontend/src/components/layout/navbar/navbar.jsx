@@ -9,10 +9,10 @@ import { useModalContext } from '../../../contexts/ModalProvider';
 
 import ProfilePictureComponent from './components/profilePicture/profilePicture';
 
-import { LogoiconDark, LogotextDark } from '../../common/icon/logo/logo-dark';
-import { LogoiconClear, LogotextClear } from '../../common/icon/logo/logo-clear';
+import { LogoiconDark, LogotextDark } from './components/icon//logo-dark';
+import { LogoiconClear, LogotextClear } from './components/icon/logo-clear';
 
-import { ToggleButton } from '../buttons/buttons';
+import { ToggleButton } from './components/buttons/buttons';
 
 import { CreateClear, HomeClear, LogoutClear, NotificationClear, ProfileClear, SearchClear } from './components/icon/sidebarIcons-clear';
 import { CreateDark, HomeDark, LogoutDark, NotificationDark, ProfileDark, SearchDark } from './components/icon/sidebarIcons-dark';
