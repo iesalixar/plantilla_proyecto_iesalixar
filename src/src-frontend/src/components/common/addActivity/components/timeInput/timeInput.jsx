@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './style.scss'; // Estilo CSS para el componente
+import './style.scss';
 
 const TimeInput = () => {
     const [hours, setHours] = useState('');
