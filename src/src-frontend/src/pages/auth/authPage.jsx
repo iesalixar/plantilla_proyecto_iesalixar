@@ -7,11 +7,10 @@ import { useScreenContext } from '../../contexts/ScreenProvider';
 
 import Skeleton from '../../components/layout/skeleton/skeleton';
 import { Header } from '../../components/layout/header/header';
-import { LoginButton, RegisterButton, ToggleButton } from './components/buttons/buttons';
 import FooterComponent from '../../components/layout/footer/footer';
 import LoginForm from './components/form/login';
 import SignupForm from './components/form/signup';
-
+import { LoginButton, RegisterButton, ToggleButton } from './components/buttons/buttons';
 import { LogoFullDark, LogoiconDark, LogotextDark } from './components/icon/logo-dark';
 import { LogoFullClear, LogoiconClear, LogotextClear } from './components/icon/logo-clear';
 

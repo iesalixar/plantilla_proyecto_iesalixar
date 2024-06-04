@@ -12,19 +12,17 @@ import ActivityPostComponent from '../../components/common/activity/activityPost
 import FooterComponent from '../../components/layout/footer/footer.jsx';
 import { ToggleButton } from './components/buttons/buttons.jsx';
 import AddActivityForm from '../../components/common/addActivity/addActivityCard.jsx';
-
 import { LogoiconDark } from './components/icon/logo-dark.jsx';
 import { LogoiconClear } from './components/icon/logo-clear.jsx';
-
 import { LogoutClear } from './components/icon/sidebarIcons-clear.jsx';
 import { LogoutDark } from './components/icon/sidebarIcons-dark.jsx';
 
 const HomePage = () => {
     // CONTEXTS
-    const { isDark, theme } = useContext(ThemeContext);
+    const { isDark } = useContext(ThemeContext);
     const { screenWidth } = useScreenContext();
     const { logout } = useAuthContext();
-    const { modalIsOpen, closeModal } = useModalContext();
+    const { modalIsOpen } = useModalContext();
     //#region SCREEN STATE
     const [isScreenSmall, setIsScreenSmall] = useState(false);
 
