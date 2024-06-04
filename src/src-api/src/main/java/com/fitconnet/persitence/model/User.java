@@ -105,7 +105,7 @@ public class User implements UserDetails {
 	/**
 	 * The profile picture.
 	 */
-	@Column(name = "C_USER_IMAGE", columnDefinition = "TEXT")
+	@Column(name = "C_USER_IMAGE", columnDefinition = "LONGTEXT")
 	private String image;
 
 	/**
