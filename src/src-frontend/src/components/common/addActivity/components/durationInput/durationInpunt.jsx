@@ -1,7 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-
 import useFirstRender from "./useIsFirstRender";
-
 import styles from "./styles.module.scss";
 
 const DurationTrack = ({ numbers, qualifier, onChange, value }) => {
@@ -11,24 +9,33 @@ const DurationTrack = ({ numbers, qualifier, onChange, value }) => {
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
-                const selectedEntry = entries.find(
-                    (e) => Number.parseFloat(e.target.textContent) === value
-                );
-                selectedEntry?.target?.scrollIntoView();
+                // Encontrar la entrada más visible
+                const selectedEntry = entries.reduce((mostVisible, entry) => {
+                    return entry.intersectionRatio > mostVisible.intersectionRatio
+                        ? entry
+                        : mostVisible;
+                }, { intersectionRatio: 0 });
 
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) {
-                        return;
-                    }
-                    !firstRender && onChange(Number.parseFloat(entry.target.textContent));
-                });
+                const selectedValue = Number.parseFloat(selectedEntry.target.textContent);
+                if (selectedValue !== value) {
+                    selectedEntry.target.scrollIntoView({ behavior: "smooth", block: "center" });
+                    !firstRender && onChange(selectedValue);
+                }
             },
-            { threshold: 1 }
+            { threshold: [0.5] } // Ajustar el threshold
         );
 
-        [...list.current.children].forEach((child) => {
+        const children = [...list.current.children];
+        children.forEach((child) => {
             observer.observe(child);
         });
+
+        // Cleanup
+        return () => {
+            children.forEach((child) => {
+                observer.unobserve(child);
+            });
+        };
     }, [value, onChange, firstRender]);
 
     return (

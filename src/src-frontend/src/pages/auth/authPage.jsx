@@ -11,8 +11,8 @@ import FooterComponent from '../../components/layout/footer/footer';
 import LoginForm from './components/form/login';
 import SignupForm from './components/form/signup';
 import { LoginButton, RegisterButton, ToggleButton } from './components/buttons/buttons';
-import { LogoFullDark, LogoiconDark, LogotextDark } from './components/icon/logo-dark';
-import { LogoFullClear, LogoiconClear, LogotextClear } from './components/icon/logo-clear';
+import { LogoFullDark, LogoiconDark, LogotextDark } from '../../assest/icon/logo-dark';
+import { LogoFullClear, LogoiconClear, LogotextClear } from '../../assest/icon/logo-clear';
 
 
 const AuthPage = () => {

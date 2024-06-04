@@ -9,13 +9,13 @@ import { useModalContext } from '../../../contexts/ModalProvider';
 
 import ProfilePictureComponent from './components/profilePicture/profilePicture';
 
-import { LogoiconDark, LogotextDark } from './components/icon//logo-dark';
-import { LogoiconClear, LogotextClear } from './components/icon/logo-clear';
+import { LogoiconDark, LogotextDark } from '../../../assest/icon/logo-dark';
+import { LogoiconClear, LogotextClear } from '../../../assest/icon/logo-clear';
 
 import { ToggleButton } from './components/buttons/buttons';
 
-import { CreateClear, HomeClear, LogoutClear, NotificationClear, ProfileClear, SearchClear } from './components/icon/sidebarIcons-clear';
-import { CreateDark, HomeDark, LogoutDark, NotificationDark, ProfileDark, SearchDark } from './components/icon/sidebarIcons-dark';
+import { CreateClear, HomeClear, LogoutClear, NotificationClear, ProfileClear, SearchClear } from '../../../assest/icon/sidebarIcons-clear';
+import { CreateDark, HomeDark, LogoutDark, NotificationDark, ProfileDark, SearchDark } from '../../../assest/icon/sidebarIcons-dark';
 
 import './style.scss';
 

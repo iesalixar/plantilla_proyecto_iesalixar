@@ -6,6 +6,8 @@ import { useModalContext } from '../../../contexts/ModalProvider';
 
 import { createActivity } from '../../../service/activityService';
 import DurationInput from './components/durationInput/durationInpunt';
+import { TimeInput } from "@nextui-org/date-input";
+import { Time } from "@internationalized/date";
 
 import { CloseIconClear, CloseIconDark } from './components/icons/closeIcon';
 import { AddImageIconClear, AddImageIconDark } from './components/icons/addImageIcon';
@@ -162,7 +164,7 @@ const AddActivityForm = ({ style }) => {
                         <input type="text" value={place} onChange={(e) => setPlace(e.target.value)} style={{ borderColor: theme.gray7, color: theme.gray12 }} placeholder='Place' />
                     </div>
                     <div className="input-container">
-                        <DurationInput value={duration} onChange={(value) => setDuration(value)} />
+                        <TimeInput label="Event Time" className="custom-time-input" />
                     </div>
                     <div className="input-container">
                         <input type="text" value={friends} readOnly style={{ borderColor: theme.gray7, color: theme.gray12 }} placeholder='Add Friends' />
