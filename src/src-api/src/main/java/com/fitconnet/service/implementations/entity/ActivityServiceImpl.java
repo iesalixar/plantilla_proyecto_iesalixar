@@ -125,10 +125,10 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		return activityRepository.existsById(id);
 	}
 
-	@Override
-	public boolean existByDate(Date date) {
-		return activityRepository.existByDate(date);
-	}
+//	@Override
+//	public boolean existByDate(Date date) {
+//		return activityRepository.existByDate(date);
+//	}
 
 	@Override
 	public void create(ActivityDTO activity) {
@@ -154,9 +154,9 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		Activity aux = activityRepository.findById(id)
 				.orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
 		updateFieldIfDifferent(aux, activity.getType(), "type", aux::setType);
-		updateFieldIfDifferent(aux, activity.getDuration(), "duration", aux::setDuration);
+		// updateFieldIfDifferent(aux, activity.getDuration(), "duration",
+		// aux::setDuration);
 		updateFieldIfDifferent(aux, activity.getPlace(), "place", aux::setPlace);
-		updateFieldIfDifferent(aux, activity.getDate(), "date", aux::setDate);
 		updateFieldIfDifferent(aux, activity.getLikes(), "like", aux::setLikes);
 		updateFieldIfDifferent(aux, activity.getImage(), "image", aux::setImage);
 		updateFieldIfDifferent(aux, activity.getParticipants().stream().map(userMapper::userDTOtoUser).toList(),
@@ -190,14 +190,12 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		switch (fieldName) {
 		case "type":
 			return (T) activity.getType();
-		case "duration":
-			return (T) activity.getDuration();
+//		case "duration":
+//			return (T) activity.getDuration();
 		case "place":
 			return (T) activity.getPlace();
 		case "participants":
 			return (T) activity.getParticipants();
-		case "date":
-			return (T) activity.getDate();
 		case "image":
 			return (T) activity.getImage();
 		case "like":

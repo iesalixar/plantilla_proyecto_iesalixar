@@ -29,8 +29,9 @@ public class ActivityMapper {
 			return null;
 		} else {
 			Activity activity = new Activity();
+			activity.setTitle(activityDTO.getTitle());
 			activity.setType(activityDTO.getType());
-			activity.setDuration(activityDTO.getDuration());
+			// activity.setDuration(activityDTO.getDuration());
 			activity.setPlace(activityDTO.getPlace());
 			activity.setLikes(activityDTO.getLikes());
 			activity.setCreator(userMapper.userDTOtoUser(activityDTO.getCreator()));
@@ -55,7 +56,7 @@ public class ActivityMapper {
 			dto.setId(activity.getId());
 			dto.setCreator(userMapper.userToUserDTO(activity.getCreator()));
 			dto.setDate(activity.getDate());
-			dto.setDuration(activity.getDuration());
+//			dto.setDuration(activity.getDuration());
 			dto.setParticipants(userMapper.usersToUserDTOs(activity.getParticipants()));
 			dto.setPlace(activity.getPlace());
 			dto.setType(activity.getType());

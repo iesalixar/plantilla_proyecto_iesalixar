@@ -1,6 +1,5 @@
 package com.fitconnet.dto.entities;
 
-import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 
@@ -11,8 +10,14 @@ import lombok.Data;
  */
 @Data
 public class ActivityDTO {
-
+	/**
+	 * The unique identifier for the activity.
+	 */
 	private Long id;
+	/**
+	 * The title of activity.
+	 */
+	private String title;
 	/**
 	 * The type of activity.
 	 */
@@ -21,7 +26,7 @@ public class ActivityDTO {
 	/**
 	 * The duration of the activity.
 	 */
-	private Duration duration;
+//	private Duration duration;
 
 	/**
 	 * The place where the activity takes place.

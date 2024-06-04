@@ -104,6 +104,11 @@
                 .suggestions-list::-webkit-scrollbar-thumb:hover {
                     background-color: #555;
                 }
+
+                .custom-time-input {
+                    min-width: 220px;
+                    display: flex;
+                }
             }
 
             .input-container-image-button {

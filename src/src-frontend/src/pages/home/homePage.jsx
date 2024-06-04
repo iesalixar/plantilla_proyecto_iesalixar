@@ -12,10 +12,10 @@ import ActivityPostComponent from '../../components/common/activity/activityPost
 import FooterComponent from '../../components/layout/footer/footer.jsx';
 import { ToggleButton } from './components/buttons/buttons.jsx';
 import AddActivityForm from '../../components/common/addActivity/addActivityCard.jsx';
-import { LogoiconDark } from './components/icon/logo-dark.jsx';
-import { LogoiconClear } from './components/icon/logo-clear.jsx';
-import { LogoutClear } from './components/icon/sidebarIcons-clear.jsx';
-import { LogoutDark } from './components/icon/sidebarIcons-dark.jsx';
+import { LogoiconDark } from '../../assest/icon/logo-dark';
+import { LogoiconClear } from '../../assest/icon/logo-clear';
+import { LogoutClear } from '../../assest/icon/sidebarIcons-clear.jsx';
+import { LogoutDark } from '../../assest/icon/sidebarIcons-dark.jsx';
 
 const HomePage = () => {
     // CONTEXTS

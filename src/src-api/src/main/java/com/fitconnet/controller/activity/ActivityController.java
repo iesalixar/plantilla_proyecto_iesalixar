@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -264,21 +262,21 @@ public class ActivityController {
 	 * @return ResponseEntity<String> The response entity indicating the success or
 	 *         failure of the update operation.
 	 */
-	@PutMapping("/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	@Operation(summary = "Update Activity by Replacement", description = "Replaces an existing activity with another.")
-	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
-	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody ActivityDTO request) {
-		logger.info("ActivityController :: updateActivity");
-		ResponseEntity<String> response = null;
-		boolean activityExist = activityService.existByDate(request.getDate());
-		response = processingResponseI.processStringResponse(activityExist,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
-					activityService.update(id, request);
-					return ResponseEntity.ok().body("Activity updated successfully.");
-				});
-		return response;
-	}
+//	@PutMapping("/{id}")
+//	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+//	@Operation(summary = "Update Activity by Replacement", description = "Replaces an existing activity with another.")
+//	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
+//	public ResponseEntity<String> updateActivity(@PathVariable Long id, @RequestBody ActivityDTO request) {
+//		logger.info("ActivityController :: updateActivity");
+//		ResponseEntity<String> response = null;
+//		boolean activityExist = activityService.existByDate(request.getDate());
+//		response = processingResponseI.processStringResponse(activityExist,
+//				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
+//					activityService.update(id, request);
+//					return ResponseEntity.ok().body("Activity updated successfully.");
+//				});
+//		return response;
+//	}
 
 	/**
 	 * Partially updates an activity.
@@ -292,21 +290,21 @@ public class ActivityController {
 	 * @return ResponseEntity<String> The response entity indicating the success or
 	 *         failure of the update operation.
 	 */
-	@PatchMapping("/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	@Operation(summary = "Partial Update of an Activity", description = "Updates some of the attributes of an activity.")
-	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
-	public ResponseEntity<String> patchActivity(@PathVariable Long id, @RequestBody ActivityDTO request) {
-		logger.info("ActivityController :: patchActivity");
-		ResponseEntity<String> response = null;
-		boolean activityExist = activityService.existByDate(request.getDate());
-		response = processingResponseI.processStringResponse(activityExist,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
-					activityService.patch(id, request);
-					return ResponseEntity.ok().body("Activity updated successfully.");
-				});
-		return response;
-	}
+//	@PatchMapping("/{id}")
+//	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+//	@Operation(summary = "Partial Update of an Activity", description = "Updates some of the attributes of an activity.")
+//	@ApiResponse(responseCode = "200", description = "Activity updated successfully")
+//	public ResponseEntity<String> patchActivity(@PathVariable Long id, @RequestBody ActivityDTO request) {
+//		logger.info("ActivityController :: patchActivity");
+//		ResponseEntity<String> response = null;
+//		boolean activityExist = activityService.existByDate(request.getDate());
+//		response = processingResponseI.processStringResponse(activityExist,
+//				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The activity already exists"), () -> {
+//					activityService.patch(id, request);
+//					return ResponseEntity.ok().body("Activity updated successfully.");
+//				});
+//		return response;
+//	}
 
 	/**
 	 * Deletes an activity.

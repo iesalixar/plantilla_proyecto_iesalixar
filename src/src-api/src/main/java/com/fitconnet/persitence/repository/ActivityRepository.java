@@ -1,6 +1,5 @@
 package com.fitconnet.persitence.repository;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +22,8 @@ public interface ActivityRepository extends JpaRepository<Activity, Long> {
 	 * @param date The date to check.
 	 * @return true if an activity exists for the given date, false otherwise.
 	 */
-	@Query("SELECT COUNT(n) > 0 FROM Activity n WHERE n.date = ?1")
-	Boolean existByDate(Date date);
+//	@Query("SELECT COUNT(n) > 0 FROM Activity n WHERE n.date = ?1")
+//	Boolean existByDate(Date date);
 
 	/**
 	 * Finds activities by their place.

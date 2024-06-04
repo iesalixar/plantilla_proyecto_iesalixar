@@ -5,8 +5,7 @@ import { ThemeContext } from '../../../contexts/ThemeProvider';
 import { useModalContext } from '../../../contexts/ModalProvider';
 
 import { createActivity } from '../../../service/activityService';
-import DurationInput from './components/durationInput/durationInpunt';
-
+import TimeInput from './components/timeInput/timeInput';
 import { CloseIconClear, CloseIconDark } from './components/icons/closeIcon';
 import { AddImageIconClear, AddImageIconDark } from './components/icons/addImageIcon';
 
@@ -37,13 +36,18 @@ const AddActivityForm = ({ style }) => {
     const [activityType, setActivityType] = useState('');
     const [title, setTitle] = useState('');
     const [place, setPlace] = useState('');
-    const [duration, setDuration] = useState('');
+    const [duration, setDuration] = useState({ hours: '', minutes: '' });
     const [image, setImage] = useState(null);
     const [friends, setFriends] = useState('');
     const [activitySuggestions, setActivitySuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const inputRef = useRef(null);
     const suggestionsRef = useRef(null);
+
+    const formatDuration = () => {
+        const { hours, minutes } = duration;
+        return `${hours} hours - ${minutes} min`;
+    };
 
     useEffect(() => {
         if (!userData) {
@@ -106,23 +110,22 @@ const AddActivityForm = ({ style }) => {
 
         try {
             const imageBase64 = await convertImageToBase64(image);
+            const formattedDuration = `${duration.hours} hours - ${duration.minutes} min`;
 
-            // Obtener la fecha actual en formato ISO 8601
-            const currentDate = new Date().toISOString();
 
             const activityData = {
                 type: activityType,
                 title,
                 place,
-                duration,
-                date: currentDate,
+                duration: formattedDuration,
+                date: null,
                 likes: 0,
                 creator: userData.user,
                 image: imageBase64,
                 comments: [],
                 participants: [],
             };
-
+            console.log(activityData)
             const token = userData.token;
 
             createActivity(activityData, token)
@@ -162,7 +165,11 @@ const AddActivityForm = ({ style }) => {
                         <input type="text" value={place} onChange={(e) => setPlace(e.target.value)} style={{ borderColor: theme.gray7, color: theme.gray12 }} placeholder='Place' />
                     </div>
                     <div className="input-container">
-                        <DurationInput value={duration} onChange={(value) => setDuration(value)} />
+                        <TimeInput
+                            label="Event Time"
+                            onHourChange={(hour) => setDuration({ ...duration, hours: hour })}
+                            onMinuteChange={(minute) => setDuration({ ...duration, minutes: minute })}
+                        />
                     </div>
                     <div className="input-container">
                         <input type="text" value={friends} readOnly style={{ borderColor: theme.gray7, color: theme.gray12 }} placeholder='Add Friends' />

@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import { ThemeContext } from '../../../contexts/ThemeProvider';
 import { useAuthContext } from '../../../contexts/AuthProvider';
 
-import { CommentIconDark, LikeIconDark } from './components/icon/publicationIcon';
-import ProfilePictureCircle from './components/profilePicture/profilePicture';
 
 import './style.scss';
 
