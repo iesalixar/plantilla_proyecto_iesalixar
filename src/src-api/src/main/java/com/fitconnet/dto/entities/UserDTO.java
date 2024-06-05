@@ -27,7 +27,7 @@ public class UserDTO {
 	/**
 	 * The username of the user.
 	 */
-	private String username;
+	private String userName;
 
 	/**
 	 * The age of the user.

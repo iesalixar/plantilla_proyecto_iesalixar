@@ -66,7 +66,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 
 	@Override
 	public List<ActivityDTO> getAcyivitiesByUsername(String username) {
-		User user = userRepository.findByUsername(username)
+		User user = userRepository.findByUserName(username)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
 		return user.getCreatedActivities().stream().map(activity -> activityMapper.activityToActivityDTO(activity))
 				.toList();

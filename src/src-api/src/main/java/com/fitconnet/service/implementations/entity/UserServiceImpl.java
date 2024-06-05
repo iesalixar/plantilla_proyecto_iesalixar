@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserServiceI {
 
 	@Override
 	public UserDTO getByUserName(String userName) {
-		User user = userRepository.findByUsername(userName)
+		User user = userRepository.findByUserName(userName)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
 		return userMapper.userToUserDTO(user);
 	}
@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserServiceI {
 
 		updateFieldIfDifferent(aux, user.getFirstName(), "firstName", aux::setFirstName);
 		updateFieldIfDifferent(aux, user.getLastName(), "lastName", aux::setLastName);
-		updateFieldIfDifferent(aux, user.getUsername(), "userName", aux::setUsername);
+		updateFieldIfDifferent(aux, user.getUserName(), "userName", aux::setUserName);
 		updateFieldIfDifferent(aux, user.getEmail(), "email", aux::setEmail);
 		updateFieldIfDifferent(aux, user.getImage(), "image", aux::setImage);
 		if (!user.getAge().equals(aux.getAge())) {

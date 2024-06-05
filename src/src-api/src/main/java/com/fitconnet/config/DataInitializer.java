@@ -39,7 +39,7 @@ public class DataInitializer implements CommandLineRunner {
 			User admin = new User();
 			admin.setFirstName("admin");
 			admin.setLastName("");
-			admin.setUsername("bustaAdmin");
+			admin.setUserName("bustaAdmin");
 			admin.setEmail("admin@admin.com");
 			admin.setAge(20);
 			admin.setPassword(passwordEncoder.encode("admin"));
@@ -50,7 +50,7 @@ public class DataInitializer implements CommandLineRunner {
 			User both = new User();
 			both.setFirstName("both");
 			both.setLastName("");
-			both.setUsername("bothAdUs");
+			both.setUserName("bothAdUs");
 			both.setEmail("both@admin.com");
 			both.setAge(20);
 			both.setPassword(passwordEncoder.encode("admin"));
@@ -62,7 +62,7 @@ public class DataInitializer implements CommandLineRunner {
 				User user = new User();
 				user.setFirstName(faker.name().firstName());
 				user.setLastName(faker.name().lastName());
-				user.setUsername(faker.name().username());
+				user.setUserName(faker.name().username());
 				user.setEmail(faker.internet().emailAddress());
 				user.setAge(faker.number().numberBetween(18, 80));
 				user.setPassword(passwordEncoder.encode(faker.internet().password()));

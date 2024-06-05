@@ -79,7 +79,7 @@ public class UserController {
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The user already exists"), () -> {
 					Role role = Role.ROLE_USER;
 					userService.create(user);
-					return ResponseEntity.ok().body("User: " + user.getUsername() + ", created successfully.");
+					return ResponseEntity.ok().body("User: " + user.getUserName() + ", created successfully.");
 				});
 	}
 
