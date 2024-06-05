@@ -64,13 +64,13 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		return activityRepository.findAll().stream().map(activityMapper::activityToActivityDTO).toList();
 	}
 
-	@Override
-	public List<ActivityDTO> getAcyivitiesByUsername(String username) {
-		User user = userRepository.findByUserName(username)
-				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return user.getCreatedActivities().stream().map(activity -> activityMapper.activityToActivityDTO(activity))
-				.toList();
-	}
+//	@Override
+//	public List<ActivityDTO> getAcyivitiesByUsername(String username) {
+//		User user = userRepository.findByUserName(username)
+//				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+//		return user.getCreatedActivities().stream().map(activity -> activityMapper.activityToActivityDTO(activity))
+//				.toList();
+//	}
 
 	@Override
 	public List<ActivityDTO> getAcyivitiesByEmail(String email) {

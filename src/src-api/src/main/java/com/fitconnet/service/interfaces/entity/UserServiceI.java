@@ -33,7 +33,7 @@ public interface UserServiceI {
 	 * @param userName The username of the user to retrieve.
 	 * @return The user with the specified username, if found.
 	 */
-	UserDTO getByUserName(String userName);
+	// UserDTO getByUserName(String userName);
 
 	/**
 	 * Retrieves the friends of a user.

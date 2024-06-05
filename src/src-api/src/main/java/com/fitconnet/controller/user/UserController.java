@@ -79,7 +79,7 @@ public class UserController {
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body("The user already exists"), () -> {
 					Role role = Role.ROLE_USER;
 					userService.create(user);
-					return ResponseEntity.ok().body("User: " + user.getUserName() + ", created successfully.");
+					return ResponseEntity.ok().body("User: " + user.getName() + ", created successfully.");
 				});
 	}
 
@@ -138,19 +138,19 @@ public class UserController {
 	 * @return ResponseEntity<Optional<User>> The response entity containing the
 	 *         user, if found.
 	 */
-	@GetMapping("/{username}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-	@Operation(summary = "Get User by username", description = "Retrieves a user by username.")
-	@ApiResponse(responseCode = "200", description = "User retrieved successfully")
-	public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
-		logger.info("UserController :: getUser");
-		ResponseEntity<UserDTO> response = null;
-		UserDTO user = userService.getByUserName(username);
-		response = processingResponseI.processUserResponse(user,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
-				() -> ResponseEntity.ok().body(user));
-		return response;
-	}
+//	@GetMapping("/{username}")
+//	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+//	@Operation(summary = "Get User by username", description = "Retrieves a user by username.")
+//	@ApiResponse(responseCode = "200", description = "User retrieved successfully")
+//	public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
+//		logger.info("UserController :: getUser");
+//		ResponseEntity<UserDTO> response = null;
+//		UserDTO user = userService.getByUserName(username);
+//		response = processingResponseI.processUserResponse(user,
+//				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
+//				() -> ResponseEntity.ok().body(user));
+//		return response;
+//	}
 
 	/**
 	 * Retrieves friends of a user by ID.

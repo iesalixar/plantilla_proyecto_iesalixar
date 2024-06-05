@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from 'react';
 import useAuth from '../hooks/useAuth';
+import useContinuousUpdates from '../hooks/useContinuousUpdates';
 
 const AuthContext = createContext();
 

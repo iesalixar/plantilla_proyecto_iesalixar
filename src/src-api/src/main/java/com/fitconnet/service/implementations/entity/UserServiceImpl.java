@@ -60,12 +60,12 @@ public class UserServiceImpl implements UserServiceI {
 		return userMapper.userToUserDTO(user);
 	}
 
-	@Override
-	public UserDTO getByUserName(String userName) {
-		User user = userRepository.findByUserName(userName)
-				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return userMapper.userToUserDTO(user);
-	}
+//	@Override
+//	public UserDTO getByUserName(String userName) {
+//		User user = userRepository.findByUserName(userName)
+//				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+//		return userMapper.userToUserDTO(user);
+//	}
 
 	@Override
 	public List<UserDTO> getFriends(Long id) {
@@ -114,9 +114,9 @@ public class UserServiceImpl implements UserServiceI {
 		User aux = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
 
-		updateFieldIfDifferent(aux, user.getFirstName(), "firstName", aux::setFirstName);
-		updateFieldIfDifferent(aux, user.getLastName(), "lastName", aux::setLastName);
-		updateFieldIfDifferent(aux, user.getUserName(), "userName", aux::setUserName);
+		updateFieldIfDifferent(aux, user.getName(), "name", aux::setName);
+//		updateFieldIfDifferent(aux, user.getLastName(), "lastName", aux::setLastName);
+//		updateFieldIfDifferent(aux, user.getUserName(), "userName", aux::setUserName);
 		updateFieldIfDifferent(aux, user.getEmail(), "email", aux::setEmail);
 		updateFieldIfDifferent(aux, user.getImage(), "image", aux::setImage);
 		if (!user.getAge().equals(aux.getAge())) {
@@ -158,10 +158,10 @@ public class UserServiceImpl implements UserServiceI {
 
 	private String getFieldValue(User user, String fieldName) {
 		switch (fieldName) {
-		case "firstName":
-			return user.getFirstName();
-		case "lastName":
-			return user.getLastName();
+		case "name":
+			return user.getName();
+//		case "lastName":
+//			return user.getLastName();
 		case "userName":
 			return user.getUsername();
 		case "email":

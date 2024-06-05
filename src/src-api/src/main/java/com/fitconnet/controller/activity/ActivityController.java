@@ -21,7 +21,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.fitconnet.dto.entities.ActivityDTO;
-import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
@@ -232,23 +231,23 @@ public class ActivityController {
 	 * @return ResponseEntity<Optional<Set<Activity>>> The response entity
 	 *         containing the set of participated activities, if any.
 	 */
-	@GetMapping("/creator/{username}")
-	@PreAuthorize("hasAuthority('ROLE_USER')")
-	@Operation(summary = "Get Activities", description = "Retrieves a set of activities in which the user has participated.")
-	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
-	public ResponseEntity<List<ActivityDTO>> getActivitiesByUserName(@PathVariable String username) {
-		logger.info("ActivityController :: getInvitedActivities");
-		ResponseEntity<List<ActivityDTO>> response = null;
-		UserDTO user = userService.getByUserName(username);
-		boolean exist = false;
-		if (user != null) {
-			exist = true;
-		}
-		response = processingResponseI.processStringResponse(exist,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
-				() -> ResponseEntity.ok().body(activityService.getAcyivitiesByUsername(username)));
-		return response;
-	}
+//	@GetMapping("/creator/{username}")
+//	@PreAuthorize("hasAuthority('ROLE_USER')")
+//	@Operation(summary = "Get Activities", description = "Retrieves a set of activities in which the user has participated.")
+//	@ApiResponse(responseCode = "200", description = "Activities retrieved successfully")
+//	public ResponseEntity<List<ActivityDTO>> getActivitiesByUserName(@PathVariable String username) {
+//		logger.info("ActivityController :: getInvitedActivities");
+//		ResponseEntity<List<ActivityDTO>> response = null;
+//		UserDTO user = userService.getByUserName(username);
+//		boolean exist = false;
+//		if (user != null) {
+//			exist = true;
+//		}
+//		response = processingResponseI.processStringResponse(exist,
+//				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND),
+//				() -> ResponseEntity.ok().body(activityService.getAcyivitiesByUsername(username)));
+//		return response;
+//	}
 
 	/**
 	 * Updates an activity by replacing it with another.

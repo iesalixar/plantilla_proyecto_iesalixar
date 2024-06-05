@@ -21,8 +21,9 @@ const HomePage = () => {
     // CONTEXTS
     const { isDark } = useContext(ThemeContext);
     const { screenWidth } = useScreenContext();
-    const { logout } = useAuthContext();
+    const { logout, userData } = useAuthContext();
     const { modalIsOpen } = useModalContext();
+
     //#region SCREEN STATE
     const [isScreenSmall, setIsScreenSmall] = useState(false);
 
@@ -43,9 +44,9 @@ const HomePage = () => {
         viewBox: "0 0 100 100",
     };
 
-
     const Logout = isDark ? <LogoutDark /> : <LogoutClear />
     const headerLeftContent = isDark ? <LogoiconDark {...svgLogoIconProps} /> : <LogoiconClear  {...svgLogoIconProps} />;
+
 
 
     if (isScreenSmall) {

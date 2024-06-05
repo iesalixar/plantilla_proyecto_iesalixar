@@ -38,12 +38,12 @@ public interface ActivityServiceI {
 	 * @param username The username of the user.
 	 * @return A list of activities created by the specified user.
 	 */
-	List<ActivityDTO> getAcyivitiesByUsername(String username);
+//	List<ActivityDTO> getAcyivitiesByUsername(String username);
 
 	/**
 	 * Retrieves the activities created by a user.
 	 * 
-	 * @param username The username of the user.
+	 * @param email The email of the user.
 	 * @return A list of activities created by the specified user.
 	 */
 	List<ActivityDTO> getAcyivitiesByEmail(String email);

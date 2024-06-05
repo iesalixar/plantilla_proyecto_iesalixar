@@ -1,4 +1,5 @@
 import React, { useState, useRef, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useAuthContext } from '../../../contexts/AuthProvider';
 import { ThemeContext } from '../../../contexts/ThemeProvider';
@@ -32,6 +33,7 @@ const AddActivityForm = ({ style }) => {
     const { userData } = useAuthContext();
     const { theme, isDark } = useContext(ThemeContext);
     const { closeModal } = useModalContext();
+    const navigate = useNavigate();
 
     const [activityType, setActivityType] = useState('');
     const [title, setTitle] = useState('');
@@ -130,7 +132,9 @@ const AddActivityForm = ({ style }) => {
 
             createActivity(activityData, token)
                 .then((data) => {
+
                     console.log('Activity created successfully:', data);
+                    navigate('/')
                 })
                 .catch((error) => {
                     console.error('Error creating activity:', error);

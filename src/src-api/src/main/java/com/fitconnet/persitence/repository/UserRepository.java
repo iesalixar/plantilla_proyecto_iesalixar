@@ -30,7 +30,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * @return An optional containing the user with the specified username, if
 	 *         found.
 	 */
-	Optional<User> findByUserName(String userName);
+//	Optional<User> findByUsername(String username);
 
 	/**
 	 * Finds users by last name.
@@ -38,7 +38,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * @param lastName The last name of the users to find.
 	 * @return An optional containing a list of users with the specified last name.
 	 */
-	Optional<List<User>> findByLastName(String lastName);
+//	Optional<List<User>> findByLastName(String lastName);
 
 	/**
 	 * Finds users by roles.

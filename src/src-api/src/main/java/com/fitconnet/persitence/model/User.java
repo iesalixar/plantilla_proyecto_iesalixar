@@ -62,23 +62,23 @@ public class User implements UserDetails {
 	/**
 	 * The first name of the user.
 	 */
-	@Column(name = "C_USER_FIRSTNAME", nullable = false)
+	@Column(name = "C_USER_NAME", nullable = false)
 	@Size(min = 3, max = 20, message = "The name must be between 3 and 20 characters.")
-	private String firstName;
+	private String name;
 
 	/**
 	 * The last name of the user.
 	 */
-	@Column(name = "C_USER_LASTNAME")
-	@Size(min = 3, max = 20, message = "The surname must be between 3 and 20 characters.")
-	private String lastName;
+//	@Column(name = "C_USER_LASTNAME")
+//	@Size(min = 3, max = 20, message = "The surname must be between 3 and 20 characters.")
+//	private String lastName;
 
 	/**
 	 * The username of the user.
 	 */
-	@Column(name = "C_USER_USERNAME", unique = true, nullable = false)
-	@Size(min = 3, max = 20, message = "The username must be between 3 and 20 characters.")
-	private String userName;
+//	@Column(name = "C_USER_USERNAME", unique = true, nullable = false)
+//	@Size(min = 3, max = 20, message = "The username must be between 3 and 20 characters.")
+//	private String username;
 
 	/**
 	 * The age of the user.

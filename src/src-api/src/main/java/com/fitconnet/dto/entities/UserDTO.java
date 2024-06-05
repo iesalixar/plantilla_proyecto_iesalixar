@@ -17,17 +17,12 @@ public class UserDTO {
 	/**
 	 * The first name of the user.
 	 */
-	private String firstName;
-
-	/**
-	 * The last name of the user.
-	 */
-	private String lastName;
+	private String name;
 
 	/**
 	 * The username of the user.
 	 */
-	private String userName;
+	// private String userName;
 
 	/**
 	 * The age of the user.

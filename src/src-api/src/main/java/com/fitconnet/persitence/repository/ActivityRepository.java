@@ -50,6 +50,6 @@ public interface ActivityRepository extends JpaRepository<Activity, Long> {
 	 * @return An optional containing a list of activities created by the specified
 	 *         username.
 	 */
-	@Query("SELECT a FROM Activity a WHERE a.creator.username = :username")
-	Optional<List<Activity>> findByCreatorUsername(@Param("username") String username);
+//	@Query("SELECT a FROM Activity a WHERE a.creator.email = :email")
+//	Optional<List<Activity>> findByCreatorUsername(@Param("email") String email);
 }

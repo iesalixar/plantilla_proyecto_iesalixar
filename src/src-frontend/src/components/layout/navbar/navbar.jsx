@@ -139,7 +139,7 @@ const SidebarComponent = ({ }) => {
                 })}
                 <div className='icon-wrapper'>
                     <div className='icon-btn'><ProfilePictureComponent source={profileImage} size={35} /></div>
-                    <div className='icon-text' style={{ color: theme.gray11 }}>Profile</div>
+                    <div className='icon-text' style={{ color: theme.gray11 }}>{userData.user.name}</div>
                 </div>
 
             </div>
