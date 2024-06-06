@@ -85,9 +85,7 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-		User user = userRepository.findByEmail(request.getIdentifier())
-				.orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
-
+		User user = userRepository.findByEmail(request.getIdentifier());
 		String jwt = jwtService.generateToken(user);
 
 		UserDTO userDTO = userMapper.userToUserDTO(user);

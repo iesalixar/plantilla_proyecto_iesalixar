@@ -74,8 +74,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 
 	@Override
 	public List<ActivityDTO> getAcyivitiesByEmail(String email) {
-		User user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+		User user = userRepository.findByEmail(email);
 		return user.getCreatedActivities().stream().map(activity -> activityMapper.activityToActivityDTO(activity))
 				.toList();
 	}
@@ -133,11 +132,29 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	@Override
 	public void create(ActivityDTO activity) {
 		logger.info("ACTIVITY SERVICE:: CREATE: IN");
+
+		// Convertir el DTO a la entidad Activity
 		Activity newActivity = activityMapper.activityDTOtoActivity(activity);
+
+		// Establecer la fecha actual
 		LocalDateTime now = LocalDateTime.now();
 		Date date = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
 		newActivity.setDate(date);
+
+		// Obtener el usuario creador de la actividad
+		User creator = userRepository.findById(newActivity.getCreator().getId())
+				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+
+		// Establecer el creador de la actividad
+		newActivity.setCreator(creator);
+
+		// Añadir la actividad a la lista de actividades creadas por el usuario
+		creator.getCreatedActivities().add(newActivity);
+
+		// Guardar la nueva actividad
 		activityRepository.save(newActivity);
+
+		logger.info("ACTIVITY SERVICE:: CREATE: OUT");
 	}
 
 	@Override

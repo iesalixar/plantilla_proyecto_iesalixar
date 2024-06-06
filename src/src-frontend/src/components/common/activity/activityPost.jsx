@@ -7,9 +7,13 @@ import ProfilePictureComponent from '../../layout/navbar/components/profilePictu
 
 import './style.scss';
 
-const ActivityPostComponent = ({ activity }) => {
+const ActivityPostComponent = () => {
     const { theme, isDark } = useContext(ThemeContext);
     const { userData } = useAuthContext();
+
+    if (!userData) {
+        return <div>Loading...</div>; // Agregar un estado de carga si no hay datos
+    }
 
     // Copiar actividades creadas por el usuario
     let activities = [...userData.user.createdActivities];
@@ -22,7 +26,6 @@ const ActivityPostComponent = ({ activity }) => {
         activities = [...activities, ...friend.createdActivities];
     }
 
-    console.log(activities);
     // Función para convertir base64 a URL de imagen
     const base64ToUrl = (base64) => `data:image/jpeg;base64,${base64}`;
 
@@ -30,8 +33,8 @@ const ActivityPostComponent = ({ activity }) => {
         <>
             {
                 activities.map((activity) => (
-                    <div className='publication-container' style={{ background: isDark ? theme.darkBackground : theme.lightBackground }}>
-                        <div key={activity.id} className='activity-post'>
+                    <div key={activity.id} className='publication-container' style={{ background: isDark ? theme.darkBackground : theme.lightBackground }}>
+                        <div className='activity-post'>
                             <div className='activity-header'>
                                 <ProfilePictureComponent source={activity.creator.image} size="40px" />
                                 <Link href={`/profile/${activity.creator.id}`} className='creator-name'>
@@ -47,17 +50,15 @@ const ActivityPostComponent = ({ activity }) => {
                                 <p>{activity.duration}</p>
                                 <p>{activity.place}</p>
                             </div>
-                            <div div className='activity-participants'>
-                                {activities.participants.map((participant) => (
-
-                                    <Link href={`/profile/${participant.id}`} className='participant-name'>
+                            <div className='activity-participants'>
+                                {activity.participants.map((participant) => (
+                                    <Link key={participant.id} href={`/profile/${participant.id}`} className='participant-name'>
                                         {participant.name}
                                     </Link>
-                                ))
-                                }
+                                ))}
                             </div>
                         </div>
-                    </div >
+                    </div>
                 ))
             }
         </>

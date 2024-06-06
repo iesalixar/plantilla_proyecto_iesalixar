@@ -16,6 +16,11 @@ import './style.scss';
 
 function convertImageToBase64(file) {
     return new Promise((resolve, reject) => {
+        if (!(file instanceof Blob)) {
+            reject(new TypeError('The provided file is not of type Blob'));
+            return;
+        }
+
         const reader = new FileReader();
         reader.readAsDataURL(file);
 
@@ -28,7 +33,6 @@ function convertImageToBase64(file) {
         };
     });
 }
-
 const AddActivityForm = ({ style }) => {
     const { userData } = useAuthContext();
     const { theme, isDark } = useContext(ThemeContext);
@@ -86,7 +90,11 @@ const AddActivityForm = ({ style }) => {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        setImage(file);
+        if (file && file.type.match('image.*')) {
+            setImage(file);
+        } else {
+            console.error('No valid image file selected');
+        }
     };
 
     const handleActivityChange = (e) => {
@@ -110,10 +118,14 @@ const AddActivityForm = ({ style }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!image) {
+            console.error('No image selected to convert');
+            return;
+        }
+
         try {
             const imageBase64 = await convertImageToBase64(image);
             const formattedDuration = `${duration.hours} hours - ${duration.minutes} min`;
-
 
             const activityData = {
                 type: activityType,
@@ -127,15 +139,15 @@ const AddActivityForm = ({ style }) => {
                 comments: [],
                 participants: [],
             };
-            console.log(activityData)
+
             const token = userData.token;
 
             createActivity(activityData, token)
                 .then((data) => {
-
                     console.log('Activity created successfully:', data);
-                    navigate('/')
+                    alert('Activity created successfully')
                 })
+                .then(closeModal())
                 .catch((error) => {
                     console.error('Error creating activity:', error);
                 });
@@ -143,7 +155,6 @@ const AddActivityForm = ({ style }) => {
             console.error('Error converting image to base64:', error);
         }
     };
-
     return (
         <div className='modal-container'>
             <div className='add-activity-card' style={{ borderColor: theme.gray7, background: theme.gray3, color: theme.teal12 }}>
