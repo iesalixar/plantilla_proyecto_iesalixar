@@ -139,7 +139,7 @@ const AddActivityForm = ({ style }) => {
                 comments: [],
                 participants: [],
             };
-
+            console.log(activityData)
             const token = userData.token;
 
             createActivity(activityData, token)

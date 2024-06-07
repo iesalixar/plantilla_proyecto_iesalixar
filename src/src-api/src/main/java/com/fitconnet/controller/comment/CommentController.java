@@ -22,7 +22,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.fitconnet.dto.entities.CommentDTO;
-import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
@@ -156,22 +155,22 @@ public class CommentController {
 	 * @return ResponseEntity<List<Comment>> The response entity containing the list
 	 *         of comments associated with the user, if any.
 	 */
-	@GetMapping("/user/{userId}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	@Operation(summary = "Get Comments by User ID", description = "Retrieves comments associated with a specific user.")
-	@ApiResponse(responseCode = "200", description = "Comments retrieved successfully")
-	@ApiResponse(responseCode = "409", description = "User not found")
-	public ResponseEntity<?> getCommentsByUserId(@PathVariable Long userId) {
-		logger.info("CommentController :: getCommentsByUserId :: userId={}", userId);
-		UserDTO user = userService.getById(userId);
-		if (user == null) {
-			logger.error("User with ID {} not found", userId);
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("User not found");
-		} else {
-			List<CommentDTO> comments = commentService.getComments(user);
-			return ResponseEntity.ok().body(comments);
-		}
-	}
+//	@GetMapping("/user/{userId}")
+//	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//	@Operation(summary = "Get Comments by User ID", description = "Retrieves comments associated with a specific user.")
+//	@ApiResponse(responseCode = "200", description = "Comments retrieved successfully")
+//	@ApiResponse(responseCode = "409", description = "User not found")
+//	public ResponseEntity<?> getCommentsByUserId(@PathVariable Long userId) {
+//		logger.info("CommentController :: getCommentsByUserId :: userId={}", userId);
+//		UserDTO user = userService.getById(userId);
+//		if (user == null) {
+//			logger.error("User with ID {} not found", userId);
+//			return ResponseEntity.status(HttpStatus.CONFLICT).body("User not found");
+//		} else {
+//			List<CommentDTO> comments = commentService.getComments(user);
+//			return ResponseEntity.ok().body(comments);
+//		}
+//	}
 
 	/**
 	 * Updates an comment by replacing it with another.

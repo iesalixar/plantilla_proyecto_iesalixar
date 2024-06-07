@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.fitconnet.dto.entities.CommentDTO;
-import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.persitence.model.Comment;
 import com.fitconnet.persitence.repository.CommentRepository;
 import com.fitconnet.service.interfaces.entity.CommentServiceI;
@@ -37,10 +36,10 @@ public class CommentServiceImpl implements CommentServiceI {
 		}
 	}
 
-	@Override
-	public List<CommentDTO> getComments(UserDTO user) {
-		return user.getComments();
-	}
+//	@Override
+//	public List<CommentDTO> getComments(UserDTO user) {
+//		return user.getComments();
+//	}
 
 	@Override
 	public List<CommentDTO> getAll() {

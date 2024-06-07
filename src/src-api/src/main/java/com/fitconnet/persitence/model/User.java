@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fitconnet.enums.Role;
 
 import jakarta.persistence.CascadeType;
@@ -67,20 +68,6 @@ public class User implements UserDetails {
 	private String name;
 
 	/**
-	 * The last name of the user.
-	 */
-//	@Column(name = "C_USER_LASTNAME")
-//	@Size(min = 3, max = 20, message = "The surname must be between 3 and 20 characters.")
-//	private String lastName;
-
-	/**
-	 * The username of the user.
-	 */
-//	@Column(name = "C_USER_USERNAME", unique = true, nullable = false)
-//	@Size(min = 3, max = 20, message = "The username must be between 3 and 20 characters.")
-//	private String username;
-
-	/**
 	 * The age of the user.
 	 */
 	@Column(name = "C_USER_AGE", nullable = false)
@@ -120,13 +107,15 @@ public class User implements UserDetails {
 	/**
 	 * The activities created by the user.
 	 */
-	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
 	private List<Activity> createdActivities = new ArrayList<>();
 
 	/**
 	 * The activities the user is invited to.
 	 */
 	@ManyToMany(mappedBy = "participants", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JsonManagedReference
 	private List<Activity> invitedActivities = new ArrayList<>();
 
 	/**
@@ -141,11 +130,6 @@ public class User implements UserDetails {
 	 */
 	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
 	private List<Notification> notifications = new ArrayList<>();
-	/**
-	 * The comments that the user have made.
-	 */
-	@OneToMany(mappedBy = "user")
-	private List<Comment> comments;
 
 	/**
 	 * Retrieves the authorities granted to the user.

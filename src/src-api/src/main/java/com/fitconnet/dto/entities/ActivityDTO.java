@@ -26,7 +26,7 @@ public class ActivityDTO {
 	/**
 	 * The duration of the activity.
 	 */
-//	private Duration duration;
+	private String duration;
 
 	/**
 	 * The place where the activity takes place.
@@ -39,11 +39,6 @@ public class ActivityDTO {
 	private Date date;
 
 	/**
-	 * The likes of the activity.
-	 */
-	private Integer likes;
-
-	/**
 	 * The creator of the activity.
 	 */
 	private UserDTO creator;
@@ -52,10 +47,6 @@ public class ActivityDTO {
 	 * The image of the activity.
 	 */
 	private String image;
-	/**
-	 * The comments of the activity.
-	 */
-	private List<CommentDTO> comments;
 	/**
 	 * The participants of the activity.
 	 */

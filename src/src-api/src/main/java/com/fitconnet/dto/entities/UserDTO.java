@@ -20,11 +20,6 @@ public class UserDTO {
 	private String name;
 
 	/**
-	 * The username of the user.
-	 */
-	// private String userName;
-
-	/**
 	 * The age of the user.
 	 */
 	private Integer age;
@@ -68,10 +63,5 @@ public class UserDTO {
 	 * The notifications received by the user.
 	 */
 	private List<NotificationDTO> notifications = new ArrayList<>();
-
-	/**
-	 * The comments that the user have made.
-	 */
-	private List<CommentDTO> comments;
 
 }

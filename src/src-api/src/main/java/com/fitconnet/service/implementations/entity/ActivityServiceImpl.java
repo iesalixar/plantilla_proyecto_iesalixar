@@ -1,8 +1,6 @@
 package com.fitconnet.service.implementations.entity;
 
 import java.security.InvalidParameterException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -124,11 +122,6 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		return activityRepository.existsById(id);
 	}
 
-//	@Override
-//	public boolean existByDate(Date date) {
-//		return activityRepository.existByDate(date);
-//	}
-
 	@Override
 	public void create(ActivityDTO activity) {
 		logger.info("ACTIVITY SERVICE:: CREATE: IN");
@@ -137,9 +130,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		Activity newActivity = activityMapper.activityDTOtoActivity(activity);
 
 		// Establecer la fecha actual
-		LocalDateTime now = LocalDateTime.now();
-		Date date = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
-		newActivity.setDate(date);
+		newActivity.setDate(new Date());
 
 		// Obtener el usuario creador de la actividad
 		User creator = userRepository.findById(newActivity.getCreator().getId())
@@ -150,6 +141,8 @@ public class ActivityServiceImpl implements ActivityServiceI {
 
 		// Añadir la actividad a la lista de actividades creadas por el usuario
 		creator.getCreatedActivities().add(newActivity);
+
+		userRepository.save(creator);
 
 		// Guardar la nueva actividad
 		activityRepository.save(newActivity);
@@ -171,15 +164,11 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		Activity aux = activityRepository.findById(id)
 				.orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
 		updateFieldIfDifferent(aux, activity.getType(), "type", aux::setType);
-		// updateFieldIfDifferent(aux, activity.getDuration(), "duration",
-		// aux::setDuration);
+		updateFieldIfDifferent(aux, activity.getDuration(), "duration", aux::setDuration);
 		updateFieldIfDifferent(aux, activity.getPlace(), "place", aux::setPlace);
-		updateFieldIfDifferent(aux, activity.getLikes(), "like", aux::setLikes);
 		updateFieldIfDifferent(aux, activity.getImage(), "image", aux::setImage);
 		updateFieldIfDifferent(aux, activity.getParticipants().stream().map(userMapper::userDTOtoUser).toList(),
 				"participants", aux::setParticipants);
-		updateFieldIfDifferent(aux, activity.getComments().stream().map(commentMapper::commentDtoToComment).toList(),
-				"comment", aux::setComments);
 
 	}
 
@@ -207,18 +196,15 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		switch (fieldName) {
 		case "type":
 			return (T) activity.getType();
-//		case "duration":
-//			return (T) activity.getDuration();
+		case "duration":
+			return (T) activity.getDuration();
 		case "place":
 			return (T) activity.getPlace();
 		case "participants":
 			return (T) activity.getParticipants();
 		case "image":
 			return (T) activity.getImage();
-		case "like":
-			return (T) activity.getLikes();
-		case "comment":
-			return (T) activity.getComments();
+
 		default:
 			throw new IllegalArgumentException("Campo desconocido: " + fieldName);
 		}
