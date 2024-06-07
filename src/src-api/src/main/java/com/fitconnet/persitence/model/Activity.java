@@ -80,7 +80,6 @@ public class Activity implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "C_ACTIVITY_CREATOR")
 	@JsonBackReference
-
 	private User creator;
 
 	/**
