@@ -46,23 +46,184 @@ FitConnet es una aplicación cuyo fin es el ser de una red social que impacte po
 
 ## Estructura del Proyecto
 
-En este apartado el alumno explicará el contenido del repositorio y de todas las carpetas relevantes del mismo. Para facilitar la gestión de la entrega, todo el código y documentación debe estar en este repositorio.
+### Carpeta src-api
 
-Por lo anterior, un proyecto que contenga un Frontend en una tecnología o framework (por ejemplo Angular) y una API REST en otra tecnología o framework (Springboot, Express) deberá tener la siguiente estructura de directorios en el repositorio de entrega:
+Esta carpteta contiene el codigo de la APIREST de Fitconnet, aqui se detalla el stack tecnológico usado:
 
-- src-api
-- src-frontend
-- docs
-- README.md
+## Stack Tecnológico
 
-En el caso anterior, si se quiere desplegar de forma automatizada a partir del control de versiones, lo habitual es que estén los dos proyectos en repositorios separados. Por lo que se deberá configurar el despliegue automático para indicarle la raíz del código fuente de cada proyecto (si es posible) o hacer dos folks del repositorio principal uno para la API y otro para el frontend y adaptar los directorios para poder realizar el despliegue automático.
+El proyecto utiliza las siguientes tecnologías y dependencias:
 
-En un proyecto monolítico (tecnología servidor: Springboot, Django, Express, PHP,... con un sistema de templates propio para el frontend: Thymeleaf, jinja, ejs,...) deberá tener la siguiente estructura en el repositorio de entrega:
+### Frameworks y Librerías Principales
 
-- src
-- docs
-- README.md
+- **Spring Boot 3.2.3**
+
+  - `spring-boot-starter-data-jpa`: Para la persistencia de datos usando JPA.
+  - `spring-boot-starter-security`: Para la seguridad de la aplicación.
+  - `spring-boot-starter-web`: Para la creación de servicios web RESTful.
+  - `spring-boot-devtools`: Herramientas de desarrollo para mejorar la productividad (opcional).
+
+- **Java 21**: Versión del JDK utilizada.
+
+### Base de Datos
+
+- **MySQL**
+  - `mysql-connector-java`: Conector JDBC para MySQL, versión 8.0.23.
+
+### Seguridad y Autenticación
+
+- **JSON Web Token (JWT)**
+  - `jjwt-api`, `jjwt-impl`, `jjwt-jackson`: Librerías para manejar JWT.
+
+### Utilidades y Otros
+
+- **Apache Commons Lang**
+  - `commons-lang3`: Utilidades adicionales para trabajar con el lenguaje Java.
+- **Lombok**
+
+  - `lombok`: Herramienta para reducir el código boilerplate (opcional).
+
+- **Java Faker**
+  - `javafaker`: Generador de datos falsos para pruebas, versión 1.0.2.
+
+### Validación
+
+- **Hibernate Validator**
+  - `hibernate-validator`: Implementación de la especificación de Bean Validation, versión 6.2.0.Final.
+  - `jakarta.el`: Dependencia necesaria para `hibernate-validator`, versión 3.0.3.
+
+### Documentación de la API
+
+- **SpringDoc OpenAPI**
+
+  - `springdoc-openapi-starter-webmvc-ui`: Para generar la documentación de la API utilizando OpenAPI, versión 2.5.0.
+
+- **Springfox Swagger**
+  - `springfox-swagger-ui`: Interfaz de usuario de Swagger para la documentación de la API, versión 3.0.0.
+
+### Dependencias de Pruebas
+
+- **Spring Boot Test**
+
+  - `spring-boot-starter-test`: Herramientas y dependencias para pruebas de Spring Boot.
+  - `spring-security-test`: Herramientas para pruebas de seguridad en Spring.
+
+- **Podam**
+  - `podam`: Generador de datos de prueba, versión 8.0.1.RELEASE.
+
+### Plugins
+
+- **Spring Boot Maven Plugin**
+
+  - `spring-boot-maven-plugin`: Plugin para empaquetar la aplicación Spring Boot.
+
+- ## **Estrutura de paquetes**
+
+```
+ FitConnectBackendApplication.java
+📁 config
+    📄 DataInitializer.java
+    📁 cors
+        📄 CorsConfig.java
+    📁 security
+        📄 JwtAuthenticationFilter.java
+        📄 PasswordEncoderConfig.java
+        📄 SecurityFilterChainConfig.java
+📁 controller
+    📁 activity
+        📄 ActivityController.java
+    📁 auth
+        📄 AuthenticationController.java
+    📁 comment
+        📄 CommentController.java
+    📁 notification
+        📄 NotificationController.java
+    📁 user
+        📄 AdminController.java
+        📄 UserController.java
+📁 dto
+    📁 entities
+        📄 ActivityDTO.java
+        📄 CommentDTO.java
+        📄 NotificationDTO.java
+        📄 UserDTO.java
+    📁 requets
+        📄 SignUp.java
+        📄 Signin.java
+    📁 response
+        📄 ErrorDetailsDTO.java
+        📄 JwtAuthenticationDTO.java
+📁 enums
+    📄 Role.java
+📁 error
+    📄 GlobalExceptionHandler.java
+    📁 exception
+        📁 activity
+            📄 ActivityNotFoundException.java
+        📁 notifications
+            📄 NotificationCreationException.java
+            📄 NotificationNotFoundException.java
+        📁 user
+            📄 UserNotFoundException.java
+📁 persitence
+    📁 model
+        📄 Activity.java
+        📄 Comment.java
+        📄 Notification.java
+        📄 User.java
+    📁 repository
+        📄 ActivityRepository.java
+        📄 CommentRepository.java
+        📄 NotificationRepository.java
+        📄 UserRepository.java
+📁 service
+    📁 implementations
+        📁 entity
+            📄 ActivityServiceImpl.java
+            📄 CommentServiceImpl.java
+            📄 NotificationServiceImpl.java
+            📄 ProcessingResponseImpl.java
+            📄 UserServiceImpl.java
+        📁 security
+            📄 AuthenticationServiceImpl.java
+            📄 JwtServiceImpl.java
+    📁 interfaces
+        📁 entity
+            📄 ActivityServiceI.java
+            📄 CommentServiceI.java
+            📄 NotificationServiceI.java
+            📄 ProcessingResponseI.java
+            📄 UserServiceI.java
+        📁 security
+            📄 AuthenticationServiceI.java
+            📄 JwtServiceI.java
+📁 utils
+    📄 Constants.java
+    📁 mappers
+        📄 ActivityMapper.java
+        📄 CommentMapper.java
+        📄 NotificationMapper.java
+        📄 UserMapper.java
+```
+
+- ## **Descripción**
+
+La estructura de paquetes de la aplicación `fitConnect-backend` está organizada de la siguiente manera:
+
+- **config**: Contiene configuraciones de seguridad y CORS.
+- **controller**: Controladores REST para gestionar las diferentes entidades como actividad, autenticación, comentarios, notificaciones y usuarios.
+- **dto**: Objetos de transferencia de datos (DTO) para entidades, solicitudes y respuestas.
+- **enums**: Enumeraciones utilizadas en la aplicación.
+- **error**: Manejadores globales de excepciones y clases de excepciones específicas.
+- **persistence**: Modelos y repositorios para la persistencia de datos.
+- **service**: Implementaciones e interfaces de servicios para la lógica de negocio, incluyendo seguridad y manejo de entidades.
+- **utils**: Clases de utilidades y mapeadores para convertir entre entidades y DTOs.
 
 ## Enlace a la documentación de la APIREST:
 
 [FitConnect - APIREST docs.](https://documenter.getpostman.com/view/34870994/2sA3JNa15u)
+https://www.youtube.com/watch?v=ZtF4CycqUDg
+
+```
+
+```
