@@ -1,0 +1,35 @@
+services:
+  backend:
+    build:
+      context: ./src-api
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/db_api_fitconnet
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      JWT_SECRET: G5pE3i4e0A1vUN/z0MutEqgxlbLLXgX+QEV8HDlyH1E=
+
+  frontend:
+    build:
+      context: ./src-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db_api_fitconnet
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
