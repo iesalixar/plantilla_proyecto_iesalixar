@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Activity implements Serializable {
+public class  Activity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/**
 	 * The unique identifier for the activity.
