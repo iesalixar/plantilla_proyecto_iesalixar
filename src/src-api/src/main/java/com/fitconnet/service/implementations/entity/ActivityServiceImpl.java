@@ -21,7 +21,6 @@ import com.fitconnet.persitence.repository.UserRepository;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.utils.Constants;
 import com.fitconnet.utils.mappers.ActivityMapper;
-import com.fitconnet.utils.mappers.CommentMapper;
 import com.fitconnet.utils.mappers.UserMapper;
 
 import jakarta.validation.ConstraintViolationException;
@@ -53,7 +52,6 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	/**
 	 * Mapper for mapping between comment entities and DTOs.
 	 */
-	private final CommentMapper commentMapper;
 
 	private final Logger logger = LoggerFactory.getLogger(ActivityServiceImpl.class);
 
@@ -61,14 +59,6 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	public List<ActivityDTO> getAll() {
 		return activityRepository.findAll().stream().map(activityMapper::activityToActivityDTO).toList();
 	}
-
-//	@Override
-//	public List<ActivityDTO> getAcyivitiesByUsername(String username) {
-//		User user = userRepository.findByUserName(username)
-//				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-//		return user.getCreatedActivities().stream().map(activity -> activityMapper.activityToActivityDTO(activity))
-//				.toList();
-//	}
 
 	@Override
 	public List<ActivityDTO> getAcyivitiesByEmail(String email) {
