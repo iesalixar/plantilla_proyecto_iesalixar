@@ -7,6 +7,10 @@ import lombok.Data;
 @Data
 public class NotificationDTO {
 	/**
+	 * The id of the notification.
+	 */
+	private Long id;
+	/**
 	 * The message content of the notification.
 	 */
 	private String message;
