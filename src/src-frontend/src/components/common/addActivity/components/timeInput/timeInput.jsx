@@ -1,3 +1,6 @@
+import React, { useState } from 'react';
+import './style.scss';
+
 const TimeInput = ({ onHourChange, onMinuteChange }) => {
     const [hours, setHours] = useState('');
     const [minutes, setMinutes] = useState('');
@@ -44,3 +47,4 @@ const TimeInput = ({ onHourChange, onMinuteChange }) => {
 };
 
 export default TimeInput;
+
