@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
+import com.fitconnet.utils.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +21,6 @@ import com.fitconnet.persitence.repository.UserRepository;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.service.interfaces.security.JwtServiceI;
 import com.fitconnet.utils.Constants;
-import com.fitconnet.utils.mappers.UserMapper;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserServiceI {
 	/**
 	 * Mapper for mapping between user entities and DTOs.
 	 */
-	private final UserMapper userMapper;
+	private final Mappers userMapper;
 
 	/**
 	 * Password encoder.
@@ -60,12 +60,6 @@ public class UserServiceImpl implements UserServiceI {
 		return userMapper.userToUserDTO(user);
 	}
 
-//	@Override
-//	public UserDTO getByUserName(String userName) {
-//		User user = userRepository.findByUserName(userName)
-//				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-//		return userMapper.userToUserDTO(user);
-//	}
 
 	@Override
 	public List<UserDTO> getFriends(Long id) {
@@ -114,8 +108,6 @@ public class UserServiceImpl implements UserServiceI {
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
 
 		updateFieldIfDifferent(aux, user.getName(), "name", aux::setName);
-//		updateFieldIfDifferent(aux, user.getLastName(), "lastName", aux::setLastName);
-//		updateFieldIfDifferent(aux, user.getUserName(), "userName", aux::setUserName);
 		updateFieldIfDifferent(aux, user.getEmail(), "email", aux::setEmail);
 		updateFieldIfDifferent(aux, user.getImage(), "image", aux::setImage);
 		if (!user.getAge().equals(aux.getAge())) {

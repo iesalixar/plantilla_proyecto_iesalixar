@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 
+import com.fitconnet.utils.Mappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,7 @@ import com.fitconnet.persitence.repository.ActivityRepository;
 import com.fitconnet.persitence.repository.UserRepository;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.utils.Constants;
-import com.fitconnet.utils.mappers.ActivityMapper;
-import com.fitconnet.utils.mappers.UserMapper;
+
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
@@ -40,30 +40,23 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	private final UserRepository userRepository;
 
 	/**
-	 * Mapper for mapping between activity entities and DTOs.
+	 * Mapper for mapping between activity and User entities and DTOs.
 	 */
-	private final ActivityMapper activityMapper;
+	private final Mappers mappers;
 
-	/**
-	 * Mapper for mapping between user entities and DTOs.
-	 */
-	private final UserMapper userMapper;
 
-	/**
-	 * Mapper for mapping between comment entities and DTOs.
-	 */
 
 	private final Logger logger = LoggerFactory.getLogger(ActivityServiceImpl.class);
 
 	@Override
 	public List<ActivityDTO> getAll() {
-		return activityRepository.findAll().stream().map(activityMapper::activityToActivityDTO).toList();
+		return activityRepository.findAll().stream().map(mappers::activityToActivityDTO).toList();
 	}
 
 	@Override
 	public List<ActivityDTO> getAcyivitiesByEmail(String email) {
 		User user = userRepository.findByEmail(email);
-		return user.getCreatedActivities().stream().map(activity -> activityMapper.activityToActivityDTO(activity))
+		return user.getCreatedActivities().stream().map(activity -> mappers.activityToActivityDTO(activity))
 				.toList();
 	}
 
@@ -71,14 +64,14 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	public ActivityDTO getOne(Long id) {
 		Activity response = activityRepository.findById(id)
 				.orElseThrow(() -> new ActivityNotFoundException(Constants.ACTIVITY_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return activityMapper.activityToActivityDTO(response);
+		return mappers.activityToActivityDTO(response);
 	}
 
 	@Override
 	public List<ActivityDTO> getCreatedActivities(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return user.getCreatedActivities().stream().map(activity -> activityMapper.activityToActivityDTO(activity))
+		return user.getCreatedActivities().stream().map(activity -> mappers.activityToActivityDTO(activity))
 				.toList();
 	}
 
@@ -86,7 +79,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	public List<ActivityDTO> getInvitedActivities(Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return user.getInvitedActivities().stream().map(activity -> activityMapper.activityToActivityDTO(activity))
+		return user.getInvitedActivities().stream().map(activity -> mappers.activityToActivityDTO(activity))
 				.toList();
 	}
 
@@ -99,7 +92,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		allActivities.addAll(user.getCreatedActivities());
 		allActivities.addAll(user.getInvitedActivities());
 
-		return allActivities.stream().map(activityMapper::activityToActivityDTO).toList();
+		return allActivities.stream().map(mappers::activityToActivityDTO).toList();
 	}
 
 	@Override
@@ -117,7 +110,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		logger.info("ACTIVITY SERVICE:: CREATE: IN");
 
 		// Convertir el DTO a la entidad Activity
-		Activity newActivity = activityMapper.activityDTOtoActivity(activity);
+		Activity newActivity = mappers.activityDTOtoActivity(activity);
 
 		// Establecer la fecha actual
 		newActivity.setDate(new Date());
@@ -146,7 +139,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 			throw new ActivityNotFoundException(Constants.ACTIVITY_NOT_FOUND, HttpStatus.NOT_FOUND);
 		}
 
-		activityRepository.save(activityMapper.activityDTOtoActivity(activity));
+		activityRepository.save(mappers.activityDTOtoActivity(activity));
 	}
 
 	@Override
@@ -157,7 +150,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		updateFieldIfDifferent(aux, activity.getDuration(), "duration", aux::setDuration);
 		updateFieldIfDifferent(aux, activity.getPlace(), "place", aux::setPlace);
 		updateFieldIfDifferent(aux, activity.getImage(), "image", aux::setImage);
-		updateFieldIfDifferent(aux, activity.getParticipants().stream().map(userMapper::userDTOtoUser).toList(),
+		updateFieldIfDifferent(aux, activity.getParticipants().stream().map(mappers::userDTOtoUser).toList(),
 				"participants", aux::setParticipants);
 
 	}
