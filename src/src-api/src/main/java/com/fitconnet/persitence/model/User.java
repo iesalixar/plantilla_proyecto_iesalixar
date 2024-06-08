@@ -1,5 +1,6 @@
 package com.fitconnet.persitence.model;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -50,6 +51,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class User implements UserDetails {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

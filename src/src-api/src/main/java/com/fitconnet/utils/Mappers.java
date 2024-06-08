@@ -40,6 +40,9 @@ public class Mappers {
             user.setImage(userDTO.getImage());
             user.setRoles(userDTO.getRoles());
             user.setCreatedActivities(activitiesDTotToActivitites(userDTO.getCreatedActivities()));
+            user.setInvitedActivities(activitiesDTotToActivitites(userDTO.getInvitedActivities()));
+            user.setFriends(userDTOsToUsers(userDTO.getFriends()));
+            user.setNotifications(notificationsDToToNotifications(userDTO.getNotifications()));
             return user;
         }
     }
@@ -63,6 +66,9 @@ public class Mappers {
             response.setPassword(user.getPassword());
             response.setRoles(user.getRoles());
             response.setCreatedActivities(activitiesToActivititesDTO(user.getCreatedActivities()));
+            response.setInvitedActivities(activitiesToActivititesDTO(user.getInvitedActivities()));
+            response.setFriends(usersToUserDTOs(user.getFriends()));
+            response.setNotifications(notificationsToNotificationsDTO(user.getNotifications()));
             return response;
         }
     }
@@ -141,6 +147,13 @@ public class Mappers {
         }
     }
 
+    /**
+     * Converts a list of {@link Activity} entities to a list of {@link ActivityDTO} objects.
+     *
+     * @param activityList the list of {@link Activity} entities to convert. If the list is null,
+     *                     an empty list will be returned.
+     * @return a list of {@link ActivityDTO} objects corresponding to the given {@link Activity} entities.
+     */
     public List<ActivityDTO> activitiesToActivititesDTO(List<Activity> activityList) {
         if (activityList == null) {
             return Collections.emptyList();
@@ -148,12 +161,20 @@ public class Mappers {
         return activityList.stream().map(this::activityToActivityDTO).toList();
     }
 
+    /**
+     * Converts a list of {@link ActivityDTO} objects to a list of {@link Activity} entities.
+     *
+     * @param activityDTOList the list of {@link ActivityDTO} objects to convert. If the list is null,
+     *                        an empty list will be returned.
+     * @return a list of {@link Activity} entities corresponding to the given {@link ActivityDTO} objects.
+     */
     public List<Activity> activitiesDTotToActivitites(List<ActivityDTO> activityDTOList) {
         if (activityDTOList == null) {
             return Collections.emptyList();
         }
         return activityDTOList.stream().map(this::activityDTOtoActivity).toList();
     }
+
     // COMMENT MAPPER LOGIC
 
     /**
@@ -190,5 +211,31 @@ public class Mappers {
             notificationDTO.setReceiver(userToUserDTO(notification.getReceiver()));
             return notificationDTO;
         }
+    }
+    /**
+     * Converts a list of {@link Notification} entities to a list of {@link NotificationDTO} objects.
+     *
+     * @param notificationList the list of {@link Notification} entities to convert. If the list is null,
+     *                         an empty list will be returned.
+     * @return a list of {@link NotificationDTO} objects corresponding to the given {@link Notification} entities.
+     */
+    public List<NotificationDTO> notificationsToNotificationsDTO(List<Notification> notificationList) {
+        if (notificationList == null) {
+            return Collections.emptyList();
+        }
+        return notificationList.stream().map(this::notificationToNotificationDTO).toList();
+    }
+    /**
+     * Converts a list of {@link NotificationDTO} objects to a list of {@link Notification} entities.
+     *
+     * @param notificationDTOList the list of {@link NotificationDTO} objects to convert. If the list is null,
+     *                            an empty list will be returned.
+     * @return a list of {@link Notification} entities corresponding to the given {@link NotificationDTO} objects.
+     */
+    public List<Notification> notificationsDToToNotifications(List<NotificationDTO> notificationDTOList) {
+        if (notificationDTOList == null) {
+            return Collections.emptyList();
+        }
+        return notificationDTOList.stream().map(this::notificationDTOtoNotification).toList();
     }
 }
