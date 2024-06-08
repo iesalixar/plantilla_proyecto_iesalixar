@@ -1,5 +1,6 @@
 package com.fitconnet.service.implementations.security;
 
+import com.fitconnet.utils.Mappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +19,6 @@ import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.UserRepository;
 import com.fitconnet.service.interfaces.security.AuthenticationServiceI;
 import com.fitconnet.service.interfaces.security.JwtServiceI;
-import com.fitconnet.utils.mappers.UserMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,7 +53,7 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 	 */
 	private final Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
 
-	private final UserMapper userMapper;
+	private final Mappers userMapper;
 
 	@Override
 	public JwtAuthenticationDTO signup(SignUp request) {
@@ -64,8 +64,6 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 
 		User user = new User();
 		user.setName(request.getFirstName());
-//		user.setLastName(request.getLastName());
-//		user.setUserName(request.getUsername());
 		user.setEmail(request.getEmail());
 		user.setAge(request.getAge());
 		user.setPassword(passwordEncoder.encode(request.getPassword()));

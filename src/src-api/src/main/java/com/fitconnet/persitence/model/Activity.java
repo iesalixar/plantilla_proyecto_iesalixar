@@ -1,5 +1,6 @@
 package com.fitconnet.persitence.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class  Activity implements Serializable {
+	@Serial
 	private static final long serialVersionUID = 1L;
 	/**
 	 * The unique identifier for the activity.
