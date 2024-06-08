@@ -133,10 +133,8 @@ const AddActivityForm = ({ style }) => {
                 place,
                 duration: formattedDuration,
                 date: null,
-                likes: 0,
                 creator: userData.user,
                 image: imageBase64,
-                comments: [],
                 participants: [],
             };
             console.log(activityData)
