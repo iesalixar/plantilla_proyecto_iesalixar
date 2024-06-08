@@ -94,6 +94,7 @@ public class UserController {
 	 *         users.
 	 */
 	@GetMapping
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	@Operation(summary = "Show Users", description = "Retrieves all users registered in the system.")
 	@ApiResponse(responseCode = "200", description = "Users retrieved successfully")
 	public ResponseEntity<List<UserDTO>> showUsers() {

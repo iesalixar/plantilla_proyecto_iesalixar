@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 import org.springframework.http.ResponseEntity;
 
 import com.fitconnet.dto.entities.ActivityDTO;
-import com.fitconnet.dto.entities.CommentDTO;
 import com.fitconnet.dto.entities.NotificationDTO;
 import com.fitconnet.dto.entities.UserDTO;
 
@@ -48,18 +47,6 @@ public interface ProcessingResponseI {
 	 * @return the ResponseEntity
 	 */
 	<T> ResponseEntity<T> processActivityResponse(ActivityDTO entity, Supplier<ResponseEntity> conflictSupplier,
-			Supplier<ResponseEntity<T>> successSupplier);
-
-	/**
-	 * Processes the entity response for CommentDTO.
-	 * 
-	 * @param entity           the entity to process
-	 * @param conflictSupplier supplier for conflict response entity
-	 * @param successSupplier  supplier for success response entity
-	 * @param <T>              the type of the response entity
-	 * @return the ResponseEntity
-	 */
-	<T> ResponseEntity<T> processCommentResponse(CommentDTO entity, Supplier<ResponseEntity> conflictSupplier,
 			Supplier<ResponseEntity<T>> successSupplier);
 
 	/**

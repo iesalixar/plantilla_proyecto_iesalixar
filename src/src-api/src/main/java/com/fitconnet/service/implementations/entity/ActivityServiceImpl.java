@@ -1,8 +1,6 @@
 package com.fitconnet.service.implementations.entity;
 
 import java.security.InvalidParameterException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +21,6 @@ import com.fitconnet.persitence.repository.UserRepository;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.utils.Constants;
 import com.fitconnet.utils.mappers.ActivityMapper;
-import com.fitconnet.utils.mappers.CommentMapper;
 import com.fitconnet.utils.mappers.UserMapper;
 
 import jakarta.validation.ConstraintViolationException;
@@ -55,7 +52,6 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	/**
 	 * Mapper for mapping between comment entities and DTOs.
 	 */
-	private final CommentMapper commentMapper;
 
 	private final Logger logger = LoggerFactory.getLogger(ActivityServiceImpl.class);
 
@@ -64,18 +60,9 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		return activityRepository.findAll().stream().map(activityMapper::activityToActivityDTO).toList();
 	}
 
-//	@Override
-//	public List<ActivityDTO> getAcyivitiesByUsername(String username) {
-//		User user = userRepository.findByUserName(username)
-//				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-//		return user.getCreatedActivities().stream().map(activity -> activityMapper.activityToActivityDTO(activity))
-//				.toList();
-//	}
-
 	@Override
 	public List<ActivityDTO> getAcyivitiesByEmail(String email) {
-		User user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+		User user = userRepository.findByEmail(email);
 		return user.getCreatedActivities().stream().map(activity -> activityMapper.activityToActivityDTO(activity))
 				.toList();
 	}
@@ -125,19 +112,32 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		return activityRepository.existsById(id);
 	}
 
-//	@Override
-//	public boolean existByDate(Date date) {
-//		return activityRepository.existByDate(date);
-//	}
-
 	@Override
 	public void create(ActivityDTO activity) {
 		logger.info("ACTIVITY SERVICE:: CREATE: IN");
+
+		// Convertir el DTO a la entidad Activity
 		Activity newActivity = activityMapper.activityDTOtoActivity(activity);
-		LocalDateTime now = LocalDateTime.now();
-		Date date = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
-		newActivity.setDate(date);
+
+		// Establecer la fecha actual
+		newActivity.setDate(new Date());
+
+		// Obtener el usuario creador de la actividad
+		User creator = userRepository.findById(newActivity.getCreator().getId())
+				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+
+		// Establecer el creador de la actividad
+		newActivity.setCreator(creator);
+
+		// Añadir la actividad a la lista de actividades creadas por el usuario
+		creator.getCreatedActivities().add(newActivity);
+
+		userRepository.save(creator);
+
+		// Guardar la nueva actividad
 		activityRepository.save(newActivity);
+
+		logger.info("ACTIVITY SERVICE:: CREATE: OUT");
 	}
 
 	@Override
@@ -154,15 +154,11 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		Activity aux = activityRepository.findById(id)
 				.orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
 		updateFieldIfDifferent(aux, activity.getType(), "type", aux::setType);
-		// updateFieldIfDifferent(aux, activity.getDuration(), "duration",
-		// aux::setDuration);
+		updateFieldIfDifferent(aux, activity.getDuration(), "duration", aux::setDuration);
 		updateFieldIfDifferent(aux, activity.getPlace(), "place", aux::setPlace);
-		updateFieldIfDifferent(aux, activity.getLikes(), "like", aux::setLikes);
 		updateFieldIfDifferent(aux, activity.getImage(), "image", aux::setImage);
 		updateFieldIfDifferent(aux, activity.getParticipants().stream().map(userMapper::userDTOtoUser).toList(),
 				"participants", aux::setParticipants);
-		updateFieldIfDifferent(aux, activity.getComments().stream().map(commentMapper::commentDtoToComment).toList(),
-				"comment", aux::setComments);
 
 	}
 
@@ -190,18 +186,15 @@ public class ActivityServiceImpl implements ActivityServiceI {
 		switch (fieldName) {
 		case "type":
 			return (T) activity.getType();
-//		case "duration":
-//			return (T) activity.getDuration();
+		case "duration":
+			return (T) activity.getDuration();
 		case "place":
 			return (T) activity.getPlace();
 		case "participants":
 			return (T) activity.getParticipants();
 		case "image":
 			return (T) activity.getImage();
-		case "like":
-			return (T) activity.getLikes();
-		case "comment":
-			return (T) activity.getComments();
+
 		default:
 			throw new IllegalArgumentException("Campo desconocido: " + fieldName);
 		}

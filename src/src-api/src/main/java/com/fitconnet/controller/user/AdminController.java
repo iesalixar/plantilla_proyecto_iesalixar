@@ -18,19 +18,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.fitconnet.dto.entities.ActivityDTO;
-import com.fitconnet.dto.entities.CommentDTO;
 import com.fitconnet.dto.entities.NotificationDTO;
 import com.fitconnet.dto.entities.UserDTO;
 import com.fitconnet.dto.response.ErrorDetailsDTO;
 import com.fitconnet.error.GlobalExceptionHandler;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
-import com.fitconnet.service.interfaces.entity.CommentServiceI;
 import com.fitconnet.service.interfaces.entity.NotificationServiceI;
 import com.fitconnet.service.interfaces.entity.ProcessingResponseI;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
@@ -64,10 +61,6 @@ public class AdminController {
 	@Qualifier("notificationService")
 	private final NotificationServiceI notificationService;
 
-	/**
-	 * Dependency injection for the CommentServiceI interface.
-	 */
-	private final CommentServiceI commentService;
 	/**
 	 * Dependency injection for the ProcessingResponseI interface.
 	 */
@@ -194,34 +187,6 @@ public class AdminController {
 	}
 
 	/**
-	 * Updates a comment.
-	 * 
-	 * <p>
-	 * Updates an existing comment with new information.
-	 * </p>
-	 * 
-	 * @param id    The ID of the comment to be updated.
-	 * @param image The request body containing the updated comment information.
-	 * @return ResponseEntity<String> The response entity indicating the success or
-	 *         failure of the update operation.
-	 */
-	@PutMapping("/comment/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	@Operation(summary = "Update Comment by Replacement", description = "Replaces an existing comment with another.")
-	@ApiResponse(responseCode = "200", description = "Comment updated successfully")
-	public ResponseEntity<String> updateComment(@PathVariable Long id, @RequestParam CommentDTO request) {
-		logger.info("AdminController :: updateComment");
-		ResponseEntity<String> response = null;
-		Boolean exist = commentService.existById(id);
-		response = processingResponseI.processStringResponse(exist,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.COMMENT_NOT_FOUND), () -> {
-					commentService.update(id, request);
-					return ResponseEntity.ok().body("Image has been deleted successfully.");
-				});
-		return response;
-	}
-
-	/**
 	 * Deletes a user.
 	 * 
 	 * <p>
@@ -271,33 +236,6 @@ public class AdminController {
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
 					activityService.deleteById(id);
 					return ResponseEntity.ok().body("Activity has been deleted successfully.");
-				});
-		return response;
-	}
-
-	/**
-	 * Deletes an comment.
-	 * 
-	 * <p>
-	 * Deletes the comment with the specified ID.
-	 * </p>
-	 * 
-	 * @param id The ID of the comment to be deleted.
-	 * @return ResponseEntity<String> The response entity indicating the success or
-	 *         failure of the deletion operation.
-	 */
-	@DeleteMapping("/comment/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	@Operation(summary = "Delete comment", description = "Deletes a comment.")
-	@ApiResponse(responseCode = "200", description = "Comment deleted successfully")
-	public ResponseEntity<String> deleteComment(@PathVariable Long id) {
-		logger.info("AdminController :: deleteComment");
-		ResponseEntity<String> response = null;
-		Boolean exist = commentService.existById(id);
-		response = processingResponseI.processStringResponse(exist,
-				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.COMMENT_NOT_FOUND), () -> {
-					commentService.delete(id);
-					return ResponseEntity.ok().body("Image has been deleted successfully.");
 				});
 		return response;
 	}

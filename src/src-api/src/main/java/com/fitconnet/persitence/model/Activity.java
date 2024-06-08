@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,7 +16,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -52,8 +54,8 @@ public class Activity implements Serializable {
 	/**
 	 * The duration of the activity.
 	 */
-//	@Column(name = "C_ACTIVITY_DURATION", length = 8, nullable = false)
-//	private Duration duration;
+	@Column(name = "C_ACTIVITY_DURATION", nullable = false)
+	private String duration;
 
 	/**
 	 * The place where the activity takes place.
@@ -66,11 +68,6 @@ public class Activity implements Serializable {
 	 */
 	@Column(name = "C_DATE", nullable = false)
 	private Date date;
-	/**
-	 * The likes of the activity.
-	 */
-	@Column(name = "C_LIKES", nullable = true)
-	private Integer likes;
 
 	/**
 	 * The profile picture.
@@ -80,8 +77,9 @@ public class Activity implements Serializable {
 	/**
 	 * The creator of the activity.
 	 */
-	@ManyToOne
-	@JoinColumn(name = "C_ACTIVITY_CREATOR", referencedColumnName = "C_PK_USER_ID")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "C_ACTIVITY_CREATOR")
+	@JsonBackReference
 	private User creator;
 
 	/**
@@ -90,10 +88,5 @@ public class Activity implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "T_ACTIVITY_PARTICIPANTS", joinColumns = @JoinColumn(name = "C_PK_ACTIVITY_ID"), inverseJoinColumns = @JoinColumn(name = "C_PK_USER_ID"))
 	private List<User> participants;
-	/**
-	 * The comments of the activity.
-	 */
-	@OneToMany(mappedBy = "activity")
-	private List<Comment> comments;
 
 }

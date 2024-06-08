@@ -38,8 +38,6 @@ public class DataInitializer implements CommandLineRunner {
 		try {
 			User admin = new User();
 			admin.setName("bustaAdmin");
-//			admin.setLastName("");
-//			admin.setUserName("bustaAdmin");
 			admin.setEmail("admin@admin.com");
 			admin.setAge(20);
 			admin.setPassword(passwordEncoder.encode("admin"));
@@ -49,8 +47,6 @@ public class DataInitializer implements CommandLineRunner {
 			userRepository.save(admin);
 			User both = new User();
 			both.setName("bothAdUs");
-//			both.setLastName("");
-//			both.setUserName("bothAdUs");
 			both.setEmail("both@admin.com");
 			both.setAge(20);
 			both.setPassword(passwordEncoder.encode("admin"));
@@ -61,8 +57,6 @@ public class DataInitializer implements CommandLineRunner {
 			for (int i = 0; i < 10; i++) {
 				User user = new User();
 				user.setName(faker.name().firstName());
-//				user.setLastName(faker.name().lastName());
-//				user.setUserName(faker.name().username());
 				user.setEmail(faker.internet().emailAddress());
 				user.setAge(faker.number().numberBetween(18, 80));
 				user.setPassword(passwordEncoder.encode(faker.internet().password()));

@@ -76,8 +76,7 @@ public class UserServiceImpl implements UserServiceI {
 
 	@Override
 	public UserDetailsService userDetailsService() {
-		return username -> userRepository.findByEmail(username)
-				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+		return username -> userRepository.findByEmail(username);
 	}
 
 	@Override
