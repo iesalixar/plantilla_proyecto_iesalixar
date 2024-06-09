@@ -2,6 +2,7 @@ package com.fitconnet.service.implementations.entity;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
@@ -104,14 +105,20 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	public void patch(Long id, ActivityDTO activity) {
 		Activity aux = activityRepository.findById(id)
 				.orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
+
 		updateFieldIfDifferent(aux, activity.getTitle(), "title", aux::setTitle);
 		updateFieldIfDifferent(aux, activity.getType(), "type", aux::setType);
 		updateFieldIfDifferent(aux, activity.getDuration(), "duration", aux::setDuration);
 		updateFieldIfDifferent(aux, activity.getPlace(), "place", aux::setPlace);
 		updateFieldIfDifferent(aux, activity.getImage(), "image", aux::setImage);
-		updateFieldIfDifferent(aux, activity.getParticipants().stream().map(mappers::userDTOtoUser).toList(),
-				"participants", aux::setParticipants);
 
+		List<User> participants = Collections.emptyList();
+		if (activity.getParticipants() != null) {
+
+			participants = activity.getParticipants().stream().map(mappers::userDTOtoUser).toList();
+		}
+
+		updateFieldIfDifferent(aux, participants, "participants", aux::setParticipants);
 	}
 
 	@Override
