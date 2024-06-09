@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -177,17 +178,17 @@ public class ActivityController {
 	 * @return ResponseEntity<String> The response entity indicating the success or
 	 *         failure of the deletion operation.
 	 */
-	@DeleteMapping("/{id}")
+	@PatchMapping("/patch/{id}")
 	@PreAuthorize("hasAuthority('ROLE_USER') and #id == authentication.principal.id")
 	@Operation(summary = "Update Activity", description = "A user can update an activity only if they are the creator of it.")
 	@ApiResponse(responseCode = "200", description = "Activity deleted successfully")
-	public ResponseEntity<String> updateActivity(@PathVariable Long id, ActivityDTO activityDTO) {
+	public ResponseEntity<String> patchActivity(@PathVariable Long id, ActivityDTO activityDTO) {
 		logger.info("ActivityController :: updateActivity");
 		ResponseEntity<String> response = null;
 		boolean existingActivity = activityService.existById(id);
 		response = processingResponseI.processStringResponse(existingActivity,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
-					activityService.update(id, activityDTO);
+					activityService.patch(id, activityDTO);
 					return ResponseEntity.ok().body("Activity update successfully");
 				});
 		return response;
