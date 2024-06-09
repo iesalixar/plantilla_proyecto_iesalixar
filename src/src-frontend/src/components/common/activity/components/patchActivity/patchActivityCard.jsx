@@ -2,7 +2,6 @@ import React, { useState, useRef, useContext, useEffect } from 'react';
 
 import { useAuthContext } from '../../../../../contexts/AuthProvider';
 import { ThemeContext } from '../../../../../contexts/ThemeProvider';
-import { useModalContext } from '../../../../../contexts/ModalProvider';
 import { patchActivity } from '../../../../../service/activityService';
 import TimeInput from './components/timeInput/timeInput';
 import { CloseIconClear, CloseIconDark } from './components/icons/closeIcon';
@@ -11,6 +10,7 @@ import { AddImageIconClear, AddImageIconDark } from './components/icons/addImage
 import activityTypes from '../../../../../model/ActivityTypes';
 
 import './style.scss';
+
 function convertImageToBase64(file) {
     return new Promise((resolve, reject) => {
         if (!(file instanceof Blob)) {
