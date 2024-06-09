@@ -12,7 +12,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fitconnet.enums.Role;
 
 import jakarta.persistence.CascadeType;
@@ -105,20 +104,6 @@ public class User implements UserDetails {
 	@CollectionTable(name = "T_USER_ROLES", joinColumns = @JoinColumn(name = "C_PK_USER_ID"))
 	@Column(name = "C_USER_ROLES")
 	private Set<Role> roles = new HashSet<>();
-
-	/**
-	 * The activities created by the user.
-	 */
-	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonManagedReference
-	private List<Activity> createdActivities = new ArrayList<>();
-
-	/**
-	 * The activities the user is invited to.
-	 */
-	@ManyToMany(mappedBy = "participants", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JsonManagedReference
-	private List<Activity> invitedActivities = new ArrayList<>();
 
 	/**
 	 * The friends of the user.

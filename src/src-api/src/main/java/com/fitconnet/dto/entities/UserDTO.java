@@ -13,6 +13,9 @@ import lombok.Data;
  */
 @Data
 public class UserDTO {
+	/**
+	 * The unique identifier for the user.
+	 */
 	private Long id;
 	/**
 	 * The first name of the user.
@@ -43,16 +46,6 @@ public class UserDTO {
 	 * The roles associated with the user.
 	 */
 	private Set<Role> roles;
-
-	/**
-	 * The activities created by the user.
-	 */
-	private List<ActivityDTO> createdActivities = new ArrayList<>();
-
-	/**
-	 * The activities the user is invited to.
-	 */
-	private List<ActivityDTO> invitedActivities = new ArrayList<>();
 
 	/**
 	 * The friends of the user.
