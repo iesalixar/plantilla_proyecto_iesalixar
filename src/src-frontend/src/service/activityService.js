@@ -75,5 +75,27 @@ const deleteActivity = async (activityId, token) => {
     }
 };
 
-export { createActivity, getActivitiesByUserId, deleteActivity };
+const patchActivity = async (activityId, activity, token) => {
+    try {
+        const response = await fetch(`${API_ACTIVITY_PATH}/${activityId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(activity)
+        });
 
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || 'Failed to update activity');
+        }
+
+        return true;
+    } catch (error) {
+        console.error('Error updating activity:', error.message);
+        throw error.message || 'Failed to update activity';
+    }
+};
+
+export { createActivity, getActivitiesByUserId, deleteActivity, patchActivity };
