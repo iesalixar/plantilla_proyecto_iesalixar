@@ -53,6 +53,27 @@ const getActivitiesByUserId = async (userId, token) => {
     }
 };
 
+const deleteActivity = async (activityId, token) => {
+    try {
+        const response = await fetch(`${API_ACTIVITY_PATH}/${activityId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
-export { createActivity, getActivitiesByUserId };
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || 'Failed to delete activity');
+        }
+
+        return true;
+    } catch (error) {
+        console.error('Error deleting activity:', error.message);
+        throw error.message || 'Failed to delete activity';
+    }
+};
+
+export { createActivity, getActivitiesByUserId, deleteActivity };
 
