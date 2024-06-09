@@ -94,7 +94,7 @@ public class UserController {
 	 *         users.
 	 */
 	@GetMapping
-	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+	// @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	@Operation(summary = "Show Users", description = "Retrieves all users registered in the system.")
 	@ApiResponse(responseCode = "200", description = "Users retrieved successfully")
 	public ResponseEntity<List<UserDTO>> showUsers() {
@@ -115,7 +115,7 @@ public class UserController {
 	 *         user, if found.
 	 */
 	@GetMapping("/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+	// @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	@Operation(summary = "Get User by ID", description = "Retrieves a user by ID.")
 	@ApiResponse(responseCode = "200", description = "User retrieved successfully")
 	public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
@@ -127,31 +127,6 @@ public class UserController {
 				() -> ResponseEntity.ok().body(user));
 		return response;
 	}
-
-	/**
-	 * Retrieves a user by username.
-	 * 
-	 * <p>
-	 * Retrieves the user with the specified username.
-	 * </p>
-	 * 
-	 * @param id The username of the user to be retrieved.
-	 * @return ResponseEntity<Optional<User>> The response entity containing the
-	 *         user, if found.
-	 */
-//	@GetMapping("/{username}")
-//	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-//	@Operation(summary = "Get User by username", description = "Retrieves a user by username.")
-//	@ApiResponse(responseCode = "200", description = "User retrieved successfully")
-//	public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
-//		logger.info("UserController :: getUser");
-//		ResponseEntity<UserDTO> response = null;
-//		UserDTO user = userService.getByUserName(username);
-//		response = processingResponseI.processUserResponse(user,
-//				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.USER_NOT_FOUND),
-//				() -> ResponseEntity.ok().body(user));
-//		return response;
-//	}
 
 	/**
 	 * Retrieves friends of a user by ID.
