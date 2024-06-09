@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 
 import { ThemeContext } from '../../../contexts/ThemeProvider';
@@ -24,7 +24,12 @@ const SidebarComponent = ({ }) => {
     const { theme, isDark } = useContext(ThemeContext);
     const { logout, userData } = useAuthContext();
     const { openModal } = useModalContext();
+    const handleOpenAddModal = () => openModal('addModal');
 
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const profileImage = userData.user.image;
 
     const { screenWidth } = useScreenContext();
     const [isScreenSmall, setIsScreenSmall] = useState();
@@ -32,9 +37,6 @@ const SidebarComponent = ({ }) => {
     useEffect(() => {
         setIsScreenSmall(screenWidth <= 1050);
     }, [screenWidth]);
-
-    const profileImage = userData.user.image;
-
 
     //#region ICON PROPS
     const svgLogoIconProps = {
@@ -68,12 +70,15 @@ const SidebarComponent = ({ }) => {
 
     const handleIconClick = (name) => {
         switch (name) {
+            case 'home':
+                location.pathname = '/' ? window.location.reload : navigate('/');
+                break;
             case 'Search':
                 break;
             case 'Notifications':
                 break;
             case 'Create':
-                openModal();
+                handleOpenAddModal();
                 break;
             case 'Profile':
                 window.location.href = '/perfil';
@@ -158,7 +163,9 @@ const FooterBarComponent = () => {
     const { userData } = useAuthContext();
     const { theme, isDark } = useContext(ThemeContext);
     const { openModal } = useModalContext();
-
+    const handleOpenAddModal = () => openModal('addModal');
+    const location = useLocation();
+    const navigate = useNavigate();
     const profileImage = userData.user.image;
 
     const darkIcons = {
@@ -179,12 +186,15 @@ const FooterBarComponent = () => {
 
     const handleIconClick = (name) => {
         switch (name) {
+            case 'home':
+                location.pathname = '/' ? window.location.reload : navigate('/');
+                break;
             case 'Search':
                 break;
             case 'Notifications':
                 break;
             case 'Create':
-                openModal();
+                handleOpenAddModal();
                 break;
             case 'Profile':
                 window.location.href = '/perfil';
