@@ -45,7 +45,7 @@ const PublicationMenuButton = ({ activityId }) => {
                         <EditIcon />
                         <span style={{ color: theme.gray11 }}>Edit</span>
                     </div>
-                    <div className="dropdown-item" style={{ borderColor: theme.gray6 }}>
+                    <div className="dropdown-item" style={{ borderColor: theme.gray6 }} onClick={handleDeleteActivity}>
                         <TrashIcon />
                         <span style={{ color: theme.gray11 }}>Delete</span>
                     </div>
