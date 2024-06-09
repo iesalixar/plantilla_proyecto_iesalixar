@@ -77,7 +77,7 @@ const deleteActivity = async (activityId, token) => {
 
 const patchActivity = async (activityId, activity, token) => {
     try {
-        const response = await fetch(`${API_ACTIVITY_PATH}/${activityId}`, {
+        const response = await fetch(`${API_ACTIVITY_PATH}/patch/${activityId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
