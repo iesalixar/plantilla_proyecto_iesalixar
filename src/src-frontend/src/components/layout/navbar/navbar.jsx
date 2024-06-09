@@ -100,18 +100,18 @@ const SidebarComponent = ({ }) => {
                     {Object.keys(icons).map((key, index) => {
                         const IconComponent = icons[key];
                         return (
-                            <div className='icon-btn' onClick={() => handleIconClick(key)} key={index}>
+                            <div className='icon-btn' onClick={() => handleIconClick(key)} key={index} style={{ borderColor: theme.gray8, backgroundColor: theme.grayA2 }}>
                                 <IconComponent />
                             </div>
                         );
                     })}
-                    <div className='icon-btn'><ProfilePictureComponent source={profileImage} size={35} /></div>
+                    <div className='icon-btn' style={{ borderColor: theme.gray8, backgroundColor: theme.grayA2 }}><ProfilePictureComponent source={profileImage} size={35} /></div>
                 </div>
                 <div className='logout-section'>
                     <div className='toggle-section'>
                         <ToggleButton />
                     </div>
-                    <div className='logout-icon' onClick={() => handleIconClick('Logout')}>
+                    <div className='logout-icon' onClick={() => handleIconClick('Logout')} style={{ borderColor: theme.gray8 }}>
                         {isDark ? <LogoutDark /> : <LogoutClear />}
                     </div>
                 </div>
@@ -129,7 +129,7 @@ const SidebarComponent = ({ }) => {
                 {Object.keys(icons).map((key) => {
                     const IconComponent = icons[key];
                     return (
-                        <div className='icon-wrapper' key={key}>
+                        <div className='icon-wrapper' key={key} style={{ borderColor: theme.gray8, backgroundColor: theme.grayA2 }}>
                             <div className='icon-btn' onClick={() => handleIconClick(key)}>
                                 <IconComponent />
                             </div>
@@ -137,7 +137,7 @@ const SidebarComponent = ({ }) => {
                         </div>
                     );
                 })}
-                <div className='icon-wrapper'>
+                <div className='icon-wrapper' style={{ borderColor: theme.gray8, backgroundColor: theme.grayA2 }}>
                     <div className='icon-btn'><ProfilePictureComponent source={profileImage} size={35} /></div>
                     <div className='icon-text' style={{ color: theme.gray11 }}>{userData.user.name}</div>
                 </div>
