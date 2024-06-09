@@ -55,39 +55,40 @@ const ActivityPostComponent = () => {
     return (
         <>
             {
-                activities.map((activity) => (
-                    <div key={activity.id} className='publication-container' style={{ background: isDark ? theme.darkBackground : theme.lightBackground }}>
-                        <div className='publication'>
-                            <div className='publication-header'>
-                                <div className='picture-name-container'>
-                                    <ProfilePictureComponent source={activity.creator.image} size="40px" />
-                                    <Link href={`/profile/${activity.creator.id}`} className='creator-name' style={{ color: theme.tealA11 }}>
-                                        {activity.creator.name}
-                                    </Link>
+                activities
+                    .sort((a, b) => new Date(b.date) - new Date(a.date)).map((activity) => (
+                        <div key={activity.id} className='publication-container' style={{ background: isDark ? theme.darkBackground : theme.lightBackground }}>
+                            <div className='publication'>
+                                <div className='publication-header'>
+                                    <div className='picture-name-container'>
+                                        <ProfilePictureComponent source={activity.creator.image} size="40px" />
+                                        <Link href={`/profile/${activity.creator.id}`} className='creator-name' style={{ color: theme.tealA11 }}>
+                                            {activity.creator.name}
+                                        </Link>
+                                    </div>
+                                    <div className='menu-container'>
+                                        {activity.creator.id === userId && <PublicationMenuButton activityId={activity.id} />}
+                                    </div>
                                 </div>
-                                <div className='menu-container'>
-                                    {activity.creator.id === userId && <PublicationMenuButton activityId={activity.id} />}
+                                <div className='img-container'>
+                                    <img src={base64ToUrl(activity.image)} alt={`${activity.type} activity`} />
                                 </div>
-                            </div>
-                            <div className='img-container'>
-                                <img src={base64ToUrl(activity.image)} alt={`${activity.type} activity`} />
-                            </div>
-                            <div className='activity-details'>
-                                <h3 id="title">{activity.title}</h3>
-                                <p style={{ color: theme.tealA11 }}>Type:<span style={{ color: theme.gray12 }}>{activity.type}</span></p>
-                                <p style={{ color: theme.tealA11 }}>Duration:<span style={{ color: theme.gray12 }}>{activity.duration}</span></p>
-                                <p style={{ color: theme.tealA11 }}>Place:<span style={{ color: theme.gray12 }}>{activity.place}</span></p>
-                            </div>
-                            <div className='activity-participants'>
-                                {activity.participants.map((participant) => (
-                                    <Link key={participant.id} href={`/profile/${participant.id}`} className='participant-name'>
-                                        {participant.name}
-                                    </Link>
-                                ))}
+                                <div className='activity-details'>
+                                    <h3 id="title">{activity.title}</h3>
+                                    <p style={{ color: theme.tealA11 }}>Type:<span style={{ color: theme.gray12 }}>{activity.type}</span></p>
+                                    <p style={{ color: theme.tealA11 }}>Duration:<span style={{ color: theme.gray12 }}>{activity.duration}</span></p>
+                                    <p style={{ color: theme.tealA11 }}>Place:<span style={{ color: theme.gray12 }}>{activity.place}</span></p>
+                                </div>
+                                <div className='activity-participants'>
+                                    {activity.participants.map((participant) => (
+                                        <Link key={participant.id} href={`/profile/${participant.id}`} className='participant-name'>
+                                            {participant.name}
+                                        </Link>
+                                    ))}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))
+                    ))
             }
         </>
     );
