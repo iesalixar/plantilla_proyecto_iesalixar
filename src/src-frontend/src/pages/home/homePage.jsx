@@ -22,7 +22,8 @@ const HomePage = () => {
     const { isDark } = useContext(ThemeContext);
     const { screenWidth } = useScreenContext();
     const { logout, userData } = useAuthContext();
-    const { modalIsOpen } = useModalContext();
+    const { isModalOpen } = useModalContext();
+    const isAddModalOpen = isModalOpen('addModal');
 
     //#region SCREEN STATE
     const [isScreenSmall, setIsScreenSmall] = useState(false);
@@ -64,7 +65,7 @@ const HomePage = () => {
                         />
                         <div className="main-content">
                             <ActivityPostComponent />
-                            {modalIsOpen && <AddActivityForm />}
+                            {isAddModalOpen && <AddActivityForm />}
                         </div>
                     </>
                 }
@@ -80,7 +81,7 @@ const HomePage = () => {
                     <SidebarComponent />
                     <div className="main-content">
                         <ActivityPostComponent />
-                        {modalIsOpen && <AddActivityForm />}
+                        {isAddModalOpen && <AddActivityForm />}
 
                     </div>
                 </>

@@ -1,5 +1,4 @@
 import React, { useState, useRef, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { useAuthContext } from '../../../contexts/AuthProvider';
 import { ThemeContext } from '../../../contexts/ThemeProvider';
@@ -33,11 +32,11 @@ function convertImageToBase64(file) {
         };
     });
 }
-const AddActivityForm = ({ style }) => {
+const AddActivityForm = () => {
     const { userData } = useAuthContext();
     const { theme, isDark } = useContext(ThemeContext);
     const { closeModal } = useModalContext();
-    const navigate = useNavigate();
+    const handleCloseAddModal = () => closeModal('addModal');
 
     const [activityType, setActivityType] = useState('');
     const [title, setTitle] = useState('');
@@ -49,11 +48,6 @@ const AddActivityForm = ({ style }) => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const inputRef = useRef(null);
     const suggestionsRef = useRef(null);
-
-    const formatDuration = () => {
-        const { hours, minutes } = duration;
-        return `${hours} hours - ${minutes} min`;
-    };
 
     useEffect(() => {
         if (!userData) {
@@ -143,11 +137,10 @@ const AddActivityForm = ({ style }) => {
             createActivity(activityData, token)
                 .then((data) => {
                     console.log('Activity created successfully:', data);
-                    alert('Activity created successfully')
+                    alert('Activity created successfully');
                     window.location.reload();
-
                 })
-                .then(closeModal())
+                .then(() => closeModal('addActivity')) // Asegúrate de llamar a closeModal correctamente
                 .catch((error) => {
                     console.error('Error creating activity:', error);
                 });
@@ -155,12 +148,13 @@ const AddActivityForm = ({ style }) => {
             console.error('Error converting image to base64:', error);
         }
     };
+
     return (
         <div className='modal-container'>
             <div className='add-activity-card' style={{ borderColor: theme.gray7, background: theme.gray3, color: theme.teal12 }}>
                 <div className='card-header-container'>
                     <div className='title-container'><h2>Add Publication</h2></div>
-                    <button onClick={closeModal} style={{ background: theme.gray3 }}>{closeIcon}</button>
+                    <button onClick={handleCloseAddModal} style={{ background: theme.gray3 }}>{closeIcon}</button>
                 </div>
                 <form onSubmit={handleSubmit} className='publication-form'>
                     <div className="input-container" ref={inputRef}>
