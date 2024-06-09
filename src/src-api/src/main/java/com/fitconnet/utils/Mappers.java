@@ -135,6 +135,7 @@ public class Mappers {
 		} else {
 			ActivityDTO dto = new ActivityDTO();
 			dto.setId(activity.getId());
+			dto.setTitle(activity.getTitle());
 			dto.setCreator(userToUserDTO(activity.getCreator()));
 			dto.setDate(activity.getDate());
 			dto.setDuration(activity.getDuration());
