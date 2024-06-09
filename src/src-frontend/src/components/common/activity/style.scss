@@ -17,9 +17,20 @@
             align-items: center;
             padding: 5px;
 
-            .creator-name {
-                padding-left: 10px;
-                text-decoration: none;
+            .picture-name-container {
+                width: 95%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                .creator-name {
+                    padding-left: 10px;
+                    text-decoration: none;
+                }
+            }
+
+            .menu-container {
+                width: 5%;
             }
         }
 
