@@ -144,6 +144,8 @@ const AddActivityForm = ({ style }) => {
                 .then((data) => {
                     console.log('Activity created successfully:', data);
                     alert('Activity created successfully')
+                    window.location.reload();
+
                 })
                 .then(closeModal())
                 .catch((error) => {
