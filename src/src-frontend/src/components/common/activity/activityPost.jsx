@@ -1,9 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getActivitiesByUserId } from '../../../service/activityService';
+// CONTEXTS
 import { ThemeContext } from '../../../contexts/ThemeProvider';
 import { useAuthContext } from '../../../contexts/AuthProvider';
+// SERVICES
+import { getActivitiesByUserId } from '../../../service/activityService';
+// COMPONENTS
 import ProfilePictureComponent from '../../layout/navbar/components/profilePicture/profilePicture';
+import PublicationMenuButton from './components/dotsIcon/DotsComponent';
 
 import './style.scss';
 
@@ -55,10 +59,15 @@ const ActivityPostComponent = () => {
                     <div key={activity.id} className='publication-container' style={{ background: isDark ? theme.darkBackground : theme.lightBackground }}>
                         <div className='publication'>
                             <div className='publication-header'>
-                                <ProfilePictureComponent source={activity.creator.image} size="40px" />
-                                <Link href={`/profile/${activity.creator.id}`} className='creator-name' style={{ color: theme.tealA11 }}>
-                                    {activity.creator.name}
-                                </Link>
+                                <div className='picture-name-container'>
+                                    <ProfilePictureComponent source={activity.creator.image} size="40px" />
+                                    <Link href={`/profile/${activity.creator.id}`} className='creator-name' style={{ color: theme.tealA11 }}>
+                                        {activity.creator.name}
+                                    </Link>
+                                </div>
+                                <div className='menu-container'>
+                                    {activity.creator.id === userId && <PublicationMenuButton activityId={activity.id} />}
+                                </div>
                             </div>
                             <div className='img-container'>
                                 <img src={base64ToUrl(activity.image)} alt={`${activity.type} activity`} />
