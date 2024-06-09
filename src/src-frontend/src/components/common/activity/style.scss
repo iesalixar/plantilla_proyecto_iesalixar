@@ -4,19 +4,25 @@
     align-items: center;
     justify-content: center;
     margin-top: 20px;
+
     .publication {
         border-bottom: 1px solid #8E8E8E;
         margin-bottom: 20px;
         max-width: 350px;
-        width: 100%; /* Asegura que la publicación ocupe todo el ancho del contenedor */
-        
-        .publication-header{
+        width: 100%;
+
+        .publication-header {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             padding: 5px;
 
+            .creator-name {
+                padding-left: 10px;
+                text-decoration: none;
+            }
         }
+
         .img-container {
             width: 100%;
             overflow: hidden;
@@ -28,40 +34,17 @@
             }
         }
 
-        .options-container {
-            width: 100%;
-            display: flex;
-            padding-top: 10px;
+        .activity-details {
 
-          
-        }
+            #title {
+                font-weight: 900;
+            }
 
-        .comment-container {
-            padding-top: 10px;
-            padding-bottom: 20px;
-
-        }
-
-        span {
-            padding-right: 5px;
-
-            a{  
-                text-decoration: none;
+            p>span {
+                margin-left: 10px;
             }
         }
-        
-        #title {
-            font-weight: 900;
-        }
-        .icon {
-            padding-right: 10px;
-            width: 2em;  // tamaño por defecto
-            height: 2em;
-            cursor: pointer;
-        }
-        li{
-            padding: 5px;
-        }
+
     }
 
 }
@@ -70,6 +53,7 @@
     .publication-container {
         margin-top: 70px;
         margin-bottom: 100px;
+
         .publication {
             .img-container {
                 img {
@@ -87,6 +71,7 @@
     .publication-container {
         margin-top: 70px;
         margin-bottom: 100px;
+
         .publication {
             .img-container {
                 img {
@@ -105,6 +90,7 @@
     .publication-container {
         margin-top: 70px;
         margin-bottom: 100px;
+
         .publication {
             .icon {
                 width: 1.8em;
@@ -118,6 +104,7 @@
     .publication-container {
         margin-top: 70px;
         margin-bottom: 100px;
+
         .publication {
             .icon {
                 width: 1.5em;
