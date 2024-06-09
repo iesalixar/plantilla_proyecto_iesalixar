@@ -25,51 +25,12 @@ public interface ActivityServiceI {
 	ActivityDTO getOne(Long id);
 
 	/**
-	 * Retrieves the activities created by a user.
-	 * 
-	 * @param id The id of the user.
-	 * @return A list of activities created by the specified user.
-	 */
-	List<ActivityDTO> getCreatedActivities(Long id);
-
-	/**
-	 * Retrieves the activities created by a user.
-	 * 
-	 * @param username The username of the user.
-	 * @return A list of activities created by the specified user.
-	 */
-//	List<ActivityDTO> getAcyivitiesByUsername(String username);
-
-	/**
-	 * Retrieves the activities created by a user.
-	 * 
-	 * @param email The email of the user.
-	 * @return A list of activities created by the specified user.
-	 */
-	List<ActivityDTO> getAcyivitiesByEmail(String email);
-
-	/**
-	 * Retrieves the activities invited to by a user.
-	 * 
-	 * @param id The id of the user.
-	 * @return A list of activities invited to by the specified user.
-	 */
-	List<ActivityDTO> getInvitedActivities(Long id);
-
-	/**
 	 * Retrieves all activities related to a user.
 	 * 
 	 * @param id The id of the user.
 	 * @return A list of all activities related to the specified user.
 	 */
-	List<ActivityDTO> getAllActivities(Long id);
-
-	/**
-	 * Retrieves all images for all the users.
-	 * 
-	 * @return A list of all images.
-	 */
-	List<String> getAllImages();
+	List<ActivityDTO> getAllActivitiesByUserId(Long id);
 
 	/**
 	 * Checks if an activity exists by its ID.

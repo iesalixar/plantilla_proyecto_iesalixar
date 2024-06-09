@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 
-import com.fitconnet.utils.Mappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,7 @@ import com.fitconnet.persitence.repository.ActivityRepository;
 import com.fitconnet.persitence.repository.UserRepository;
 import com.fitconnet.service.interfaces.entity.ActivityServiceI;
 import com.fitconnet.utils.Constants;
-
+import com.fitconnet.utils.Mappers;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
@@ -44,20 +43,11 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	 */
 	private final Mappers mappers;
 
-
-
 	private final Logger logger = LoggerFactory.getLogger(ActivityServiceImpl.class);
 
 	@Override
 	public List<ActivityDTO> getAll() {
 		return activityRepository.findAll().stream().map(mappers::activityToActivityDTO).toList();
-	}
-
-	@Override
-	public List<ActivityDTO> getAcyivitiesByEmail(String email) {
-		User user = userRepository.findByEmail(email);
-		return user.getCreatedActivities().stream().map(activity -> mappers.activityToActivityDTO(activity))
-				.toList();
 	}
 
 	@Override
@@ -68,36 +58,14 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	}
 
 	@Override
-	public List<ActivityDTO> getCreatedActivities(Long id) {
-		User user = userRepository.findById(id)
+	public List<ActivityDTO> getAllActivitiesByUserId(Long id) {
+		User creator = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return user.getCreatedActivities().stream().map(activity -> mappers.activityToActivityDTO(activity))
-				.toList();
-	}
-
-	@Override
-	public List<ActivityDTO> getInvitedActivities(Long id) {
-		User user = userRepository.findById(id)
-				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-		return user.getInvitedActivities().stream().map(activity -> mappers.activityToActivityDTO(activity))
-				.toList();
-	}
-
-	@Override
-	public List<ActivityDTO> getAllActivities(Long id) {
-		User user = userRepository.findById(id)
-				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-
-		List<Activity> allActivities = new ArrayList<>();
-		allActivities.addAll(user.getCreatedActivities());
-		allActivities.addAll(user.getInvitedActivities());
-
-		return allActivities.stream().map(mappers::activityToActivityDTO).toList();
-	}
-
-	@Override
-	public List<String> getAllImages() {
-		return activityRepository.findAll().stream().map(Activity::getImage).toList();
+		List<Activity> activityList = new ArrayList<>();
+		if (creator != null) {
+			activityList = activityRepository.findAllByCreatorId(id);
+		}
+		return activityList.stream().map(mappers::activityToActivityDTO).toList();
 	}
 
 	@Override
@@ -121,11 +89,6 @@ public class ActivityServiceImpl implements ActivityServiceI {
 
 		// Establecer el creador de la actividad
 		newActivity.setCreator(creator);
-
-		// Añadir la actividad a la lista de actividades creadas por el usuario
-		creator.getCreatedActivities().add(newActivity);
-
-		userRepository.save(creator);
 
 		// Guardar la nueva actividad
 		activityRepository.save(newActivity);

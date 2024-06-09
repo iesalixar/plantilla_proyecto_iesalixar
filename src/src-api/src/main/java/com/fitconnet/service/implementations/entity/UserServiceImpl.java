@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import com.fitconnet.utils.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +20,7 @@ import com.fitconnet.persitence.repository.UserRepository;
 import com.fitconnet.service.interfaces.entity.UserServiceI;
 import com.fitconnet.service.interfaces.security.JwtServiceI;
 import com.fitconnet.utils.Constants;
+import com.fitconnet.utils.Mappers;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
@@ -59,7 +59,6 @@ public class UserServiceImpl implements UserServiceI {
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
 		return userMapper.userToUserDTO(user);
 	}
-
 
 	@Override
 	public List<UserDTO> getFriends(Long id) {
@@ -151,8 +150,6 @@ public class UserServiceImpl implements UserServiceI {
 		switch (fieldName) {
 		case "name":
 			return user.getName();
-//		case "lastName":
-//			return user.getLastName();
 		case "userName":
 			return user.getUsername();
 		case "email":
