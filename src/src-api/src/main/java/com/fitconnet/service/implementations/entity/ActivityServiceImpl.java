@@ -77,20 +77,15 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	public void create(ActivityDTO activity) {
 		logger.info("ACTIVITY SERVICE:: CREATE: IN");
 
-		// Convertir el DTO a la entidad Activity
 		Activity newActivity = mappers.activityDTOtoActivity(activity);
 
-		// Establecer la fecha actual
 		newActivity.setDate(new Date());
 
-		// Obtener el usuario creador de la actividad
 		User creator = userRepository.findById(newActivity.getCreator().getId())
 				.orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
 
-		// Establecer el creador de la actividad
 		newActivity.setCreator(creator);
 
-		// Guardar la nueva actividad
 		activityRepository.save(newActivity);
 
 		logger.info("ACTIVITY SERVICE:: CREATE: OUT");
@@ -109,6 +104,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
 	public void patch(Long id, ActivityDTO activity) {
 		Activity aux = activityRepository.findById(id)
 				.orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
+		updateFieldIfDifferent(aux, activity.getTitle(), "title", aux::setTitle);
 		updateFieldIfDifferent(aux, activity.getType(), "type", aux::setType);
 		updateFieldIfDifferent(aux, activity.getDuration(), "duration", aux::setDuration);
 		updateFieldIfDifferent(aux, activity.getPlace(), "place", aux::setPlace);
@@ -129,17 +125,20 @@ public class ActivityServiceImpl implements ActivityServiceI {
 
 	private <T> void updateFieldIfDifferent(Activity activity, T newValue, String fieldName, Consumer<T> setter) {
 		T existingValue = getFieldValue(activity, fieldName);
-		if (newValue != null && !newValue.equals(existingValue)) {
+		if (newValue != null && !newValue.equals(existingValue) || (newValue == null && existingValue != null)) {
 			try {
 				setter.accept(newValue);
 			} catch (ConstraintViolationException e) {
-				throw new InvalidParameterException("El valor para '" + fieldName + "' no es válido.");
+				throw new InvalidParameterException("The value for '" + fieldName + "' is not valid.");
 			}
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private <T> T getFieldValue(Activity activity, String fieldName) {
 		switch (fieldName) {
+		case "title":
+			return (T) activity.getTitle();
 		case "type":
 			return (T) activity.getType();
 		case "duration":
@@ -150,10 +149,8 @@ public class ActivityServiceImpl implements ActivityServiceI {
 			return (T) activity.getParticipants();
 		case "image":
 			return (T) activity.getImage();
-
 		default:
-			throw new IllegalArgumentException("Campo desconocido: " + fieldName);
+			throw new IllegalArgumentException("Unknown field: " + fieldName);
 		}
 	}
-
 }
