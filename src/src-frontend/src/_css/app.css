@@ -337,6 +337,13 @@ main {
   }
   .sidebar-container .icon-section .icon-btn {
     padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  .sidebar-container .icon-section .icon-btn:hover {
+    border: 1px solid;
+    border-radius: 10px;
+    background-color: var(--gray-a2);
   }
 }
 @media (max-width: 770px) {

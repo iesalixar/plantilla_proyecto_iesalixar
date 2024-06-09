@@ -53,6 +53,15 @@ main {
 
       .icon-btn {
         padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+
+        &:hover {
+          border: 1px solid;
+          border-radius: 10px;
+          background-color: var(--gray-a2);
+
+        }
       }
     }
   }
