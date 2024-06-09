@@ -1,0 +1,17 @@
+.time-input {
+    display: flex;
+    align-items: center;
+
+    input {
+        width: 40px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        text-align: center;
+
+        &:focus {
+            outline: none;
+            border-color: dodgerblue;
+        }
+    }
+}
