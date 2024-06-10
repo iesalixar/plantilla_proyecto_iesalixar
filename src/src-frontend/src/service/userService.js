@@ -17,13 +17,12 @@ const fetchAllUsers = async (token) => {
         }
 
         const users = await response.json();
-        console.log('Users:', users); // Puedes almacenar esto en el estado si es necesario
+        console.log('Users:', users);
     } catch (error) {
         console.error('Error getting users:', error.message);
     }
 };
 
-// Función para obtener la información del usuario autenticado
 const fetchUserData = async (token, id, updateUser) => {
     try {
         const response = await fetch(`${API_USER_PATH}/${id}`, {
@@ -40,9 +39,12 @@ const fetchUserData = async (token, id, updateUser) => {
         }
 
         const user = await response.json();
+        console.log('User:', user);
+
         updateUser(user);
     } catch (error) {
         console.error('Error getting user data:', error.message);
     }
 };
+
 export { fetchAllUsers, fetchUserData }
