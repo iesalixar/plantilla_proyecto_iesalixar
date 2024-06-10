@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -35,7 +36,8 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/user")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST,
+		RequestMethod.PUT, RequestMethod.DELETE })
 @AllArgsConstructor
 public class UserController {
 	/**
@@ -94,7 +96,7 @@ public class UserController {
 	 *         users.
 	 */
 	@GetMapping
-	// @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	@Operation(summary = "Show Users", description = "Retrieves all users registered in the system.")
 	@ApiResponse(responseCode = "200", description = "Users retrieved successfully")
 	public ResponseEntity<List<UserDTO>> showUsers() {
@@ -115,7 +117,7 @@ public class UserController {
 	 *         user, if found.
 	 */
 	@GetMapping("/{id}")
-	// @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	@Operation(summary = "Get User by ID", description = "Retrieves a user by ID.")
 	@ApiResponse(responseCode = "200", description = "User retrieved successfully")
 	public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
