@@ -1,6 +1,5 @@
 package com.fitconnet.service.implementations.security;
 
-import com.fitconnet.utils.Mappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +18,7 @@ import com.fitconnet.persitence.model.User;
 import com.fitconnet.persitence.repository.UserRepository;
 import com.fitconnet.service.interfaces.security.AuthenticationServiceI;
 import com.fitconnet.service.interfaces.security.JwtServiceI;
+import com.fitconnet.utils.Mappers;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -58,12 +58,13 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 	@Override
 	public JwtAuthenticationDTO signup(SignUp request) {
 		boolean emailExists = userRepository.existsByEmail(request.getEmail());
+
 		if (emailExists) {
 			throw new IllegalArgumentException("Email already in use.");
 		}
 
 		User user = new User();
-		user.setName(request.getFirstName());
+		user.setName(request.getName());
 		user.setEmail(request.getEmail());
 		user.setAge(request.getAge());
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -71,7 +72,9 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
 		userRepository.save(user);
 
 		String jwt = jwtService.generateToken(user);
+
 		UserDTO userDTO = userMapper.userToUserDTO(user);
+
 		return JwtAuthenticationDTO.builder().token(jwt).userDTO(userDTO).build();
 	}
 

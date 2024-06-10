@@ -7,21 +7,8 @@ import lombok.Data;
  */
 @Data
 public class SignUp {
-	/**
-	 * The first name of the user signing up.
-	 */
-	private String firstName;
 
-	/**
-	 * The last name of the user signing up.
-	 */
-	private String lastName;
-
-	/**
-	 * The username chosen by the user signing up.
-	 */
-	private String username;
-
+	private String name;
 	/**
 	 * The age of the user signing up.
 	 */

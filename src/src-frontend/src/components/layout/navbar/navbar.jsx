@@ -29,7 +29,7 @@ const SidebarComponent = ({ }) => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const profileImage = userData.user.image;
+    const profileImage = userData?.user?.image;
 
     const { screenWidth } = useScreenContext();
     const [isScreenSmall, setIsScreenSmall] = useState();
@@ -144,7 +144,7 @@ const SidebarComponent = ({ }) => {
                 })}
                 <div className='icon-wrapper' style={{ borderColor: theme.gray8, backgroundColor: theme.grayA2 }}>
                     <div className='icon-btn'><ProfilePictureComponent source={profileImage} size={35} /></div>
-                    <div className='icon-text' style={{ color: theme.gray11 }}>{userData.user.name}</div>
+                    <div className='icon-text' style={{ color: theme.gray11 }}>{userData?.user?.name}</div>
                 </div>
 
             </div>
@@ -166,7 +166,7 @@ const FooterBarComponent = () => {
     const handleOpenAddModal = () => openModal('addModal');
     const location = useLocation();
     const navigate = useNavigate();
-    const profileImage = userData.user.image;
+    const profileImage = userData?.user?.image;
 
     const darkIcons = {
         Home: HomeDark,

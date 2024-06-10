@@ -167,7 +167,7 @@ const SignupForm = () => {
         } else {
             try {
                 const result = await signupService(registrationInfo);
-                login({ token: result.token });
+                login({ token: result.token, user: result.userDTO });
                 navigate('/');
             } catch (error) {
                 setErrors({ generic: error.message });

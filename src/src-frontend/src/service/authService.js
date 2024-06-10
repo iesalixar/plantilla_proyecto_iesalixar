@@ -7,6 +7,7 @@ const signupService = async (registrationInfo) => {
             },
             body: JSON.stringify(registrationInfo),
         });
+
         const contentType = response.headers.get('Content-Type');
 
         if (!response.ok) {
@@ -18,19 +19,20 @@ const signupService = async (registrationInfo) => {
                 throw new Error(errorText || 'Failed to sign up.');
             }
         }
+
         if (contentType && contentType.includes('application/json')) {
-            const data = await response.json();
-            if (data && typeof data.token === 'string' && data.token.trim() !== '') {
-                return { success: true, token: data.token };
+            const { token, userDTO } = await response.json();
+            if (token && typeof token === 'string' && token.trim() !== '' && userDTO) {
+                return { success: true, token, userDTO };
             } else {
-                throw new Error('Invalid token received');
+                throw new Error('Invalid token or user data received');
             }
         } else {
             throw new Error('Unexpected response format');
         }
     } catch (error) {
         console.error('Error:', error.message);
-        throw new Error(error.message || 'Failed to sign in');
+        throw new Error(error.message || 'Failed to sign up');
     }
 };
 
@@ -61,7 +63,7 @@ const signinService = async (identifier, password) => {
         if (contentType && contentType.includes('application/json')) {
             const { token, userDTO } = await response.json();
             if (token && typeof token === 'string' && token.trim() !== '' && userDTO) {
-                delete userDTO.password; // Eliminar la contraseña del objeto userDTO
+                delete userDTO.password;
                 return { success: true, token, userDTO };
             } else {
                 throw new Error('Invalid token or user data received');
