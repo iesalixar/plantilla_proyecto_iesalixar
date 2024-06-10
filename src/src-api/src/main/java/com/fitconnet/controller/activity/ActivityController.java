@@ -182,16 +182,19 @@ public class ActivityController {
 	@PreAuthorize("hasAuthority('ROLE_USER') and #id == authentication.principal.id")
 	@Operation(summary = "Update Activity", description = "A user can update an activity only if they are the creator of it.")
 	@ApiResponse(responseCode = "200", description = "Activity deleted successfully")
-	public ResponseEntity<String> patchActivity(@PathVariable Long id, ActivityDTO activityDTO) {
+	public ResponseEntity<String> patchActivity(@PathVariable Long id, @RequestBody ActivityDTO activityDTO) {
 		logger.info("ActivityController :: updateActivity");
-		ResponseEntity<String> response = null;
+		if (activityDTO == null) {
+			logger.error("ActivityDTO is null");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request payload");
+		}
+		logger.info(activityDTO.toString());
 		boolean existingActivity = activityService.existById(id);
-		response = processingResponseI.processStringResponse(existingActivity,
+		return processingResponseI.processStringResponse(existingActivity,
 				() -> ResponseEntity.status(HttpStatus.CONFLICT).body(Constants.ACTIVITY_NOT_FOUND), () -> {
 					activityService.patch(id, activityDTO);
 					return ResponseEntity.ok().body("Activity update successfully");
 				});
-		return response;
 	}
 
 	/**
