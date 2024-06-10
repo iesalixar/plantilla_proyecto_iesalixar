@@ -6,9 +6,13 @@ import { ThemeProvider } from './contexts/ThemeProvider.js';
 import { ScreenProvider } from './contexts/ScreenProvider.js';
 import { ModalProvider } from './contexts/ModalProvider.js';
 
+import ProtectedRoute from './service/routerProtectionService.js';
+
 import HomePage from './pages/home/homePage';
 import AuthPage from './pages/auth/authPage.jsx';
-import ProtectedRoute from './service/routerProtectionService.js';
+import DashboardPage from './pages/admin/dashboardPage.jsx';
+import UserTable from './components/common/table/userTable.jsx';
+
 import "@fontsource/roboto";
 import './app.scss'
 
@@ -21,7 +25,8 @@ function App() {
         <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
         <Route path="/login" element={<AuthPage />} />
         <Route path="/register" element={<AuthPage />} />
-        <Route path="/dashboard" element={<AuthPage />} />
+        <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+        <Route path="/pruebas" element={<UserTable />} />
       </Routes>
     </Router>
   );
