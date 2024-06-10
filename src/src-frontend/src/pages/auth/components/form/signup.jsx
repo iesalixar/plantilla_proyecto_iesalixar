@@ -78,7 +78,7 @@ const SignupForm = () => {
                 } else if (!isNaN(value) || !validateName(updatedValue)) {
                     setErrors((prevErrors) => ({
                         ...prevErrors,
-                        firstName: 'Please enter a valid name.'
+                        name: 'Please enter a valid name.'
                     }));
                 }
                 break;
@@ -147,7 +147,7 @@ const SignupForm = () => {
             generic: ''
         };
 
-        if (!validateName(registrationInfo.firstName)) {
+        if (!validateName(registrationInfo.name)) {
             newErrors.name = 'Please enter a valid name.';
         }
         if (!validateAge(registrationInfo.age)) {
@@ -182,7 +182,7 @@ const SignupForm = () => {
             <form onSubmit={handleSubmit} className="signup-container" style={{ borderColor: theme.gray7, borderWidth: '1px', borderStyle: 'solid' }}>
                 <h1 style={{ color: theme.grayA12 }}>Welcome to <span style={{ color: theme.tealA11 }}>FitConnet</span></h1>
                 <section className='error-container'>
-                    {errors.name && <div className="error-message">{errors.firstName}</div>}
+                    {errors.name && <div className="error-message">{errors.name}</div>}
                     {errors.age && <div className="error-message">{errors.age}</div>}
                     {errors.email && <div className="error-message">{errors.email}</div>}
                     {errors.password && <div className="error-message">{errors.password}</div>}
@@ -192,7 +192,7 @@ const SignupForm = () => {
                 <div className="input-container">
                     <input
                         type="text"
-                        name="firstName"
+                        name="name"
                         value={registrationInfo.name}
                         onChange={handleChange}
                         placeholder='Name'
@@ -260,7 +260,6 @@ const SignupForm = () => {
                 <Link to="/login" style={{ color: theme.teal11 }}>Already registered?</Link>
             </div>
             <section>
-                {errors.privacyPolicy && <div className="error-message">{errors.privacyPolicy}</div>}
                 {errors.generic && <div className="error-message">{errors.generic}</div>}
 
             </section>
