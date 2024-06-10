@@ -1,42 +1,41 @@
 import React, { useState, useRef, useContext, useEffect } from 'react';
 
-import { useAuthContext } from '../../../contexts/AuthProvider';
-import { ThemeContext } from '../../../contexts/ThemeProvider';
-import { useModalContext } from '../../../contexts/ModalProvider';
+import { useAuthContext } from '../../../../../contexts/AuthProvider';
+import { ThemeContext } from '../../../../../contexts/ThemeProvider';
 
-import { createActivity } from '../../../service/activityService';
-import { convertImageToBase64 } from '../../../service/imageService';
+import { patchActivity } from '../../../../../service/activityService';
+import { convertImageToBase64 } from '../../../../../service/imageService';
 
 import TimeInput from './components/timeInput/timeInput';
 import { CloseIconClear, CloseIconDark } from './components/icons/closeIcon';
 import { AddImageIconClear, AddImageIconDark } from './components/icons/addImageIcon';
 
-import activityTypes from '../../../model/ActivityTypes';
+import activityTypes from '../../../../../model/ActivityTypes';
 
 import './style.scss';
 
-const AddActivityForm = () => {
+
+const PatchActivityForm = ({ activity, closeModal }) => {
+    console.log(activity)
     const { userData } = useAuthContext();
     const { theme, isDark } = useContext(ThemeContext);
-    const { closeModal } = useModalContext();
-    const handleCloseAddModal = () => closeModal('addModal');
 
-    const [activityType, setActivityType] = useState('');
-    const [title, setTitle] = useState('');
-    const [place, setPlace] = useState('');
-    const [duration, setDuration] = useState({ hours: '', minutes: '' });
-    const [image, setImage] = useState(null);
-    const [friends, setFriends] = useState('');
+    const [activityType, setActivityType] = useState(activity?.type || '');
+    const [title, setTitle] = useState(activity?.title || '');
+    const [place, setPlace] = useState(activity?.place || '');
+    const [duration, setDuration] = useState({
+        hours: activity?.duration.split(' ')[0] || '',
+        minutes: activity?.duration.split(' ')[3] || ''
+    });
+    const [image, setImage] = useState(activity?.image || null);
+    const [friends, setFriends] = useState(activity?.participants.map(participant => participant.name).join(', ') || '');
+
     const [activitySuggestions, setActivitySuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const inputRef = useRef(null);
     const suggestionsRef = useRef(null);
 
     useEffect(() => {
-        if (!userData) {
-            console.log('No user data found in sessionStorage');
-        }
-
         const handleKeyDown = (e) => {
             if (e.key === 'Escape') {
                 setShowSuggestions(false);
@@ -56,11 +55,7 @@ const AddActivityForm = () => {
             document.removeEventListener('keydown', handleKeyDown);
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [userData]);
-
-    if (!userData) {
-        return <div>Loading...</div>;
-    }
+    }, []);
 
     const closeIcon = isDark ? <CloseIconDark /> : <CloseIconClear />;
     const addImageIcon = isDark ? <AddImageIconDark /> : <AddImageIconClear />;
@@ -95,37 +90,39 @@ const AddActivityForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!image) {
-            console.error('No image selected to convert');
-            return;
-        }
+        const isDefaultType = activityType === (activity?.type || '');
+        const isDefaultTitle = title === (activity?.title || '');
+        const isDefaultPlace = place === (activity?.place || '');
+        const isDefaultDuration = `${duration.hours} hours - ${duration.minutes} min` === (activity?.duration || '');
 
         try {
-            const imageBase64 = await convertImageToBase64(image);
-            const formattedDuration = `${duration.hours} hours - ${duration.minutes} min`;
+            let imageBase64;
+            if (image instanceof Blob) {
+                imageBase64 = await convertImageToBase64(image);
+            } else {
+                imageBase64 = activity.image || '';
+            }
 
             const activityData = {
-                type: activityType,
-                title,
-                place,
-                duration: formattedDuration,
-                date: null,
-                creator: userData.user,
+                type: isDefaultType ? activity.type : activityType,
+                title: isDefaultTitle ? activity.title : title,
+                place: isDefaultPlace ? activity.place : place,
+                duration: isDefaultDuration ? activity.duration : `${duration.hours} hours - ${duration.minutes} min`,
                 image: imageBase64,
                 participants: [],
             };
-            console.log(activityData)
-            const token = userData.token;
 
-            createActivity(activityData, token)
+            const token = userData.token;
+            console.log('ACTIVITY DATA ');
+            console.log(activityData);
+            patchActivity(activity.id, activityData, token)
                 .then((data) => {
-                    handleCloseAddModal();
-                    console.log('Activity created successfully:', data);
+                    console.log('Activity update successfully:', data);
                     window.location.reload();
                 })
-                .then(() => closeModal('addActivity'))
+                .then(closeModal())
                 .catch((error) => {
-                    console.error('Error creating activity:', error);
+                    console.error('Error updating activity:', error);
                 });
         } catch (error) {
             console.error('Error converting image to base64:', error);
@@ -136,8 +133,8 @@ const AddActivityForm = () => {
         <div className='modal-container'>
             <div className='add-activity-card' style={{ borderColor: theme.gray7, background: theme.gray3, color: theme.teal12 }}>
                 <div className='card-header-container'>
-                    <div className='title-container'><h2>Add Publication</h2></div>
-                    <button onClick={handleCloseAddModal} style={{ background: theme.gray3 }}>{closeIcon}</button>
+                    <div className='title-container'><h2>Edit Activity</h2></div>
+                    <button onClick={() => closeModal('patchActivity')} style={{ background: theme.gray3 }}>{closeIcon}</button>
                 </div>
                 <form onSubmit={handleSubmit} className='publication-form'>
                     <div className="input-container" ref={inputRef}>
@@ -171,7 +168,7 @@ const AddActivityForm = () => {
                         <button type="button" onClick={handleImageClick} className="image-upload-btn" style={{ background: theme.grayA4, color: theme.teal12 }}>Upload an Image {addImageIcon}</button>
                     </div>
                     <div className='submit-button-container'>
-                        <button type="submit" style={{ backgroundColor: theme.teal12, color: theme.gray1 }}>Publish</button>
+                        <button type="submit" style={{ backgroundColor: theme.teal12, color: theme.gray1 }}>Update</button>
                     </div>
                 </form>
             </div>
@@ -179,4 +176,5 @@ const AddActivityForm = () => {
     );
 };
 
-export default AddActivityForm;
+export default PatchActivityForm;
+
