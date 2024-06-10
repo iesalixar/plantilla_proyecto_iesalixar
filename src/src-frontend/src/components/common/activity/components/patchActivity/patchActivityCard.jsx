@@ -2,7 +2,10 @@ import React, { useState, useRef, useContext, useEffect } from 'react';
 
 import { useAuthContext } from '../../../../../contexts/AuthProvider';
 import { ThemeContext } from '../../../../../contexts/ThemeProvider';
+
 import { patchActivity } from '../../../../../service/activityService';
+import { convertImageToBase64 } from '../../../../../service/imageService';
+
 import TimeInput from './components/timeInput/timeInput';
 import { CloseIconClear, CloseIconDark } from './components/icons/closeIcon';
 import { AddImageIconClear, AddImageIconDark } from './components/icons/addImageIcon';
@@ -11,27 +14,9 @@ import activityTypes from '../../../../../model/ActivityTypes';
 
 import './style.scss';
 
-function convertImageToBase64(file) {
-    return new Promise((resolve, reject) => {
-        if (!(file instanceof Blob)) {
-            reject(new TypeError('The provided file is not of type Blob'));
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-
-        reader.onload = () => {
-            resolve(reader.result);
-        };
-
-        reader.onerror = (error) => {
-            reject(error);
-        };
-    });
-}
 
 const PatchActivityForm = ({ activity, closeModal }) => {
+    console.log(activity)
     const { userData } = useAuthContext();
     const { theme, isDark } = useContext(ThemeContext);
 
@@ -44,6 +29,7 @@ const PatchActivityForm = ({ activity, closeModal }) => {
     });
     const [image, setImage] = useState(activity?.image || null);
     const [friends, setFriends] = useState(activity?.participants.map(participant => participant.name).join(', ') || '');
+
     const [activitySuggestions, setActivitySuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const inputRef = useRef(null);
@@ -104,30 +90,34 @@ const PatchActivityForm = ({ activity, closeModal }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!image) {
-            console.error('No image selected to convert');
-            return;
-        }
+        const isDefaultType = activityType === (activity?.type || '');
+        const isDefaultTitle = title === (activity?.title || '');
+        const isDefaultPlace = place === (activity?.place || '');
+        const isDefaultDuration = `${duration.hours} hours - ${duration.minutes} min` === (activity?.duration || '');
 
         try {
-            const imageBase64 = await convertImageToBase64(image);
-            const formattedDuration = `${duration.hours} hours - ${duration.minutes} min`;
+            let imageBase64;
+            if (image instanceof Blob) {
+                imageBase64 = await convertImageToBase64(image);
+            } else {
+                imageBase64 = activity.image || '';
+            }
 
             const activityData = {
-                type: activityType,
-                title,
-                place,
-                duration: formattedDuration,
+                type: isDefaultType ? activity.type : activityType,
+                title: isDefaultTitle ? activity.title : title,
+                place: isDefaultPlace ? activity.place : place,
+                duration: isDefaultDuration ? activity.duration : `${duration.hours} hours - ${duration.minutes} min`,
                 image: imageBase64,
                 participants: [],
             };
 
             const token = userData.token;
-
+            console.log('ACTIVITY DATA ');
+            console.log(activityData);
             patchActivity(activity.id, activityData, token)
                 .then((data) => {
                     console.log('Activity update successfully:', data);
-                    alert('Activity update successfully');
                     window.location.reload();
                 })
                 .then(closeModal())
@@ -187,3 +177,4 @@ const PatchActivityForm = ({ activity, closeModal }) => {
 };
 
 export default PatchActivityForm;
+

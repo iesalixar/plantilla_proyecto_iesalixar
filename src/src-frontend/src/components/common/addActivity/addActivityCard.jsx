@@ -5,6 +5,8 @@ import { ThemeContext } from '../../../contexts/ThemeProvider';
 import { useModalContext } from '../../../contexts/ModalProvider';
 
 import { createActivity } from '../../../service/activityService';
+import { convertImageToBase64 } from '../../../service/imageService';
+
 import TimeInput from './components/timeInput/timeInput';
 import { CloseIconClear, CloseIconDark } from './components/icons/closeIcon';
 import { AddImageIconClear, AddImageIconDark } from './components/icons/addImageIcon';
@@ -13,25 +15,6 @@ import activityTypes from '../../../model/ActivityTypes';
 
 import './style.scss';
 
-function convertImageToBase64(file) {
-    return new Promise((resolve, reject) => {
-        if (!(file instanceof Blob)) {
-            reject(new TypeError('The provided file is not of type Blob'));
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-
-        reader.onload = () => {
-            resolve(reader.result);
-        };
-
-        reader.onerror = (error) => {
-            reject(error);
-        };
-    });
-}
 const AddActivityForm = () => {
     const { userData } = useAuthContext();
     const { theme, isDark } = useContext(ThemeContext);
@@ -136,11 +119,11 @@ const AddActivityForm = () => {
 
             createActivity(activityData, token)
                 .then((data) => {
+                    handleCloseAddModal();
                     console.log('Activity created successfully:', data);
-                    alert('Activity created successfully');
                     window.location.reload();
                 })
-                .then(() => closeModal('addActivity')) // Asegúrate de llamar a closeModal correctamente
+                .then(() => closeModal('addActivity'))
                 .catch((error) => {
                     console.error('Error creating activity:', error);
                 });
