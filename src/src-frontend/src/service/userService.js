@@ -41,7 +41,6 @@ const fetchUserData = async (token, id, updateUser) => {
         const user = await response.json();
         console.log('User:', user);
 
-        updateUser(user);
     } catch (error) {
         console.error('Error getting user data:', error.message);
     }
