@@ -105,9 +105,12 @@ const LoginForm = () => {
             try {
                 const result = await signinService(loginInfo.identifier, loginInfo.password);
                 if (result.success) {
-                    // Guarda el token y la información del usuario en el contexto de autenticación
                     login({ token: result.token, user: result.userDTO });
-                    navigate('/');
+                    if (result.userDTO.roles && result.userDTO.roles.includes('ROLE_ADMIN')) {
+                        navigate('/dashboard');
+                    } else {
+                        navigate('/');
+                    }
                 }
             } catch (error) {
                 setErrors({ generic: error.message });
