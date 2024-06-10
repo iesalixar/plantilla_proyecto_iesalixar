@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import useInterval from '../hooks/useInterval';
 import { fetchAllUsers, fetchUserData } from '../service/userService';
@@ -9,17 +9,18 @@ export const AuthProvider = ({ children }) => {
   const auth = useAuth();
   const { userData, updateUser } = auth;
   const token = userData ? userData.token : null;
+  const [allUsers, setAllUsers] = useState([]);
 
-  // Hook para actualizar información periódicamente
-  useInterval(() => {
+  useInterval(async () => {
     if (token && userData) {
-      fetchUserData(token, userData.user.id, updateUser);
-      fetchAllUsers(token);
+      await fetchUserData(token, userData.user.id, updateUser);
+      const users = await fetchAllUsers(token);
+      setAllUsers(users);
     }
-  }, 60000); // Llamadas cada 60 segundos
+  }, 60000);
 
   return (
-    <AuthContext.Provider value={auth}>
+    <AuthContext.Provider value={{ ...auth, allUsers }}>
       {children}
     </AuthContext.Provider>
   );
