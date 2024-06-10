@@ -103,22 +103,27 @@ public class ActivityServiceImpl implements ActivityServiceI {
 
 	@Override
 	public void patch(Long id, ActivityDTO activity) {
-		Activity aux = activityRepository.findById(id)
-				.orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
+	    logger.info("ActivityService :: patchActivity");
+	    Activity aux = activityRepository.findById(id)
+	            .orElseThrow(() -> new ActivityNotFoundException("Activity not found", HttpStatus.NOT_FOUND));
 
-		updateFieldIfDifferent(aux, activity.getTitle(), "title", aux::setTitle);
-		updateFieldIfDifferent(aux, activity.getType(), "type", aux::setType);
-		updateFieldIfDifferent(aux, activity.getDuration(), "duration", aux::setDuration);
-		updateFieldIfDifferent(aux, activity.getPlace(), "place", aux::setPlace);
-		updateFieldIfDifferent(aux, activity.getImage(), "image", aux::setImage);
+	    updateFieldIfDifferent(aux, activity.getTitle(), "title", aux::setTitle);
+	    updateFieldIfDifferent(aux, activity.getType(), "type", aux::setType);
+	    
+	    String newDuration = activity.getDuration() != null ? activity.getDuration() : aux.getDuration();
+	    updateFieldIfDifferent(aux, newDuration, "duration", aux::setDuration);
+	    
+	    updateFieldIfDifferent(aux, activity.getPlace(), "place", aux::setPlace);
+	    updateFieldIfDifferent(aux, activity.getImage(), "image", aux::setImage);
 
-		List<User> participants = Collections.emptyList();
-		if (activity.getParticipants() != null) {
+	    List<User> participants = Collections.emptyList();
+	    if (activity.getParticipants() != null) {
+	        participants = activity.getParticipants().stream().map(mappers::userDTOtoUser).toList();
+	    }
 
-			participants = activity.getParticipants().stream().map(mappers::userDTOtoUser).toList();
-		}
-
-		updateFieldIfDifferent(aux, participants, "participants", aux::setParticipants);
+	    updateFieldIfDifferent(aux, participants, "participants", aux::setParticipants);
+	    
+	    activityRepository.save(aux);
 	}
 
 	@Override
