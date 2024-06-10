@@ -1,12 +1,9 @@
 package com.fitconnet.config.cors;
 
-import java.util.Arrays;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Configuration class for Cross-Origin Resource Sharing (CORS) setup. Enables
@@ -22,23 +19,13 @@ public class CorsConfig {
 	 *         methods, and headers.
 	 */
 	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration corsConfiguration = new CorsConfiguration();
-
-		// Allow requests from all origins
-		corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
-
-		// Allow specified HTTP methods
-		corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "UPDATE", "PATCH"));
-
-		// Allow all headers
-		corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
-
-		// Create a UrlBasedCorsConfigurationSource and register the CORS configuration
-		// for all endpoints
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", corsConfiguration);
-
-		return source;
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/api/**").allowedOrigins("http://localhost:3000")
+						.allowedMethods("GET", "POST", "PUT", "DELETE").allowCredentials(true);
+			}
+		};
 	}
 }
