@@ -105,11 +105,17 @@ const LoginForm = () => {
             try {
                 const result = await signinService(loginInfo.identifier, loginInfo.password);
                 if (result.success) {
+
                     login({ token: result.token, user: result.userDTO });
-                    if (result.userDTO.roles && result.userDTO.roles.includes('ROLE_ADMIN')) {
-                        navigate('/dashboard');
+
+                    window.sessionStorage.setItem("token", result.token);
+                    window.sessionStorage.setItem("userRol", result.userDTO.roles);
+                    window.sessionStorage.setItem("isLogged", true);
+
+                    if (result.userDTO.roles.includes('ROLE_ADMIN')) {
+                        return (window.location.href = "/dashboad");
                     } else {
-                        navigate('/');
+                        window.location.href = "/home";
                     }
                 }
             } catch (error) {

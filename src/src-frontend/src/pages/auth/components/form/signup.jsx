@@ -167,8 +167,17 @@ const SignupForm = () => {
         } else {
             try {
                 const result = await signupService(registrationInfo);
-                login({ token: result.token, user: result.userDTO });
-                navigate('/');
+                if (result.success) {
+
+                    login({ token: result.token, user: result.userDTO });
+
+                    window.sessionStorage.setItem("token", result.token);
+                    window.sessionStorage.setItem("userRol", result.userDTO.roles);
+                    window.sessionStorage.setItem("isLogged", true);
+
+                    window.location.href = "/home";
+
+                }
             } catch (error) {
                 setErrors({ generic: error.message });
             }
