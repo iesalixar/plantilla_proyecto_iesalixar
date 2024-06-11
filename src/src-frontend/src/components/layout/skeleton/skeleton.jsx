@@ -2,9 +2,8 @@ import React, { useContext } from 'react';
 import { ThemeContext } from '../../../contexts/ThemeProvider';
 import { useLocation } from 'react-router-dom';
 
-const Skeleton = ({ style, mainContent, footerContent }) => {
+const Skeleton = ({ mainContent, footerContent, currentPath }) => {
     const { theme } = useContext(ThemeContext);
-    const location = useLocation();
 
     const getBackgroundColor = (path) => {
         switch (path) {
@@ -16,9 +15,10 @@ const Skeleton = ({ style, mainContent, footerContent }) => {
                 return theme.colorBackground;
         }
     };
+
     return (
-        <div className="body-container" style={{ background: getBackgroundColor(location.pathname) }}>
-            <main >{mainContent}</main>
+        <div className="body-container" style={{ background: getBackgroundColor(currentPath) }}>
+            <main>{mainContent}</main>
             <footer>{footerContent}</footer>
         </div>
     );
