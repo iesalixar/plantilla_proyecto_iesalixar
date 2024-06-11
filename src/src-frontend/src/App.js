@@ -18,10 +18,10 @@ import './app.scss'
 
 function App() {
   document.title = 'FitConnet';
-  const isLoggedIn = window.sessionStorage.getItem("loggedIn");
-  const userType = window.sessionStorage.getItem("userType");
+  const isLogged = window.sessionStorage.getItem("isLogged");
+  const userRol = window.sessionStorage.getItem("userRol");
   const isAdmin = () => {
-    if (userType && userType == ('ROLE_ADMIN')) {
+    if (userRol && userRol == ('ROLE_ADMIN')) {
       return true;
     } else {
       return false;
@@ -32,7 +32,7 @@ function App() {
     <Router>
       <Routes>
         {/* unauthorized route */}
-        {!isLoggedIn && (
+        {!isLogged && (
           <>
             <Route path="/login" element={<AuthPage />} />
             <Route path="/register" element={<AuthPage />} />
