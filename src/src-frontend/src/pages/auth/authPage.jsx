@@ -23,16 +23,12 @@ const AuthPage = () => {
     const pathname = location.pathname;
     const { screenWidth } = useScreenContext();
 
-    //
     let logoIcon;
-
 
     // METADATA TITLE
     setMetaDataTitle();
 
     //#region SCREEN STATE
-
-
     const [isScreenSmall, setIsScreenSmall] = useState(false);
     const [isScreenMedium, setIsScreenMedium] = useState(false);
 
@@ -93,6 +89,7 @@ const AuthPage = () => {
                     </>
                 }
                 footerContent={<FooterComponent />}
+                currentPath={location.pathname}
             />
         );
     }
@@ -114,6 +111,7 @@ const AuthPage = () => {
                 </>
             }
             footerContent={<FooterComponent />}
+            currentPath={location.pathname}
         />
     );
 
