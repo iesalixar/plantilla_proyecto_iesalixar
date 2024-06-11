@@ -23,8 +23,8 @@ const useAuth = () => {
         setUserData(null);
         sessionStorage.removeItem('userData');
         sessionStorage.removeItem('token');
-        sessionStorage.removeItem('userType');
-        sessionStorage.removeItem('loggedIn');
+        sessionStorage.removeItem('Role');
+        sessionStorage.removeItem('isAuht');
     };
 
     const updateUser = (data) => {

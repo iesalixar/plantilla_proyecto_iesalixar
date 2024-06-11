@@ -109,13 +109,13 @@ const LoginForm = () => {
                     login({ token: result.token, user: result.userDTO });
 
                     window.sessionStorage.setItem("token", result.token);
-                    window.sessionStorage.setItem("userRol", result.userDTO.roles);
-                    window.sessionStorage.setItem("isLogged", true);
+                    window.sessionStorage.setItem("Role", result.userDTO.roles);
+                    window.sessionStorage.setItem("isAuht", true);
 
                     if (result.userDTO.roles.includes('ROLE_ADMIN')) {
                         return (window.location.href = "/dashboad");
                     } else {
-                        window.location.href = "/home";
+                        return (window.location.href = "/home");
                     }
                 }
             } catch (error) {
