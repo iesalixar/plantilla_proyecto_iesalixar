@@ -1,0 +1,2547 @@
+{
+	"info": {
+		"_postman_id": "03296ff1-d604-4857-bbb6-27dbb1b548f7",
+		"name": "FitConnet - APIREST",
+		"description": "Contains all the CRUD methods for different entities: user, activity, and notifications.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34870994"
+	},
+	"item": [
+		{
+			"name": "ADMIN",
+			"item": [
+				{
+					"name": "GET METHODS",
+					"item": [
+						{
+							"name": "Show Dashboard",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/admin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"admin"
+									]
+								},
+								"description": "Retrieves data for the admin dashboard, including user information and activities."
+							},
+							"response": [
+								{
+									"name": "Dashboard data retrieved successfully",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:8080/api/v1/admin",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"admin"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"essee6c\": {}\n}"
+								}
+							]
+						}
+					],
+					"description": "This folder contains all HTTP requests that follow the GET protocol."
+				},
+				{
+					"name": "UPDATE METHODS",
+					"item": [
+						{
+							"name": "Update User",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<long>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"userName\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"roles\": [\n    \"ROLE_USER\",\n    \"ROLE_ADMIN\"\n  ],\n  \"createdActivities\": [\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    }\n  ],\n  \"invitedActivities\": [\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    }\n  ],\n  \"friends\": [\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    }\n  ],\n  \"notifications\": [\n    {\n      \"id\": \"<long>\",\n      \"message\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"receiver\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    },\n    {\n      \"id\": \"<long>\",\n      \"message\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"receiver\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"authorities\": [\n    {\n      \"authority\": \"<string>\"\n    },\n    {\n      \"authority\": \"<string>\"\n    }\n  ],\n  \"username\": \"<string>\",\n  \"credentialsNonExpired\": \"<boolean>\",\n  \"accountNonExpired\": \"<boolean>\",\n  \"accountNonLocked\": \"<boolean>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/admin/user/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"user",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Updates an existing user with new information."
+							},
+							"response": [
+								{
+									"name": "User updated successfully",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<long>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"userName\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"roles\": [\n    \"ROLE_USER\",\n    \"ROLE_ADMIN\"\n  ],\n  \"createdActivities\": [\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    }\n  ],\n  \"invitedActivities\": [\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    }\n  ],\n  \"friends\": [\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    }\n  ],\n  \"notifications\": [\n    {\n      \"id\": \"<long>\",\n      \"message\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"receiver\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    },\n    {\n      \"id\": \"<long>\",\n      \"message\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"receiver\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"authorities\": [\n    {\n      \"authority\": \"<string>\"\n    },\n    {\n      \"authority\": \"<string>\"\n    }\n  ],\n  \"username\": \"<string>\",\n  \"credentialsNonExpired\": \"<boolean>\",\n  \"accountNonExpired\": \"<boolean>\",\n  \"accountNonLocked\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/admin/user/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"admin",
+												"user",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						},
+						{
+							"name": "Update Notification",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<long>\",\n  \"message\": \"<string>\",\n  \"date\": \"<dateTime>\",\n  \"receiver\": {\n    \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n  }\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/admin/notification/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"notification",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Updates an existing notification with new information."
+							},
+							"response": [
+								{
+									"name": "Notification updated successfully",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<long>\",\n  \"message\": \"<string>\",\n  \"date\": \"<dateTime>\",\n  \"receiver\": {\n    \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n  }\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/admin/notification/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"admin",
+												"notification",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						},
+						{
+							"name": "Update Activity",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<long>\",\n  \"type\": \"<string>\",\n  \"duration\": {\n    \"seconds\": \"<long>\",\n    \"zero\": \"<boolean>\",\n    \"nano\": \"<integer>\",\n    \"negative\": \"<boolean>\",\n    \"positive\": \"<boolean>\",\n    \"units\": [\n      {\n        \"durationEstimated\": \"<boolean>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\"\n        },\n        \"timeBased\": \"<boolean>\",\n        \"dateBased\": \"<boolean>\"\n      },\n      {\n        \"durationEstimated\": \"<boolean>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\"\n        },\n        \"timeBased\": \"<boolean>\",\n        \"dateBased\": \"<boolean>\"\n      }\n    ]\n  },\n  \"place\": \"<string>\",\n  \"date\": \"<dateTime>\",\n  \"creator\": {\n    \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n  },\n  \"participants\": [\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/admin/activity/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"activity",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Updates an existing activity with new information."
+							},
+							"response": [
+								{
+									"name": "Activity updated successfully",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<long>\",\n  \"type\": \"<string>\",\n  \"duration\": {\n    \"seconds\": \"<long>\",\n    \"zero\": \"<boolean>\",\n    \"nano\": \"<integer>\",\n    \"negative\": \"<boolean>\",\n    \"positive\": \"<boolean>\",\n    \"units\": [\n      {\n        \"durationEstimated\": \"<boolean>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\"\n        },\n        \"timeBased\": \"<boolean>\",\n        \"dateBased\": \"<boolean>\"\n      },\n      {\n        \"durationEstimated\": \"<boolean>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\"\n        },\n        \"timeBased\": \"<boolean>\",\n        \"dateBased\": \"<boolean>\"\n      }\n    ]\n  },\n  \"place\": \"<string>\",\n  \"date\": \"<dateTime>\",\n  \"creator\": {\n    \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n  },\n  \"participants\": [\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    }\n  ]\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/v1/admin/activity/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"admin",
+												"activity",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					],
+					"description": "This folder contains all HTTP requests that follow the UPDATE protocol."
+				},
+				{
+					"name": "DELETE METHODS",
+					"item": [
+						{
+							"name": "Delete User",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/admin/user/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"user",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Deletes a user by his id."
+							},
+							"response": [
+								{
+									"name": "User deleted successfully",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:8080/api/v1/admin/user/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"admin",
+												"user",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						},
+						{
+							"name": "Delete Activity",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/admin/activity/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"activity",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Deletes an activity."
+							},
+							"response": [
+								{
+									"name": "Activity deleted successfully",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:8080/api/v1/admin/activity/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"v1",
+												"admin",
+												"activity",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					],
+					"description": "This folder contains all HTTP requests that follow the DELETE protocol."
+				}
+			],
+			"description": "Contains methods that only administrators can access."
+		},
+		{
+			"name": "ACTIVITY",
+			"item": [
+				{
+					"name": "CREATE METHODS",
+					"item": [
+						{
+							"name": "Create Activity",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"activity\": {\n    \"type\": \"<string>\",\n    \"duration\": {\n      \"seconds\": \"<long>\",\n      \"zero\": \"<boolean>\",\n      \"nano\": \"<integer>\",\n      \"negative\": \"<boolean>\",\n      \"positive\": \"<boolean>\",\n      \"units\": [\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        },\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        }\n      ]\n    },\n    \"place\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"creator\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"userName\": \"<string>\",\n      \"age\": \"<integer>\",\n      \"email\": \"<string>\",\n      \"password\": \"<string>\",\n      \"roles\": [\n        \"ROLE_USER\",\n        \"ROLE_USER\"\n      ]\n    },\n    \"participants\": [\n      {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"userName\": \"<string>\",\n        \"age\": \"<integer>\",\n        \"email\": \"<string>\",\n        \"password\": \"<string>\",\n        \"roles\": [\n          \"ROLE_USER\",\n          \"ROLE_ADMIN\"\n        ]\n      },\n      {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"userName\": \"<string>\",\n        \"age\": \"<integer>\",\n        \"email\": \"<string>\",\n        \"password\": \"<string>\",\n        \"roles\": [\n          \"ROLE_USER\",\n          \"ROLE_USER\"\n        ]\n      }\n    ]\n  },\n  \"userId\": \"<long>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/activity",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"activity"
+									]
+								},
+								"description": "Registers a new activity in the system."
+							},
+							"response": [
+								{
+									"name": "Activity created successfully",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"activity\": {\n    \"type\": \"<string>\",\n    \"duration\": {\n      \"seconds\": \"<long>\",\n      \"zero\": \"<boolean>\",\n      \"nano\": \"<integer>\",\n      \"negative\": \"<boolean>\",\n      \"positive\": \"<boolean>\",\n      \"units\": [\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        },\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        }\n      ]\n    },\n    \"place\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"creator\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"userName\": \"<string>\",\n      \"age\": \"<integer>\",\n      \"email\": \"<string>\",\n      \"password\": \"<string>\",\n      \"roles\": [\n        \"ROLE_USER\",\n        \"ROLE_USER\"\n      ]\n    },\n    \"participants\": [\n      {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"userName\": \"<string>\",\n        \"age\": \"<integer>\",\n        \"email\": \"<string>\",\n        \"password\": \"<string>\",\n        \"roles\": [\n          \"ROLE_USER\",\n          \"ROLE_ADMIN\"\n        ]\n      },\n      {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"userName\": \"<string>\",\n        \"age\": \"<integer>\",\n        \"email\": \"<string>\",\n        \"password\": \"<string>\",\n        \"roles\": [\n          \"ROLE_USER\",\n          \"ROLE_USER\"\n        ]\n      }\n    ]\n  },\n  \"userId\": \"<long>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/activity",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activity"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "GET METHODS",
+					"item": [
+						{
+							"name": "Get Created Activities",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/activity/created/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"activity",
+										"created",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Retrieves a set of activities created by the user."
+							},
+							"response": [
+								{
+									"name": "Activities retrieved successfully",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/activity/created/:userId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activity",
+												"created",
+												":userId"
+											],
+											"variable": [
+												{
+													"key": "userId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": \"<long>\",\n    \"type\": \"<string>\",\n    \"duration\": {\n      \"seconds\": \"<long>\",\n      \"zero\": \"<boolean>\",\n      \"nano\": \"<integer>\",\n      \"negative\": \"<boolean>\",\n      \"positive\": \"<boolean>\",\n      \"units\": [\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        },\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        }\n      ]\n    },\n    \"place\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"creator\": {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    \"participants\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<long>\",\n    \"type\": \"<string>\",\n    \"duration\": {\n      \"seconds\": \"<long>\",\n      \"zero\": \"<boolean>\",\n      \"nano\": \"<integer>\",\n      \"negative\": \"<boolean>\",\n      \"positive\": \"<boolean>\",\n      \"units\": [\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        },\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        }\n      ]\n    },\n    \"place\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"creator\": {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    \"participants\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    ]\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "Get Activities by User ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/activity/user/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"activity",
+										"user",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Retrieves activities associated with a specific user."
+							},
+							"response": [
+								{
+									"name": "Activities retrieved successfully",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/activity/user/:userId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activity",
+												"user",
+												":userId"
+											],
+											"variable": [
+												{
+													"key": "userId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": \"<long>\",\n    \"type\": \"<string>\",\n    \"duration\": {\n      \"seconds\": \"<long>\",\n      \"zero\": \"<boolean>\",\n      \"nano\": \"<integer>\",\n      \"negative\": \"<boolean>\",\n      \"positive\": \"<boolean>\",\n      \"units\": [\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        },\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        }\n      ]\n    },\n    \"place\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"creator\": {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    \"participants\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<long>\",\n    \"type\": \"<string>\",\n    \"duration\": {\n      \"seconds\": \"<long>\",\n      \"zero\": \"<boolean>\",\n      \"nano\": \"<integer>\",\n      \"negative\": \"<boolean>\",\n      \"positive\": \"<boolean>\",\n      \"units\": [\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        },\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        }\n      ]\n    },\n    \"place\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"creator\": {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    \"participants\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    ]\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "Get Participated Activities",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/activity/invited/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"activity",
+										"invited",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Retrieves a set of activities in which the user has participated."
+							},
+							"response": [
+								{
+									"name": "Activities retrieved successfully",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/activity/invited/:userId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activity",
+												"invited",
+												":userId"
+											],
+											"variable": [
+												{
+													"key": "userId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": \"<long>\",\n    \"type\": \"<string>\",\n    \"duration\": {\n      \"seconds\": \"<long>\",\n      \"zero\": \"<boolean>\",\n      \"nano\": \"<integer>\",\n      \"negative\": \"<boolean>\",\n      \"positive\": \"<boolean>\",\n      \"units\": [\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        },\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        }\n      ]\n    },\n    \"place\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"creator\": {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    \"participants\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<long>\",\n    \"type\": \"<string>\",\n    \"duration\": {\n      \"seconds\": \"<long>\",\n      \"zero\": \"<boolean>\",\n      \"nano\": \"<integer>\",\n      \"negative\": \"<boolean>\",\n      \"positive\": \"<boolean>\",\n      \"units\": [\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        },\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        }\n      ]\n    },\n    \"place\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"creator\": {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    \"participants\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    ]\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "Get All Activities",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/activity",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"activity"
+									]
+								},
+								"description": "Retrieves all activities registered in the system."
+							},
+							"response": [
+								{
+									"name": "Activities retrieved successfully",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/activity",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activity"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": \"<long>\",\n    \"type\": \"<string>\",\n    \"duration\": {\n      \"seconds\": \"<long>\",\n      \"zero\": \"<boolean>\",\n      \"nano\": \"<integer>\",\n      \"negative\": \"<boolean>\",\n      \"positive\": \"<boolean>\",\n      \"units\": [\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        },\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        }\n      ]\n    },\n    \"place\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"creator\": {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    \"participants\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<long>\",\n    \"type\": \"<string>\",\n    \"duration\": {\n      \"seconds\": \"<long>\",\n      \"zero\": \"<boolean>\",\n      \"nano\": \"<integer>\",\n      \"negative\": \"<boolean>\",\n      \"positive\": \"<boolean>\",\n      \"units\": [\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        },\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"duration\": {\n            \"seconds\": \"<long>\",\n            \"zero\": \"<boolean>\",\n            \"nano\": \"<integer>\",\n            \"negative\": \"<boolean>\",\n            \"positive\": \"<boolean>\"\n          },\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        }\n      ]\n    },\n    \"place\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"creator\": {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    \"participants\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    ]\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "Get Activity by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/activity/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"activity",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Retrieves an activity by its ID."
+							},
+							"response": [
+								{
+									"name": "Activity retrieved successfully",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/activity/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activity",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<long>\",\n  \"type\": \"<string>\",\n  \"duration\": {\n    \"seconds\": \"<long>\",\n    \"zero\": \"<boolean>\",\n    \"nano\": \"<integer>\",\n    \"negative\": \"<boolean>\",\n    \"positive\": \"<boolean>\",\n    \"units\": [\n      {\n        \"durationEstimated\": \"<boolean>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\"\n        },\n        \"timeBased\": \"<boolean>\",\n        \"dateBased\": \"<boolean>\"\n      },\n      {\n        \"durationEstimated\": \"<boolean>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\"\n        },\n        \"timeBased\": \"<boolean>\",\n        \"dateBased\": \"<boolean>\"\n      }\n    ]\n  },\n  \"place\": \"<string>\",\n  \"date\": \"<dateTime>\",\n  \"creator\": {\n    \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n  },\n  \"participants\": [\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    }\n  ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "UPDATE METHODS",
+					"item": [
+						{
+							"name": "Update Activity by Replacement",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"activity\": {\n    \"type\": \"<string>\",\n    \"duration\": {\n      \"seconds\": \"<long>\",\n      \"zero\": \"<boolean>\",\n      \"nano\": \"<integer>\",\n      \"negative\": \"<boolean>\",\n      \"positive\": \"<boolean>\",\n      \"units\": [\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        },\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        }\n      ]\n    },\n    \"place\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"creator\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"userName\": \"<string>\",\n      \"age\": \"<integer>\",\n      \"email\": \"<string>\",\n      \"password\": \"<string>\",\n      \"roles\": [\n        \"ROLE_USER\",\n        \"ROLE_USER\"\n      ]\n    },\n    \"participants\": [\n      {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"userName\": \"<string>\",\n        \"age\": \"<integer>\",\n        \"email\": \"<string>\",\n        \"password\": \"<string>\",\n        \"roles\": [\n          \"ROLE_USER\",\n          \"ROLE_ADMIN\"\n        ]\n      },\n      {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"userName\": \"<string>\",\n        \"age\": \"<integer>\",\n        \"email\": \"<string>\",\n        \"password\": \"<string>\",\n        \"roles\": [\n          \"ROLE_USER\",\n          \"ROLE_USER\"\n        ]\n      }\n    ]\n  },\n  \"userId\": \"<long>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/activity/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"activity",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Replaces an existing activity with another."
+							},
+							"response": [
+								{
+									"name": "Activity updated successfully",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"activity\": {\n    \"type\": \"<string>\",\n    \"duration\": {\n      \"seconds\": \"<long>\",\n      \"zero\": \"<boolean>\",\n      \"nano\": \"<integer>\",\n      \"negative\": \"<boolean>\",\n      \"positive\": \"<boolean>\",\n      \"units\": [\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        },\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        }\n      ]\n    },\n    \"place\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"creator\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"userName\": \"<string>\",\n      \"age\": \"<integer>\",\n      \"email\": \"<string>\",\n      \"password\": \"<string>\",\n      \"roles\": [\n        \"ROLE_USER\",\n        \"ROLE_USER\"\n      ]\n    },\n    \"participants\": [\n      {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"userName\": \"<string>\",\n        \"age\": \"<integer>\",\n        \"email\": \"<string>\",\n        \"password\": \"<string>\",\n        \"roles\": [\n          \"ROLE_USER\",\n          \"ROLE_ADMIN\"\n        ]\n      },\n      {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"userName\": \"<string>\",\n        \"age\": \"<integer>\",\n        \"email\": \"<string>\",\n        \"password\": \"<string>\",\n        \"roles\": [\n          \"ROLE_USER\",\n          \"ROLE_USER\"\n        ]\n      }\n    ]\n  },\n  \"userId\": \"<long>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/activity/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activity",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "PATCH METHODS",
+					"item": [
+						{
+							"name": "Partial Update of an Activity",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"activity\": {\n    \"type\": \"<string>\",\n    \"duration\": {\n      \"seconds\": \"<long>\",\n      \"zero\": \"<boolean>\",\n      \"nano\": \"<integer>\",\n      \"negative\": \"<boolean>\",\n      \"positive\": \"<boolean>\",\n      \"units\": [\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        },\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        }\n      ]\n    },\n    \"place\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"creator\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"userName\": \"<string>\",\n      \"age\": \"<integer>\",\n      \"email\": \"<string>\",\n      \"password\": \"<string>\",\n      \"roles\": [\n        \"ROLE_USER\",\n        \"ROLE_USER\"\n      ]\n    },\n    \"participants\": [\n      {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"userName\": \"<string>\",\n        \"age\": \"<integer>\",\n        \"email\": \"<string>\",\n        \"password\": \"<string>\",\n        \"roles\": [\n          \"ROLE_USER\",\n          \"ROLE_ADMIN\"\n        ]\n      },\n      {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"userName\": \"<string>\",\n        \"age\": \"<integer>\",\n        \"email\": \"<string>\",\n        \"password\": \"<string>\",\n        \"roles\": [\n          \"ROLE_USER\",\n          \"ROLE_USER\"\n        ]\n      }\n    ]\n  },\n  \"userId\": \"<long>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/activity/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"activity",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Updates some of the attributes of an activity."
+							},
+							"response": [
+								{
+									"name": "Activity updated successfully",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"activity\": {\n    \"type\": \"<string>\",\n    \"duration\": {\n      \"seconds\": \"<long>\",\n      \"zero\": \"<boolean>\",\n      \"nano\": \"<integer>\",\n      \"negative\": \"<boolean>\",\n      \"positive\": \"<boolean>\",\n      \"units\": [\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        },\n        {\n          \"durationEstimated\": \"<boolean>\",\n          \"timeBased\": \"<boolean>\",\n          \"dateBased\": \"<boolean>\"\n        }\n      ]\n    },\n    \"place\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"creator\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"userName\": \"<string>\",\n      \"age\": \"<integer>\",\n      \"email\": \"<string>\",\n      \"password\": \"<string>\",\n      \"roles\": [\n        \"ROLE_USER\",\n        \"ROLE_USER\"\n      ]\n    },\n    \"participants\": [\n      {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"userName\": \"<string>\",\n        \"age\": \"<integer>\",\n        \"email\": \"<string>\",\n        \"password\": \"<string>\",\n        \"roles\": [\n          \"ROLE_USER\",\n          \"ROLE_ADMIN\"\n        ]\n      },\n      {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"userName\": \"<string>\",\n        \"age\": \"<integer>\",\n        \"email\": \"<string>\",\n        \"password\": \"<string>\",\n        \"roles\": [\n          \"ROLE_USER\",\n          \"ROLE_USER\"\n        ]\n      }\n    ]\n  },\n  \"userId\": \"<long>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/activity/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activity",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "DELETE METHODS",
+					"item": [
+						{
+							"name": "Delete Activity",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/activity/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"activity",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "A user can delete an activity only if they are the creator of it."
+							},
+							"response": [
+								{
+									"name": "Activity deleted successfully",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/activity/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"activity",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				}
+			],
+			"description": "In this section we find all HTTP requests: create, read, update and delete for an activity."
+		},
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "CREATE METHODS",
+					"item": [
+						{
+							"name": "Create User",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"userName\": \"<string>\",\n  \"age\": \"<integer>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"roles\": [\n    \"ROLE_USER\",\n    \"ROLE_USER\"\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								},
+								"description": "Registers a new user in the system."
+							},
+							"response": [
+								{
+									"name": "User created successfully",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"userName\": \"<string>\",\n  \"age\": \"<integer>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"roles\": [\n    \"ROLE_USER\",\n    \"ROLE_USER\"\n  ]\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/user",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"user"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						},
+						{
+							"name": "Create Admin",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"userName\": \"<string>\",\n  \"age\": \"<integer>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"roles\": [\n    \"ROLE_USER\",\n    \"ROLE_USER\"\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/user/add/admin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"add",
+										"admin"
+									]
+								},
+								"description": "Registers a new admin user in the system."
+							},
+							"response": [
+								{
+									"name": "Admin user created successfully",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"userName\": \"<string>\",\n  \"age\": \"<integer>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"roles\": [\n    \"ROLE_USER\",\n    \"ROLE_USER\"\n  ]\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/user/add/admin",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"user",
+												"add",
+												"admin"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "GET METHODS",
+					"item": [
+						{
+							"name": "Get User by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/user/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Retrieves a user by ID."
+							},
+							"response": [
+								{
+									"name": "User retrieved successfully",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/user/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"user",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<long>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"userName\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"roles\": [\n    \"ROLE_USER\",\n    \"ROLE_ADMIN\"\n  ],\n  \"createdActivities\": [\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    }\n  ],\n  \"invitedActivities\": [\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    }\n  ],\n  \"friends\": [\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    }\n  ],\n  \"notifications\": [\n    {\n      \"id\": \"<long>\",\n      \"message\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"receiver\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    },\n    {\n      \"id\": \"<long>\",\n      \"message\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"receiver\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"authorities\": [\n    {\n      \"authority\": \"<string>\"\n    },\n    {\n      \"authority\": \"<string>\"\n    }\n  ],\n  \"username\": \"<string>\",\n  \"credentialsNonExpired\": \"<boolean>\",\n  \"accountNonExpired\": \"<boolean>\",\n  \"accountNonLocked\": \"<boolean>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Show Users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								},
+								"description": "Retrieves all users registered in the system."
+							},
+							"response": [
+								{
+									"name": "Users retrieved successfully",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/user",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"user"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": \"<long>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"userName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\",\n    \"roles\": [\n      \"ROLE_USER\",\n      \"ROLE_USER\"\n    ],\n    \"createdActivities\": [\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      }\n    ],\n    \"invitedActivities\": [\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      }\n    ],\n    \"friends\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    ],\n    \"notifications\": [\n      {\n        \"id\": \"<long>\",\n        \"message\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"receiver\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      },\n      {\n        \"id\": \"<long>\",\n        \"message\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"receiver\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      }\n    ],\n    \"enabled\": \"<boolean>\",\n    \"authorities\": [\n      {\n        \"authority\": \"<string>\"\n      },\n      {\n        \"authority\": \"<string>\"\n      }\n    ],\n    \"username\": \"<string>\",\n    \"credentialsNonExpired\": \"<boolean>\",\n    \"accountNonExpired\": \"<boolean>\",\n    \"accountNonLocked\": \"<boolean>\"\n  },\n  {\n    \"id\": \"<long>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"userName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\",\n    \"roles\": [\n      \"ROLE_ADMIN\",\n      \"ROLE_USER\"\n    ],\n    \"createdActivities\": [\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      }\n    ],\n    \"invitedActivities\": [\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      }\n    ],\n    \"friends\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    ],\n    \"notifications\": [\n      {\n        \"id\": \"<long>\",\n        \"message\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"receiver\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      },\n      {\n        \"id\": \"<long>\",\n        \"message\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"receiver\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      }\n    ],\n    \"enabled\": \"<boolean>\",\n    \"authorities\": [\n      {\n        \"authority\": \"<string>\"\n      },\n      {\n        \"authority\": \"<string>\"\n      }\n    ],\n    \"username\": \"<string>\",\n    \"credentialsNonExpired\": \"<boolean>\",\n    \"accountNonExpired\": \"<boolean>\",\n    \"accountNonLocked\": \"<boolean>\"\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "Get Friends by User ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/user/friends/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"friends",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Retrieves friends of a user by ID."
+							},
+							"response": [
+								{
+									"name": "Friends retrieved successfully",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/user/friends/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"user",
+												"friends",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": \"<long>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"userName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\",\n    \"roles\": [\n      \"ROLE_USER\",\n      \"ROLE_USER\"\n    ],\n    \"createdActivities\": [\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      }\n    ],\n    \"invitedActivities\": [\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      }\n    ],\n    \"friends\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    ],\n    \"notifications\": [\n      {\n        \"id\": \"<long>\",\n        \"message\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"receiver\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      },\n      {\n        \"id\": \"<long>\",\n        \"message\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"receiver\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      }\n    ],\n    \"enabled\": \"<boolean>\",\n    \"authorities\": [\n      {\n        \"authority\": \"<string>\"\n      },\n      {\n        \"authority\": \"<string>\"\n      }\n    ],\n    \"username\": \"<string>\",\n    \"credentialsNonExpired\": \"<boolean>\",\n    \"accountNonExpired\": \"<boolean>\",\n    \"accountNonLocked\": \"<boolean>\"\n  },\n  {\n    \"id\": \"<long>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"userName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\",\n    \"roles\": [\n      \"ROLE_ADMIN\",\n      \"ROLE_USER\"\n    ],\n    \"createdActivities\": [\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      }\n    ],\n    \"invitedActivities\": [\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<long>\",\n        \"type\": \"<string>\",\n        \"duration\": {\n          \"seconds\": \"<long>\",\n          \"zero\": \"<boolean>\",\n          \"nano\": \"<integer>\",\n          \"negative\": \"<boolean>\",\n          \"positive\": \"<boolean>\",\n          \"units\": [\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            },\n            {\n              \"durationEstimated\": \"<boolean>\",\n              \"duration\": {\n                \"seconds\": \"<long>\",\n                \"zero\": \"<boolean>\",\n                \"nano\": \"<integer>\",\n                \"negative\": \"<boolean>\",\n                \"positive\": \"<boolean>\"\n              },\n              \"timeBased\": \"<boolean>\",\n              \"dateBased\": \"<boolean>\"\n            }\n          ]\n        },\n        \"place\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"creator\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        \"participants\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n          }\n        ]\n      }\n    ],\n    \"friends\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    ],\n    \"notifications\": [\n      {\n        \"id\": \"<long>\",\n        \"message\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"receiver\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      },\n      {\n        \"id\": \"<long>\",\n        \"message\": \"<string>\",\n        \"date\": \"<dateTime>\",\n        \"receiver\": {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      }\n    ],\n    \"enabled\": \"<boolean>\",\n    \"authorities\": [\n      {\n        \"authority\": \"<string>\"\n      },\n      {\n        \"authority\": \"<string>\"\n      }\n    ],\n    \"username\": \"<string>\",\n    \"credentialsNonExpired\": \"<boolean>\",\n    \"accountNonExpired\": \"<boolean>\",\n    \"accountNonLocked\": \"<boolean>\"\n  }\n]"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "PATCH METHODS",
+					"item": [
+						{
+							"name": "Update User",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<long>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"userName\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"roles\": [\n    \"ROLE_USER\",\n    \"ROLE_ADMIN\"\n  ],\n  \"createdActivities\": [\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    }\n  ],\n  \"invitedActivities\": [\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    }\n  ],\n  \"friends\": [\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    }\n  ],\n  \"notifications\": [\n    {\n      \"id\": \"<long>\",\n      \"message\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"receiver\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    },\n    {\n      \"id\": \"<long>\",\n      \"message\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"receiver\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"authorities\": [\n    {\n      \"authority\": \"<string>\"\n    },\n    {\n      \"authority\": \"<string>\"\n    }\n  ],\n  \"username\": \"<string>\",\n  \"credentialsNonExpired\": \"<boolean>\",\n  \"accountNonExpired\": \"<boolean>\",\n  \"accountNonLocked\": \"<boolean>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/user/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Updates an existing user with new information."
+							},
+							"response": [
+								{
+									"name": "User updated successfully",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<long>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"userName\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"roles\": [\n    \"ROLE_USER\",\n    \"ROLE_ADMIN\"\n  ],\n  \"createdActivities\": [\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    }\n  ],\n  \"invitedActivities\": [\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<long>\",\n      \"type\": \"<string>\",\n      \"duration\": {\n        \"seconds\": \"<long>\",\n        \"zero\": \"<boolean>\",\n        \"nano\": \"<integer>\",\n        \"negative\": \"<boolean>\",\n        \"positive\": \"<boolean>\",\n        \"units\": [\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          },\n          {\n            \"durationEstimated\": \"<boolean>\",\n            \"duration\": {\n              \"seconds\": \"<long>\",\n              \"zero\": \"<boolean>\",\n              \"nano\": \"<integer>\",\n              \"negative\": \"<boolean>\",\n              \"positive\": \"<boolean>\"\n            },\n            \"timeBased\": \"<boolean>\",\n            \"dateBased\": \"<boolean>\"\n          }\n        ]\n      },\n      \"place\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"creator\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      },\n      \"participants\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n        }\n      ]\n    }\n  ],\n  \"friends\": [\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    },\n    {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    }\n  ],\n  \"notifications\": [\n    {\n      \"id\": \"<long>\",\n      \"message\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"receiver\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    },\n    {\n      \"id\": \"<long>\",\n      \"message\": \"<string>\",\n      \"date\": \"<dateTime>\",\n      \"receiver\": {\n        \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n      }\n    }\n  ],\n  \"enabled\": \"<boolean>\",\n  \"authorities\": [\n    {\n      \"authority\": \"<string>\"\n    },\n    {\n      \"authority\": \"<string>\"\n    }\n  ],\n  \"username\": \"<string>\",\n  \"credentialsNonExpired\": \"<boolean>\",\n  \"accountNonExpired\": \"<boolean>\",\n  \"accountNonLocked\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/user/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"user",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "DELETE METHODS",
+					"item": [
+						{
+							"name": "Delete User",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/user/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Deletes a user."
+							},
+							"response": [
+								{
+									"name": "User deleted successfully",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/user/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"user",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "NOTIFICATIONS",
+			"item": [
+				{
+					"name": "CREATE METHODS",
+					"item": [
+						{
+							"name": "Create Notification",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<long>\",\n  \"message\": \"<string>\",\n  \"date\": \"<dateTime>\",\n  \"receiver\": {\n    \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n  }\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/notification",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"notification"
+									]
+								},
+								"description": "Registers a new notification in the system."
+							},
+							"response": [
+								{
+									"name": "Notification created successfully",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<long>\",\n  \"message\": \"<string>\",\n  \"date\": \"<dateTime>\",\n  \"receiver\": {\n    \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n  }\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/notification",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"notification"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "GET METHODS",
+					"item": [
+						{
+							"name": "Get Notifications by User ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/notification/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"notification",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Retrieves notifications associated with a specific user."
+							},
+							"response": [
+								{
+									"name": "Notifications retrieved successfully",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/notification/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"notification",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": \"<long>\",\n    \"message\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"receiver\": {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    }\n  },\n  {\n    \"id\": \"<long>\",\n    \"message\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"receiver\": {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    }\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "Get All Notifications",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/notification",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"notification"
+									]
+								},
+								"description": "Retrieves all notifications registered in the system."
+							},
+							"response": [
+								{
+									"name": "Notifications retrieved successfully",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/notification",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"notification"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": \"<long>\",\n    \"message\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"receiver\": {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    }\n  },\n  {\n    \"id\": \"<long>\",\n    \"message\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"receiver\": {\n      \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n    }\n  }\n]"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "PATCH METHODS",
+					"item": [
+						{
+							"name": "Update Notification",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<long>\",\n  \"message\": \"<string>\",\n  \"date\": \"<dateTime>\",\n  \"receiver\": {\n    \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n  }\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/notification/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"notification",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Updates an existing notification with new information."
+							},
+							"response": [
+								{
+									"name": "Notification updated successfully",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<long>\",\n  \"message\": \"<string>\",\n  \"date\": \"<dateTime>\",\n  \"receiver\": {\n    \"value\": \"<Circular reference to #/components/schemas/User detected>\"\n  }\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/notification/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"notification",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "DELETE METHODS",
+					"item": [
+						{
+							"name": "Delete Notification",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/notification/notification/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"notification",
+										"notification",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Deletes an existing notification."
+							},
+							"response": [
+								{
+									"name": "Notification deleted successfully",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/notification/notification/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"notification",
+												"notification",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "signup",
+					"item": [
+						{
+							"name": "User Registration",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"username\": \"<string>\",\n  \"age\": \"<integer>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/auth/signup",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"signup"
+									]
+								},
+								"description": "Registers a new user."
+							},
+							"response": [
+								{
+									"name": "User registered successfully",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"username\": \"<string>\",\n  \"age\": \"<integer>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/auth/signup",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"auth",
+												"signup"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"token\": \"<string>\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "signin",
+					"item": [
+						{
+							"name": "User Sign-in",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/auth/signin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"signin"
+									]
+								},
+								"description": "Logs in an existing user."
+							},
+							"response": [
+								{
+									"name": "Sign-in successful",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/auth/signin",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"auth",
+												"signin"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"token\": \"<string>\"\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}

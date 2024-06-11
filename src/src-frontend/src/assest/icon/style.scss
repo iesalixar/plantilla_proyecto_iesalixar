@@ -1,0 +1,31 @@
+.sidebar-icon {
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+
+    @media screen and (max-width: 770px) {
+        width: 1.5em;
+        height: 1.5em;
+    }
+
+    @media screen and (max-width: 550px) {
+        width: 1.5em;
+        height: 1.5em;
+    }
+}
+
+.logo-icon {
+    padding: 10px;
+}
+
+.logo-text {
+    padding: 10px;
+}
+
+.logo-full {
+    padding: 10px;
+}
+
+.logo-icon-header {
+    padding: 5px;
+}

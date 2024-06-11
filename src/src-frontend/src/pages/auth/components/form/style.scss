@@ -1,0 +1,223 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 7%;
+    margin-bottom: 10%;
+    justify-content: center;
+
+    h1 {
+        font-size: 3rem;
+        text-align: center;
+        font-weight: 900;
+        color: var(--grayA12);
+    }
+
+    .login-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 70%;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 12px 8px rgb(0 0 0 / 16%);
+        text-align: center;
+        border: 1px;
+        background-color: #cbcbf91e;
+
+        input {
+            width: 80%;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #cbcbf900;
+            border: 1px solid;
+
+            .focus {
+                border-color: var(--teal-8);
+            }
+        }
+
+        label {
+            width: 80%;
+            display: flex;
+            flex-direction: row;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            margin: 0 auto;
+
+            .check {
+                width: 15px;
+                margin: 0;
+                margin-right: 10px;
+                background-color: #cbcbf900;
+                border: 1px solid;
+                cursor: pointer;
+
+            }
+
+            .small-text {
+                @media screen and (max-width: 768px) {
+
+                    font-size: 12px;
+                }
+
+                @media screen and (max-width: 600px) {
+
+                    font-size: 11.5px;
+                }
+
+                @media screen and (max-width: 400px) {
+
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+
+    .signup-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 55%;
+        min-width: 300px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 12px 8px rgb(0 0 0 / 16%);
+        text-align: center;
+        border: 1px;
+        background-color: #cbcbf91e;
+
+        input {
+            width: 70%;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #cbcbf900;
+            border: 1px solid;
+
+            .focus {
+                border-color: var(--teal-8);
+            }
+        }
+
+        label {
+            width: 70%;
+            display: flex;
+            flex-direction: row;
+            padding: 10px;
+            margin: 0 auto;
+
+            .check {
+                width: 15px;
+                margin: 0;
+                margin-right: 10px;
+                background-color: #cbcbf900;
+                border: 1px solid;
+                cursor: pointer;
+            }
+
+            .small-text {
+                @media (min-width: 768px) and (max-width: 1000px) {
+                    font-size: 12.4px;
+                }
+
+                @media screen and (max-width: 768px) {
+                    font-size: 12px;
+                }
+
+                @media (min-width: 600px) and (max-width: 768px) {
+                    font-size: 11.8px;
+                }
+
+                @media screen and (max-width: 600px) {
+                    font-size: 11.5px;
+                }
+
+                @media screen and (max-width: 400px) {
+                    font-size: 11px;
+                }
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            width: 60%;
+            margin-top: 10%;
+        }
+
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+                margin-top: 20px;
+            }
+        }
+    }
+
+    .term-link {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .submit-btn {
+
+        width: 300px;
+        padding: 10px;
+        cursor: pointer;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-weight: 700;
+        border-radius: 10px;
+
+        @media screen and (max-width: 600px) {
+            width: 90%;
+        }
+    }
+
+    .register-link {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.8em;
+        text-align: center;
+        margin-top: 10px;
+        text-decoration: none;
+
+        a {
+            margin-top: 10px;
+        }
+    }
+
+    .error-message {
+        text-align: center;
+        color: rgb(235, 78, 78);
+        padding: 5px;
+        margin: 0 auto;
+    }
+
+    @media screen and (max-width: 1500px) {
+        margin-top: 20%;
+
+        h1 {
+            margin-top: 20px;
+        }
+    }
+
+    @media screen and (max-width: 1000px) {
+
+        margin-top: 20%;
+
+        h1 {
+            margin-top: 20px;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        margin-top: 10%;
+
+        h1 {
+            font-size: 2rem;
+            margin-top: 20px;
+        }
+
+    }
+
+}

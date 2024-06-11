@@ -1,0 +1,43 @@
+.header-btn {
+    border-radius: 10px;
+    height: 40px;
+    min-width: 90px;
+    margin-right: 50px;
+    cursor: pointer;
+
+    p {
+        margin: 0;
+        font-size: 0.8rem;
+        font-weight:600 ;
+    }
+
+    @media screen and (max-width: 768px) {
+     display: none;
+    }
+}   
+
+.toggle-container{
+    display: flex;
+    transition: background-color 0.3s ease;
+    width: fit-content; 
+
+    .icon{
+        width: 2em;  
+        height: 2em;
+        cursor: pointer;
+        @media screen and (max-width: 770px){
+            width: 1.8em;  
+            height: 1.8em;
+        }
+        @media screen and (max-width: 550px){
+            width: 1.5em;  
+            height: 1.5em;
+        }
+    }
+}
+.toggle-container.hovered {
+    border: 1px solid;
+    border-color: var(--gray-8);
+    border-radius: 5px;
+}
+

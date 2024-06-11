@@ -1,0 +1,15 @@
+{
+  "short_name": "FitConnet App",
+  "name": "FitConnet, let's Thrive",
+  "icons": [
+    {
+      "src": "../src/assest/icons/svg/logo/logofull-dark.svg  ",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-svg"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#111;",
+  "background_color": "radial-gradient(circle, #00474b, #0e3843, #172a35, #181d24, #111113);"
+}

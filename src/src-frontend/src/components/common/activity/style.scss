@@ -1,0 +1,127 @@
+.publication-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+
+    .publication {
+        border-bottom: 1px solid #8E8E8E;
+        margin-bottom: 20px;
+        max-width: 350px;
+        width: 100%;
+
+        .publication-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 5px;
+
+            .picture-name-container {
+                width: 95%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                .creator-name {
+                    padding-left: 10px;
+                    text-decoration: none;
+                }
+            }
+
+            .menu-container {
+                width: 5%;
+            }
+        }
+
+        .img-container {
+            width: 100%;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+        }
+
+        .activity-details {
+
+            #title {
+                font-weight: 900;
+                text-align: center;
+            }
+
+            p>span {
+                margin-left: 10px;
+            }
+        }
+
+    }
+
+}
+
+@media (max-width: 770px) {
+    .publication-container {
+        margin-top: 70px;
+        margin-bottom: 100px;
+
+        .publication {
+            .img-container {
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    aspect-ratio: 1 / 1;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .publication-container {
+        margin-top: 70px;
+        margin-bottom: 100px;
+
+        .publication {
+            .img-container {
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    aspect-ratio: 1 / 1;
+                }
+            }
+        }
+    }
+}
+
+
+@media (max-width: 768px) {
+    .publication-container {
+        margin-top: 70px;
+        margin-bottom: 100px;
+
+        .publication {
+            .icon {
+                width: 1.8em;
+                height: 1.8em;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .publication-container {
+        margin-top: 70px;
+        margin-bottom: 100px;
+
+        .publication {
+            .icon {
+                width: 1.5em;
+                height: 1.5em;
+            }
+        }
+    }
+}

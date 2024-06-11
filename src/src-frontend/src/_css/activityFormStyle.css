@@ -1,0 +1,143 @@
+.modal-container {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(5px);
+}
+.modal-container .add-activity-card {
+  width: 15vw;
+  min-width: 350px;
+  margin: auto;
+  margin-top: 20vh;
+  padding: 0 20px 20px;
+  border: 1px solid;
+  border-radius: 5px;
+  z-index: 1000;
+  position: relative;
+}
+.modal-container .add-activity-card .card-header-container {
+  width: 100%;
+  display: flex;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+.modal-container .add-activity-card .card-header-container .title-container {
+  width: 90%;
+}
+.modal-container .add-activity-card .card-header-container .title-container h2 {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.modal-container .add-activity-card .card-header-container button {
+  width: 10%;
+  padding-top: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.modal-container .add-activity-card .publication-form {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  align-items: center;
+}
+.modal-container .add-activity-card .publication-form .input-container {
+  position: relative;
+  margin-bottom: 20px;
+  width: 80%;
+  margin: 0 auto;
+  padding: 10px;
+}
+.modal-container .add-activity-card .publication-form .input-container input[type=text] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: transparent;
+  box-sizing: border-box;
+}
+.modal-container .add-activity-card .publication-form .input-container .suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 210px;
+  overflow-y: auto;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid;
+  z-index: 999;
+}
+.modal-container .add-activity-card .publication-form .input-container .suggestions-list li {
+  padding: 10px;
+  border: 1px solid;
+  margin: 10px;
+  border-radius: 5px;
+}
+.modal-container .add-activity-card .publication-form .input-container .suggestions-list::-webkit-scrollbar {
+  width: 8px;
+}
+.modal-container .add-activity-card .publication-form .input-container .suggestions-list::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+.modal-container .add-activity-card .publication-form .input-container .suggestions-list::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+.modal-container .add-activity-card .publication-form .input-container-image-button {
+  width: 70%;
+  padding: 10px;
+  cursor: pointer;
+}
+.modal-container .add-activity-card .publication-form .input-container-image-button button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background: transparent;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid;
+  border-color: var(--gray-a1);
+}
+.modal-container .add-activity-card .publication-form button[type=submit] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.modal-container .add-activity-card .publication-form .submit-button-container {
+  margin-bottom: 20px;
+  width: 80%;
+  margin: 0 auto;
+  padding: 10px;
+}
+.modal-container .add-activity-card .publication-form .submit-button-container button[type=submit] {
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+@media screen and (max-width: 550px) {
+  .modal-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(5px);
+  }
+}/*# sourceMappingURL=activityFormStyle.css.map */

@@ -1,0 +1,45 @@
+.header-container {
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    top: 0;
+    border-radius: 5px;
+    border-bottom: 1px solid;
+    
+    .btn-container{
+        margin-right: 16px;
+    }
+    .logo-container{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 50%;
+
+        @media screen and (max-width: 500px){
+            margin-left: 10px;
+        }
+        @media screen and (max-width: 770px){
+            padding: 10px;
+        }
+        .logo-icon-header{
+            width: 1.9em;
+            height: 1.9em;
+        }
+    }
+    .option-container{
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+    }
+    .toggle-container{
+        margin-right: 20px;
+    }
+
+
+}

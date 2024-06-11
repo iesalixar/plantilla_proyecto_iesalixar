@@ -1,0 +1,30 @@
+@media screen and (max-width: 770px) {
+
+    .closeIcon,
+    .add-image-icon {
+        width: 1.5em;
+        height: 1.5em;
+    }
+}
+
+@media screen and (max-width: 1050px) {
+
+    .closeIcon,
+    .add-image-icon {
+        width: 2em;
+        height: 2em;
+    }
+}
+
+@media screen and (min-width: 1050px) {
+
+    .closeIcon,
+    .add-image-icon {
+        width: 2em;
+        height: 2em;
+    }
+}
+
+.add-image-icon {
+    margin-top: 10px;
+}

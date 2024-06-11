@@ -1,0 +1,24 @@
+  .footer-container{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 25px  ;
+      margin-bottom: 16px;
+      .row-1, .row-2{
+        padding: 5px;
+      }
+      .row-1{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      a {
+          text-decoration: none; /* Quita el subrayado */
+          color: inherit; /* Hereda el color del texto de su contenedor */
+          margin: 0 5px 0 5px;
+          color: #8E8E8E;
+          font-weight: lighter;
+          font-size: 0.8rem;
+        }
+
+    }

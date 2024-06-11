@@ -1,0 +1,175 @@
+:root, .light, .light-theme {
+    --teal-1: #f9fefe;
+    --teal-2: #f3fbfb;
+    --teal-3: #dff7f8;
+    --teal-4: #ccf1f3;
+    --teal-5: #b9e9ec;
+    --teal-6: #a5dee2;
+    --teal-7: #8acfd3;
+    --teal-8: #60bbc1;
+    --teal-9: #00666b;
+    --teal-10: #00575c;
+    --teal-11: #1b7378;
+    --teal-12: #133a3c;
+  
+    --teal-a1: #00d5d506;
+    --teal-a2: #00aaaa0c;
+    --teal-a3: #00c0c820;
+    --teal-a4: #00b9c333;
+    --teal-a5: #00afba46;
+    --teal-a6: #01a2ad5a;
+    --teal-a7: #0097a075;
+    --teal-a8: #00929c9f;
+    --teal-a9: #00666b;
+    --teal-a10: #00575c;
+    --teal-a11: #006268e4;
+    --teal-a12: #002a2cec;
+  
+    --teal-contrast: #fff;
+    --teal-surface: #f0fafacc;
+    --teal-indicator: #00666b;
+    --teal-track: #00666b;
+
+
+    --gray-1: #fcfcfd;
+    --gray-2: #f9f9fb;
+    --gray-3: #eff0f3;
+    --gray-4: #e7e8ec;
+    --gray-5: #e0e1e6;
+    --gray-6: #d8d9e0;
+    --gray-7: #cdced7;
+    --gray-8: #b9bbc6;
+    --gray-9: #8b8d98;
+    --gray-10: #80828d;
+    --gray-11: #62636c;
+    --gray-12: #1e1f24;
+  
+    --gray-a1: #00005503;
+    --gray-a2: #00005506;
+    --gray-a3: #00104010;
+    --gray-a4: #000b3618;
+    --gray-a5: #0009321f;
+    --gray-a6: #00073527;
+    --gray-a7: #00063332;
+    --gray-a8: #00083046;
+    --gray-a9: #00051d74;
+    --gray-a10: #00051b7f;
+    --gray-a11: #0002119d;
+    --gray-a12: #000107e1;
+  
+    --gray-contrast: #FFFFFF;
+    --gray-surface: #ffffffcc;
+    --gray-indicator: #8b8d98;
+    --gray-track: #8b8d98;
+
+    --background-gradient: linear-gradient(to left top, #007e84, #5898aa, #93b2c6, #c5cedc, #eeeef0);
+
+  }
+  
+  @supports (color: color(display-p3 1 1 1)) {
+    @media (color-gamut: p3) {
+      :root, .light, .light-theme {
+        --teal-1: oklch(99.3% 0.005 200.7);
+        --teal-2: oklch(98.2% 0.009 200.7);
+        --teal-3: oklch(95.8% 0.025 200.7);
+        --teal-4: oklch(93.3% 0.039 200.7);
+        --teal-5: oklch(90.2% 0.05 200.7);
+        --teal-6: oklch(86.3% 0.059 200.7);
+        --teal-7: oklch(81.1% 0.07 200.7);
+        --teal-8: oklch(73.9% 0.087 200.7);
+        --teal-9: oklch(46.4% 0.079 200.7);
+        --teal-10: oklch(41.1% 0.079 200.7);
+        --teal-11: oklch(50.9% 0.079 200.7);
+        --teal-12: oklch(32.3% 0.044 200.7);
+  
+        --teal-a1: color(display-p3 0.02 0.804 0.804 / 0.02);
+        --teal-a2: color(display-p3 0.02 0.647 0.647 / 0.044);
+        --teal-a3: color(display-p3 0.004 0.671 0.741 / 0.106);
+        --teal-a4: color(display-p3 0.004 0.663 0.706 / 0.173);
+        --teal-a5: color(display-p3 0.004 0.62 0.671 / 0.236);
+        --teal-a6: color(display-p3 0.004 0.553 0.616 / 0.306);
+        --teal-a7: color(display-p3 0 0.51 0.561 / 0.4);
+        --teal-a8: color(display-p3 0 0.486 0.529 / 0.534);
+        --teal-a9: color(display-p3 0 0.271 0.302 / 0.836);
+        --teal-a10: color(display-p3 0 0.231 0.255 / 0.863);
+        --teal-a11: color(display-p3 0 0.286 0.318 / 0.781);
+        --teal-a12: color(display-p3 0 0.122 0.129 / 0.883);
+  
+        --teal-contrast: #fff;
+        --teal-surface: color(display-p3 0.945 0.98 0.98 / 0.8);
+        --teal-indicator: oklch(46.4% 0.079 200.7);
+        --teal-track: oklch(46.4% 0.079 200.7);
+        --gray-1: oklch(99.1% 0.001 277.7);
+        --gray-2: oklch(98.2% 0.003 277.7);
+        --gray-3: oklch(95.6% 0.005 277.7);
+        --gray-4: oklch(93.1% 0.006 277.7);
+        --gray-5: oklch(91% 0.008 277.7);
+        --gray-6: oklch(88.8% 0.009 277.7);
+        --gray-7: oklch(85.3% 0.012 277.7);
+        --gray-8: oklch(79.4% 0.016 277.7);
+        --gray-9: oklch(64.6% 0.016 277.7);
+        --gray-10: oklch(61% 0.016 277.7);
+        --gray-11: oklch(50.3% 0.014 277.7);
+        --gray-12: oklch(24.1% 0.01 277.7);
+  
+        --gray-a1: color(display-p3 0.024 0.024 0.349 / 0.012);
+        --gray-a2: color(display-p3 0.024 0.024 0.349 / 0.024);
+        --gray-a3: color(display-p3 0.008 0.067 0.255 / 0.063);
+        --gray-a4: color(display-p3 0.012 0.051 0.216 / 0.095);
+        --gray-a5: color(display-p3 0.004 0.039 0.2 / 0.122);
+        --gray-a6: color(display-p3 0.004 0.027 0.18 / 0.153);
+        --gray-a7: color(display-p3 0.008 0.027 0.184 / 0.197);
+        --gray-a8: color(display-p3 0.004 0.031 0.176 / 0.275);
+        --gray-a9: color(display-p3 0.004 0.02 0.106 / 0.455);
+        --gray-a10: color(display-p3 0.004 0.02 0.098 / 0.499);
+        --gray-a11: color(display-p3 0 0.008 0.059 / 0.616);
+        --gray-a12: color(display-p3 0 0.004 0.027 / 0.883);
+  
+        --gray-contrast: #FFFFFF;
+        --gray-surface: color(display-p3 1 1 1 / 80%);
+        --gray-indicator: oklch(64.6% 0.016 277.7);
+        --gray-track: oklch(64.6% 0.016 277.7);
+      }
+    }
+  }
+
+  
+  @supports (color: color(display-p3 1 1 1)) {
+    @media (color-gamut: p3) {
+      :root, .light, .light-theme {
+        --gray-1: oklch(99.1% 0.001 277.7);
+        --gray-2: oklch(98.2% 0.003 277.7);
+        --gray-3: oklch(95.6% 0.005 277.7);
+        --gray-4: oklch(93.1% 0.006 277.7);
+        --gray-5: oklch(91% 0.008 277.7);
+        --gray-6: oklch(88.8% 0.009 277.7);
+        --gray-7: oklch(85.3% 0.012 277.7);
+        --gray-8: oklch(79.4% 0.016 277.7);
+        --gray-9: oklch(64.6% 0.016 277.7);
+        --gray-10: oklch(61% 0.016 277.7);
+        --gray-11: oklch(50.3% 0.014 277.7);
+        --gray-12: oklch(24.1% 0.01 277.7);
+  
+        --gray-a1: color(display-p3 0.024 0.024 0.349 / 0.012);
+        --gray-a2: color(display-p3 0.024 0.024 0.349 / 0.024);
+        --gray-a3: color(display-p3 0.008 0.067 0.255 / 0.063);
+        --gray-a4: color(display-p3 0.012 0.051 0.216 / 0.095);
+        --gray-a5: color(display-p3 0.004 0.039 0.2 / 0.122);
+        --gray-a6: color(display-p3 0.004 0.027 0.18 / 0.153);
+        --gray-a7: color(display-p3 0.008 0.027 0.184 / 0.197);
+        --gray-a8: color(display-p3 0.004 0.031 0.176 / 0.275);
+        --gray-a9: color(display-p3 0.004 0.02 0.106 / 0.455);
+        --gray-a10: color(display-p3 0.004 0.02 0.098 / 0.499);
+        --gray-a11: color(display-p3 0 0.008 0.059 / 0.616);
+        --gray-a12: color(display-p3 0 0.004 0.027 / 0.883);
+  
+        --gray-contrast: #FFFFFF;
+        --gray-surface: color(display-p3 1 1 1 / 80%);
+        --gray-indicator: oklch(64.6% 0.016 277.7);
+        --gray-track: oklch(64.6% 0.016 277.7);
+      }
+    }
+  }
+  :root, .light, .light-theme, .radix-themes {
+    --color-background: #fff;
+  }

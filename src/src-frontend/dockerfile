@@ -1,0 +1,14 @@
+# Usa una imagen de nginx para servir la aplicación
+FROM nginx:alpine
+
+# Establece el directorio de trabajo
+WORKDIR /usr/share/nginx/html
+
+# Copia los archivos compilados al contenedor
+COPY build/ .
+
+# Expone el puerto 80 (el puerto por defecto de nginx)
+EXPOSE 80
+
+# Comando para ejecutar nginx
+CMD ["nginx", "-g", "daemon off;"]

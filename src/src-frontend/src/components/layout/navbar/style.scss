@@ -1,0 +1,108 @@
+.sidebar-container {
+    width: fit-content;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-right: 1px solid;
+    border-radius: 5px;
+
+
+    .icon-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        padding-top: 20px;
+
+        .icon-text {
+            margin-left: 16px;
+        }
+    }
+
+    .icon-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 16px;
+        border-radius: 10px;
+        margin-top: 8px;
+
+        &:hover {
+            border: 1px solid;
+            border-radius: 10px;
+            background-color: var(--gray-a2);
+
+        }
+
+    }
+
+    .logout-section {
+        position: fixed;
+        bottom: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 0 auto;
+        padding: 16px;
+
+        .toggle-section {
+            padding-bottom: 10px;
+        }
+
+        .logout-icon {
+            padding-top: 10px;
+        }
+    }
+
+}
+
+.footerbar-container {
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    z-index: 1000;
+    bottom: 0;
+    border-top: 1px solid var(--gray-7);
+    border-radius: 5px;
+
+    .icon-container {
+        width: 78%;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+
+        .icon-item {
+            &:hover {
+                border: 1px solid;
+                border-radius: 10px;
+                background-color: var(--gray-a2);
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    .icon-btn {
+        &:hover {
+            border: 1px solid;
+            border-radius: 10px;
+            background-color: var(--gray-a2);
+
+        }
+    }
+
+    .logout-icon {
+        &:hover {
+            border: 1px solid;
+            border-radius: 10px;
+        }
+    }
+}
