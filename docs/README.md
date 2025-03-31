@@ -65,7 +65,7 @@ Motivación que justifique la realización de la aplicación web.
 Lista de las tecnologías usadas para construir la aplicación y análisis de por qué se ha construído en estas tecnologías. 
 
 ## Esquema E-R y descripción de las entidades y campos de la base de datos.
-Imágen del esquema entidad relación y descricpión de las entidades y campos que conforman el modelo de datos.
+Imagen del esquema entidad relación y descricpión de las entidades y campos que conforman el modelo de datos.
 
 ## Prototipo de la Aplicación Web.
 Imágenes extraidas de la aplicación de prototipado. Si son muchas, poner solo las más representativas y el resto adjuntarlas como anexo.
